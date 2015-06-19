@@ -1,0 +1,29 @@
+{
+    "name": "primephp/primephp",
+    "description": "Descrição do projeto PrimePHP.",
+    "authors": [
+        {
+            "name": "TomSailor",
+            "email": "www.eltonluiz@hotmail.com"
+        }
+    ],
+    "type": "library",
+    "keywords": ["framework", "library", "primephp"],
+    "description": "Toolkit de Componentes php para criação de aplicações MVC",
+    "license": "MIT",
+    "support": {
+        "issues": "https://github.com/primephp/primephp/issues",
+        "source": "https://github.com/primephp/primephp"
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "ext-mbstring": "*",
+        "monolog/monolog": "~1.11",
+        "twig/twig":"~1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prime\\": "Prime"
+        }
+    },
+}
