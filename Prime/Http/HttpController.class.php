@@ -14,5 +14,5 @@ use Prime\Core\Object;
  * @author TomSailor <www.eltonluiz@hotmail.com>
  */
 class HttpController extends Object {
-    
+     
 }
