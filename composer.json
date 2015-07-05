@@ -1,7 +1,19 @@
 {
-    "name": "primephp/primephp",
+    "name": "primephp/framework",
     "description": "Toolkit de Componentes php para criação de aplicações MVC",
+    "authors": [
+        {
+            "name": "Tom Sailor",
+            "email": "www.eltonluiz@hotmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Prime\\": ""
+        }
+    },
     "require": {
         "php": ">=5.5.0"
-    }
+    },
+    "minimum-stability": "dev"
 }
