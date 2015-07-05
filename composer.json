@@ -1,0 +1,7 @@
+{
+    "name": "primephp/primephp",
+    "description": "Toolkit de Componentes php para criação de aplicações MVC",
+    "require": {
+        "php": ">=5.5.0"
+    }
+}
