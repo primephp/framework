@@ -7,6 +7,7 @@
             "email": "www.eltonluiz@hotmail.com"
         }
     ],
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "Prime\\": ""
