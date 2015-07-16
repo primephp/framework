@@ -8,16 +8,21 @@
         }
     ],
     "license": "MIT",
-    "autoload": {
-        "psr-4": {
-            "Prime\\": ""
-        }
+    "support": {
+        "issues": "https://github.com/laravel/framework/issues",
+        "source": "https://github.com/laravel/framework"
     },
     "require": {
         "php": ">=5.5.0",
-        "symfony/http-kernel": "2.7.x",
-        "symfony/routing": "2.7.x",
-        "symfony/console": "2.7.x"
+        "ext-mbstring": "*",
+        "symfony/http-kernel": "2.7.*",
+        "symfony/routing": "2.7.*",
+        "symfony/console": "2.7.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Prime\\": "src/Prime/"
+        }
     },
     "minimum-stability": "dev"
 }
