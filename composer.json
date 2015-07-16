@@ -15,9 +15,9 @@
     },
     "require": {
         "php": ">=5.5.0",
-        "symfony/http-kernel": "3.x",
-        "symfony/routing": "3.x",
-        "symfony/console": "3.x"
+        "symfony/http-kernel": "2.7.x",
+        "symfony/routing": "2.7.x"..,
+        "symfony/console": "2.7.x"
     },
     "minimum-stability": "dev"
 }
