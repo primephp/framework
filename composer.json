@@ -9,8 +9,8 @@
     ],
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/laravel/framework/issues",
-        "source": "https://github.com/laravel/framework"
+        "issues": "https://github.com/primephp/framework/issues",
+        "source": "https://github.com/primephp/framework"
     },
     "require": {
         "php": ">=5.5.0",

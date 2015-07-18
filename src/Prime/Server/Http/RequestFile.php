@@ -9,7 +9,7 @@ use Prime\Pattern\Singleton\ISingleton;
 /**
  * Descrição de RequestFile
  * @name RequestFile
- * @package Prime\Http
+ * @package Prime\Server\Http
  * @version 1.0
  * @create 21/06/2012
  * @access public

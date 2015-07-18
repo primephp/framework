@@ -2,7 +2,7 @@
 
 namespace Prime\Server\Http;
 
-use Prime\Pattern\Singleton\ISingleton;
+use Symfony\Component\HttpFoundation\Request as BaseRequest;
 
 /**
  * Descrição da Classe Request
@@ -13,97 +13,13 @@ use Prime\Pattern\Singleton\ISingleton;
  * @since 12/09/2011
  * @access public
  */
-class Request implements ISingleton {
+class Request extends BaseRequest {
 
     /**
-     *
-     * @var Request
+     * Retorna TRUE se for uma requisição ajax
+     * @return type
      */
-    private static $_instance;
-    private $_vars;
-
-    /**
-     * 
-     */
-    private function __construct() {
-        if (filter_input_array(INPUT_GET)) {
-            foreach (filter_input_array(INPUT_GET) as $key => $value) {
-                $this->_vars[$key] = $value;
-            }
-        }
-
-        if (filter_input_array(INPUT_POST)) {
-            foreach (filter_input_array(INPUT_POST) as $key => $value) {
-                $this->_vars[$key] = $value;
-            }
-        }
-
-        if ($_FILES) {
-            foreach ($_FILES as $key => $value) {
-                $this->_vars[$key] = $value;
-            }
-        }
+    public function isAjax() {
+        return parent::isXmlHttpRequest();
     }
-
-    /**
-     * Adiciona um parâmetro ao objeto de requisição
-     * @param string $key
-     * @param string $value
-     */
-    public function addParameter($key, $value) {
-        $this->_vars[$key] = $value;
-    }
-
-    /**
-     * Retorna uma instância de objeto do tipo Request
-     * @return Request
-     */
-    public static function getInstance() {
-        if (is_null(self::$_instance)) {
-            self::$_instance = new Request();
-        }
-        return self::$_instance;
-    }
-
-    /**
-     * Retorna o valor da variável de acordo com o nome passdo
-     * @param string $name Nome da Variável 
-     */
-    public function getParameter($name) {
-        if (isset($this->_vars[$name])) {
-            return $this->_vars[$name];
-        } else {
-            return FALSE;
-        }
-    }
-
-    /**
-     * Retorna todos os Parâmetros no formato de
-     * um array 
-     * @return array 
-     */
-    public function getVariables() {
-        return $this->_vars;
-    }
-
-    /**
-     * Retorna todas as variáveis armazenadas no formato
-     * URL
-     */
-    public function getQueryString() {
-        return http_build_query($this->_vars);
-    }
-
-    /**
-     * Retorna o total de parâmetros recuperados
-     * @return int 
-     */
-    public function getRequestSize() {
-        return count($this->_vars);
-    }
-
-    public static function isAjax() {
-        return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
-    }
-
 }
