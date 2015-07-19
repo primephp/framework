@@ -89,5 +89,13 @@ class Kernel {
 
         $kernel->terminate($this->getRequest(), $response);
     }
+    
+    public function database(){
+        
+    }
+    
+    public function view(){
+        
+    }
 
 }

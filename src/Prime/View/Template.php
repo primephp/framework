@@ -14,7 +14,7 @@ use App\Config\AppConfig;
  * @since 09/10/2011
  * @access public
  */
-class Template implements IView {
+class Template implements ViewInterface {
 
     private $content;
     private $changeList = array();

@@ -6,9 +6,9 @@ use Prime\DataTypes\Datetime,
     Prime\Html\Base\HTMLImage,
     Prime\Html\Style\HTMLStyle,
     Prime\Html\Table\HTMLTable,
-    Prime\View\IView;
+    Prime\View\ViewInterface;
 
-class HTMLStatusBar implements IView {
+class HTMLStatusBar implements ViewInterface {
 
     private $container;
     private $items;
