@@ -3,7 +3,7 @@
 namespace Prime\Bootstrap\Media;
 
 use Prime\Html\Base\HTMLDiv,
-    Prime\View\IView;
+    Prime\View\ViewInterface;
 
 /**
  * Descrição de Media
@@ -41,7 +41,7 @@ class Media extends HTMLDiv {
     protected function getText() {
         $text = '';
         foreach ($this->text as $value) {
-            if ($value instanceof IView) {
+            if ($value instanceof ViewInterface) {
                 $text .= $value->getOutput();
             } else {
                 $text .= (string) $value;
@@ -69,10 +69,10 @@ class Media extends HTMLDiv {
 
     /**
      * Define o texto a ser utilizado como cabeçalho do Media
-     * @param IView $text
+     * @param ViewInterface $text
      */
     public function setHeading($text) {
-        if ($text instanceof IView) {
+        if ($text instanceof ViewInterface) {
             $this->heading = $text->getOutput();
         } else {
             $this->heading = (string) $text;

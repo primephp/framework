@@ -9,7 +9,7 @@ use App\Config\AppConfig,
     Prime\Html\Base\HTMLImage,
     Prime\Html\Base\HTMLSpan,
     Prime\Html\Interfaces\IHTMLWindow,
-    Prime\View\IView;
+    Prime\View\ViewInterface;
 
 /**
  * Descrição de HTMLWindow
@@ -72,7 +72,7 @@ class HTMLWindow implements IHTMLWindow {
     private function getContent() {
         $content = '';
         foreach ($this->content as $child) {
-            if ($child instanceof IView) {
+            if ($child instanceof ViewInterface) {
                 $content .= $child->getOutput();
             } else {
                 $content .= $child;

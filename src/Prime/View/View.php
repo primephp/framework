@@ -8,7 +8,7 @@ namespace Prime\View;
  *
  * @author tom
  */
-abstract class View implements IView {
+abstract class View implements ViewInterface {
 
     /**
      * Armazena os conteúdos adicionados dentro de um array
@@ -31,7 +31,7 @@ abstract class View implements IView {
     protected function getContents(){
         $content = '';
         foreach ($this->content as $value) {
-            if ($value instanceof IView) {
+            if ($value instanceof ViewInterface) {
                 $content .= $value->getOutput();
             } else {
                 $content .= $value;

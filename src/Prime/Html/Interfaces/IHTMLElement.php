@@ -2,13 +2,13 @@
 
 namespace Prime\Html\Interfaces;
 
-use Prime\View\IView;
+use Prime\View\ViewInterface;
 
 /**
  * Descrição da Interface IHTMLElement
  * @author tom
  */
-interface IHTMLElement extends IView {
+interface IHTMLElement extends ViewInterface {
 
     public function setAttribute($name, $value);
 

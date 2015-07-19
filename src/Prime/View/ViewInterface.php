@@ -2,12 +2,14 @@
 
 namespace Prime\View;
 
+use Prime\Io\PrintableInterface;
+
 /**
  * Defini a Interface para as classes de Visualização
  * @author tom
  * @package Prime\View
  */
-interface IView extends IPrintable {
+interface ViewInterface extends PrintableInterface {
 
     /**
      * Retorna o Conteúdo da imprimível na tela 
