@@ -20,7 +20,7 @@
         "symfony/console": "2.7.*",
         "twig/twig": "v1.18.2",
         "smottt/wideimage": "*",
-        "phpmailer/phpmailer": "5.2.*"
+        "phpmailer/phpmailer": "5.2.*" 
     },
     "autoload": {
         "psr-4": {
