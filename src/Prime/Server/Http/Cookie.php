@@ -2,7 +2,7 @@
 
 namespace Prime\Server\Http;
 
-use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Cookie as BaseCookie;
 
 /**
  * Descrição da Classe Cookie
@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Cookie;
  * @package Prime\Server\Http
  * @author TomSailor <www.eltonluiz@hotmail.com> 
  */
-class Cookie extends Cookie{
-
+class Cookie extends BaseCookie {
+    
 }
-

@@ -36,13 +36,14 @@ final class Connection {
     public static function open($conn_var) {
         if (is_string($conn_var)) {
             $var = explode(':', $conn_var);
-
+            
+            $conn_var = array();
             $conn_var['type'] = $var[0];
             $conn_var['host'] = $var[1];
             $conn_var['user'] = $var[2];
             $conn_var['pass'] = $var[3];
             $conn_var['name'] = $var[4];
-            $conn_var['port'] = $var[5] || NULL;
+            $conn_var['port'] = isset($var[5]) ? $var[5] : NULL;
         }
         if (!is_array($conn_var)) {
             trigger_error('Parâmetro inválido. ' . __METHOD__, E_USER_ERROR);
@@ -59,7 +60,9 @@ final class Connection {
         // descobre qual o tipo (driver) de banco de dados a ser utilizado
         switch ($type) {
             case 'pgsql':
-                $port = $port ? $port : '5432';
+                if(is_null($port)){
+                    $port = '5432';
+                }
                 $conn = new PDO("pgsql:dbname={$name}; user={$user}; password={$pass};
                         host=$host;port={$port}");
                 break;

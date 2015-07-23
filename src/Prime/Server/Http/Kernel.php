@@ -17,7 +17,7 @@ use Symfony\Component\Routing\RequestContext;
  * @package Prime\Server\Http
  * @createAt 16/07/2015
  */
-class Kernel { 
+class Kernel {
 
     /**
      *
@@ -36,7 +36,7 @@ class Kernel {
      * @var EventDispatcher 
      */
     private $dispatcher;
-    
+
     /**
      * Store UrlMatcher object
      * @var UrlMatcher
@@ -89,5 +89,5 @@ class Kernel {
 
         $kernel->terminate($this->getRequest(), $response);
     }
-    
+
 }
