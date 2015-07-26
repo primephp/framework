@@ -26,7 +26,7 @@
 
 namespace Prime\Console;
 
-use \Symfony\Component\Console\Command\Command as BaseCommand;
+use \Symfony\Component\Console\Command\Command as SymfonyCommand;
 
 /**
  * Classe Command
@@ -35,12 +35,12 @@ use \Symfony\Component\Console\Command\Command as BaseCommand;
  * @since 23/07/2015
  * @author TomSailor
  */
-class Command extends BaseCommand {
+class BaseCommand extends SymfonyCommand {
 
     /**
      * Define uma ajuda par ao comando
      * @param string $help
-     * @return Command
+     * @return BaseCommand
      */
     public function setHelp($help) {
         parent::setHelp($help);

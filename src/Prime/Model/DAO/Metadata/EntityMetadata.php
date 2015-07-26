@@ -86,9 +86,13 @@ class EntityMetadata {
 
         $conn = $this->conn;
         $statement = $conn->query($query);
-
+        
+        if(!$statement){
+            throw new \UnexpectedValueException('Entidade Relacional não encontrada no banco de dados.');
+        }
+        
         $this->totalColumns = $statement->columnCount();
-        $columns = array();
+
         for ($index = 0; $index < $this->totalColumns; $index++) {
             $column = array();
             $meta = $statement->getColumnMeta($index);

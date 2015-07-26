@@ -8,7 +8,7 @@ namespace Prime\Controller;
  * @author TomSailor
  * Define a interface para o tipo Controller
  */
-interface IController {
+interface ControllerInterface {
 
     /**
      * DEVEM SER DEFINIDAS AS CONSTANTES COM OS NOMES DAS ACTIONS DEFINIDAS
@@ -22,11 +22,11 @@ interface IController {
      * Método a ser executado quando a inicialização
      * do Controller
      */
-    public function initialize();
+    protected function initialize();
 
     /**
      * Método a ser executado quando da finalização 
      * do Controller
      */
-    public function finalize();
+    protected function finalize();
 }

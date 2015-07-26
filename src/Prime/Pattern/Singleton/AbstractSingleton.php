@@ -24,27 +24,60 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Console;
-
-use Symfony\Component\Console\Application as ConsoleApplication;
+namespace Prime\Pattern\Singleton;
 
 /**
- * Descrição da Classe Application
+ * Descrição da Classe AbstractSingleton
  *
- * @name Application
- * @package Prime\Console
- * @createAt 22/07/2015
+ * @name AbstractSingleton
+ * @package Prime\Pattern\Singleton
+ * @createAt 24/07/2015
  * @author Elton Luiz
  */
-class Application extends ConsoleApplication {
+class AbstractSingleton {
 
-    public function __construct($name = 'PrimePHP Application', $version = '0.1alpha') {
-        parent::__construct($name, $version);
-        $this->setPrimeCommands();
+    /**
+     * Retorna uma instância única de uma classe.
+     *
+     * @staticvar Singleton $instance A instância única dessa classe.
+     *
+     * @return Singleton A Instância única.
+     */
+    public static function getInstance() {
+        static $instance = null;
+        if (null === $instance) {
+            $instance = new static();
+        }
+
+        return $instance;
     }
 
-    public function setPrimeCommands() {
-        $this->add(new Command\CreateDaoCommand());
+    /**
+     * Construtor do tipo protegido previne que uma nova instância da
+     * Classe seja criada através do operador `new` de fora dessa classe.
+     */
+    protected function __construct() {
+        
+    }
+
+    /**
+     * Método clone do tipo privado previne a clonagem dessa instância
+     * da classe
+     *
+     * @return void
+     */
+    private function __clone() {
+        
+    }
+
+    /**
+     * Método unserialize do tipo privado para prevenir a desserialização
+     * da instância dessa classe.
+     *
+     * @return void
+     */
+    private function __wakeup() {
+        
     }
 
 }

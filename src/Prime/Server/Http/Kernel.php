@@ -2,6 +2,7 @@
 
 namespace Prime\Server\Http;
 
+use Prime\Server\Listener\KernelExceptionListener;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpKernel\Controller\ControllerResolver;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
@@ -51,6 +52,7 @@ class Kernel {
 
         $this->dispatcher = new EventDispatcher();
         $this->dispatcher->addSubscriber(new RouterListener($this->matcher));
+        $this->dispatcher->addSubscriber(new KernelExceptionListener());
     }
 
     /**
