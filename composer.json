@@ -19,8 +19,6 @@
         "symfony/routing": "2.7.*",
         "symfony/console": "2.7.*",
         "twig/twig": "v1.18.2",
-        "smottt/wideimage": "*",
-        "phpmailer/phpmailer": "5.2.*",
         "monolog/monolog": "1.15.*"
     },
     "autoload": {
