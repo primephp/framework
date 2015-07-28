@@ -17,16 +17,4 @@ interface ControllerInterface {
     const ACTION_INDEX = 'index';
 
     public function indexAction();
-
-    /**
-     * Método a ser executado quando a inicialização
-     * do Controller
-     */
-    protected function initialize();
-
-    /**
-     * Método a ser executado quando da finalização 
-     * do Controller
-     */
-    protected function finalize();
 }

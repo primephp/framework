@@ -19,12 +19,6 @@ final class Transaction {
      * @var PDOStatement
      */
     private static $conn;
-
-    /**
-     *
-     * @var TLogger
-     */
-    private static $logger; // objeto de LOG
     private static $sqlStatement;
 
     /**
@@ -46,11 +40,11 @@ final class Transaction {
         // abre uma conexão e armazena na propriedade Estática $conn
         if (empty(self::$conn)) {
             self::$conn = Connection::open($database);
-            // inicia a transação
-            self::$conn->beginTransaction();
-            // desliga o log de SQL
-            self::$logger = NULL;
         }
+        // inicia a transação
+        self::$conn->beginTransaction();
+        // desliga o log de SQL
+        self::$logger = NULL;
         return self::$conn;
     }
 
@@ -88,34 +82,8 @@ final class Transaction {
         }
     }
 
-    /**
-     * método setLogger()
-     * define qual estratÃ©gia (algoritmo de LOG será usado)
-     */
-    public static function setLogger(TLogger $logger) {
-        self::$logger = $logger;
-    }
-
-    /**
-     * método log()
-     * armazena uma mensagem no arquivo de LOG
-     * baseada na estratégia ($logger) atual
-     */
-    public static function log($message) {
-        // verifica existe um logger
-        if (self::$logger) {
-            self::$logger->write($message);
-        }
-        self::$sqlStatement = $message;
-    }
-
-    public static function getLog() {
-        return self::$logger;
-    }
-
     public static function getSqlStatement() {
         return self::$sqlStatement;
     }
 
 }
-

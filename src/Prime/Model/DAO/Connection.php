@@ -2,8 +2,8 @@
 
 namespace Prime\Model\DAO;
 
-use Exception,
-    PDO;
+use PDO;
+use PDOException;
 
 /**
  * classe TConnection
@@ -88,7 +88,7 @@ final class Connection {
         }
 
         if (!is_object($conn)) {
-            throw new \PDOException('Falha na conexao com a base de dados.');
+            throw new PDOException('Falha na conexao com a base de dados.');
         }
 
         // define para que o PDO lance exceções na ocorrência de erros
@@ -116,7 +116,7 @@ final class Connection {
         if (!empty(self::$conn)) {
             return self::$conn;
         } else {
-            throw new Exception('Não há conexão ativa');
+            throw new PDOException('Não há conexão ativa');
         }
     }
 

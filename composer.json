@@ -15,9 +15,10 @@
     "require": {
         "php": ">=5.5.0",
         "ext-mbstring": "*",
-        "symfony/http-kernel": "2.7.*",
-        "symfony/routing": "2.7.*",
-        "symfony/console": "2.7.*",
+        "symfony/http-kernel": "^2.7",
+        "symfony/routing": "^2.7",
+        "symfony/filesystem": "^2.7",
+        "symfony/console": "^2.7",
         "twig/twig": "v1.18.2",
         "monolog/monolog": "1.15.*"
     },

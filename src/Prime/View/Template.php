@@ -57,7 +57,7 @@ class Template {
 
     public function __construct($path = null, $index = null) {
         $this->setPath($path, $index);
-        $this->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'error', 'error');
+        $this->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'prime', 'prime');
     }
 
     public function setPath($path, $index = null) {
