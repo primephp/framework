@@ -164,7 +164,7 @@ abstract class Model implements IModel {
         $sql->setEntity($this->getEntity());
         $sql->setCriteria($criteria);
 
-        $conn = $this->getTransaction();
+        $conn = $this->getConnection();
 
         Transaction::log($sql->getStatement());
         return $conn->query($sql->getStatement());
@@ -219,7 +219,7 @@ abstract class Model implements IModel {
             $sql = $this->update();
         }
 
-        $conn = $this->getTransaction();
+        $conn = $this->getConnection();
         Transaction::log($sql->getStatement());
         return $conn->exec($sql->getStatement());
     }
@@ -291,7 +291,7 @@ abstract class Model implements IModel {
         $sql->setEntity($this->getEntity());
         $sql->setCriteria(new SQLFilter($this->getPrimaryKey(), SQLFilter::IS_EQUAL, $id));
 
-        $conn = $this->getTransaction();
+        $conn = $this->getConnection();
         Transaction::log($sql->getStatement());
         return $conn->exec($sql->getStatement());
     }
@@ -301,7 +301,7 @@ abstract class Model implements IModel {
      * @return str
      */
     public function getEntity() {
-        $class = get_class($this);
+        $class = $this->getClass();
         return constant("{$class}::TABLENAME");
     }
 
@@ -310,8 +310,8 @@ abstract class Model implements IModel {
      * @return PDO
      * @throws Exception
      */
-    protected function getTransaction() {
-        if ($conn = Transaction::get()) {
+    protected function getConnection() {
+        if ($conn = Connection::get()) {
             return $conn;
         } else {
             throw new PDOException('Não há transação ativa em ' . $this->getClass());
@@ -352,7 +352,7 @@ abstract class Model implements IModel {
             $sq1->addColumn('max(' . $this->getPrimaryKey() . ') as ' . $this->getPrimaryKey());
             $sq1->setEntity($this->getEntity());
             Transaction::log($sq1->getStatement());
-            $resu1t = $this->getTransaction()->query($sq1->getStatement());
+            $resu1t = $this->getConnection()->query($sq1->getStatement());
             $row = $resu1t->fetch();
             return ((int) $row[0]) + 1;
         }

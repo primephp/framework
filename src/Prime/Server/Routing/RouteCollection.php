@@ -36,29 +36,54 @@ use Symfony\Component\Routing\RouteCollection as BaseCollection;
  * @createAt 18/07/2015
  * @author Elton Luiz
  */
-class RouteCollection extends BaseCollection{
-    
-    public function setRoute($path, $callable){
+class RouteCollection extends BaseCollection {
+
+    /**
+     * Define uma rota para os métodos http GET, POST e HEAD
+     * Podendo aceitar coringas
+     * @param string $path o caminho da rota ex. /user/profile/{id}
+     * @param callable $callable o callable que será chamado para a rota 
+     * definida
+     * @return \Prime\Server\Routing\Route
+     */
+    public function setRoute($path, $callable) {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods(array('POST', 'GET', 'HEAD'));
         $this->add($route->getName(), $route);
         return $route;
     }
-    
-    public function setPost($path, $callable){
+
+    /**
+     * Define uma rota para o método http POST
+     * Podendo aceitar coringas
+     * @param string $path o caminho da rota ex. /user/save/{id}
+     * @param callable $callable o callable que será chamado para a rota 
+     * definida
+     * @return \Prime\Server\Routing\Route
+     */
+    public function setPost($path, $callable) {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods('POST');
         $this->add($route->getName(), $route);
         return $route;
     }
-    
-    public function setGet($path, $callable){
+
+    /**
+     * Define uma rota para o método http GET
+     * Podendo aceitar coringas
+     * @param string $path o caminho da rota ex. /user/profile/{id}
+     * @param callable $callable o callable que será chamado para a rota 
+     * definida
+     * @return \Prime\Server\Routing\Route
+     */
+    public function setGet($path, $callable) {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods('GET');
         $this->add($route->getName(), $route);
         return $route;
     }
+
 }

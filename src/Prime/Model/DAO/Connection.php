@@ -20,7 +20,7 @@ final class Connection {
 
     /**
      * método __construct()
-     * não existirão instâncias de TConnection, por isto estamos marcando-o como private
+     * não existirão instâncias de Connection, por isto estamos marcando-o como private
      */
     private function __construct() {
         

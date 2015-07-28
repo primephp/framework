@@ -11,20 +11,21 @@ namespace Prime\Pattern\Singleton;
  */
 trait SingletonTrait {
 
+    static $instance = null;
+
     /**
      * Retorna uma instância única de uma classe.
      *
      * @staticvar Singleton $instance A instância única dessa classe.
      *
-     * @return Singleton A Instância única.
+     * @return __CLASS__ A Instância única.
      */
     public static function getInstance() {
-        static $instance = null;
-        if (null === $instance) {
-            $instance = new static();
+        if(is_null(self::$instance)){
+            self::$instance = new static();
         }
 
-        return $instance;
+        return self::$instance;
     }
 
     /**
