@@ -45,6 +45,7 @@ class Application extends ConsoleApplication {
 
     public function setPrimeCommands() {
         $this->add(new Command\CreateDaoCommand());
+        $this->add(new Command\CreateApplicationCommand());
     }
 
 }
