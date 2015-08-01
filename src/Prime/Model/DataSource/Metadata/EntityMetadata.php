@@ -24,15 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DAO\Metadata;
+namespace Prime\Model\DataSource\Metadata;
 
 use \PDO,
-    \Prime\Model\DAO\Connection;
+    \Prime\Model\DataSource\Connection;
 
 /**
  * Classe Metadata
  * @name Metadata
- * @package Prime\Model\DAO
+ * @package Prime\Model\DataSource
  * @since 22/07/2015
  * @author TomSailor
  */

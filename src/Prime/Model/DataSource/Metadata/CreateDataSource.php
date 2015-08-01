@@ -24,18 +24,18 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DAO\Metadata;
+namespace Prime\Model\DataSource\Metadata;
 
-use \Prime\Model\DAO\Model;
+use \Prime\Model\DataSource\Model;
 
 /**
- * Classe CreateDAO
- * @name CreateDAO
- * @package Prime\Model\DAO\Metadata
+ * Classe CreateDataSource
+ * @name CreateDataSource
+ * @package Prime\Model\DataSource\Metadata
  * @since 22/07/2015
  * @author TomSailor
  */
-class CreateDAO {
+class CreateDataSource {
 
     private $entity;
     private $metadata;
@@ -82,7 +82,7 @@ class CreateDAO {
                 $uCase .= ucfirst($fragment);
             }
         }
-        return $uCase . 'DAO';
+        return $uCase . 'DataSource';
     }
 
     private function getHeader() {

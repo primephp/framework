@@ -27,22 +27,22 @@
 namespace Prime\Console\Command;
 
 use Prime\Console\BaseCommand;
-use Prime\Model\DAO\Connection;
-use Prime\Model\DAO\Metadata\CreateDAO;
+use Prime\Model\DataSource\Connection;
+use Prime\Model\DataSource\Metadata\CreateDataSource;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Descrição da Classe CreateDaoCommand
+ * Descrição da Classe CreateDataSourceCommand
  *
- * @name CreateDaoCommand
+ * @name CreateDataSourceCommand
  * @package Prime\Console
  * @createAt 22/07/2015
  * @author Elton Luiz
  */
-class CreateDaoCommand extends BaseCommand {
+class CreateDataSourceCommand extends BaseCommand {
 
     private function isConnected() {
         if (!Connection::get()) {
@@ -51,20 +51,20 @@ class CreateDaoCommand extends BaseCommand {
     }
 
     protected function configure() {
-        $this->setName('create:dao')
-                ->setProcessTitle('DAO Create')
+        $this->setName('create:datasource')
+                ->setProcessTitle('DataSource Create')
                 ->setDescription('Cria um objeto para acesso aos dados de uma tabela do banco de dados da aplicação')
                 ->addArgument(
-                        'entity', InputArgument::REQUIRED, 'O nome da tabela para qual deve ser criado o DAO')
-                ->setHelp('console create:dao {NomeDaTabela} para criar uma classe de acesso ao banco de dados');
+                        'entity', InputArgument::REQUIRED, 'O nome da tabela para qual deve ser criado o DataSource')
+                ->setHelp('console create:DataSource {NomeDaTabela} para criar uma classe de acesso ao banco de dados');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $this->isConnected();
         $entity = $input->getArgument('entity');
 
-        $dao = new CreateDAO($entity);
-        $output->write($dao->getOutput());
+        $DataSource = new CreateDataSource($entity);
+        $output->write($DataSource->getOutput());
     }
 
 }

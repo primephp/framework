@@ -1,6 +1,6 @@
 <?php
 
-namespace Prime\Model\DAO;
+namespace Prime\Model\DataSource;
 
 use Exception;
 use PDO;
@@ -20,7 +20,7 @@ use Prime\Model\SQL\SQLUpdate;
  * Esta classe provê os métodos necessários para persistir e
  * recuperar objetos da base de dados (Active Record)
  * @name Record
- * @package Prime\Model\DAO
+ * @package Prime\Model\DataSource
  * @version 2.0
  * @author Pablo Daglio / TomSailor
  * @since 18/08/2011

@@ -24,12 +24,12 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DAO\Metadata;
+namespace Prime\Model\DataSource\Metadata;
 
 /**
  * Classe CreateSetterGetter
  * @name CreateSetterGetter
- * @package Prime\Model\DAO\Metadata
+ * @package Prime\Model\DataSource\Metadata
  * @since 22/07/2015
  * @author devel4
  */

@@ -63,6 +63,9 @@ class CreateApplicationCommand extends BaseCommand {
         $this->createSkeleton();
     }
 
+    /**
+     * Cria a estrutura de diretórios utilizados na aplicação
+     */
     private function createSkeleton() {
         $fileSystem = Filesystem::getInstance();
 

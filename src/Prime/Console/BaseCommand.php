@@ -47,5 +47,4 @@ class BaseCommand extends SymfonyCommand {
         return $this;
     }
 
-    
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Prime\Model\DAO;
+namespace Prime\Model\DataSource;
 
 use Prime\Model\SQL\SQLDelete,
     Prime\Model\SQL\SQLExpression,
@@ -11,7 +11,7 @@ use Prime\Model\SQL\SQLDelete,
 /**
  * Classe Repository
  * @name Repository
- * @package Prime\Model\DAO
+ * @package Prime\Model\DataSource
  * esta classe provê os métodos necessários para manipular coleções de objetos.
  */
 final class Repository {

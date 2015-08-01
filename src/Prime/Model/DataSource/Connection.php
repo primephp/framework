@@ -1,13 +1,13 @@
 <?php
 
-namespace Prime\Model\DAO;
+namespace Prime\Model\DataSource;
 
 use PDO;
 use PDOException;
 
 /**
  * classe TConnection
- * @package Prime\Model\DAO
+ * @package Prime\Model\DataSource
  * gerencia conexões com bancos de dados através de arquivos de configuração.
  */
 final class Connection {
