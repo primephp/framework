@@ -59,22 +59,22 @@ class KernelExceptionListener implements EventSubscriberInterface {
         $exception = $event->getException();
 
         if ($exception instanceof UnauthorizedHttpException) {
-            $template = new Template('@error/401.twig');
+            $template = new Template('@prime/401.twig');
             $event->setResponse(new Response($template->getOutput(), 401));
         } elseif ($exception instanceof AccessDeniedHttpException) {
-            $template = new Template('@error/403.twig');
+            $template = new Template('@prime/403.twig');
             $event->setResponse(new Response($template->getOutput(), 403));
         } elseif ($exception instanceof NotFoundHttpException) {
-            $template = new Template('@error/404.twig');
+            $template = new Template('@prime/404.twig');
             $event->setResponse(new Response($template->getOutput(), 404));
         } elseif ($exception instanceof ServiceUnavailableHttpException) {
-            $template = new Template('@error/503.twig');
+            $template = new Template('@prime/503.twig');
             $event->setResponse(new Response($template->getOutput(), 503));
         } elseif ($exception instanceof HttpException) {
-            $template = new Template('@error/418.twig');
+            $template = new Template('@prime/418.twig');
             $event->setResponse(new Response($template->getOutput(), 418));
         } else {
-            $template = new Template('@error/500.twig');
+            $template = new Template('@prime/500.twig');
             $event->setResponse(new Response($template->getOutput(), 500));
         }
     }
