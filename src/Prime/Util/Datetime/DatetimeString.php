@@ -20,7 +20,7 @@ class DatetimeString {
 	 * 
 	 * @var array
 	 */
-	protected $days = array (
+	protected $days =  [
 			"Domingo",
 			"Segunda",
 			"Terça",
@@ -28,14 +28,14 @@ class DatetimeString {
 			"Quinta",
 			"Sexta",
 			"Sábado" 
-	);
+	];
 	
 	/**
 	 * Lista os nomes dos meses do ano
 	 * 
 	 * @var array
 	 */
-	protected $months = array (
+	protected $months =  [
 			"",
 			"Janeiro",
 			"Fevereiro",
@@ -49,14 +49,14 @@ class DatetimeString {
 			"Outubro",
 			"Novembro",
 			"Dezembro" 
-	);
+	];
 	
 	/**
 	 * Total de dias de cada mês do ano
 	 * 
 	 * @var type
 	 */
-	protected $totalDays = array (
+	protected $totalDays =  [
 			0,
 			31,
 			28,
@@ -70,11 +70,11 @@ class DatetimeString {
 			31,
 			30,
 			31 
-	);
-	protected $locale = array (
+	];
+	protected $locale =  [
 			"en_US",
 			"pt_BR" 
-	);
+	];
 	private $year;
 	private $month;
 	private $date;
@@ -252,7 +252,7 @@ class DatetimeString {
 		return $this->startTimeStamp ['mday'];
 	}
 	public function getDayName() {
-		$names = array (
+		$names =  [
 				1 => 'primeiro',
 				2 => 'dois',
 				3 => 'três',
@@ -284,7 +284,7 @@ class DatetimeString {
 				29 => 'vinte e nove',
 				30 => 'trinta',
 				31 => 'trinta e um' 
-		);
+		];
 		
 		return $names [$this->startTimeStamp ['mday']];
 	}

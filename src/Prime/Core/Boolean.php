@@ -36,10 +36,10 @@ class Boolean extends Object {
     }
 
     public function setValue($value) {
-        $false = array('false', 'False', 'FALSE', 'no', 'No', 'n', 'N', '0', 'off',
-            'Off', 'OFF', false, 0, null);
-        $true = array('true', 'True', 'TRUE', 'yes', 'Yes', 'y', 'Y', '1',
-            'on', 'On', 'ON', true, 1);
+        $false = ['false', 'False', 'FALSE', 'no', 'No', 'n', 'N', '0', 'off',
+            'Off', 'OFF', false, 0, null];
+        $true = ['true', 'True', 'TRUE', 'yes', 'Yes', 'y', 'Y', '1',
+            'on', 'On', 'ON', true, 1];
         if (in_array($value, $false, TRUE)) {
             $bool = FALSE;
         } else

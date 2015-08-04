@@ -69,7 +69,7 @@ class CreateApplicationCommand extends BaseCommand {
     private function createSkeleton() {
         $fileSystem = Filesystem::getInstance();
 
-        $fileSystem->mkdir(array(
+        $fileSystem->mkdir([
             'app/Modules',
             'app/Console',
             'app/DataSource',
@@ -81,7 +81,7 @@ class CreateApplicationCommand extends BaseCommand {
             'data/log',
             'data/cache',
             'data/doc'
-                ), 2770);
+                ], 2770);
         $fileSystem->mirror(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config', $this->dirBase . DIRECTORY_SEPARATOR . 'config');
     }
 

@@ -75,7 +75,7 @@ final class String extends Object {
      */
     private function countChars($input) {
         $l = mb_strlen($input, $this->getEncoding());
-        $unique = array();
+        $unique = [];
         for ($i = 0; $i < $l; $i++) {
             $char = mb_substr($input, $i, 1, $this->getEncoding());
             if (!array_key_exists($char, $unique)) {
@@ -269,7 +269,7 @@ final class String extends Object {
     public function toArray() {
         $string = $this->getValue();
         $strlen = mb_strlen($string);
-        $array = array();
+        $array = [];
         while ($strlen) {
             $array[] = mb_substr($string, 0, 1, $this->getEncoding());
             $string = mb_substr($string, 1, $strlen, $this->getEncoding());

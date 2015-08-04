@@ -107,7 +107,7 @@ class Index extends HTMLPage {
 
         $clear = new HTMLDiv("clear");
 
-        $div->appendChild(array($borda, $clear));
+        $div->appendChild([$borda, $clear]);
 
         $this->topHeader = $div;
 
@@ -136,7 +136,7 @@ class Index extends HTMLPage {
         $leftMenu = $this->topLeftMenu();
         $rightMenu = $this->topRightMenu();
 
-        $div->appendChild(array($leftMenu, $rightMenu));
+        $div->appendChild([$leftMenu, $rightMenu]);
 
         $this->topMenu = $div;
 

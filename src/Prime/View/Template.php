@@ -76,7 +76,7 @@ class Template {
         return self::$loader;
     }
 
-    public static function initEnviroment(array $env = array()) {
+    public static function initEnviroment(array $env = []) {
         if (is_null(self::$env)) {
             self::$env = new Twig_Environment(self::initLoader(), $env);
         }

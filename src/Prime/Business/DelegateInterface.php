@@ -11,7 +11,7 @@ namespace Prime\Business;
  * @access public
  * @author Tom Sailor
  */
-interface IDelegate {
+interface DelegateInterface {
 
     public function delegate();
 }

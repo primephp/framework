@@ -20,7 +20,7 @@ use Prime\Util\Interfaces\ICollection;
  */
 abstract class AbstractCollection implements ICollection {
 
-    protected $_collection = array();
+    protected $_collection = [];
 
     /**
      * Cria uma coleção a partir de um array passado como parâmetro
@@ -82,7 +82,7 @@ abstract class AbstractCollection implements ICollection {
     }
 
     public function clear() {
-        $this->_collection = array();
+        $this->_collection = [];
     }
 
     public function contains($o) {

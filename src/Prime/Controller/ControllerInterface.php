@@ -9,11 +9,12 @@ namespace Prime\Controller;
  * Define a interface para o tipo Controller
  */
 interface ControllerInterface {
+
     /**
      * DEVEM SER DEFINIDAS AS CONSTANTES COM OS NOMES DAS ACTIONS DEFINIDAS
      * NO CONTROLLER PARA A FACILITAÇÃO DO DESENVOLVIMENTO
      */
     const ACTION_INDEX = 'index';
 
-    public function indexAction();
+    public function dispatch();
 }

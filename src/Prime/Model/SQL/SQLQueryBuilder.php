@@ -50,8 +50,8 @@ class SQLQueryBuilder {
      *
      * @var array
      */
-    protected $columns = array();
-    protected $values = array();
+    protected $columns = [];
+    protected $values = [];
 
     /**
      * Constructor - Defines the query type

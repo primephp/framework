@@ -27,9 +27,9 @@ class SQLCriteria extends SQLExpression {
     }
 
     public function reset() {
-        $this->expressions = array();
-        $this->operators = array();
-        $this->properties = array(self::GROUP_BY => NULL, self::LIMIT => NULL, self::OFFSET => NULL, self::ORDER_BY => NULL);
+        $this->expressions = [];
+        $this->operators = [];
+        $this->properties = [self::GROUP_BY => NULL, self::LIMIT => NULL, self::OFFSET => NULL, self::ORDER_BY => NULL];
     }
 
     /**

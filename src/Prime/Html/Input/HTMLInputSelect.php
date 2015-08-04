@@ -10,8 +10,8 @@ use Prime\Util\Interfaces\IList;
 
 class HTMLInputSelect extends HTMLInput {
 
-    private $options = array();
-    private $selection = array();
+    private $options = [];
+    private $selection = [];
 
     /**
      *

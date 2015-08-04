@@ -22,7 +22,7 @@ class HTMLList extends HTMLElement {
     const LS_DISC = 'disc';
     const LS_NONE = 'none';
 
-    private $itens = array();
+    private $itens = [];
 
     public function __construct($type = HTMLList::T_UNORDERED, $listStyle = HTMLList::LS_NONE) {
         if ($type == self::T_ORDERED) {

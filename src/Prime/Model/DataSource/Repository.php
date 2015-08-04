@@ -82,7 +82,7 @@ final class Repository {
 
             // executa a consulta no banco de dados
             $result = $conn->query($sql->getStatement());
-            $results = array();
+            $results = [];
 
             if ($result) {
                 // percorre os resultados da consulta, retornando um objeto
@@ -135,7 +135,7 @@ final class Repository {
      * @param array $columns Array associativo com o nome da coluna e seus valores
      * @return int $num Valores de linhas afetadas pela instrução 
      */
-    public function update(SQLExpression $criteria, $columns = array()) {
+    public function update(SQLExpression $criteria, $columns = []) {
         $sql = new SQLUpdate();
         $sql->setEntity(constant($this->class . '::TABLENAME'));
         $sql->setCriteria($criteria);

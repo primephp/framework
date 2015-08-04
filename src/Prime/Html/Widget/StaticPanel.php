@@ -20,7 +20,7 @@ class StaticPanel extends HTMLDiv {
     private $title;
     private $titleText = "Mensagem";
     private $panel;
-    private $footer = array();
+    private $footer = [];
 
     public function __construct($nameId = null) {
         parent::__construct($nameId);

@@ -15,8 +15,8 @@ use Prime\Html\Base\HTMLElement;
  */
 abstract class HTMLInput {
 
-    protected $events = array();
-    protected $styles = array();
+    protected $events = [];
+    protected $styles = [];
 
     /**
      *
@@ -29,7 +29,7 @@ abstract class HTMLInput {
      * @var HTMLElement
      */
     protected $element;
-    protected static $eventList = array();
+    protected static $eventList = [];
 
     public function __construct($tagname = "input") {
         $this->element = new HTMLElement($tagname);

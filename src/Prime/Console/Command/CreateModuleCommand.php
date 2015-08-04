@@ -63,17 +63,17 @@ class CreateModuleCommand extends BaseCommand {
         $fs = \Prime\FileSystem\Filesystem::getInstance();
         if (!$input->getOption('simple')) {
             $output->writeln('Vamos criar o módulo ' . $baseDir . ' completo');
-            $fs->mkdir(array(
+            $fs->mkdir([
                 $baseDir . 'Business',
                 $baseDir . 'Controller',
                 $baseDir . 'Model',
                 $baseDir . 'View'
-                    ));
+                    ]);
         } else {
             $output->writeln('Vamos criar o módulo ' . $baseDir . ' simples');
-            $fs->mkdir(array(
+            $fs->mkdir([
                 $baseDir . 'Controller'
-                    ));
+                    ]);
         }
         $output->writeln('Módulo ' . $this->moduleName . ' criado com sucesso');
     }

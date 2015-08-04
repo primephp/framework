@@ -8,7 +8,7 @@ namespace Prime\Business;
  * @package Prime\Business
  * @author TomSailor
  */
-interface IAction {
+interface ActionInterface {
 
     public function execute();
 }

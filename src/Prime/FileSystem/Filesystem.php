@@ -20,7 +20,7 @@ class Filesystem extends SymfonyFilesystem {
      */
     private static $instance;
     protected static $documentRoot;
-    protected static $paths = array();
+    protected static $paths = [];
 
     /**
      * Construtor privado para impedir múltiplas instância do objeto filesystem

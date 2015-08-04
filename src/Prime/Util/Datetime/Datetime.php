@@ -47,7 +47,7 @@ class Datetime extends Object {
      * @param string $datetime        	
      */
     public function __construct($datetime = NULL) {
-        $this->_date = new ArrayObject(array());
+        $this->_date = new ArrayObject([]);
         if (!is_null($datetime)) {
             $this->setValue($datetime);
         }

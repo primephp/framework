@@ -49,7 +49,7 @@ class RouteCollection extends BaseCollection {
     public function setRoute($path, $callable) {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
-        $route->setMethods(array('POST', 'GET', 'HEAD'));
+        $route->setMethods(['POST', 'GET', 'HEAD']);
         $this->add($route->getName(), $route);
         return $route;
     }

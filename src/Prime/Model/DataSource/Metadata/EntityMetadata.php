@@ -94,7 +94,7 @@ class EntityMetadata {
         $this->totalColumns = $statement->columnCount();
 
         for ($index = 0; $index < $this->totalColumns; $index++) {
-            $column = array();
+            $column = [];
             $meta = $statement->getColumnMeta($index);
             $column['name'] = $meta['name'];
             $column['type'] = $this->types[$meta['native_type']];

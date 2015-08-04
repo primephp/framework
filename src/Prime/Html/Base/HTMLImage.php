@@ -8,7 +8,7 @@ namespace Prime\Html\Base;
  */
 class HTMLImage extends HTMLElement {
 
-    private $info = array();
+    private $info = [];
     private $height = NULL;
     private $width = NULL;
 

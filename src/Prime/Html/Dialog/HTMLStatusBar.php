@@ -22,7 +22,7 @@ class HTMLStatusBar implements ViewInterface {
             $date = new Datetime();
             $this->firstItem = $date->getDatePTBR();
         }
-        $this->items = array();
+        $this->items = [];
         $this->container = new HTMLTable();
         $this->container->border = "0";
         $this->container->width = "100%";

@@ -90,7 +90,7 @@ class Resolver implements ControllerResolverInterface {
 
     protected function doGetArguments(Request $request, $controller, array $parameters) {
         $attributes = $request->attributes->all();
-        $arguments = array();
+        $arguments = [];
         foreach ($parameters as $param) {
             if (array_key_exists($param->name, $attributes)) {
                 $arguments[] = $attributes[$param->name];
@@ -134,7 +134,7 @@ class Resolver implements ControllerResolverInterface {
             throw new InvalidArgumentException(sprintf('Classe "%s" não existe.', $class));
         }
 
-        return array($this->instantiateController($class), $method);
+        return [$this->instantiateController($class), $method];
     }
 
     /**

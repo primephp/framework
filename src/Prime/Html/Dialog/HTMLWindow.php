@@ -33,7 +33,7 @@ class HTMLWindow implements IHTMLWindow {
     private $zIndex;
 
     public function __construct($title = '', $width = 350, $height = 100) {
-        $this->content = array();
+        $this->content = [];
         $this->title = (string) $title;
         $this->titleAlign = 'left';
         $this->width = intval($width);

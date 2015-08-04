@@ -48,11 +48,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class KernelExceptionListener implements EventSubscriberInterface {
 
     public static function getSubscribedEvents() {
-        return array(
-            KernelEvents::EXCEPTION => array(
-                array('onKernelException', 20)
-            )
-        );
+        return [
+            KernelEvents::EXCEPTION => [
+                ['onKernelException', 20]
+            ]
+        ];
     }
 
     public function onKernelException(GetResponseForExceptionEvent $event) {
@@ -61,18 +61,23 @@ class KernelExceptionListener implements EventSubscriberInterface {
         if ($exception instanceof UnauthorizedHttpException) {
             $template = new Template('@prime/401.twig');
             $event->setResponse(new Response($template->getOutput(), 401));
+            
         } elseif ($exception instanceof AccessDeniedHttpException) {
             $template = new Template('@prime/403.twig');
             $event->setResponse(new Response($template->getOutput(), 403));
+            
         } elseif ($exception instanceof NotFoundHttpException) {
             $template = new Template('@prime/404.twig');
             $event->setResponse(new Response($template->getOutput(), 404));
+            
         } elseif ($exception instanceof ServiceUnavailableHttpException) {
             $template = new Template('@prime/503.twig');
             $event->setResponse(new Response($template->getOutput(), 503));
+            
         } elseif ($exception instanceof HttpException) {
             $template = new Template('@prime/418.twig');
             $event->setResponse(new Response($template->getOutput(), 418));
+            
         } else {
             $template = new Template('@prime/500.twig');
             $event->setResponse(new Response($template->getOutput(), 500));

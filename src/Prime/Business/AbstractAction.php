@@ -9,7 +9,7 @@ use Prime\Core\Error;
  * @package Prime\Business
  * @author TomSailor
  */
-abstract class Action implements IAction {
+abstract class AbstractAction implements ActionInterface {
 
     private $errors = NULL;
 

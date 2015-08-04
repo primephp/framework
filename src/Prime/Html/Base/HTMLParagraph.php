@@ -31,7 +31,7 @@ class HTMLParagraph extends HTMLElement {
      */
     public function setAlignment($align) {
         if (is_numeric($align)) {
-            $al = array("left", "center", "right");
+            $al = ["left", "center", "right"];
             $align = $al[$align];
         }
         $this->align = $align;

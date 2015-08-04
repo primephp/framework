@@ -8,7 +8,7 @@ namespace Prime\Business;
  * @package Prime\Business
  * @author tom
  */
-interface IStaticCreate {
+interface StaticCreateInterface {
 
     /**
      * Método abstrático do qual em sua implementação deverá criar o objeto e 

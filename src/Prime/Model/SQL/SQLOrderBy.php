@@ -22,7 +22,7 @@ final class SQLOrderBy extends SQLExpression {
      * @param string $order 
      */
     public function __construct($column = NULL, $order = self::ASC_OPERATOR) {
-        self::$struct = array();
+        self::$struct = [];
         if (is_array($column) || is_string($column)) {
             $this->add($column, $order);
         }
@@ -34,7 +34,7 @@ final class SQLOrderBy extends SQLExpression {
      * String que representam números não serão usados.
      * @param {string|array} $column
      */
-    public function add($column = array(), $order = self::ASC_OPERATOR) {
+    public function add($column = [], $order = self::ASC_OPERATOR) {
         self::$order = $order;
         if (is_array($column)) {
             self::$struct = array_merge(self::$struct, $column);

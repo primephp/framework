@@ -16,7 +16,7 @@ use Prime\Server\Http\Request,
  * @access public
  * @author tom
  */
-abstract class DelegateRequest implements IDelegate {
+abstract class DelegateRequest implements DelegateInterface {
 
     abstract protected function ajax();
 

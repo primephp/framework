@@ -14,7 +14,7 @@ abstract class View implements ViewInterface {
      * Armazena os conteúdos adicionados dentro de um array
      * @var array 
      */
-    protected $content = array();
+    protected $content = [];
 
     /**
      * Adiciona conteúdo no objeto

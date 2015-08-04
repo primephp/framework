@@ -9,12 +9,12 @@ class HTMLElement implements IHTMLElement {
 
     private $tag_name;
     private $properties;
-    private $children = array();
+    private $children = [];
     private $openTag;
     private $midTag;
     private $close_tag;
     private $style;
-    private $classes = array();
+    private $classes = [];
 
     /**
      *

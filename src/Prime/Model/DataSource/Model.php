@@ -32,8 +32,8 @@ abstract class Model implements IModel {
      * Armazena os dados do Objeto Row DataGateway
      * @var array 
      */
-    protected $data = array();
-    protected $oldData = array();
+    protected $data = [];
+    protected $oldData = [];
     protected $columns;
     protected $criteria;
 
@@ -83,8 +83,8 @@ abstract class Model implements IModel {
      * Inicializa internamente o objeto model
      */
     protected function init() {
-        $this->data = array();
-        $this->oldData = array();
+        $this->data = [];
+        $this->oldData = [];
     }
 
     /**

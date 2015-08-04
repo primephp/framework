@@ -47,7 +47,7 @@ final class SQLUpdate extends SQLStatement {
         // monsta a string de UPDATE
         $this->sql = "UPDATE {$this->entity}";
         // monta os pares: coluna=valor,...
-        $set = array();
+        $set = [];
         if ($this->columnValues) {
             foreach ($this->columnValues as $column => $value) {
                 $set[] = "{$column} = {$value}";

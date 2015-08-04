@@ -19,7 +19,7 @@ class HTMLStyleInline extends View {
     private $properties;
 
     public function __construct() {
-        $this->properties = array();
+        $this->properties = [];
     }
 
     public function setProperty($name, $value) {
