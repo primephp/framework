@@ -2,9 +2,11 @@
 
 namespace Prime\Server\Http;
 
+use Prime\Controller\Resolver;
+use Prime\EventDispatcher\Dispatcher;
 use Prime\Server\Listener\KernelExceptionListener;
 use Symfony\Component\EventDispatcher\EventDispatcher;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
@@ -50,9 +52,10 @@ class Kernel {
 
         $this->matcher = new UrlMatcher($routes, new RequestContext($this->getRequest()));
 
-        $this->dispatcher = new EventDispatcher();
+        $this->dispatcher = new Dispatcher();
         $this->dispatcher->addSubscriber(new RouterListener($this->matcher));
         $this->dispatcher->addSubscriber(new KernelExceptionListener());
+        $this->dispatcher->addSubscriber(new ResponseListener('UTF-8'));
     }
 
     /**
@@ -83,7 +86,7 @@ class Kernel {
     }
 
     public function handle() {
-        $resolver = new ControllerResolver();
+        $resolver = new Resolver();
         $kernel = new HttpKernel($this->getDispatcher(), $resolver);
 
         $response = $kernel->handle($this->getRequest());
