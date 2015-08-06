@@ -5,7 +5,8 @@ namespace Prime\Pattern\Command;
 /**
  * TODO Auto-generated comment.
  */
-class Receiver {
+class Receiver
+{
 
     /**
      * TODO Auto-generated comment.
@@ -15,7 +16,8 @@ class Receiver {
     /**
      * TODO Auto-generated comment.
      */
-    public function Action() {
+    public function Action()
+    {
         
     }
 

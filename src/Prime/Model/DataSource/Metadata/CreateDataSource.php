@@ -35,7 +35,8 @@ use \Prime\Model\DataSource\Model;
  * @since 22/07/2015
  * @author TomSailor
  */
-class CreateDataSource {
+class CreateDataSource
+{
 
     private $entity;
     private $metadata;
@@ -43,19 +44,27 @@ class CreateDataSource {
     private $className = NULL;
     private $parentClass = NULL;
 
-    public function __construct($tableName) {
+    public function __construct($tableName)
+    {
         $this->entity = $tableName;
         $meta = new EntityMetadata($tableName);
         $this->metadata = $meta->get();
-        $this->className = ucfirst(strtolower($tableName));
+        $this->className = $this->className(ucfirst(strtolower($tableName)));
         $this->parentClass = Model::class;
     }
-    
-    public function setNamespace($namespace){
+
+    public function getClassName()
+    {
+        return $this->className;
+    }
+
+    public function setNamespace($namespace)
+    {
         $this->modelNamespace = $namespace;
     }
 
-    private function className($tableName) {
+    private function className($tableName)
+    {
         $string = ucfirst(strtolower($tableName));
         $num = strlen($string);
         $uCase = $string;
@@ -85,8 +94,9 @@ class CreateDataSource {
         return $uCase . 'DataSource';
     }
 
-    private function getHeader() {
-        $classeName = $this->className($this->entity);
+    private function getHeader()
+    {
+        $classeName = $this->getClassName();
         return
                 "
                 namespace {$this->modelNamespace};\n 
@@ -106,7 +116,8 @@ class CreateDataSource {
                     ";
     }
 
-    public function getConstants() {
+    public function getConstants()
+    {
         $constFields = "const TABLENAME = \"{$this->entity}\";\n";
 
         $pk = NULL;
@@ -124,12 +135,14 @@ class CreateDataSource {
         return $constFields;
     }
 
-    public function getSetterGetter(array $field) {
+    public function getSetterGetter(array $field)
+    {
         $methods = new CreateSetterGetter($field);
         return $methods->getOutput();
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         $out = "<?php";
         $out .= $this->getHeader();
         $out .= $this->getConstants();
@@ -142,7 +155,8 @@ class CreateDataSource {
         return $out;
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 

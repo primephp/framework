@@ -9,7 +9,8 @@ namespace Prime\Pattern\Singleton;
  * o padrão Singleton
  * @author tom
  */
-trait SingletonTrait {
+trait SingletonTrait
+{
 
     static $instance = null;
 
@@ -20,8 +21,9 @@ trait SingletonTrait {
      *
      * @return __CLASS__ A Instância única.
      */
-    public static function getInstance() {
-        if(is_null(self::$instance)){
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
             self::$instance = new static();
         }
 
@@ -32,7 +34,8 @@ trait SingletonTrait {
      * Construtor do tipo protegido previne que uma nova instância da
      * Classe seja criada através do operador `new` de fora dessa classe.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         
     }
 
@@ -42,7 +45,8 @@ trait SingletonTrait {
      *
      * @return void
      */
-    private function __clone() {
+    private function __clone()
+    {
         
     }
 
@@ -52,7 +56,8 @@ trait SingletonTrait {
      *
      * @return void
      */
-    private function __wakeup() {
+    private function __wakeup()
+    {
         
     }
 

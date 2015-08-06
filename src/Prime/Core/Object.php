@@ -11,7 +11,8 @@ use stdClass;
  * @author TomSailor
  * @since 03/08/2011
  */
-class Object extends stdClass {
+class Object extends stdClass
+{
 
     /**
      * Armazena todos os dados do Objeto
@@ -25,7 +26,8 @@ class Object extends stdClass {
      * quando for convertida para uma string. 
      * @return string 
      */
-    public function __toString() {
+    public function __toString()
+    {
         return get_class($this);
     }
 
@@ -35,7 +37,8 @@ class Object extends stdClass {
      * @param string $name
      * @param mixed $value 
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->data[$name] = $value;
     }
 
@@ -43,7 +46,8 @@ class Object extends stdClass {
      * 
      * @param type $name 
      */
-    public function __unset($name) {
+    public function __unset($name)
+    {
         unset($this->data[$name]);
     }
 
@@ -53,7 +57,8 @@ class Object extends stdClass {
      * @param string $name
      * @return mixed 
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
@@ -65,7 +70,8 @@ class Object extends stdClass {
      * O método __destruct remove todo conteúdo do atributo $data do objeto, para remover
      * o uso da memória
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         unset($this->data);
     }
 
@@ -73,7 +79,8 @@ class Object extends stdClass {
      * O método __invoke é chamado quando um script
      * tenta chamar um objeto como uma função. 
      */
-    public function __invoke() {
+    public function __invoke()
+    {
         ;
     }
 
@@ -81,7 +88,8 @@ class Object extends stdClass {
      * Retorna o tipo do objeto atual
      * @return string O nome da classe do objeto instanciado
      */
-    public function getType() {
+    public function getType()
+    {
         return get_class($this);
     }
 
@@ -89,7 +97,8 @@ class Object extends stdClass {
      * Retorna o nome da classe do objeto
      * @return string O nome da classe do objeto instanciado
      */
-    public function getClass() {
+    public function getClass()
+    {
         return $this->getType();
     }
 
@@ -97,7 +106,8 @@ class Object extends stdClass {
      * Retorna um código hash do tipo MD5 representando o objeto atual
      * @return str
      */
-    public function getHashCode() {
+    public function getHashCode()
+    {
         return hash('md5', $this);
     }
 
@@ -105,14 +115,16 @@ class Object extends stdClass {
      * Retorna um clone do objeto atual
      * @return unknown
      */
-    protected function getClone() {
+    protected function getClone()
+    {
         return clone $this;
     }
 
     /**
      * Cria um objeto através do valor passado
      */
-    public static function create($value) {
+    public static function create($value)
+    {
         if (is_float($value)) {
             return new Float($value);
         } else
@@ -127,7 +139,8 @@ class Object extends stdClass {
         }
     }
 
-    public function toString() {
+    public function toString()
+    {
         
     }
 

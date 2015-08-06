@@ -8,7 +8,8 @@ namespace Prime\Model\SQL\MySQL;
  * MySQL
  * @author tom
  */
-class MySql {
+class MySql
+{
 
     /**
      * Retorna função DATE_FORMAT devidamente formatada
@@ -171,7 +172,8 @@ class MySql {
      * @param string $as_name
      * @return string 
      */
-    public static function DateFormat($field, $format, $as_name = NULL) {
+    public static function DateFormat($field, $format, $as_name = NULL)
+    {
         if (is_null($as_name)) {
             $as_name = $field;
         }
@@ -179,5 +181,3 @@ class MySql {
     }
 
 }
-
-

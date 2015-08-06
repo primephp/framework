@@ -20,7 +20,8 @@ use Symfony\Component\Routing\RequestContext;
  * @package Prime\Server\Http
  * @createAt 16/07/2015
  */
-class Kernel {
+class Kernel
+{
 
     /**
      *
@@ -46,7 +47,8 @@ class Kernel {
      */
     private $matcher;
 
-    private function __construct($routes) {
+    private function __construct($routes)
+    {
 
         $this->request = Request::createFromGlobals();
 
@@ -62,7 +64,8 @@ class Kernel {
      * Returns a single instance of the application Kernel
      * @return Kernel
      */
-    public static function getInstance($routes) {
+    public static function getInstance($routes)
+    {
         if (is_null(self::$instance)) {
             self::$instance = new Kernel($routes);
         }
@@ -73,7 +76,8 @@ class Kernel {
      * Return request object
      * @return Request
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         return $this->request;
     }
 
@@ -81,11 +85,13 @@ class Kernel {
      * Return Event Dispatcher object
      * @return EventDispatcher
      */
-    public function getDispatcher() {
+    public function getDispatcher()
+    {
         return $this->dispatcher;
     }
 
-    public function handle() {
+    public function handle()
+    {
         $resolver = new Resolver();
         $kernel = new HttpKernel($this->getDispatcher(), $resolver);
 

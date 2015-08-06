@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Prime\Io;
 
 /**
@@ -11,7 +10,8 @@ namespace Prime\Io;
  * @author tom
  * @createAt 19/07/2015
  */
-interface PrintableInterface {
-    
+interface PrintableInterface
+{
+
     public function printOut();
 }

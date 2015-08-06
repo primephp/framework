@@ -16,9 +16,11 @@ namespace Prime\Controller;
  * @author tom
  * @createAt 02/08/2015
  */
-abstract class AbstractControllerAction extends AbstractController {
+abstract class AbstractControllerAction extends AbstractController
+{
 
-    public function __invoke() {
+    public function __invoke()
+    {
         $this->dispatch();
     }
 

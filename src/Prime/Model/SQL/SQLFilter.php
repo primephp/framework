@@ -7,7 +7,8 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê uma interface para definição de filtros de seleção
  */
-class SQLFilter extends SQLExpression {
+class SQLFilter extends SQLExpression
+{
 
     private $variable; // variável
     private $operator; // operador
@@ -21,7 +22,8 @@ class SQLFilter extends SQLExpression {
      * @param $value      = valor a ser comparado
      */
 
-    public function __construct($variable, $operator, $value) {
+    public function __construct($variable, $operator, $value)
+    {
         // armazena as propriedades
         $this->variable = $variable;
         $this->operator = $operator;
@@ -38,7 +40,8 @@ class SQLFilter extends SQLExpression {
      * podendo ser um integer/string/boolean ou array.
      * @param $value = valor a ser transformado
      */
-    private function transform($value) {
+    private function transform($value)
+    {
         // caso seja um array
         if (is_array($value)) {
             // percorre os valores
@@ -85,10 +88,10 @@ class SQLFilter extends SQLExpression {
      * método dump()
      * retorna o filtro em forma de expressão
      */
-    public function dump() {
+    public function dump()
+    {
         // concatena a expressão
         return "{$this->variable} {$this->operator} {$this->value}";
     }
 
 }
-

@@ -4,9 +4,11 @@ namespace Prime\Core;
 
 use InvalidArgumentException;
 
-final class String extends Object {
+final class String extends Object
+{
 
-    public function __construct($string = NULL) {
+    public function __construct($string = NULL)
+    {
         $this->setEncoding('UTF8');
         if (!is_null($string)) {
             $this->setValue($string);
@@ -19,7 +21,8 @@ final class String extends Object {
      * @param string $str
      * @return String
      */
-    public static function create($str) {
+    public static function create($str)
+    {
         return new String($str);
     }
 
@@ -28,7 +31,8 @@ final class String extends Object {
      * impressa
      * @return String
      */
-    public function toString() {
+    public function toString()
+    {
         return $this;
     }
 
@@ -36,7 +40,8 @@ final class String extends Object {
      * Retorna a string do objeto
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->getValue();
     }
 
@@ -44,7 +49,8 @@ final class String extends Object {
      * Retorna true se, e somente se, length() é 0.
      * @return boolean
      */
-    public function isEmpty() {
+    public function isEmpty()
+    {
         if (!$this->length()) {
             return TRUE;
         }
@@ -55,7 +61,8 @@ final class String extends Object {
      * Retorna o total de caracteres da string
      * @return int
      */
-    public function length() {
+    public function length()
+    {
         return mb_strlen($this->getValue(), $this->getEncoding());
     }
 
@@ -63,7 +70,8 @@ final class String extends Object {
      * Largura de retorno de string
      * @return int
      */
-    public function width() {
+    public function width()
+    {
         return mb_strwidth($this->getValue(), $this->getEncoding());
     }
 
@@ -73,7 +81,8 @@ final class String extends Object {
      * @param string $input
      * @return array
      */
-    private function countChars($input) {
+    public function countChars($input)
+    {
         $l = mb_strlen($input, $this->getEncoding());
         $unique = [];
         for ($i = 0; $i < $l; $i++) {
@@ -90,8 +99,9 @@ final class String extends Object {
      * Retorna o conteúdo da string
      * @return string a string interna armazenada
      */
-    public function getValue() {
-        return $this->value;
+    public function getValue()
+    {
+        return $this->data['value'];
     }
 
     /**
@@ -100,7 +110,8 @@ final class String extends Object {
      * @param str $str
      * @return String
      */
-    public static function valueOf($str) {
+    public static function valueOf($str)
+    {
         return new String($str);
     }
 
@@ -109,9 +120,10 @@ final class String extends Object {
      * @param string $value
      * @throws InvalidArgumentException
      */
-    private function setValue($value) {
+    private function setValue($value)
+    {
         if (is_string($value)) {
-            $this->data['value'] = $value;
+            $this->data['value'] = filter_var($value, FILTER_SANITIZE_STRING);
             $this->data['length'] = $this->length();
         } else {
             throw new InvalidArgumentException(__CLASS__ . ' aceita apenas '
@@ -123,7 +135,8 @@ final class String extends Object {
      * Retorna a codificação de caracteres da string
      * @return string 
      */
-    public function getEncoding() {
+    public function getEncoding()
+    {
         return $this->data['encoding'];
     }
 
@@ -131,7 +144,8 @@ final class String extends Object {
      * Define a codificação de caracteres da string
      * @param string $encoding
      */
-    public function setEncoding($encoding) {
+    public function setEncoding($encoding)
+    {
         $this->data['encoding'] = $encoding;
     }
 
@@ -141,7 +155,8 @@ final class String extends Object {
      * @return Boolean Caso as string sejam iguais retorna TRUE do contrário
      * retorna FALSE
      */
-    public function compareTo(String $str) {
+    public function compareTo(String $str)
+    {
         if ($this->getValue() === $str->getValue()) {
             return TRUE;
         } else {
@@ -155,7 +170,8 @@ final class String extends Object {
      * @param String $str
      * @return Boolean
      */
-    public function compareToIgnoreCase(String $str) {
+    public function compareToIgnoreCase(String $str)
+    {
         if ($this->toUpper()->getValue() === $str->toUpper()->getValue()) {
             return TRUE;
         } else {
@@ -168,7 +184,8 @@ final class String extends Object {
      * @param String $str
      * @return String
      */
-    public function concat(String $str) {
+    public function concat(String $str)
+    {
         $this->setValue($this->getValue() . $str->getValue());
         return $this;
     }
@@ -179,7 +196,8 @@ final class String extends Object {
      * @param char $s
      * @return Boolean
      */
-    public function contains($s) {
+    public function contains($s)
+    {
         return (bool) mb_strstr($this->getValue(), $s, FALSE, $this->getEncoding());
     }
 
@@ -189,7 +207,8 @@ final class String extends Object {
      * @param int $length
      * @return String
      */
-    public function subString($beginIndex, $length) {
+    public function subString($beginIndex, $length)
+    {
         return new String(mb_substr($this->getValue(), $beginIndex, $length, $this->getEncoding()));
     }
 
@@ -200,7 +219,8 @@ final class String extends Object {
      * @param type $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
-    public function insensitivePosition($needle, $offset = 0) {
+    public function insensitivePosition($needle, $offset = 0)
+    {
         return mb_stripos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
@@ -211,16 +231,19 @@ final class String extends Object {
      * @param type $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
-    public function sensitivePosition($needle, $offset = 0) {
+    public function sensitivePosition($needle, $offset = 0)
+    {
         return mb_stripos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
     /**
-     * Retorna uma cópia da string, com os principais espaços em branco e omitido.
+     * Remove os principais espaços em branco e omitido.
      * @return String
      */
-    public function trim() {
-        return new String(trim($this->getValue()));
+    public function trim()
+    {
+        $this->setValue(trim($this->getValue()));
+        return $this;
     }
 
     /**
@@ -229,7 +252,8 @@ final class String extends Object {
      * @param int $offset
      * @return int o index da posição da string passada
      */
-    public function indexOf($needle, $offset = 0) {
+    public function indexOf($needle, $offset = 0)
+    {
         return mb_strpos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
@@ -239,7 +263,8 @@ final class String extends Object {
      * @param string $replacement string que substituirá os valores encontrados
      * @return String 
      */
-    public function replace($pattern, $replacement) {
+    public function replace($pattern, $replacement)
+    {
         $this->setValue(mb_ereg_replace($pattern, $replacement, $this->getValue()));
         return $this;
     }
@@ -248,25 +273,28 @@ final class String extends Object {
      * Converte todos os caracteres alfabéticos para maiúsculo. 
      * @return String
      */
-    public function toUpper() {
-        $string = new String(mb_strtoupper($this->getValue(), $this->getEncoding()));
-        return $string;
+    public function toUpper()
+    {
+        $this->setValue(mb_strtoupper($this->getValue(), $this->getEncoding()));
+        return $this;
     }
 
     /**
      * Converte todos os caracteres alfabéticos para minúsculos. 
      * @return String
      */
-    public function toLower() {
-        $string = new String(mb_strtolower($this->getValue(), $this->getEncoding()));
-        return $string;
+    public function toLower()
+    {
+        $this->setValue(mb_strtolower($this->getValue(), $this->getEncoding()));
+        return $this;
     }
 
     /**
      * Retorna um array dos caracteres que formam a String
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $string = $this->getValue();
         $strlen = mb_strlen($string);
         $array = [];
@@ -285,8 +313,10 @@ final class String extends Object {
      * @param string $trimMarker Uma seqüência que é adicionado ao final da string quando a string é truncada. 
      * @return String
      */
-    public function strimWidth($width, $start = 0, $trimMarker = '') {
-        return new String(mb_strimwidth($this->getValue(), $start, $width, $trimMarker, $this->getEncoding()));
+    public function strimWidth($width, $start = 0, $trimMarker = '')
+    {
+        $this->setValue(mb_strimwidth($this->getValue(), $start, $width, $trimMarker, $this->getEncoding()));
+        return $this;
     }
 
 }

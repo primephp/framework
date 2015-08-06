@@ -24,7 +24,8 @@ namespace Prime\Util\Interfaces;
  * @dateCreate 09/06/2014
  * @author Elton Luiz
  */
-interface IListIterator extends IIterator {
+interface IListIterator extends IIterator
+{
 
     /**
      * Insere o elemento especificado na lista

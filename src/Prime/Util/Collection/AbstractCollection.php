@@ -18,7 +18,8 @@ use Prime\Util\Interfaces\ICollection;
  * @author tom
  * @dateCreate 05JUN2014
  */
-abstract class AbstractCollection implements ICollection {
+abstract class AbstractCollection implements ICollection
+{
 
     protected $_collection = [];
 
@@ -27,7 +28,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @param array $array        	
      */
-    public function __construct(array $array = NULL) {
+    public function __construct(array $array = NULL)
+    {
         if (!is_null($array)) {
             foreach ($array as $value) {
                 $this->add($value);
@@ -41,7 +43,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @param ICollection $collection        	
      */
-    public static function ofCollection(ICollection $collection) {
+    public static function ofCollection(ICollection $collection)
+    {
         $class = get_called_class();
         return new $class($collection->toArray());
     }
@@ -56,7 +59,8 @@ abstract class AbstractCollection implements ICollection {
      * @return boolean Returna FALSE caso o elemento já esteja adicionado e não aceite
      *         duplicatas e TRUE caso tenha sido adicionado com sucesso.
      */
-    public function add($e) {
+    public function add($e)
+    {
         if (!is_object($e)) {
             $e = Object::create($e);
         }
@@ -75,17 +79,20 @@ abstract class AbstractCollection implements ICollection {
      * @param ICollection $collection        	
      * @return boolean Retorna TRUE se os objetos foram adicionados
      */
-    public function addAll(ICollection $collection) {
+    public function addAll(ICollection $collection)
+    {
         for ($index = 0; $index < $collection->size(); $index ++) {
             $this->add($collection->iterator());
         }
     }
 
-    public function clear() {
+    public function clear()
+    {
         $this->_collection = [];
     }
 
-    public function contains($o) {
+    public function contains($o)
+    {
         if (array_search($o, $this->_collection)) {
             return TRUE;
         } else {
@@ -97,7 +104,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @param ICollection $collection        	
      */
-    public function containAll(ICollection $collection) {
+    public function containAll(ICollection $collection)
+    {
         $iterator = $collection->iterator();
 
         for ($index = 0; $index < $collection->size(); $index ++) {
@@ -111,7 +119,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return boolean
      */
-    public function isEmpty() {
+    public function isEmpty()
+    {
         if ((boolean) count($this->_collection)) {
             return FALSE;
         } else {
@@ -119,7 +128,8 @@ abstract class AbstractCollection implements ICollection {
         }
     }
 
-    public function iterator() {
+    public function iterator()
+    {
         ;
     }
 
@@ -131,7 +141,8 @@ abstract class AbstractCollection implements ICollection {
      * @return boolean Caso o elemeto passado como parâmetro exista na
      *         Collection, o remove e retorna TRUE, do contrário e retorna FALSE
      */
-    public function remove($o) {
+    public function remove($o)
+    {
         $index = array_search($o, $this->_collection);
         if ($index !== FALSE) {
             unset($this->_collection [$index]);
@@ -147,11 +158,13 @@ abstract class AbstractCollection implements ICollection {
      *
      * @param ICollection $collection        	
      */
-    public function removeAll(ICollection $collection) {
+    public function removeAll(ICollection $collection)
+    {
         ;
     }
 
-    public function retainAll(ICollection $collection) {
+    public function retainAll(ICollection $collection)
+    {
         ;
     }
 
@@ -160,7 +173,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return int
      */
-    public function size() {
+    public function size()
+    {
         return count($this->_collection);
     }
 
@@ -169,7 +183,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return $this->_collection;
     }
 
@@ -179,7 +194,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return ArrayList
      */
-    public function toArrayList() {
+    public function toArrayList()
+    {
         return new ArrayList($this->_collection);
     }
 
@@ -189,7 +205,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return \ArrayObject
      */
-    public function toArrayObject() {
+    public function toArrayObject()
+    {
         return new ArrayObject($this->_collection);
     }
 
@@ -201,7 +218,8 @@ abstract class AbstractCollection implements ICollection {
      * @return boolean Caso sejam iguais o hashCode retorna TRUE, do contário
      *         retorna FALSE
      */
-    public function equals(ICollection $o) {
+    public function equals(ICollection $o)
+    {
         if ($this->hashCode() === $o->hashCode()) {
             return TRUE;
         } else {
@@ -214,7 +232,8 @@ abstract class AbstractCollection implements ICollection {
      *
      * @return string
      */
-    public function hashCode() {
+    public function hashCode()
+    {
         return hash('md5', $this);
     }
 

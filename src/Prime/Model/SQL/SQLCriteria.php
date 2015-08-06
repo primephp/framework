@@ -7,7 +7,8 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê uma interface utilizada para definição de critérios
  */
-class SQLCriteria extends SQLExpression {
+class SQLCriteria extends SQLExpression
+{
 
     const ORDER_BY = 'order';
     const GROUP_BY = 'group';
@@ -22,11 +23,13 @@ class SQLCriteria extends SQLExpression {
      * Método Construtor
      */
 
-    function __construct() {
+    function __construct()
+    {
         $this->reset();
     }
 
-    public function reset() {
+    public function reset()
+    {
         $this->expressions = [];
         $this->operators = [];
         $this->properties = [self::GROUP_BY => NULL, self::LIMIT => NULL, self::OFFSET => NULL, self::ORDER_BY => NULL];
@@ -38,7 +41,8 @@ class SQLCriteria extends SQLExpression {
      * @param $expression = expressão (objeto TExpression)
      * @param $operator     = operador lógico de comparação
      */
-    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR) {
+    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR)
+    {
         // na primeira vez, não precisamos de operador lógico para concatenar
         if (empty($this->expressions)) {
             $operator = NULL;
@@ -53,7 +57,8 @@ class SQLCriteria extends SQLExpression {
      * método dump()
      * retorna a expressão final
      */
-    public function dump() {
+    public function dump()
+    {
         // concatena a lista de expressões
         if (is_array($this->expressions)) {
             if (count($this->expressions) > 0) {
@@ -75,7 +80,8 @@ class SQLCriteria extends SQLExpression {
      * @param $property = propriedade
      * @param $value      = valor
      */
-    public function setProperty($property, $value) {
+    public function setProperty($property, $value)
+    {
         if (isset($value)) {
             $this->properties[$property] = $value;
         } else {
@@ -88,11 +94,11 @@ class SQLCriteria extends SQLExpression {
      * retorna o valor de uma propriedade
      * @param $property = propriedade
      */
-    public function getProperty($property) {
+    public function getProperty($property)
+    {
         if ($this->properties[$property]) {
             return $this->properties[$property];
         }
     }
 
 }
-

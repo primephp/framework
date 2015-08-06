@@ -15,7 +15,8 @@ use Prime\Util\Interfaces\IListIterator;
  * @dateCreate 16/06/2014
  * @author Elton Luiz
  */
-class ListIterator implements IListIterator {
+class ListIterator implements IListIterator
+{
 
     /**
      * Armazena a lista a ser iterada
@@ -33,7 +34,8 @@ class ListIterator implements IListIterator {
      * 
      * @param AbstractList $list        	
      */
-    public function __construct(AbstractList $list) {
+    public function __construct(AbstractList $list)
+    {
         $this->_list = $list->toArrayObject();
         $this->_size = count($this->_list);
         $this->rewind();
@@ -44,7 +46,8 @@ class ListIterator implements IListIterator {
      * 
      * @param mixed $e        	
      */
-    public function add($e) {
+    public function add($e)
+    {
         return $this->_list->append($e);
     }
 
@@ -54,7 +57,8 @@ class ListIterator implements IListIterator {
      * 
      * @return boolean
      */
-    public function hasNext() {
+    public function hasNext()
+    {
         if ($this->nextIndex() >= $this->_size) {
             return FALSE;
         }
@@ -70,7 +74,8 @@ class ListIterator implements IListIterator {
      * 
      * @return boolean
      */
-    public function hasPrevious() {
+    public function hasPrevious()
+    {
         if ($this->previousIndex() < 0) {
             return FALSE;
         }
@@ -83,7 +88,8 @@ class ListIterator implements IListIterator {
     /**
      * Retorna o próximo elemento da lista e avança a posição do cursor.
      */
-    public function next() {
+    public function next()
+    {
         if ($this->hasNext()) {
             $this->_index += 1;
             return $this->_list->offsetGet($this->key());
@@ -99,7 +105,8 @@ class ListIterator implements IListIterator {
      * @return int O próximo índice do elemento, caso a lista esteja no fim, retorna o
      *         tamanho da lista
      */
-    public function nextIndex() {
+    public function nextIndex()
+    {
         return $this->key() + 1;
     }
 
@@ -107,7 +114,8 @@ class ListIterator implements IListIterator {
      * Retorna o elemento anterior da lista e move a posição do cursor
      * para trás.
      */
-    public function previous() {
+    public function previous()
+    {
         if ($this->hasPrevious()) {
             $this->_index -= 1;
             return $this->_list->offsetGet($this->key());
@@ -123,14 +131,16 @@ class ListIterator implements IListIterator {
      * @return int O índice anterior a posição atual do ponteiro. Retorna -1 se a o Iterador
      *         está no início da lista
      */
-    public function previousIndex() {
+    public function previousIndex()
+    {
         return $this->key() - 1;
     }
 
     /**
      * Remove da lista o último elemento retornado por next() ou previous()
      */
-    public function remove() {
+    public function remove()
+    {
         if ($this->valid()) {
             $this->_list->offsetUnset($this->key());
         }
@@ -142,7 +152,8 @@ class ListIterator implements IListIterator {
      * 
      * @param mixed $e        	
      */
-    public function set($e) {
+    public function set($e)
+    {
         $e;
     }
 
@@ -151,7 +162,8 @@ class ListIterator implements IListIterator {
      * 
      * @return mixed
      */
-    public function current() {
+    public function current()
+    {
         return $this->_list->offsetGet($this->key());
     }
 
@@ -160,7 +172,8 @@ class ListIterator implements IListIterator {
      * 
      * @return int O índice atual do Iterador
      */
-    protected function key() {
+    protected function key()
+    {
         return $this->_index;
     }
 
@@ -168,11 +181,13 @@ class ListIterator implements IListIterator {
      * Rebobina o iterador para a posição inicial
      * (posição -1)
      */
-    public function rewind() {
+    public function rewind()
+    {
         $this->_index = - 1;
     }
 
-    public function valid() {
+    public function valid()
+    {
         ;
     }
 

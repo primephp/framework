@@ -19,12 +19,14 @@ use \Closure,
  * @author tom
  * @createAt 02/08/2015
  */
-class Resolver implements ControllerResolverInterface {
+class Resolver implements ControllerResolverInterface
+{
 
     /**
      * 
      */
-    public function __construct() {
+    public function __construct()
+    {
         
     }
 
@@ -36,7 +38,8 @@ class Resolver implements ControllerResolverInterface {
      *
      * @api
      */
-    public function getController(Request $request) {
+    public function getController(Request $request)
+    {
         if (!$controller = $request->attributes->get('_controller')) {
             return false;
         }
@@ -75,7 +78,8 @@ class Resolver implements ControllerResolverInterface {
      *
      * @api
      */
-    public function getArguments(Request $request, $controller) {
+    public function getArguments(Request $request, $controller)
+    {
         if (is_array($controller)) {
             $r = new ReflectionMethod($controller[0], $controller[1]);
         } elseif (is_object($controller) && !$controller instanceof Closure) {
@@ -88,7 +92,8 @@ class Resolver implements ControllerResolverInterface {
         return $this->doGetArguments($request, $controller, $r->getParameters());
     }
 
-    protected function doGetArguments(Request $request, $controller, array $parameters) {
+    protected function doGetArguments(Request $request, $controller, array $parameters)
+    {
         $attributes = $request->attributes->all();
         $arguments = [];
         foreach ($parameters as $param) {
@@ -123,7 +128,8 @@ class Resolver implements ControllerResolverInterface {
      *
      * @throws InvalidArgumentException
      */
-    protected function createController($controller) {
+    protected function createController($controller)
+    {
         if (false === strpos($controller, '@')) {
             throw new InvalidArgumentException(sprintf('Não foi possível encontrar o controller "%s".', $controller));
         }
@@ -144,11 +150,12 @@ class Resolver implements ControllerResolverInterface {
      *
      * @return object
      */
-    protected function instantiateController($class) {
+    protected function instantiateController($class)
+    {
         $instance = new $class();
         /* @var $instance Request */
 
         return $instance;
-    } 
+    }
 
 }

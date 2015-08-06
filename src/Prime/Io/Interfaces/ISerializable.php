@@ -9,7 +9,8 @@ namespace Prime\io\interfaces;
  * @dateCreate 28/05/2014
  * @author Elton Luiz
  */
-interface ISerializable {
+interface ISerializable
+{
 
     public function serialize();
 }

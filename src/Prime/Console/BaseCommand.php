@@ -26,7 +26,10 @@
 
 namespace Prime\Console;
 
-use \Symfony\Component\Console\Command\Command as SymfonyCommand;
+use LogicException;
+use Symfony\Component\Console\Command\Command as SymfonyCommand;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Classe Command
@@ -35,16 +38,29 @@ use \Symfony\Component\Console\Command\Command as SymfonyCommand;
  * @since 23/07/2015
  * @author TomSailor
  */
-class BaseCommand extends SymfonyCommand {
+class BaseCommand extends SymfonyCommand
+{
 
     /**
      * Define uma ajuda par ao comando
      * @param string $help
      * @return BaseCommand
      */
-    public function setHelp($help) {
+    public function setHelp($help)
+    {
         parent::setHelp($help);
         return $this;
+    }
+
+    /**
+     * Esse método é responsável pela execução do Command em si
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @throws LogicException
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        throw new LogicException('Esse método deve ser substituído na classe command concreta.');
     }
 
 }

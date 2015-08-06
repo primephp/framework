@@ -12,7 +12,8 @@ namespace Prime\Util\Interfaces;
  * @dateCreate 17/06/2014
  * @author tom
  */
-interface IDeque extends IQueue {
+interface IDeque extends IQueue
+{
 
     public function addLast($e);
 

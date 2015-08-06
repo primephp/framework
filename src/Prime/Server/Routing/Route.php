@@ -36,19 +36,21 @@ use Symfony\Component\Routing\Route as BaseRoute;
  * @createAt 18/07/2015
  * @author Elton Luiz
  */
-class Route extends BaseRoute{
-    
+class Route extends BaseRoute
+{
+
     /**
      * The basead name to Route
      * @return string
      */
-    public function getName(){
+    public function getName()
+    {
         $path = $this->getPath();
         $name = '';
         $r = explode('/', $path);
         foreach ($r as $value) {
-            if(!empty($value) && $value[0] != '{'){
-                if(!empty($name)){
+            if (!empty($value) && $value[0] != '{') {
+                if (!empty($name)) {
                     $name .= '_';
                 }
                 $name .= $value;
@@ -56,4 +58,5 @@ class Route extends BaseRoute{
         }
         return $name;
     }
+
 }

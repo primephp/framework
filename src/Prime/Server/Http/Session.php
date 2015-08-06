@@ -10,7 +10,7 @@ use \Symfony\Component\HttpFoundation\Session\Session as BaseSession;
  * @package Prime\Http
  * gerencia uma sessão com o usuário
  */
-class Session extends BaseSession {
-
+class Session extends BaseSession
+{
     
 }

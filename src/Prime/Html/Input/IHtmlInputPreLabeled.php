@@ -7,6 +7,7 @@ namespace Prime\Html\Input;
  * input
  * @author tom
  */
-interface IHtmlInputPreLabeled {
+interface IHtmlInputPreLabeled
+{
     //put your code here
 }

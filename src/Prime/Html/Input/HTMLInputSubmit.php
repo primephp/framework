@@ -10,9 +10,11 @@ namespace Prime\Html\Input;
  * Concluida
  *
  */
-class HTMLInputSubmit extends HTMLInput {
+class HTMLInputSubmit extends HTMLInput
+{
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct();
         $this->element->name = $name;
         $this->element->id = $name;
@@ -20,4 +22,3 @@ class HTMLInputSubmit extends HTMLInput {
     }
 
 }
-

@@ -8,7 +8,8 @@ use Prime\DataTypes\Datetime,
     Prime\Html\Table\HTMLTable,
     Prime\View\ViewInterface;
 
-class HTMLStatusBar implements ViewInterface {
+class HTMLStatusBar implements ViewInterface
+{
 
     private $container;
     private $items;
@@ -16,7 +17,8 @@ class HTMLStatusBar implements ViewInterface {
     private $firstItem;
     private $icon;
 
-    public function __construct($status = "") {
+    public function __construct($status = "")
+    {
         $this->firstItem = "$status";
         if (empty($status)) {
             $date = new Datetime();
@@ -35,31 +37,37 @@ class HTMLStatusBar implements ViewInterface {
      *
      * @return HTMLTable
      */
-    public function getStatusBar() {
+    public function getStatusBar()
+    {
         $this->createStatus();
         return $this->container;
     }
 
-    public function addItem($item) {
+    public function addItem($item)
+    {
         if (count($this->items) < 3) {
             $this->items[] = "$item";
         }
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         return $this->getStatusBar();
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         $this->createStatus();
         $this->container->printOut();
     }
 
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value)
+    {
         $this->container->setAttribute($name, $value);
     }
 
-    public function setStyle($property, $value) {
+    public function setStyle($property, $value)
+    {
         $this->container->setStyle($property, $value);
     }
 
@@ -67,7 +75,8 @@ class HTMLStatusBar implements ViewInterface {
      *
      * @return  void
      */
-    private function createStatus() {
+    private function createStatus()
+    {
         $this->rowItem = $this->container->insertRow();
         $firstCell = $this->rowItem->insertCell($this->firstItem);
         $firstCell->id = "status_0";
@@ -80,11 +89,13 @@ class HTMLStatusBar implements ViewInterface {
         }
     }
 
-    public function setIcon($src) {
+    public function setIcon($src)
+    {
         $this->icon = $src;
     }
 
-    private function produceStatus() {
+    private function produceStatus()
+    {
         $id = 1;
         foreach ($this->items as $item) {
             $itemCell = $this->rowItem->insertCell($item);
@@ -95,7 +106,8 @@ class HTMLStatusBar implements ViewInterface {
         }
     }
 
-    private function createStatusLook() {
+    private function createStatusLook()
+    {
         $look = new HTMLStyle("statusBar");
         $look->font_size = "12px";
         $look->font_family = "Sans";
@@ -108,4 +120,3 @@ class HTMLStatusBar implements ViewInterface {
     }
 
 }
-

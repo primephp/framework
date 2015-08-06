@@ -7,6 +7,7 @@ namespace Prime\Util\Collection;
  *
  * @author tom
  */
-abstract class AbstractSequentialList extends AbstractList {
-	
+abstract class AbstractSequentialList extends AbstractList
+{
+    
 }

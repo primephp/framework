@@ -27,7 +27,8 @@ use Prime\Core\Interfaces\IIterable;
  * @dateCreate 10/06/2014
  * @author Elton Luiz
  */
-interface IQueue extends ICollection, IIterable {
+interface IQueue extends ICollection, IIterable
+{
 
     /**
      * Insere o elemento especificado para esta fila se for possível fazê-lo imediatamente, 

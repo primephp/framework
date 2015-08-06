@@ -12,12 +12,14 @@ namespace Prime\Html\Base;
  * @access public
  * @author tom
  */
-class HTMLObject extends HTMLElement {
+class HTMLObject extends HTMLElement
+{
 
     private $filename, $width, $height;
     private $autostart = 1;
 
-    public function __construct($filename, $width = '400', $height = '300') {
+    public function __construct($filename, $width = '400', $height = '300')
+    {
         $this->filename = $filename;
         if (file_exists('.' . $this->filename)) {
             parent::__construct('object');
@@ -34,7 +36,8 @@ class HTMLObject extends HTMLElement {
     }
 
     public
-            function getOutput() {
+            function getOutput()
+    {
         $this->setAttribute('data', $this->filename);
 
         $url = new HTMLElement('param');
@@ -61,5 +64,3 @@ class HTMLObject extends HTMLElement {
     }
 
 }
-
-

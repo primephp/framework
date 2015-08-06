@@ -10,8 +10,9 @@ namespace Prime\core\interfaces;
  * @dateCreate 10/06/2014
  * @author Elton Luiz
  */
-interface IAutoCloseable {
-    
+interface IAutoCloseable
+{
+
     /**
      * Fecha este recurso, abandonando todos os recursos subjacentes.
      */

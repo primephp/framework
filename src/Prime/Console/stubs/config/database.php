@@ -8,7 +8,7 @@ return [
       |
       | Define o drive de conexão à base de dados, os valores aceitos são:
       | pgsql - mysql - sqlite - ibase - oci - mssql
-      |  
+      |
       |
      */
     'type' => 'DbDrive',
@@ -47,7 +47,7 @@ return [
       | IP do host aonde está hospedado a base de dados a qual se quer acessar
       |
      */
-    'host' => 'DbHost', 
+    'host' => 'DbHost',
     /*
       |-------------------------------------------------------------------------
       | Porta
@@ -56,6 +56,5 @@ return [
       | Porta para acesso à base de dados
       |
      */
-    'port' => 'DbPort'  
-  
+    'port' => 'DbPort'
 ];

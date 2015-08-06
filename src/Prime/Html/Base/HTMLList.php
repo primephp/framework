@@ -13,7 +13,8 @@ namespace Prime\Html\Base;
  * @since 29/10/2011
  * @access public
  */
-class HTMLList extends HTMLElement {
+class HTMLList extends HTMLElement
+{
 
     const T_UNORDERED = 0;
     const T_ORDERED = 1;
@@ -24,7 +25,8 @@ class HTMLList extends HTMLElement {
 
     private $itens = [];
 
-    public function __construct($type = HTMLList::T_UNORDERED, $listStyle = HTMLList::LS_NONE) {
+    public function __construct($type = HTMLList::T_UNORDERED, $listStyle = HTMLList::LS_NONE)
+    {
         if ($type == self::T_ORDERED) {
             parent::__construct('ol');
         } else {
@@ -33,7 +35,8 @@ class HTMLList extends HTMLElement {
         $this->setListStyle($listStyle);
     }
 
-    public function addItem($content) {
+    public function addItem($content)
+    {
         $child = new HTMLElement('li');
         $child->appendChild($content);
 
@@ -42,10 +45,9 @@ class HTMLList extends HTMLElement {
         return $child;
     }
 
-    public function setListStyle($style = 'none') {
+    public function setListStyle($style = 'none')
+    {
         $this->setStyle('list-style', $style);
     }
 
 }
-
-

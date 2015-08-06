@@ -36,7 +36,8 @@ use Symfony\Component\Routing\RouteCollection as BaseCollection;
  * @createAt 18/07/2015
  * @author Elton Luiz
  */
-class RouteCollection extends BaseCollection {
+class RouteCollection extends BaseCollection
+{
 
     /**
      * Define uma rota para os métodos http GET, POST e HEAD
@@ -46,7 +47,8 @@ class RouteCollection extends BaseCollection {
      * definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setRoute($path, $callable) {
+    public function setRoute($path, $callable)
+    {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods(['POST', 'GET', 'HEAD']);
@@ -62,7 +64,8 @@ class RouteCollection extends BaseCollection {
      * definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setPost($path, $callable) {
+    public function setPost($path, $callable)
+    {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods('POST');
@@ -78,7 +81,8 @@ class RouteCollection extends BaseCollection {
      * definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setGet($path, $callable) {
+    public function setGet($path, $callable)
+    {
         $route = new Route($path);
         $route->setDefault('_controller', $callable);
         $route->setMethods('GET');

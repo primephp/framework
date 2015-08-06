@@ -15,7 +15,8 @@ use Prime\Model\SQL\SQLExpression;
  * @since 08/10/2011
  * @access public
  */
-interface IModel {
+interface IModel
+{
 
     public function __construct($id = null);
 
@@ -69,5 +70,3 @@ interface IModel {
 
     public function addColumns($columnsName);
 }
-
-

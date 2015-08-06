@@ -8,7 +8,8 @@ namespace Prime\Model\SQL;
  * Esta classe provê meios para manipulação de uma instrução de SELECT no banco de dados
  */
 
-final class SQLSelect extends SQLStatement {
+final class SQLSelect extends SQLStatement
+{
 
     private $columns;     // array de colunas a serem retornadas.
 
@@ -18,7 +19,8 @@ final class SQLSelect extends SQLStatement {
      * @param $column = coluna da tabela
      */
 
-    public function addColumn($column) {
+    public function addColumn($column)
+    {
         // adiciona a coluna no array
         $this->columns[] = $column;
     }
@@ -28,7 +30,8 @@ final class SQLSelect extends SQLStatement {
      * retorna a instrução de SELECT em forma de string.
      */
 
-    public function getStatement() {
+    public function getStatement()
+    {
         // monta a instrução de SELECT
         $this->sql = 'SELECT ';
 
@@ -72,4 +75,3 @@ final class SQLSelect extends SQLStatement {
     }
 
 }
-

@@ -13,7 +13,8 @@ use Prime\Html\Base\HTMLElement;
  * Concluida
  *
  */
-abstract class HTMLInput {
+abstract class HTMLInput
+{
 
     protected $events = [];
     protected $styles = [];
@@ -31,7 +32,8 @@ abstract class HTMLInput {
     protected $element;
     protected static $eventList = [];
 
-    public function __construct($tagname = "input") {
+    public function __construct($tagname = "input")
+    {
         $this->element = new HTMLElement($tagname);
     }
 
@@ -40,7 +42,8 @@ abstract class HTMLInput {
      * @param boolean $event
      * @return string
      */
-    private function checkEvent($event) {
+    private function checkEvent($event)
+    {
         $event = strtolower($event);
         self::$eventList["click"] = "onclick";
         self::$eventList["mouseover"] = "onmouseover";
@@ -72,7 +75,8 @@ abstract class HTMLInput {
      * @param bool $bool
      * @return HTMLElement Retorna uma objeto HTMLElement para tag Label
      */
-    public function setLabel($label) {
+    public function setLabel($label)
+    {
         if (is_string($label)) {
             $HTMLLabel = new HTMLElement('label');
             $HTMLLabel->appendChild($label);
@@ -92,7 +96,8 @@ abstract class HTMLInput {
      * @return void
      * @param string $value
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $this->element->value = $value;
     }
 
@@ -101,14 +106,16 @@ abstract class HTMLInput {
      *
      * @param string $name
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         if (is_string($name)) {
             $this->element->name = $name;
             $this->element->id = $name;
         }
     }
 
-    public function setStyle($property, $value) {
+    public function setStyle($property, $value)
+    {
         $this->element->setStyle($property, $value);
     }
 
@@ -117,11 +124,13 @@ abstract class HTMLInput {
      * @param string $name
      * @param string $value
      */
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value)
+    {
         $this->element->setAttribute($name, $value);
     }
 
-    public function getAttribute($name) {
+    public function getAttribute($name)
+    {
         return $this->element->getAttribute($name);
     }
 
@@ -131,7 +140,8 @@ abstract class HTMLInput {
      *
      * @param string $maxlength
      */
-    public function setMaxLength($maxlength) {
+    public function setMaxLength($maxlength)
+    {
         if (is_numeric($maxlength)) {
             $this->element->maxlength = (int) $maxlength;
         } else {
@@ -145,7 +155,8 @@ abstract class HTMLInput {
      *
      * @param integer $size
      */
-    public function setSize($size) {
+    public function setSize($size)
+    {
         if (is_int($size)) {
             $this->element->size = $size;
         } else {
@@ -158,7 +169,8 @@ abstract class HTMLInput {
      * @param string $event
      * @param string $function
      */
-    public function addEvent($event, $function) {
+    public function addEvent($event, $function)
+    {
         if ($this->checkEvent($event)) {
             $this->element->$event = $function;
         } else {
@@ -173,7 +185,8 @@ abstract class HTMLInput {
      *
      * @return void
      */
-    public function addCSSClass($className) {
+    public function addCSSClass($className)
+    {
         $this->addClass($className);
     }
 
@@ -184,7 +197,8 @@ abstract class HTMLInput {
      *
      * @return
      */
-    public function addClass($className) {
+    public function addClass($className)
+    {
         if (is_string($className)) {
             $this->element->addClass($className);
         } else {
@@ -198,7 +212,8 @@ abstract class HTMLInput {
      * @return void
      * @param string $cssStyle
      */
-    public function addCSSStyle($cssStyle = null) {
+    public function addCSSStyle($cssStyle = null)
+    {
         if (is_string($cssStyle)) {
             $this->element->style = $cssStyle;
         } else {
@@ -211,7 +226,8 @@ abstract class HTMLInput {
      *
      * @param string $id
      */
-    public function setId($id) {
+    public function setId($id)
+    {
         if (is_string($id)) {
             $this->element->id = $id;
         } else {
@@ -225,7 +241,8 @@ abstract class HTMLInput {
      *
      * @param boolean $boolean
      */
-    public function isReadOnly($boolean = TRUE) {
+    public function isReadOnly($boolean = TRUE)
+    {
         if (is_bool($boolean)) {
             $this->readonly = ($boolean == TRUE) ? " readonly " : " ";
         } else {
@@ -239,7 +256,8 @@ abstract class HTMLInput {
      *
      * @param boolean $boolean
      */
-    public function isEnabled($boolean = FALSE) {
+    public function isEnabled($boolean = FALSE)
+    {
         if (is_bool($boolean)) {
             $this->element->disabled = ($boolean == true) ? " disabled " : "disabled";
         } else {
@@ -253,7 +271,8 @@ abstract class HTMLInput {
      *
      * @param string $title
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->element->title = $title;
     }
 
@@ -263,7 +282,8 @@ abstract class HTMLInput {
      *
      * @param string $index
      */
-    public function setTabIndex($index) {
+    public function setTabIndex($index)
+    {
         if (is_numeric($index)) {
             $this->element->tabindex = (int) $index;
         } else {
@@ -271,7 +291,8 @@ abstract class HTMLInput {
         }
     }
 
-    public function setPlaceHolder($text) {
+    public function setPlaceHolder($text)
+    {
         $this->setAttribute('placeholder', $text);
     }
 
@@ -285,11 +306,13 @@ abstract class HTMLInput {
      * @return string
      *
      */
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         $return = $this->element->getOutput();
         if (!is_null($this->label)) {
             if ($this instanceof IHtmlInputPostLabeled) {
@@ -302,7 +325,8 @@ abstract class HTMLInput {
         return $return;
     }
 
-    protected function triggerError($class, $method) {
+    protected function triggerError($class, $method)
+    {
         trigger_error("Passagem de parâmetro inválido em $class::$method", E_USER_ERROR);
     }
 

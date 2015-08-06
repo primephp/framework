@@ -4,18 +4,21 @@ namespace Prime\Controller;
 
 use Prime\Server\Http\Request;
 use Prime\Server\Http\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * Descrição da Classe Controller<br>
+ * Descrição da Classe AbstractController<br>
  * 
  * <br>
  * Por Padrão todos os métodos de Ação do Controller
  * deve ser nomeados com o sufixo Action
+ * @name AbstractController
  * @package Prime\Controller
  * @author TomSailor
  * @since 03/08/2011
  */
-abstract class AbstractController implements ControllerInterface {
+abstract class AbstractController implements ControllerInterface
+{
 
     /**
      * Armazena a instância de request que será utilizada pelo controller
@@ -29,19 +32,29 @@ abstract class AbstractController implements ControllerInterface {
      */
     private $response = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->initialize();
     }
 
-    protected function initialize() {
+    protected function initialize()
+    {
         
     }
 
-    public function redirect() {
-        
+    /**
+     * Redireciona para uma URL passada como parâmetro
+     * @param string $url A Url para qual a requisição deve ser redirecionada
+     * @param int $status O status HTTP, por padrão é 302
+     * @return RedirectResponse retorna uma instância da classe RedirectResponse
+     */
+    public function redirect($url, $status = 302)
+    {
+        return new RedirectResponse($url, $status);
     }
 
-    public function setRequest(Request $request) {
+    public function setRequest(Request $request)
+    {
         $this->request = $request;
     }
 
@@ -49,7 +62,8 @@ abstract class AbstractController implements ControllerInterface {
      * Retorna o objeto Request 
      * @return Request
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         if (is_null($this->request)) {
             $this->request = Request::createFromGlobals();
         }
@@ -60,7 +74,8 @@ abstract class AbstractController implements ControllerInterface {
      * Retorna o objeto Response
      * @return Response
      */
-    public function getResponse() {
+    public function getResponse()
+    {
         if (is_null($this->response)) {
             $this->response = new Response();
         }
@@ -71,27 +86,23 @@ abstract class AbstractController implements ControllerInterface {
      * Define o Objeto Response que será utilizado pelo Controller
      * @param Response $response
      */
-    public function setResponse(Response $response) {
+    public function setResponse(Response $response)
+    {
         $this->response = $response;
     }
 
-    public function dispatch() {
+    public function dispatch()
+    {
         
     }
 
-    protected function beforeDispatch() {
+    protected function finalize()
+    {
         
     }
 
-    protected function afterDispatch() {
-        
-    }
-
-    protected function finalize() {
-        
-    }
-
-    public function __destruct() {
+    public function __destruct()
+    {
         $this->finalize();
     }
 

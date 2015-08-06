@@ -9,13 +9,15 @@ namespace Prime\Html\Base;
  * @author tom
  * @since 28/01/2012
  */
-class HTMLHeader extends HTMLElement {
+class HTMLHeader extends HTMLElement
+{
 
     /**
      * Cria uma Tag HTML h1 a h6 de acordo com o parâmetro passado
      * @param int $num 
      */
-    public function __construct($num = 1) {
+    public function __construct($num = 1)
+    {
         if ($num > 0 || $num < 7) {
             parent::__construct('h' . $num);
         } else {
@@ -24,5 +26,3 @@ class HTMLHeader extends HTMLElement {
     }
 
 }
-
-

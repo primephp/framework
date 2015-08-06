@@ -16,14 +16,16 @@ use Prime\Util\Interfaces\IList;
  *          @dateCreate 06/06/2014
  * @author Elton Luiz
  */
-class ArrayList extends AbstractList implements IList, IClonable, ISerializable {
+class ArrayList extends AbstractList implements IList, IClonable, ISerializable
+{
 
     /**
      * Retorna um Clone o objeto ArrayList
      * 
      * @return ArrayList
      */
-    public function getClone() {
+    public function getClone()
+    {
         return clone $this;
     }
 
@@ -32,11 +34,13 @@ class ArrayList extends AbstractList implements IList, IClonable, ISerializable 
      * 
      * @return string contendo o byte-stream representando o objeto ArrayList
      */
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this);
     }
 
-    public function subList($fromIndex, $toIndex) {
+    public function subList($fromIndex, $toIndex)
+    {
         // user iterator para iterar e criar um novo arrayList através
         // dos parametros passados
     }

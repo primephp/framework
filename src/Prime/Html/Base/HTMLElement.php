@@ -5,7 +5,8 @@ namespace Prime\Html\Base;
 use Prime\Html\Interfaces\IHTMLElement,
     Prime\Html\Style\HTMLStyleInline;
 
-class HTMLElement implements IHTMLElement {
+class HTMLElement implements IHTMLElement
+{
 
     private $tag_name;
     private $properties;
@@ -20,7 +21,8 @@ class HTMLElement implements IHTMLElement {
      *
      * @param string $name
      */
-    public function __construct($name) {
+    public function __construct($name)
+    {
         //define o nome do elemento
         $this->tag_name = $name;
     }
@@ -33,7 +35,8 @@ class HTMLElement implements IHTMLElement {
      * @param string $value;
      * @return void
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         //armazena os valores atribuidos
         //ao array properties
         $this->properties[$name] = $value;
@@ -44,7 +47,8 @@ class HTMLElement implements IHTMLElement {
      * @param type $name
      * @return type 
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (isset($this->properties[$name])) {
             return $this->properties[$name];
         }
@@ -55,7 +59,8 @@ class HTMLElement implements IHTMLElement {
      * @param string $name
      * @return mixed 
      */
-    public function getAttribute($name) {
+    public function getAttribute($name)
+    {
         if (isset($this->properties[(string) $name])) {
             return $this->properties[(string) $name];
         } else {
@@ -67,14 +72,16 @@ class HTMLElement implements IHTMLElement {
      * Retorna o último elemento filho adicionado 
      * @return mixed
      */
-    public function getLastChild() {
+    public function getLastChild()
+    {
         $childNum = count($this->children) - 1;
         if (isset($this->children[$childNum])) {
             return $this->children[$childNum];
         }
     }
 
-    public function addClass($class) {
+    public function addClass($class)
+    {
         $this->classes[] = $class;
     }
 
@@ -82,13 +89,15 @@ class HTMLElement implements IHTMLElement {
      * Retorna o primeiro elemento filho adicionado
      * @return mixed
      */
-    public function getFirstChild() {
+    public function getFirstChild()
+    {
         if (isset($this->children[0])) {
             return $this->children[0];
         }
     }
 
-    public function hasChildren() {
+    public function hasChildren()
+    {
         return (bool) count($this->children);
     }
 
@@ -98,7 +107,8 @@ class HTMLElement implements IHTMLElement {
      * @param string $name
      * @param mixed $value 
      */
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value)
+    {
         //armazena os valores atribuidos
         //ao array properties
         if ($name == 'class') {
@@ -108,7 +118,8 @@ class HTMLElement implements IHTMLElement {
         }
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->properties['title'] = $title;
     }
 
@@ -117,7 +128,8 @@ class HTMLElement implements IHTMLElement {
      *
      * @param mixed $child
      */
-    public function appendChild($child) {
+    public function appendChild($child)
+    {
         if (is_array($child)) {
             foreach ($child as $childs) {
                 $this->children[] = $childs;
@@ -127,11 +139,13 @@ class HTMLElement implements IHTMLElement {
         }
     }
 
-    public function prependChild($child) {
+    public function prependChild($child)
+    {
         array_unshift($this->children, $child);
     }
 
-    private function getClasses() {
+    private function getClasses()
+    {
         if (count($this->classes)) {
             $classes = "class = \"";
             foreach ($this->classes as $value) {
@@ -148,7 +162,8 @@ class HTMLElement implements IHTMLElement {
      * Abre a tag html a introduz toda os atributos definidos
      * @return string
      */
-    protected function openTag() {
+    protected function openTag()
+    {
         $this->openTag = "<{$this->tag_name}";
         $this->midTag = "";
         $this->midTag = ' ' . $this->getClasses();
@@ -166,7 +181,8 @@ class HTMLElement implements IHTMLElement {
      * Fecha uma tag HTML
      *
      */
-    protected function closeTag() {
+    protected function closeTag()
+    {
         return "</{$this->tag_name}>\n";
     }
 
@@ -174,7 +190,8 @@ class HTMLElement implements IHTMLElement {
      * Método que exibe a tag na tela, juntamente com seu conteúdo
      *
      */
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 
@@ -183,7 +200,8 @@ class HTMLElement implements IHTMLElement {
      * pronto para ser inserido em outro objeto ou impresso em tela
      * @return string
      */
-    protected function getChildren() {
+    protected function getChildren()
+    {
         $output = '';
         foreach ($this->children as $child) {
             if (is_object($child)) {
@@ -202,7 +220,8 @@ class HTMLElement implements IHTMLElement {
      *
      * @return string
      */
-    public function getOutput() {
+    public function getOutput()
+    {
         $tag_name = $this->openTag();
         if (is_array($this->children)) {
             $tag_name .= $this->getChildren();
@@ -219,7 +238,8 @@ class HTMLElement implements IHTMLElement {
      * @param string $property
      * @param string $value 
      */
-    public function setStyle($property, $value) {
+    public function setStyle($property, $value)
+    {
         if ($value instanceof HTMLStyleInline) {
             $this->setAttribute('style', $value->getOutput());
         } else {
@@ -233,7 +253,8 @@ class HTMLElement implements IHTMLElement {
      * $style;
      * @return string 
      */
-    private function getStyles() {
+    private function getStyles()
+    {
         if ($this->style) {
             $style = "style = \"";
             foreach ($this->style as $key => $value) {

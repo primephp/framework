@@ -2,11 +2,13 @@
 
 namespace Prime\Html\Base;
 
-class HTMLDateOptions {
+class HTMLDateOptions
+{
 
     private static $meses;
 
-    public function __construct() {
+    public function __construct()
+    {
         date_default_timezone_set("Brazil/East");
         //print_r(DateTimeZone::listAbbreviations());
         self::$meses[] = "Janeiro";
@@ -23,7 +25,8 @@ class HTMLDateOptions {
         self::$meses[] = "Dezembro";
     }
 
-    public function getDates($e = "") {
+    public function getDates($e = "")
+    {
         $e = (empty($e)) ? date("d") : (int) $e;
         $options = new ArrayList();
         for ($d = 1; $d <= 31; $d++) {
@@ -45,7 +48,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList de HTMLElement
      */
-    public function getMonths($e = "") {
+    public function getMonths($e = "")
+    {
         $e = (empty($e)) ? date("m") : (int) $e;
         $options = new ArrayList();
         for ($d = 1; $d <= 12; $d++) {
@@ -67,7 +71,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList
      */
-    public function getLongMonths($e = "") {
+    public function getLongMonths($e = "")
+    {
         $e = (empty($e)) ? date("m") : (int) $e;
         $options = new ArrayList();
         for ($d = 1; $d <= 12; $d++) {
@@ -89,7 +94,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList
      */
-    public function getShortMonths($e = "") {
+    public function getShortMonths($e = "")
+    {
         $e = (empty($e)) ? date("m") : (int) $e;
         $options = new ArrayList();
         for ($d = 1; $d <= 12; $d++) {
@@ -111,7 +117,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList
      */
-    public function getYears($e = "") {
+    public function getYears($e = "")
+    {
         $e = (empty($e)) ? date("Y") : (int) $e;
         $options = new ArrayList();
         for ($d = ($e - 5); $d <= ($e + 10); $d++) {
@@ -131,7 +138,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList
      */
-    public function getHours($e = "") {
+    public function getHours($e = "")
+    {
         $e = (empty($e)) ? date("H") : (int) $e;
         $options = new ArrayList();
         for ($d = 0; $d <= 23; $d++) {
@@ -152,7 +160,8 @@ class HTMLDateOptions {
      * @param int $e
      * @return ArrayList
      */
-    public function getMinutes($e = "") {
+    public function getMinutes($e = "")
+    {
         $e = (empty($e)) ? date("i") : (int) $e;
         $options = new ArrayList();
         for ($d = 0; $d <= 59; $d++) {
@@ -169,4 +178,3 @@ class HTMLDateOptions {
     }
 
 }
-

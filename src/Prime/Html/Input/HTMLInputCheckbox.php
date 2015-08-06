@@ -10,11 +10,13 @@ namespace Prime\Html\Input;
  * Concluida
  *  
  */
-class HTMLInputCheckbox extends HTMLInput implements IHtmlInputPostLabeled {
+class HTMLInputCheckbox extends HTMLInput implements IHtmlInputPostLabeled
+{
 
     private $state;
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct();
         $this->element->type = "checkbox";
         $this->element->name = $name;
@@ -27,7 +29,8 @@ class HTMLInputCheckbox extends HTMLInput implements IHtmlInputPostLabeled {
      *
      * @param boolean $bool
      */
-    public function isChecked($bool = FALSE) {
+    public function isChecked($bool = FALSE)
+    {
         if (is_bool($bool) && $bool == TRUE) {
             $this->element->checked = "checked ";
         }

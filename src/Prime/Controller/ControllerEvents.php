@@ -16,6 +16,7 @@ namespace Prime\Controller;
  * @author TomSailor
  * @createAt 02/08/2015
  */
-final class ControllerEvents {
+final class ControllerEvents
+{
     
 }

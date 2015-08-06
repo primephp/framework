@@ -34,6 +34,7 @@ namespace Prime\EventDispatcher;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-class BaseEvent {
+class BaseEvent
+{
     //put your code here
 }

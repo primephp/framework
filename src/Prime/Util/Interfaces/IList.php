@@ -28,7 +28,8 @@ namespace Prime\Util\Interfaces;
  * diferentes, assim como também elementos nulos
  * @author tom
  */
-interface IList extends ICollection {
+interface IList extends ICollection
+{
 
     /**
      * Insere o elemento especificado na posição especificada nesta lista.

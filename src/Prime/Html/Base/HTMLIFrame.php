@@ -2,13 +2,15 @@
 
 namespace Prime\Html\Base;
 
-class HTMLIFrame extends HTMLElement {
+class HTMLIFrame extends HTMLElement
+{
 
     /**
      * Cria um IFrame
      * @param string $text
      */
-    public function __construct($src = NULL) {
+    public function __construct($src = NULL)
+    {
         parent::__construct("iframe");
         $this->setAttribute("width", "99%");
         //$this->setAttribute("height", "0");
@@ -26,9 +28,9 @@ class HTMLIFrame extends HTMLElement {
      *
      * @param string $child
      */
-    public function appendChild($child) {
+    public function appendChild($child)
+    {
         $this->setAttribute("src", $child);
     }
 
 }
-

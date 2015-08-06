@@ -10,7 +10,8 @@ use Iterator;
  * @dateCreate 06/06/2014
  * @author comforsup-0215
  */
-interface IIterator extends Iterator {
+interface IIterator extends Iterator
+{
 
     public function hasNext();
 

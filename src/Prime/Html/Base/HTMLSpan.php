@@ -2,7 +2,8 @@
 
 namespace Prime\Html\Base;
 
-class HTMLSpan extends HTMLElement {
+class HTMLSpan extends HTMLElement
+{
 
 //configuracao interna de dados
     /**
@@ -10,10 +11,10 @@ class HTMLSpan extends HTMLElement {
      *
      * @param string $text
      */
-    public function __construct($content = "") {
+    public function __construct($content = "")
+    {
         parent::__construct("span");
         parent::appendChild($content);
     }
 
 }
-

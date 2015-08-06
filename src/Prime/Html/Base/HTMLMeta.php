@@ -8,14 +8,16 @@ namespace Prime\Html\Base;
  * META
  * @author TomSailor
  */
-class HTMLMeta extends HTMLElement {
+class HTMLMeta extends HTMLElement
+{
 
     /**
      * Método Construtor
      * @param string $name nome para o atribute name
      * da tag META
      */
-    function __construct($name = null) {
+    function __construct($name = null)
+    {
         parent::__construct("meta");
         if ($name) {
             $this->setAttribute("name", $name);
@@ -27,7 +29,8 @@ class HTMLMeta extends HTMLElement {
      * @param string $content conteúdo do atributo content da tag META
      * 
      */
-    function setContent($content) {
+    function setContent($content)
+    {
         $this->setAttribute("content", $content);
     }
 
@@ -37,10 +40,9 @@ class HTMLMeta extends HTMLElement {
      * @param string $metaName nome do atributo da tag META
      * @param string $value valor do atributo
      */
-    function setMetaAttibute($metaName, $value) {
+    function setMetaAttibute($metaName, $value)
+    {
         $this->setAttribute($metaName, $value);
     }
 
 }
-
-

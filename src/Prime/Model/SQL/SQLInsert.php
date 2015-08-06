@@ -8,7 +8,8 @@ namespace Prime\Model\SQL;
  * Esta classe provê meios para manipulação de uma instrução de INSERT no banco de dados
  */
 
-final class SQLInsert extends SQLStatement {
+final class SQLInsert extends SQLStatement
+{
 
     private $columnValues;
 
@@ -18,10 +19,11 @@ final class SQLInsert extends SQLStatement {
      * @param $column = coluna da tabela
      * @param $value = valor a ser armazenado
      */
-    public function setRowData($column, $value) {
+    public function setRowData($column, $value)
+    {
         // verifica se é um dado escalar (string, inteiro, ...)
         if (is_scalar($value)) {
-            if (is_string($value) and (!empty($value))) {
+            if (is_string($value) and ( !empty($value))) {
                 // adiciona \ em aspas
                 $value = addslashes($value);
                 // caso seja uma string
@@ -43,7 +45,8 @@ final class SQLInsert extends SQLStatement {
      * método setCriteria()
      * não existe no contexto desta classe, logo, irá lançar um erro ser for executado
      */
-    public function setCriteria(SQLExpression $criteria) {
+    public function setCriteria(SQLExpression $criteria)
+    {
         // lança o erro
         throw new Exception("Não pode chamar o método setCriteria de " . __CLASS__);
     }
@@ -52,7 +55,8 @@ final class SQLInsert extends SQLStatement {
      * método getStatement()
      * retorna a instrução de INSERT em forma de string.
      */
-    public function getStatement() {
+    public function getStatement()
+    {
         $this->sql = "INSERT INTO {$this->entity} (";
         // monta uma string contendo os nomes de colunas
         $columns = implode(', ', array_keys($this->columnValues));
@@ -64,4 +68,3 @@ final class SQLInsert extends SQLStatement {
     }
 
 }
-

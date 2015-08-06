@@ -2,7 +2,8 @@
 
 namespace Prime\Html\Base;
 
-class HTMLParagraph extends HTMLElement {
+class HTMLParagraph extends HTMLElement
+{
 
 //configuracao interna de dados
     /**
@@ -10,7 +11,8 @@ class HTMLParagraph extends HTMLElement {
      *
      * @param string $text
      */
-    public function __construct($text = "") {
+    public function __construct($text = "")
+    {
         parent::__construct("p");
         $this->appendChild($text);
     }
@@ -20,7 +22,8 @@ class HTMLParagraph extends HTMLElement {
      *
      * @param string $text
      */
-    public function appendText($text) {
+    public function appendText($text)
+    {
         $this->appendChild($text);
     }
 
@@ -29,7 +32,8 @@ class HTMLParagraph extends HTMLElement {
      * left, center,right
      * @param mixed $align
      */
-    public function setAlignment($align) {
+    public function setAlignment($align)
+    {
         if (is_numeric($align)) {
             $al = ["left", "center", "right"];
             $align = $al[$align];
@@ -38,4 +42,3 @@ class HTMLParagraph extends HTMLElement {
     }
 
 }
-

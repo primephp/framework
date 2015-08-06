@@ -9,21 +9,25 @@ use Prime\Html\Base\HTMLElement;
  * Cria uma tag de uma lista de descrição DL
  * @author Elton Luiz
  */
-class HTMLDl extends HTMLElement {
+class HTMLDl extends HTMLElement
+{
 
-    public function __construct($id = NULL) {
+    public function __construct($id = NULL)
+    {
         parent::__construct('dl');
         if (!is_null($id)) {
             $this->setAttribute('id', $id);
         }
     }
-    
-    public function addItem($term, $value){
+
+    public function addItem($term, $value)
+    {
         parent::appendChild($term);
         parent::appendChild($value);
     }
 
-    public function appendChild(HTMLDt $dt, HTMLDd $dd = NULL) {
+    public function appendChild(HTMLDt $dt, HTMLDd $dd = NULL)
+    {
         parent::appendChild($dt);
         if (!is_null($dd)) {
             parent::appendChild($dd);

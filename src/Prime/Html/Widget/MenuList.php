@@ -12,13 +12,15 @@ use Prime\Html\Base\HTMLAnchor,
  * @since 21/03/2011
  * @author TomSailor <www.eltonluiz@hotmail.com>
  */
-class MenuList extends HTMLElement {
+class MenuList extends HTMLElement
+{
     /* @var HTMLElement $menu */
 
     private $menu;
     private $menuItens;
 
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct('ul');
         $this->menu = new HTMLElement("ul");
     }
@@ -30,7 +32,8 @@ class MenuList extends HTMLElement {
      * @param type $target
      * @return HTMLElement Retorna um objeto HTMLElement(li)
      */
-    public function addItem($text = "Novo Menu", $href = "#", $target = NULL) {
+    public function addItem($text = "Novo Menu", $href = "#", $target = NULL)
+    {
         //Cria um elemento HTML ListItem
         $item = new HTMLElement("li");
         //Cria um elemento HTML Anchor
@@ -50,7 +53,8 @@ class MenuList extends HTMLElement {
      * e um HTML de acordo com os parâmetros passados
      * @param HTMLAnchor $anchor 
      */
-    public function addLink(HTMLAnchor $anchor) {
+    public function addLink(HTMLAnchor $anchor)
+    {
         //Cria um elemento HTML ListItem
         $item = new HTMLElement("li");
         $item->appendChild($anchor);
@@ -58,14 +62,14 @@ class MenuList extends HTMLElement {
         parent::appendChild($item);
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 
-    public function addMenuList(MenuList $menu) {
+    public function addMenuList(MenuList $menu)
+    {
         $this->menuItens[] = $menu;
     }
 
 }
-
-

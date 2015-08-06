@@ -27,6 +27,8 @@
 namespace Prime\Console\Command;
 
 use Prime\Console\BaseCommand;
+use Prime\FileSystem\File;
+use Prime\FileSystem\Filesystem;
 use Prime\Model\DataSource\Connection;
 use Prime\Model\DataSource\Metadata\CreateDataSource;
 use RuntimeException;
@@ -42,15 +44,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @createAt 22/07/2015
  * @author Elton Luiz
  */
-class CreateDataSourceCommand extends BaseCommand {
+class CreateDataSourceCommand extends BaseCommand
+{
 
-    private function isConnected() {
+    private function isConnected()
+    {
         if (!Connection::get()) {
             throw new RuntimeException('Há conexão com com banco de dados.');
         }
     }
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('create:datasource')
                 ->setProcessTitle('DataSource Create')
                 ->setDescription('Cria um objeto para acesso aos dados de uma tabela do banco de dados da aplicação')
@@ -59,12 +64,23 @@ class CreateDataSourceCommand extends BaseCommand {
                 ->setHelp('console create:DataSource {NomeDaTabela} para criar uma classe de acesso ao banco de dados');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $this->isConnected();
         $entity = $input->getArgument('entity');
 
-        $DataSource = new CreateDataSource($entity);
-        $output->write($DataSource->getOutput());
+        $dataSource = new CreateDataSource($entity);
+
+        $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'DataSource';
+        $filename = realpath($dirBase) . DIRECTORY_SEPARATOR . $dataSource->getClassName() . '.php';
+
+        Filesystem::getInstance()->touch($filename);
+
+        $file = new File($filename);
+        $fileObject = $file->openFile('w');
+        $fileObject->fwrite($dataSource->getOutput());
+
+        $output->writeln("<info>$filename criado com sucesso!!!</info>");
     }
 
 }

@@ -11,7 +11,8 @@ namespace Prime\Html\Base;
  * @access public
  * @author TomSailor <www.eltonluiz@hotmail.com>
  */
-class HTMLDivImage extends HTMLElement {
+class HTMLDivImage extends HTMLElement
+{
 
     private $info;
     private $height;
@@ -25,7 +26,8 @@ class HTMLDivImage extends HTMLElement {
      * @param string $src = localizacao da imagem a partir da raiz do site.;
      * @param string $size Aceita a definição do background como COVER ou CONTAIN
      */
-    public function __construct($src, $size = 'cover') {
+    public function __construct($src, $size = 'cover')
+    {
         parent::__construct("div");
 
         $file = PUBLIC_PATH . $src;
@@ -43,31 +45,37 @@ class HTMLDivImage extends HTMLElement {
         }
     }
 
-    public function setAlt($text) {
+    public function setAlt($text)
+    {
         $this->setAttribute("alt", $text);
     }
 
-    public function setWidth($width) {
+    public function setWidth($width)
+    {
         $this->newWidth = $width;
     }
 
-    public function getWidth() {
+    public function getWidth()
+    {
         if (isset($this->info[0])) {
             return $this->info[0];
         }
     }
 
-    public function setHeight($height) {
+    public function setHeight($height)
+    {
         $this->newHeight = $height;
     }
 
-    public function getHeight() {
+    public function getHeight()
+    {
         if (isset($this->info[1])) {
             return $this->info[1];
         }
     }
 
-    public function setMaximumSize($height, $width) {
+    public function setMaximumSize($height, $width)
+    {
         $novaLargura = (int) $width;
         $novaAltura = (int) $height;
         if ($this->info[1] > $height || $this->info[0] > $width) {
@@ -91,7 +99,8 @@ class HTMLDivImage extends HTMLElement {
         }
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         if (empty($this->newHeight)) {
             $this->setStyle('height', $this->getHeight() . 'px');
         } else {

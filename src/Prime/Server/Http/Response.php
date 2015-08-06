@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response as BaseResponse;
  * @author tom
  *        
  */
-class Response extends BaseResponse {
+class Response extends BaseResponse
+{
     
 }

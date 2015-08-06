@@ -12,8 +12,9 @@ namespace Prime\Core;
  *  @dateCreate 29/05/2014
  * 
  */
-abstract class Number extends Object {
-    
+abstract class Number extends Object
+{
+
     abstract function getValue();
 
     /**
@@ -24,7 +25,8 @@ abstract class Number extends Object {
      * para o tipo <code> int </ code>.
      * 
      */
-    public function intValue() {
+    public function intValue()
+    {
         return (int) $this->getValue();
     }
 
@@ -36,7 +38,8 @@ abstract class Number extends Object {
      *           to type <code>float</code>.
      * 
      */
-    public function floatValue() {
+    public function floatValue()
+    {
         return (float) $this->getValue();
     }
 
@@ -49,7 +52,8 @@ abstract class Number extends Object {
      *  @since   JDK1.1
      * 
      */
-    public function byteValue() {
+    public function byteValue()
+    {
         return $this->getValue();
     }
 

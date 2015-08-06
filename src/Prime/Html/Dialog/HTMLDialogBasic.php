@@ -5,10 +5,12 @@ namespace Prime\Html\Dialog;
 use App\Config\AppConfig,
     Prime\Html\Base\HTMLImage;
 
-class HTMLDialogBasic extends HTMLDialog {
+class HTMLDialogBasic extends HTMLDialog
+{
 
 //instancia uma nova linha
-    public function __construct($message, $title = "INFORMATIVO.", $width = 360, $height = 180) {
+    public function __construct($message, $title = "INFORMATIVO.", $width = 360, $height = 180)
+    {
         parent::__construct($message, $title, $width, $height);
         $info = new HTMLImage(AppConfig::baseIcons() . "web-basic.png");
         $this->dialog->setPosition(0, 0);
@@ -21,4 +23,3 @@ class HTMLDialogBasic extends HTMLDialog {
     }
 
 }
-

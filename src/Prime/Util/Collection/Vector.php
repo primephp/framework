@@ -21,17 +21,21 @@ use Prime\Util\Interfaces\IList;
  * depois do vector foi criado. 
  * @author tom
  */
-class Vector extends AbstractList implements IList, IClonable, ISerializable {
+class Vector extends AbstractList implements IList, IClonable, ISerializable
+{
 
-    public function getClone() {
+    public function getClone()
+    {
         
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         
     }
 
-    public function subList($fromIndex, $toIndex) {
+    public function subList($fromIndex, $toIndex)
+    {
         
     }
 
@@ -41,7 +45,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * argumento de capacidade mínima. 
      * @param array $anArray
      */
-    public function copyInto(array $anArray) {
+    public function copyInto(array $anArray)
+    {
         
     }
 
@@ -52,7 +57,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * conjunto de dados interno, mantido no campo elementData, com um menor. 
      * Um aplicativo pode usar esta operação para minimizar o armazenamento de um vetor.
      */
-    public function trimToSize() {
+    public function trimToSize()
+    {
         
     }
 
@@ -62,7 +68,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * argumento de capacidade mínima. 
      * @param int $minCapacity
      */
-    public function ensureCapacity($minCapacity) {
+    public function ensureCapacity($minCapacity)
+    {
         
     }
 
@@ -73,7 +80,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * newSize e maior são descartadas.
      * @param int $newSize
      */
-    public function setSize($newSize) {
+    public function setSize($newSize)
+    {
         
     }
 
@@ -81,7 +89,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * Retorna a capacidade atual desse vetor.
      * @return int A capacidade atual do vetor
      */
-    public function capacity() {
+    public function capacity()
+    {
         
     }
 
@@ -90,23 +99,28 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * voltou irá gerar todos os itens deste vetor. O primeiro ponto é gerado o 
      * item no índice 0, então o item no índice 1, e assim por diante.
      */
-    public function elements() {
+    public function elements()
+    {
         
     }
 
-    public function elementAt($index) {
+    public function elementAt($index)
+    {
         
     }
 
-    public function firstElement() {
+    public function firstElement()
+    {
         
     }
 
-    public function lastElement() {
+    public function lastElement()
+    {
         
     }
 
-    public function setElementAt($e, $index) {
+    public function setElementAt($e, $index)
+    {
         
     }
 
@@ -118,7 +132,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * @param int $index
      * @return boolean
      */
-    public function removeElementAt($index) {
+    public function removeElementAt($index)
+    {
         return $this->removeIn($index);
     }
 
@@ -130,7 +145,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * @param mixed $e
      * @param int $index
      */
-    public function intertElementAt($e, $index) {
+    public function intertElementAt($e, $index)
+    {
         return $this->addIn($index, $e);
     }
 
@@ -141,7 +157,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * @param boolean $e Returna FALSE caso o elemento já esteja adicionado e não 
      * aceite duplicatas e TRUE caso tenha sido adicionado com sucesso.
      */
-    public function addElement($e) {
+    public function addElement($e)
+    {
         return $this->add($e);
     }
 
@@ -152,7 +169,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * ter um índice de um menor do que o valor que tinha antes. 
      * @param boolean $e
      */
-    public function removeElement($e) {
+    public function removeElement($e)
+    {
         return $this->remove($e);
     }
 
@@ -160,7 +178,8 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable {
      * Remove todos os componentes deste vetor e define o seu tamanho para zero. 
      * @return type
      */
-    public function removeAllElements() {
+    public function removeAllElements()
+    {
         return $this->clear();
     }
 

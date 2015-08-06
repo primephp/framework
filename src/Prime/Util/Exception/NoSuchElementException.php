@@ -26,9 +26,11 @@ use RuntimeException;
  *
  * @author comforsup-0213
  */
-class NoSuchElementException extends RuntimeException {
+class NoSuchElementException extends RuntimeException
+{
 
-    public function __construct($message, $code = NULL, $previous = NULL) {
+    public function __construct($message, $code = NULL, $previous = NULL)
+    {
         parent::__construct($message, $code, $previous);
     }
 

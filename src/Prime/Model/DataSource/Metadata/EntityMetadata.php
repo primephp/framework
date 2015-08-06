@@ -36,7 +36,8 @@ use \PDO,
  * @since 22/07/2015
  * @author TomSailor
  */
-class EntityMetadata {
+class EntityMetadata
+{
 
     /**
      *
@@ -48,14 +49,16 @@ class EntityMetadata {
     private $metadata = NULL;
     private $types = [];
 
-    public function __construct($entity = NULL) {
+    public function __construct($entity = NULL)
+    {
         $this->entity = $entity;
         $this->conn = Connection::get();
         $this->setTypes();
         $this->prepare();
     }
-    
-    private function setTypes(){
+
+    private function setTypes()
+    {
         $this->types = [
             //text
             'VARCHAR' => 'VARCHAR',
@@ -63,14 +66,13 @@ class EntityMetadata {
             'bpchar' => 'VARCHAR',
             'VAR_STRING' => 'VARCHAR',
             'BLOB' => 'VARCHAR',
-            
+            'STRING' => 'VARCHAR',
             //integer
             'TINY' => 'INTEGER',
             'LONG' => 'INTEGER',
             'int4' => 'INTEGER',
             'int' => 'INTEGER',
             'integer' => 'INTEGER',
-            
             //datetime
             'DATETIME' => 'DATETIME',
             'timestamp' => 'TIMESTAMP',
@@ -80,17 +82,18 @@ class EntityMetadata {
         ];
     }
 
-    private function prepare() {
+    private function prepare()
+    {
         $table = $this->entity;
         $query = "SELECT * FROM $table LIMIT 1";
 
         $conn = $this->conn;
         $statement = $conn->query($query);
-        
-        if(!$statement){
+
+        if (!$statement) {
             throw new \UnexpectedValueException('Entidade Relacional não encontrada no banco de dados.');
         }
-        
+
         $this->totalColumns = $statement->columnCount();
 
         for ($index = 0; $index < $this->totalColumns; $index++) {
@@ -130,15 +133,18 @@ class EntityMetadata {
         $this->metadata = $columns;
     }
 
-    public function getEntityName() {
+    public function getEntityName()
+    {
         return $this->entity;
     }
 
-    public function getTotalColumns() {
+    public function getTotalColumns()
+    {
         return $this->totalColumns;
     }
 
-    public function get() {
+    public function get()
+    {
         return $this->metadata;
     }
 

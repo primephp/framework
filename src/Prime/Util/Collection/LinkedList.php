@@ -23,61 +23,76 @@ use Prime\Util\Interfaces\IList;
  * desde o início ou o fim, o que for mais perto do índice especificado. 
  * @author tom
  */
-class LinkedList extends AbstractSequentialList implements IList, IDeque, IClonable, ISerializable {
+class LinkedList extends AbstractSequentialList implements IList, IDeque, IClonable, ISerializable
+{
 
-    public function addFirst($e) {
+    public function addFirst($e)
+    {
         
     }
 
-    public function addLast($e) {
+    public function addLast($e)
+    {
         
     }
 
-    public function element() {
+    public function element()
+    {
         
     }
 
-    public function getClone() {
+    public function getClone()
+    {
         
     }
 
-    public function getFirst() {
+    public function getFirst()
+    {
         
     }
 
-    public function offer($e) {
+    public function offer($e)
+    {
         
     }
 
-    public function offerLast($e) {
+    public function offerLast($e)
+    {
         
     }
 
-    public function peek() {
+    public function peek()
+    {
         
     }
 
-    public function peekFirst() {
+    public function peekFirst()
+    {
         
     }
 
-    public function poll() {
+    public function poll()
+    {
         
     }
 
-    public function pollFirst() {
+    public function pollFirst()
+    {
         
     }
 
-    public function removeFirst() {
+    public function removeFirst()
+    {
         
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         
     }
 
-    public function subList($fromIndex, $toIndex) {
+    public function subList($fromIndex, $toIndex)
+    {
         
     }
 

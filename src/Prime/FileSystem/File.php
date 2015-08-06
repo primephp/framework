@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
  * @createAt 28/07/2015
  * @author TomSailor
  */
-class File extends SymfonyFile {
+class File extends SymfonyFile
+{
     
 }

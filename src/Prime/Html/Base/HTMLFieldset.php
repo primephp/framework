@@ -7,7 +7,8 @@ namespace Prime\Html\Base;
  *
  * @author tom
  */
-class HTMLFieldset extends HTMLElement {
+class HTMLFieldset extends HTMLElement
+{
 
     /**
      * Armazena o objeto HTMLLegend que define a legenda
@@ -16,7 +17,8 @@ class HTMLFieldset extends HTMLElement {
      */
     private $_legend = NULL;
 
-    public function __construct($content = NULL) {
+    public function __construct($content = NULL)
+    {
         parent::__construct('fieldset');
 
         if (!is_null($content)) {
@@ -24,13 +26,15 @@ class HTMLFieldset extends HTMLElement {
         }
     }
 
-    public function setLegend($legend) {
+    public function setLegend($legend)
+    {
         $this->_legend = new HTMLLegend($legend);
 
         return $this->_legend;
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         if (!is_null($this->_legend)) {
             $this->prependChild($this->_legend);
         }
@@ -38,5 +42,3 @@ class HTMLFieldset extends HTMLElement {
     }
 
 }
-
-

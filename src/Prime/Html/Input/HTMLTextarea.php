@@ -9,12 +9,14 @@ namespace Prime\Html\Input;
  *
  * Concluida
  */
-class HTMLTextarea extends HTMLInput {
+class HTMLTextarea extends HTMLInput
+{
 
     /**
      * @param string $name
      */
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct("textarea");
         $this->element->name = $name;
         $this->element->id = $name;
@@ -28,7 +30,8 @@ class HTMLTextarea extends HTMLInput {
      * @return void
      * @param string rows
      */
-    public function setRows($rows) {
+    public function setRows($rows)
+    {
         if (is_numeric($rows)) {
             $this->element->rows = (int) $rows;
         } else {
@@ -39,7 +42,8 @@ class HTMLTextarea extends HTMLInput {
     /**
      * @param string $cols
      */
-    public function setCols($cols) {
+    public function setCols($cols)
+    {
         if (is_numeric($cols)) {
             $this->element->cols = (int) $cols;
         } else {
@@ -54,7 +58,8 @@ class HTMLTextarea extends HTMLInput {
      * uso com Ajax, logo se aperfeiçoamento trará grandes benefícios.
      * @param string $text
      */
-    public function addText($text) {
+    public function addText($text)
+    {
         if (is_string($text)) {
             $this->element->appendChild($text);
         } else {
@@ -63,4 +68,3 @@ class HTMLTextarea extends HTMLInput {
     }
 
 }
-

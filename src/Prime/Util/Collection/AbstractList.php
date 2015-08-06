@@ -13,13 +13,16 @@ use Prime\Util\Interfaces\IList;
  *
  * @author tom
  */
-abstract class AbstractList extends AbstractCollection implements IList {
+abstract class AbstractList extends AbstractCollection implements IList
+{
 
-    public function addIn($index, $element) {
+    public function addIn($index, $element)
+    {
         $this->_collection [$index] = $element;
     }
 
-    public function removeIn($index) {
+    public function removeIn($index)
+    {
         if (isset($this->_collection [$index])) {
             unset($this->_collection[$index]);
             return TRUE;
@@ -28,22 +31,26 @@ abstract class AbstractList extends AbstractCollection implements IList {
         }
     }
 
-    public function get($index) {
+    public function get($index)
+    {
         if (isset($this->_collection [$index])) {
             return $this->_collection [$index];
         }
     }
 
-    public function indexOf($o) {
+    public function indexOf($o)
+    {
         return array_search($o, $this->_collection);
     }
 
-    public function lastIndexOf($o) {
+    public function lastIndexOf($o)
+    {
         $array = array_reverse($this->_collection, TRUE);
         return array_search($o, $array);
     }
 
-    public function removeObject($o) {
+    public function removeObject($o)
+    {
         $index = $this->indexOf($o);
         if ($index !== FALSE) {
             unset($this->_collection [$index]);
@@ -58,13 +65,15 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param type $fromIndex
      * @param type $toIndex
      */
-    public function removeRange($fromIndex, $toIndex) {
+    public function removeRange($fromIndex, $toIndex)
+    {
         for ($index = $fromIndex; $index < $toIndex; $index++) {
             $this->removeIn($index);
         }
     }
 
-    public function set($index, $element) {
+    public function set($index, $element)
+    {
         $this->_collection [$index] = $element;
     }
 

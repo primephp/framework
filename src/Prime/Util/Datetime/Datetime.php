@@ -17,7 +17,8 @@ use UnexpectedValueException;
  * @author Elton Luiz
  *         @dateCreate 10/06/2014
  */
-class Datetime extends Object {
+class Datetime extends Object
+{
 
     const SECONDS_PER_DAY = 86400;
     const FORMAT_ATOM = "Y-m-d\TH:i:sP";
@@ -46,7 +47,8 @@ class Datetime extends Object {
      *
      * @param string $datetime        	
      */
-    public function __construct($datetime = NULL) {
+    public function __construct($datetime = NULL)
+    {
         $this->_date = new ArrayObject([]);
         if (!is_null($datetime)) {
             $this->setValue($datetime);
@@ -60,7 +62,8 @@ class Datetime extends Object {
      * @param array $array        	
      * @return boolean
      */
-    private function dateVerify(array $array) {
+    private function dateVerify(array $array)
+    {
         if (checkdate($array ['month'], $array ['day'], $array ['year'])) {
             return TRUE;
         } else {
@@ -74,7 +77,8 @@ class Datetime extends Object {
      * @param string $value        	
      * @throws UnexpectedValueException
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         $value = str_replace('/', '-', $value);
         $parse = date_parse($value);
         if ($this->dateVerify($parse)) {
@@ -91,7 +95,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getTimestamp() {
+    public function getTimestamp()
+    {
         if ($this->_date->offsetExists(0)) {
             return $this->_date->offsetGet(0);
         } else {
@@ -105,7 +110,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getMonth() {
+    public function getMonth()
+    {
         if ($this->_date->offsetExists('mon')) {
             return $this->_date->offsetGet('mon');
         } else {
@@ -119,7 +125,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getYear() {
+    public function getYear()
+    {
         if ($this->_date->offsetExists('year')) {
             return $this->_date->offsetGet('year');
         } else {
@@ -133,7 +140,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getDay() {
+    public function getDay()
+    {
         if ($this->_date->offsetExists('day')) {
             return $this->_date->offsetGet('day');
         } else {
@@ -147,7 +155,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getHour() {
+    public function getHour()
+    {
         if ($this->_date->offsetExists('hour')) {
             return $this->_date->offsetGet('hour');
         } else {
@@ -161,7 +170,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getMinute() {
+    public function getMinute()
+    {
         if ($this->_date->offsetExists('minute')) {
             return $this->_date->offsetGet('minute');
         } else {
@@ -175,7 +185,8 @@ class Datetime extends Object {
      *
      * @return int NULL
      */
-    public function getSecond() {
+    public function getSecond()
+    {
         if ($this->_date->offsetExists('second')) {
             return $this->_date->offsetGet('second');
         } else {
@@ -192,7 +203,8 @@ class Datetime extends Object {
      * @return string NULL a string representando a datahora do objeto, ou NULL caso não
      *         se tenha sido configurado a datahora
      */
-    public function get($format = Datetime::FORMAT_AMERICAN) {
+    public function get($format = Datetime::FORMAT_AMERICAN)
+    {
         if (!is_null($this->getTimestamp())) {
             return date($format, $this->getTimestamp());
         } else {
@@ -206,7 +218,8 @@ class Datetime extends Object {
      *
      * @return boolean Retorna TRUE caso a data seja uma data válida e FALSE caso seja uma data inválida
      */
-    public function isValid() {
+    public function isValid()
+    {
         return $this->dateVerify(checkdate($this->getMonth(), $this->getDay(), $this->getYear()));
     }
 
@@ -215,7 +228,8 @@ class Datetime extends Object {
      *
      * @see Object::toString()
      */
-    public function toString() {
+    public function toString()
+    {
         return $this->get();
     }
 

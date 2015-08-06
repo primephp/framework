@@ -45,9 +45,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @author tom
  * @createAt 25/07/2015
  */
-class KernelExceptionListener implements EventSubscriberInterface {
+class KernelExceptionListener implements EventSubscriberInterface
+{
 
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return [
             KernelEvents::EXCEPTION => [
                 ['onKernelException', 20]
@@ -55,29 +57,25 @@ class KernelExceptionListener implements EventSubscriberInterface {
         ];
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event) {
+    public function onKernelException(GetResponseForExceptionEvent $event)
+    {
         $exception = $event->getException();
 
         if ($exception instanceof UnauthorizedHttpException) {
             $template = new Template('@prime/401.twig');
             $event->setResponse(new Response($template->getOutput(), 401));
-            
         } elseif ($exception instanceof AccessDeniedHttpException) {
             $template = new Template('@prime/403.twig');
             $event->setResponse(new Response($template->getOutput(), 403));
-            
         } elseif ($exception instanceof NotFoundHttpException) {
             $template = new Template('@prime/404.twig');
             $event->setResponse(new Response($template->getOutput(), 404));
-            
         } elseif ($exception instanceof ServiceUnavailableHttpException) {
             $template = new Template('@prime/503.twig');
             $event->setResponse(new Response($template->getOutput(), 503));
-            
         } elseif ($exception instanceof HttpException) {
             $template = new Template('@prime/418.twig');
             $event->setResponse(new Response($template->getOutput(), 418));
-            
         } else {
             $template = new Template('@prime/500.twig');
             $event->setResponse(new Response($template->getOutput(), 500));

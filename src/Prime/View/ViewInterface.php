@@ -9,7 +9,8 @@ use Prime\Io\PrintableInterface;
  * @author tom
  * @package Prime\View
  */
-interface ViewInterface extends PrintableInterface {
+interface ViewInterface extends PrintableInterface
+{
 
     /**
      * Retorna o Conteúdo da imprimível na tela 

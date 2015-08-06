@@ -25,7 +25,8 @@ use Prime\Util\Interfaces\IIterator;
  * Define uma interface para objetos que possam ser iteráveis
  * @author tom
  */
-interface IIterable {
+interface IIterable
+{
 
     /**
      * Retorna um iterador sobre um conjunto de elementos do Tipo X

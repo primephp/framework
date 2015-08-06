@@ -27,9 +27,11 @@ use Prime\Core\String;
  * @author Elton Luiz
  * @status Finalizada
  */
-class Float extends Number {
+class Float extends Number
+{
 
-    public function __construct($value = NULL) {
+    public function __construct($value = NULL)
+    {
         if (!is_null($value)) {
             $this->setValue($value);
         }
@@ -39,7 +41,8 @@ class Float extends Number {
      * Define o valor do objeto TFloat
      * @param int|float|string $value
      */
-    public function setValue($value) {
+    public function setValue($value)
+    {
         if ($value instanceof String) {
             $value = $value->getValue();
         }
@@ -50,7 +53,8 @@ class Float extends Number {
      * Retorna o valor do objeto TFloat
      * @return float
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->data['value'];
     }
 
@@ -59,7 +63,8 @@ class Float extends Number {
      * @param float $float
      * @return String
      */
-    public static function toString($float) {
+    public static function toString($float)
+    {
         return new String($float);
     }
 
@@ -67,7 +72,8 @@ class Float extends Number {
      * Retorna um Objeto String desse objeto Float
      * @return String
      */
-    public function getString() {
+    public function getString()
+    {
         return new String($this->getValue());
     }
 
@@ -76,17 +82,19 @@ class Float extends Number {
      * @param float|String $float
      * @return Float
      */
-    public static function valueOf($float) {
+    public static function valueOf($float)
+    {
         return new Float($float);
     }
-    
+
     /**
      * Retorna um novo flutuador inicializada com o valor representado por o especificado
      *  String, como é realizada pelo método valueOf da classe Float.
      * @param \Prime\Core\String $string
      * @return \Prime\core\Float
      */
-    public static function parseFloat(String $string){
+    public static function parseFloat(String $string)
+    {
         return new Float($string->getValue());
     }
 
@@ -94,7 +102,8 @@ class Float extends Number {
      * Retorna true se o número especificado é um Not-a-Number (NaN) valor, falso caso contrário.
      * @return boolean
      */
-    public function isNaN() {
+    public function isNaN()
+    {
         if (is_nan($this->getValue())) {
             return TRUE;
         } else {
@@ -106,7 +115,8 @@ class Float extends Number {
      * Verifica se o valor deste objeto Float é um infinito
      * @return boolean
      */
-    public function isInfinite() {
+    public function isInfinite()
+    {
         if (is_infinite($this->getValue())) {
             return TRUE;
         } else {
@@ -120,7 +130,8 @@ class Float extends Number {
      * @param float $f2
      * @return boolean
      */
-    public function compare($f1, $f2) {
+    public function compare($f1, $f2)
+    {
         $x = new Float($f1);
         $y = new Float($f2);
         if ($x->getValue() === $y->getValue()) {
@@ -135,7 +146,8 @@ class Float extends Number {
      * @param Float $float
      * @return boolean
      */
-    public function compareTo(Float $float) {
+    public function compareTo(Float $float)
+    {
         if ($this->getValue() === $float->getValue()) {
             return TRUE;
         } else {

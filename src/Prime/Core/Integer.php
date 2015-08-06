@@ -10,13 +10,15 @@ use Prime\Core\Number;
  * @dateCreate 30/05/2014
  * @author Elton Luiz
  */
-class Integer extends Number {
+class Integer extends Number
+{
 
     /**
      * Instancia um objeto do tipo Inteiro
      * @param int|string|String|NULL $int
      */
-    public function __construct($int = NULL) {
+    public function __construct($int = NULL)
+    {
         $this->setMinValue(-(PHP_INT_MAX));
         $this->setMaxValue(PHP_INT_MAX);
         if (!is_null($int)) {
@@ -31,7 +33,8 @@ class Integer extends Number {
      * permitido pelo PHP ou pelo definido
      * @param int $value
      */
-    private function verifyValue($value) {
+    private function verifyValue($value)
+    {
         if ($value <= $this->getMinValue()) {
             return FALSE;
         }
@@ -50,7 +53,8 @@ class Integer extends Number {
      * @return Boolean Retorna TRUE caso o valor pode ser atribuído como máximo
      * e falso caso contário
      */
-    public function setMaxValue($max) {
+    public function setMaxValue($max)
+    {
         if ($max <= PHP_INT_MAX) {
             $this->data['max-value'] = $max;
             return TRUE;
@@ -63,7 +67,8 @@ class Integer extends Number {
      * Retorna 
      * @return int
      */
-    public function getMaxValue() {
+    public function getMaxValue()
+    {
         return $this->data['max-value'];
     }
 
@@ -76,7 +81,8 @@ class Integer extends Number {
      * @return Boolean Retorna TRUE caso o valor pode ser atribuído como mínimo
      * e falso caso contário
      */
-    public function setMinValue($min) {
+    public function setMinValue($min)
+    {
         $phpMin = -(PHP_INT_MAX);
         if ($min >= $phpMin) {
             $this->data['min-value'] = $min;
@@ -90,7 +96,8 @@ class Integer extends Number {
      * Retorna o valor mínimo aceito pelo objeto Integer
      * @return int
      */
-    public function getMinValue() {
+    public function getMinValue()
+    {
         return $this->data['min-value'];
     }
 
@@ -99,7 +106,8 @@ class Integer extends Number {
      * uma string
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return (string) $this->getValue();
     }
 
@@ -107,7 +115,8 @@ class Integer extends Number {
      * Retorna o valor deste Integer como uma String
      * @return String
      */
-    public function toString() {
+    public function toString()
+    {
         return new String($this->getValue());
     }
 
@@ -115,7 +124,8 @@ class Integer extends Number {
      * Retorna o valor interno do objeto Integer
      * @return int
      */
-    public function getValue() {
+    public function getValue()
+    {
         return (int) $this->data['value'];
     }
 
@@ -125,7 +135,8 @@ class Integer extends Number {
      * @return Boolean Retorna TRUE se o valor pode ser atribuido com sucesso, 
      * do contrário retorna FALSE;
      */
-    public function setValue($int) {
+    public function setValue($int)
+    {
         if (is_int($int)) {
             $value = $int;
         } else
@@ -142,7 +153,8 @@ class Integer extends Number {
      * Retorna o valor deste Integer como um int.
      * @return int
      */
-    public function intValue() {
+    public function intValue()
+    {
         return (int) $this->getValue();
     }
 
@@ -150,7 +162,8 @@ class Integer extends Number {
      * Retorna o valor deste integer como Float
      * @return Float
      */
-    public function toFloat() {
+    public function toFloat()
+    {
         return new Float($this->getValue());
     }
 
@@ -161,7 +174,8 @@ class Integer extends Number {
      * @param string $str
      * @return int
      */
-    public static function parseInt($str) {
+    public static function parseInt($str)
+    {
         return (int) $str;
     }
 
@@ -172,7 +186,8 @@ class Integer extends Number {
      * @param type $str
      * @return Integer
      */
-    public static function parseInteger($str) {
+    public static function parseInteger($str)
+    {
         return new Integer((int) $str);
     }
 
@@ -182,7 +197,8 @@ class Integer extends Number {
      * @param type $y
      * @return Boolean
      */
-    public static function compare($x, $y) {
+    public static function compare($x, $y)
+    {
         if (is_int($x) && is_int($y)) {
             if ($x == $y) {
                 return TRUE;
@@ -197,7 +213,8 @@ class Integer extends Number {
      * @param str $str
      * @return Integer
      */
-    public static function valueOf($str) {
+    public static function valueOf($str)
+    {
         return new Integer($str);
     }
 

@@ -13,25 +13,31 @@ namespace Prime\Util\Collection;
  *
  * @author tom
  */
-class Stack extends Vector {
+class Stack extends Vector
+{
 
-    public function isEmpty() {
+    public function isEmpty()
+    {
         
     }
 
-    public function peek() {
+    public function peek()
+    {
         
     }
 
-    public function pop() {
+    public function pop()
+    {
         
     }
 
-    public function push($item) {
+    public function push($item)
+    {
         
     }
 
-    public function search($o) {
+    public function search($o)
+    {
         
     }
 

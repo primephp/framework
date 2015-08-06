@@ -27,7 +27,8 @@ use Prime\Core\Interfaces\IIterable;
  * duplicados e outros não. Alguns são ordenados e os outros não ordenada. 
  * @author tom
  */
-interface ICollection extends IIterable {
+interface ICollection extends IIterable
+{
 
     public function add($e);
 

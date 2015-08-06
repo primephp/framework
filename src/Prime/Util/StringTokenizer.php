@@ -16,7 +16,8 @@ use Prime\core\Object;
  * @dateCreate 28/05/2014
  * @author Elton Luiz
  */
-class StringTokenizer extends Object implements IEnumeration {
+class StringTokenizer extends Object implements IEnumeration
+{
 
     /**
      * Constrói um tokenizador corda para a seqüência especificada. 
@@ -27,7 +28,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * @param string $string
      * @param string $delim
      */
-    public function __construct($string, $delim) {
+    public function __construct($string, $delim)
+    {
         ;
     }
 
@@ -37,7 +39,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * sem argumento retornará com sucesso um token.
      * @return TBoolean TRUE se há mais tokens; FALSO caso contrário.
      */
-    public function hasMoreToken() {
+    public function hasMoreToken()
+    {
         
     }
 
@@ -51,7 +54,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * @param string $delim Novo delimitador 
      * @return string O próximo tokem a partir deste tokenizador de string
      */
-    public function nextToken($delim = NULL) {
+    public function nextToken($delim = NULL)
+    {
         
     }
 
@@ -60,7 +64,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * esta classe pode implementar a interface Enumeration.
      * @return TBoolean TRUE se há mais tokens; FALSO caso contrário.
      */
-    public function hasMoreElements() {
+    public function hasMoreElements()
+    {
         return $this->hasMoreToken();
     }
 
@@ -70,7 +75,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * classe pode implementar a interface Enumeration.
      * @return string 
      */
-    public function nextElement() {
+    public function nextElement()
+    {
         return $this->nextToken();
     }
 
@@ -80,7 +86,8 @@ class StringTokenizer extends Object implements IEnumeration {
      * @return int O número de tokens restantes na string usando o conjunto 
      * delimitador atual.
      */
-    public function countTokens() {
+    public function countTokens()
+    {
         
     }
 
