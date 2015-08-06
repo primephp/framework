@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Modules\Controller\{{ module }};
+namespace App\Modules\{{ module }}\Controller;
 
 /**
 * Descrição do Controller {{ controller }}
@@ -8,19 +8,23 @@ namespace App\Modules\Controller\{{ module }};
 */
 class {{ controller }} extends \Prime\Controller\AbstractController {
 
-public function index() {
-//para listar todos os item
-}
 
-public function create() {
-//para criação de um novo item
-}
+    public function index()
+    {
+        $template = new \Prime\View\Template('@prime/200.twig');
+        $template->assign('text', __METHOD__);
+        return $this->getResponse()->setContent($template->getOutput());
+    }
 
-public function destroy($id) {
-//para deleção ou exclusão de um item
-}
+    public function create() {
+    //para criação de um novo item
+    }
 
-public function update($id) {
-//para atualização de um item
-}
+    public function destroy($id) {
+    //para deleção ou exclusão de um item
+    }
+
+    public function update($id) {
+    //para atualização de um item
+    }
 }

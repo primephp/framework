@@ -58,7 +58,11 @@
                 </h1>
                 <h4 class="important">
                     {% block important %}
-                        PrimePHP Application
+                        {% if text %}
+                            {{ text }}
+                        {% else %}
+                            PrimePHP Application
+                        {% endif %}
                     {% endblock %}
                 </h4>
                 <div class="title">

@@ -84,7 +84,12 @@ class CreateControllerCommand extends BaseCommand
         }
         $controller .= 'Controller';
 
-        $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'controller.php.twig';
+        $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
+        if ($input->getOption('plain')) {
+            $filename .= 'controller_plain.php.twig';
+        } else {
+            $filename .= 'controller.php.twig';
+        }
         if (file_exists($filename)) {
             $string = new String(file_get_contents($filename));
             $string->replace('{{ controller }}', $controller)->replace('{{ module }}', $module);
@@ -102,7 +107,7 @@ class CreateControllerCommand extends BaseCommand
             $fileObject->fwrite($string->getValue());
             $output->writeln("<info>OK: $fileController criado com sucesso</info>");
         } else {
-            $output->writeln("<error>FALHA: O módulo $module não existe ou não não é gravável</error>");
+            $output->writeln("<error>FALHA: O módulo $module não existe ou não é gravável</error>");
         }
     }
 

@@ -19,9 +19,11 @@ namespace Prime\Controller;
 abstract class AbstractControllerAction extends AbstractController
 {
 
+    abstract public function index();
+
     public function __invoke()
     {
-        $this->dispatch();
+        $this->index();
     }
 
 }

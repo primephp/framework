@@ -77,8 +77,7 @@ class KernelExceptionListener implements EventSubscriberInterface
             $template = new Template('@prime/418.twig');
             $event->setResponse(new Response($template->getOutput(), 418));
         } else {
-            $template = new Template('@prime/500.twig');
-            $event->setResponse(new Response($template->getOutput(), 500));
+            //Define procedimento para essa abordagem
         }
     }
 

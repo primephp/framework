@@ -1,26 +1,20 @@
 <?php
 
-namespace App\Modules\Controller\{{ module }};
+namespace App\Modules\{{ module }}\Controller;
 
 /**
 * Descrição do Controller {{ controller }}
 * Pertencente ao Módulo {{ module }}
+* Os controllers que extendem AbstractControllerAction, pode ser utilizado para 
+* ser responsável por apenas uma ação, através do seu método index
 */
-class {{ controller }} extends \Prime\Controller\AbstractController {
+class {{ controller }} extends \Prime\Controller\AbstractControllerAction {
 
-public function index(){
+    public function index()
+    {
+        $template = new \Prime\View\Template('@prime/200.twig');
+        $template->assign('text', __METHOD__);
+        return $this->getResponse()->setContent($template->getOutput());
+    }
 
-}
-
-public function create(){
-
-}
-
-public function destroy($id){
-
-}
-
-public function update($id){
-
-}
 }

@@ -123,7 +123,7 @@ final class String extends Object
     private function setValue($value)
     {
         if (is_string($value)) {
-            $this->data['value'] = filter_var($value, FILTER_SANITIZE_STRING);
+            $this->data['value'] = $value;
             $this->data['length'] = $this->length();
         } else {
             throw new InvalidArgumentException(__CLASS__ . ' aceita apenas '
