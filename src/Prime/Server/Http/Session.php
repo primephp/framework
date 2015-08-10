@@ -2,7 +2,7 @@
 
 namespace Prime\Server\Http;
 
-use \Symfony\Component\HttpFoundation\Session\Session as BaseSession;
+use Symfony\Component\HttpFoundation\Session\Session as BaseSession;
 
 /**
  * classe Session

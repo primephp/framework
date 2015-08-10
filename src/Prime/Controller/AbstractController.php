@@ -24,13 +24,13 @@ abstract class AbstractController implements ControllerInterface
      * Armazena a instância de request que será utilizada pelo controller
      * @var Request
      */
-    private $request = null;
+    protected $request = null;
 
     /**
      * Armazena a instância de response que será utilizada pelo controller
      * @var Response
      */
-    private $response = null;
+    protected $response = null;
 
     public function __construct()
     {
@@ -39,7 +39,8 @@ abstract class AbstractController implements ControllerInterface
 
     protected function initialize()
     {
-        
+        $this->request = $this->getRequest();
+        $this->response = $this->getResponse();
     }
 
     /**

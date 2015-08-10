@@ -33,7 +33,8 @@ namespace Prime\Model\DataSource\Metadata;
  * @since 22/07/2015
  * @author devel4
  */
-class CreateSetterGetter {
+class CreateSetterGetter
+{
 
     private $name;
     private $method;
@@ -41,14 +42,16 @@ class CreateSetterGetter {
     private $const;
     private $notNull;
 
-    public function __construct(array $field) {
+    public function __construct(array $field)
+    {
         $this->name = $field['name'];
         $this->type = $field['type'];
         $this->method = $this->getMethod();
         $this->const = 'self::FIELD_' . strtoupper($this->name);
     }
 
-    private function getMethod() {
+    private function getMethod()
+    {
         $uMethodo = ucfirst(strtolower($this->name));
         if (strpos($uMethodo, "_")) {
             $fragments = explode("_", $uMethodo);
@@ -64,7 +67,8 @@ class CreateSetterGetter {
         return $uMethodo;
     }
 
-    private function getter() {
+    private function getter()
+    {
         return "\npublic function get{$this->method}(){\n" .
                 "if(!empty(\$this->data[{$this->const}])){
             return htmlspecialchars(\$this->data[{$this->const}]);
@@ -73,7 +77,8 @@ class CreateSetterGetter {
                 . "}\n";
     }
 
-    private function setter() {
+    private function setter()
+    {
         $value = strtolower($this->type);
         $return = "public function set{$this->method}(\$$value){";
         if ($this->notNull) {
@@ -87,15 +92,18 @@ class CreateSetterGetter {
         return $return;
     }
 
-    private function setNotNull() {
+    private function setNotNull()
+    {
         
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         return $this->setter() . "\n" . $this->getter();
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 

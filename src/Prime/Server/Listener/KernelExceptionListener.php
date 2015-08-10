@@ -75,6 +75,7 @@ class KernelExceptionListener implements EventSubscriberInterface
             $event->setResponse(new Response($template->getOutput(), 503));
         } elseif ($exception instanceof HttpException) {
             $template = new Template('@prime/418.twig');
+            $template->assign('text', $exception->getMessage());
             $event->setResponse(new Response($template->getOutput(), 418));
         } else {
             //Define procedimento para essa abordagem

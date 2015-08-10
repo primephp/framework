@@ -45,14 +45,18 @@ class RouteCollection extends BaseCollection
      * @param string $path o caminho da rota ex. /user/profile/{id}
      * @param callable $callable o callable que será chamado para a rota 
      * definida
+     * @param string $name O nome para a Rota definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setRoute($path, $callable)
+    public function setRoute($path, $callable, $name = NULL)
     {
         $route = new Route($path);
+        if (is_null($name)) {
+            $name = $route->getName();
+        }
         $route->setDefault('_controller', $callable);
         $route->setMethods(['POST', 'GET', 'HEAD']);
-        $this->add($route->getName(), $route);
+        $this->add($name, $route);
         return $route;
     }
 
@@ -62,14 +66,18 @@ class RouteCollection extends BaseCollection
      * @param string $path o caminho da rota ex. /user/save/{id}
      * @param callable $callable o callable que será chamado para a rota 
      * definida
+     * @param string $name O nome para a rota definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setPost($path, $callable)
+    public function setPost($path, $callable, $name = NULL)
     {
         $route = new Route($path);
+        if (is_null($name)) {
+            $name = $route->getName();
+        }
         $route->setDefault('_controller', $callable);
-        $route->setMethods('POST');
-        $this->add($route->getName(), $route);
+        $route->setMethods(['POST']);
+        $this->add($name, $route);
         return $route;
     }
 
@@ -79,14 +87,18 @@ class RouteCollection extends BaseCollection
      * @param string $path o caminho da rota ex. /user/profile/{id}
      * @param callable $callable o callable que será chamado para a rota 
      * definida
+     * @param string $name O nome para a rota definida
      * @return \Prime\Server\Routing\Route
      */
-    public function setGet($path, $callable)
+    public function setGet($path, $callable, $name = NULL)
     {
         $route = new Route($path);
+        if (is_null($name)) {
+            $name = $route->getName();
+        }
         $route->setDefault('_controller', $callable);
-        $route->setMethods('GET');
-        $this->add($route->getName(), $route);
+        $route->setMethods(['GET']);
+        $this->add($name, $route);
         return $route;
     }
 

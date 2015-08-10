@@ -40,11 +40,25 @@ class Route extends BaseRoute
 {
 
     /**
-     * The basead name to Route
+     * Define um nome para a rota;
+     * @var string
+     */
+    protected $name;
+
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * Retorna o nome da rota 
      * @return string
      */
     public function getName()
     {
+        if (!is_null($this->name)) {
+            return $ths->name;
+        }
         $path = $this->getPath();
         $name = '';
         $r = explode('/', $path);

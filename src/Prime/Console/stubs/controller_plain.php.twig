@@ -10,11 +10,11 @@ namespace App\Modules\{{ module }}\Controller;
 */
 class {{ controller }} extends \Prime\Controller\AbstractControllerAction {
 
-    public function index()
-    {
-        $template = new \Prime\View\Template('@prime/200.twig');
-        $template->assign('text', __METHOD__);
-        return $this->getResponse()->setContent($template->getOutput());
-    }
+public function index()
+{
+$template = new \Prime\View\Template('@prime/200.twig');
+$template->assign('text', __METHOD__);
+return $this->getResponse()->setContent($template->getOutput());
+}
 
 }
