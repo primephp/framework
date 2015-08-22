@@ -58,6 +58,17 @@ final class String extends Object
     }
 
     /**
+     * Remove qualquer tipo de tag e deixa a string pura
+     * @param string $string
+     * @return String
+     */
+    public function sanitize($string)
+    {
+        $v = filter_var($string, FILTER_SANITIZE_STRING);
+        return new String($v);
+    }
+
+    /**
      * Retorna o total de caracteres da string
      * @return int
      */
@@ -151,12 +162,15 @@ final class String extends Object
 
     /**
      * Compara a string de dois objetos String
-     * @param String $str
-     * @return Boolean Caso as string sejam iguais retorna TRUE do contrário
+     * @param string $str
+     * @return boolean Caso as string sejam iguais retorna TRUE do contrário
      * retorna FALSE
      */
-    public function compareTo(String $str)
+    public function compareTo($str)
     {
+        if (!$str instanceof String) {
+            $str = new String((string) $str);
+        }
         if ($this->getValue() === $str->getValue()) {
             return TRUE;
         } else {
@@ -167,11 +181,14 @@ final class String extends Object
     /**
      * Compara a string de dois objetos String ignorando caixa alta e caixa
      * baixa
-     * @param String $str
+     * @param string $str
      * @return Boolean
      */
-    public function compareToIgnoreCase(String $str)
+    public function compareToIgnoreCase($str)
     {
+        if (!$str instanceof String) {
+            $str = new String((string) $str);
+        }
         if ($this->toUpper()->getValue() === $str->toUpper()->getValue()) {
             return TRUE;
         } else {
@@ -181,11 +198,14 @@ final class String extends Object
 
     /**
      * Concatena a seqüência especificada para o final desta string.
-     * @param String $str
+     * @param string $str
      * @return String
      */
-    public function concat(String $str)
+    public function concat($str)
     {
+        if (!$str instanceof String) {
+            $str = new String((string) $str);
+        }
         $this->setValue($this->getValue() . $str->getValue());
         return $this;
     }
@@ -202,7 +222,7 @@ final class String extends Object
     }
 
     /**
-     * Retorna uma nova String que é uma substring desta string. 
+     * Retorna uma nova instância de String que é uma substring desta string. 
      * @param int $beginIndex
      * @param int $length
      * @return String
@@ -215,11 +235,11 @@ final class String extends Object
     /**
      * Encontra a posição da primeira ocorrência de uma string dentro de outra,
      * sem diferenciar maiúsculas e minúsculas
-     * @param type $needle A string a ser localizada no objeto String corrente
-     * @param type $offset A posição que vai ser iniciar a busca da string
+     * @param string $needle A string a ser localizada no objeto String corrente
+     * @param int $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
-    public function insensitivePosition($needle, $offset = 0)
+    public function iPosition($needle, $offset = 0)
     {
         return mb_stripos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
@@ -227,8 +247,8 @@ final class String extends Object
     /**
      * Encontra a posição da primeira ocorrência de uma string dentro de outra,
      * diferenciando maiúsculas e minúsculas
-     * @param type $needle A string a ser localizada no objeto String corrente
-     * @param type $offset A posição que vai ser iniciar a busca da string
+     * @param string $needle A string a ser localizada no objeto String corrente
+     * @param int $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
     public function sensitivePosition($needle, $offset = 0)
@@ -317,6 +337,125 @@ final class String extends Object
     {
         $this->setValue(mb_strimwidth($this->getValue(), $start, $width, $trimMarker, $this->getEncoding()));
         return $this;
+    }
+
+    /**
+     * Busca a última ocorrência de uma string
+     * @param string $str A string a ser localizada
+     * @param boolean $part Define qual parte da string será retornada<br>
+     * Caso seja <b>TRUE</b> retornará toda a string até o início da última 
+     * ocorrência de $char <br>
+     * Caso seja <b>FALSE</b> retornará toda a string a partir da última 
+     * ocorrência de $char
+     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
+     */
+    public function lastOccurrence($str, $part = false)
+    {
+        $r = mb_strrchr($this->getValue(), $str, $part, $this->getEncoding());
+        if ($r) {
+            return new String($r);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Busca a última ocorrência de uma string (Case Insensitive)
+     * @param string $str A string a ser localizada
+     * @param boolean $before_char Define qual parte da string será retornada<br>
+     * Caso seja <b>TRUE</b> retornará toda a string até o início da última 
+     * ocorrência de $char <br>
+     * Caso seja <b>FALSE</b> retornará toda a string a partir da última 
+     * ocorrência de $char
+     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
+     */
+    public function iLastOccurrence($str, $before_char = false)
+    {
+        $r = mb_strrichr($this->getValue(), $str, $before_char, $this->getEncoding());
+        if ($r) {
+            return new String($r);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Busca a primeira ocorrência de um caracter na string
+     * @param string $char A string a ser localizada
+     * @param boolean $before_char Define qual parte da string será retornada<br>
+     * Caso seja <b>TRUE</b> retornará toda a string até o início da primeira 
+     * ocorrência de $char <br>
+     * Caso seja <b>FALSE</b> retornará toda a string a partir da primeira 
+     * ocorrência de $char
+     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
+     */
+    public function firstOccurrence($char, $before_char = false)
+    {
+        $r = mb_strstr($this->getValue(), $char, $before_char, $this->getEncoding());
+        if ($r) {
+            return new String($r);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Busca a primeira ocorrência de um caracter na string (Case Insensitive)
+     * @param string $char A string a ser localizada
+     * @param boolean $before_char Define qual parte da string será retornada<br>
+     * Caso seja <b>TRUE</b> retornará toda a string até o início da primeira 
+     * ocorrência de $char <br>
+     * Caso seja <b>FALSE</b> retornará toda a string a partir da primeira 
+     * ocorrência de $char
+     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
+     */
+    public function iFirstOccurrence($char, $before_char = false)
+    {
+        $r = mb_stristr($this->getValue(), $char, $before_char, $this->getEncoding());
+        if ($r) {
+            return new String($r);
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Obtem uma String truncada com a largura especificada
+     * @param int $start O índice do caracter onde começará a string
+     * @param int $width A largura da string desejada
+     * @param string $trimmarker A string que será adicionada no final da string
+     * truncada
+     * @return String Retorna um objeto string contendo a string truncada, caso
+     * seja passado $trimmarker, esse será adicionado no seu fina.
+     */
+    public function trimWidth($start, $width, $trimmarker = NULL)
+    {
+        $r = mb_strimwidth($this->getValue(), $start, $width, $trimmarker, $this->getEncoding());
+        return new String($r);
+    }
+
+    /**
+     * Retorna o total de ocorrências encontradas 
+     * @param string $str A string a ser localizada no objeto
+     * @return int O total de ocorrências encontradas
+     */
+    public function countOccurrence($str)
+    {
+        return mb_substr_count($this->getValue(), $str, $this->getEncoding());
+    }
+
+    /**
+     * Altera a codificação de caracteres
+     * @param string $encoding
+     */
+    public function convertEncoding($encoding)
+    {
+        $this->setValue(mb_convert_encoding($this->getValue(), $encoding, $this->getEncoding()));
+        $this->setEncoding($encoding);
     }
 
 }

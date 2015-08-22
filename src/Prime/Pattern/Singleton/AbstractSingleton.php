@@ -34,7 +34,7 @@ namespace Prime\Pattern\Singleton;
  * @createAt 24/07/2015
  * @author Elton Luiz
  */
-class AbstractSingleton
+abstract class AbstractSingleton implements SingletonInterface
 {
 
     /**
@@ -42,7 +42,7 @@ class AbstractSingleton
      *
      * @staticvar Singleton $instance A instância única dessa classe.
      *
-     * @return Singleton A Instância única.
+     * @return static A Instância única.
      */
     public static function getInstance()
     {

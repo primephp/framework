@@ -5,16 +5,11 @@ namespace App\Modules\{{ module }}\Controller;
 /**
 * Descrição do Controller {{ controller }}
 * Pertencente ao Módulo {{ module }}
-* Os controllers que extendem AbstractControllerAction, pode ser utilizado para 
-* ser responsável por apenas uma ação, através do seu método index
+* @name {{ controller }}
+* @package App\Modules\{{ module }}\Controller
+* @createAt {{ date }}
 */
-class {{ controller }} extends \Prime\Controller\AbstractControllerAction {
-
-public function index()
+class {{ controller }} extends \Prime\Controller\AbstractController 
 {
-$template = new \Prime\View\Template('@prime/200.twig');
-$template->assign('text', __METHOD__);
-return $this->getResponse()->setContent($template->getOutput());
-}
 
 }

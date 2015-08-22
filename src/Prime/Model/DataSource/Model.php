@@ -180,7 +180,6 @@ abstract class Model implements IModel
 
         $conn = $this->getConnection();
 
-        Transaction::log($sql->getStatement());
         return $conn->query($sql->getStatement());
     }
 
@@ -238,7 +237,6 @@ abstract class Model implements IModel
         }
 
         $conn = $this->getConnection();
-        Transaction::log($sql->getStatement());
         return $conn->exec($sql->getStatement());
     }
 
@@ -315,7 +313,6 @@ abstract class Model implements IModel
         $sql->setCriteria(new SQLFilter($this->getPrimaryKey(), SQLFilter::IS_EQUAL, $id));
 
         $conn = $this->getConnection();
-        Transaction::log($sql->getStatement());
         return $conn->exec($sql->getStatement());
     }
 
@@ -379,7 +376,6 @@ abstract class Model implements IModel
             $sq1 = new SQLSelect();
             $sq1->addColumn('max(' . $this->getPrimaryKey() . ') as ' . $this->getPrimaryKey());
             $sq1->setEntity($this->getEntity());
-            Transaction::log($sq1->getStatement());
             $resu1t = $this->getConnection()->query($sq1->getStatement());
             $row = $resu1t->fetch();
             return ((int) $row[0]) + 1;

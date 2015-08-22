@@ -12,7 +12,5 @@ namespace Prime\Controller;
 interface ControllerInterface
 {
 
-    public function index();
-
     public function dispatch();
 }

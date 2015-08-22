@@ -74,6 +74,7 @@ class EntityMetadata
             'int' => 'INTEGER',
             'integer' => 'INTEGER',
             //datetime
+            'DATE' => 'DATE',
             'DATETIME' => 'DATETIME',
             'timestamp' => 'TIMESTAMP',
             'TIMESTAMP' => 'TIMESTAMP',

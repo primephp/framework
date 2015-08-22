@@ -45,4 +45,9 @@ class ArrayList extends AbstractList implements IList, IClonable, ISerializable
         // dos parametros passados
     }
 
+    public function merge()
+    {
+        array_merge($array1, $_);
+    }
+
 }

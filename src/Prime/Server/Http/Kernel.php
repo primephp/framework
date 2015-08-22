@@ -52,7 +52,8 @@ class Kernel
 
         $this->request = Request::createFromGlobals();
 
-        $this->matcher = new UrlMatcher($routes, new RequestContext($this->getRequest()));
+        $context = new RequestContext();
+        $this->matcher = new UrlMatcher($routes, $context->fromRequest($this->getRequest()));
 
         $this->dispatcher = new Dispatcher();
         $this->dispatcher->addSubscriber(new RouterListener($this->matcher));

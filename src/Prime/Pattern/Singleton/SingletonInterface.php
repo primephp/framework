@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Elton Luiz.
+ * Copyright 2015 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,34 +24,21 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Console;
-
-use Symfony\Component\Console\Application as ConsoleApplication;
+namespace Prime\Pattern\Singleton;
 
 /**
- * Descrição da Classe Application
- *
- * @name Application
- * @package Prime\Console
- * @createAt 22/07/2015
- * @author Elton Luiz
+ * Interface SingletonInterface
+ * @name SingletonInterface
+ * @package Prime\Pattern\Singleton
+ * @createAt 13/08/2015
+ * @author TomSailor
  */
-class Application extends ConsoleApplication
+interface SingletonInterface
 {
 
-    public function __construct($name = 'PrimePHP Application', $version = '0.1alpha')
-    {
-        parent::__construct($name, $version);
-        $this->setPrimeCommands();
-    }
-
-    public function setPrimeCommands()
-    {
-        $this->add(new Command\CreateDataSourceCommand());
-        $this->add(new Command\CreateApplicationCommand());
-        $this->add(new Command\CreateModuleCommand());
-        $this->add(new Command\CreateControllerCommand());
-        $this->add(new Command\CreatePageControllerCommand());
-    }
-
+    /**
+     * Retorna uma instância única do objeto em questão
+     * @return static
+     */
+    public static function getInstance();
 }

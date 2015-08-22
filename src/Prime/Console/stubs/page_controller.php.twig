@@ -2,32 +2,20 @@
 
 namespace App\Modules\{{ module }}\Controller;
 
+use Prime\Controller\AbstractPageController;
+
 /**
-* Descrição do Controller {{ controller }}
+* PageController {{ controller }}
 * Pertencente ao Módulo {{ module }}
 * @name {{ controller }}
 * @package App\Modules\{{ module }}\Controller
 * @createAt {{ date }}
 */
-class {{ controller }} extends \Prime\Controller\AbstractController 
+class {{ controller }} extends AbstractPageController
 {
-
-public function index() {
+public function handler() {
 $template = new \Prime\View\Template('@prime/200.twig');
 $template->assign('text', __METHOD__);
 return $this->getResponse()->setContent($template->getOutput());
 }
-
-public function create() {
-//para criação de um novo item
-}
-
-public function destroy($id) {
-//para deleção ou exclusão de um item
-}
-
-public function update($id) {
-//para atualização de um item
-}
-
 }

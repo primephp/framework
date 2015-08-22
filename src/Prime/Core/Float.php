@@ -142,12 +142,15 @@ class Float extends Number
     }
 
     /**
-     * 
-     * @param Float $float
+     * Compara o valor passado com o valor float do objeto 
+     * @param float $float
      * @return boolean
      */
-    public function compareTo(Float $float)
+    public function compareTo($float)
     {
+        if (!$float instanceof Float) {
+            $float = new Float($float);
+        }
         if ($this->getValue() === $float->getValue()) {
             return TRUE;
         } else {

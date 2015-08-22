@@ -81,6 +81,14 @@ class Application
     {
         return $this->kernel;
     }
+    
+    /**
+     * Implementação na aplicação para registrar os Listeners utilizados na aplicação
+     * através do arquivo de configuração de Listeners
+     */
+    protected function registerListeners(){
+        
+    }
 
     /**
      * Returns a single instance of the application Kernel
@@ -104,7 +112,7 @@ class Application
     {
         $this->debug($debug);
         $this->database();
-        $this->configTemplate();
+        $this->template();
     }
 
     /**
@@ -118,18 +126,29 @@ class Application
         }
     }
 
+    /**
+     * Finaliza a Aplicação chamando Kernel->handle() para manipular a 
+     * requisição
+     */
     public function finalyze()
     {
         $this->kernel->handle();
     }
 
+    /**
+     * Carrega a configuração do banco de dados e abre uma conexão
+     */
     protected function database()
     {
         $array = require Filesystem::getInstance()->getPath('root') . '/config/database.php';
         Connection::open($array);
     }
 
-    protected function configTemplate()
+    /**
+     * Carrega as configurações e faz a configuração inicial do uso do Twig
+     * para a manipulação dos templates na aplicação
+     */
+    protected function template()
     {
         $config = require Filesystem::getInstance()->getPath('root') . '/config/view.php';
         Template::setEnviroment($config);
