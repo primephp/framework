@@ -6,7 +6,7 @@ use PDO;
 use PDOException;
 
 /**
- * classe TConnection
+ * classe Connection
  * @package Prime\Model\DataSource
  * gerencia conexões com bancos de dados através de arquivos de configuração.
  */

@@ -2,6 +2,7 @@
 
 namespace Prime\Controller;
 
+use Prime\Core\Object;
 use Prime\Server\Http\Request;
 use Prime\Server\Http\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;

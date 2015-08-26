@@ -16,7 +16,7 @@ use Prime\Model\SQL\SQLSelect;
 use Prime\Model\SQL\SQLUpdate;
 
 /**
- * classe Record
+ * classe Model
  * Esta classe provê os métodos necessários para persistir e
  * recuperar objetos da base de dados (Active Record)
  * @name Record

@@ -48,9 +48,6 @@ abstract class AbstractListener extends Object implements EventSubscriberInterfa
      * ser invodos
      * 
      */
-    public static function getSubscribedEvents()
-    {
-        ;
-    }
+    abstract public static function getSubscribedEvents();
 
 }

@@ -47,7 +47,7 @@ class Application
      * Armazena a instância única de instância do objeto Application
      * @var Application
      */
-    private static $instance = NULL;
+    protected static $instance = NULL;
 
     /**
      * Armazena a instância única de 
@@ -99,9 +99,9 @@ class Application
     public static function getInstance($routes = NULL)
     {
         if (is_null(self::$instance)) {
-            self::$instance = new Application($routes);
+            static::$instance = new static($routes);
         }
-        return self::$instance;
+        return static::$instance;
     }
 
     /**
@@ -113,6 +113,7 @@ class Application
         $this->debug($debug);
         $this->database();
         $this->template();
+        $this->registerListeners();
     }
 
     /**
