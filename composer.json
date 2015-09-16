@@ -13,7 +13,7 @@
         "source": "https://github.com/primephp/framework"
     },
     "require": {
-        "php": ">=5.5.0",
+        "php": ">=5.5.9",
         "ext-mbstring": "*",
         "ext-openssl": "*",
         "symfony/http-kernel": "2.7",

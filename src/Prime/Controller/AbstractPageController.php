@@ -9,6 +9,7 @@
 namespace Prime\Controller;
 
 use Prime\Server\Http\Response;
+use Symfony\Component\HttpFoundation\Response as SCHR;
 
 /**
  * Classe ControllerAction <br>
@@ -37,7 +38,7 @@ abstract class AbstractPageController extends AbstractController
     public function __invoke()
     {
         $handle = $this->handler();
-        if (!$handle instanceof Response) {
+        if (!$handle instanceof SCHR) {
             return new Response($handle);
         }
         return $handle;

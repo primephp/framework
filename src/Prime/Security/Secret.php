@@ -17,8 +17,22 @@ use Prime\Core\Object;
 class Secret extends Object
 {
 
+    /**
+     * Chave secreta que será utilizada para a criptografia
+     * @var string
+     */
     protected static $_key = 'secret_passwd';
+
+    /**
+     * Vetor de 16bits de inicialização da criptografia
+     * @var string
+     */
     private static $_iv = 'fFUXRWLpySSxtWW4';
+
+    /**
+     * Método padrão de criptografia utilizado pela Classe Secret
+     * @var string
+     */
     protected static $_method = 'aes256';
 
     /**
@@ -76,24 +90,60 @@ class Secret extends Object
     }
 
     /**
-     * Uma string de 16 bits para ser utilizada como vector inicialização para 
-     * a criptografia
-     * @return string string de 16 bits
+     * Define uma string de 16bits como vetor de inicialização da criptografia
+     * @param string $iv string de 16bits, podendo ser utilizado 16 caracteres que não 
+     * sejam caracteres especiais
      */
-    protected function getInitVector()
+    public function setInitVector($iv)
     {
-        return static::$_iv;
+        static::initVector($iv);
     }
 
     /**
-     * Criptografa o conteúdo passada e retorna cryptografado e em base64
+     * Define ou obtém o vetor de inicialização da criptografia
+     * @param string $iv string de 16bits para inicialização, caso seja passada
+     * retorna a string que está sendo utilizada
+     * @return string
+     */
+    public static function initVector($iv = null)
+    {
+        if (!is_null($iv)) {
+            $s = substr($iv, 0, 16);
+            static::$_iv = $s;
+        } else {
+            return static::$_iv;
+        }
+    }
+
+    /**
+     * Faz uma criptografia dupla e retorna o conteúdo
+     * @param string $data A string que deve ser duplamente criptografada
+     * @return string O conteúdo duplamento criptografado 
+     */
+    public function doubleEncrypt($data)
+    {
+        return $this->base64Encode($this->iCrypt($this->iCrypt($data)));
+    }
+
+    /**
+     * Descriptografa uma string com criptografia dupla
      * @param string $data
      * @return string
      */
-    public function encrypt($data)
+    public function doubleDecrypt($data)
     {
-        $data = (string) $data;
-        return base64_encode(openssl_encrypt($data, $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector()));
+        return $this->iDecrypt($this->iDecrypt($this->base64Decode($data)));
+    }
+
+    /**
+     * Descriptografa a string e retorna seu conteúdo
+     * @param string $data
+     * @return string|null Retorna a string descriptografada, ou null se a chave 
+     * e o vetor de inicialização não foram os mesmos utilizados para a criptografia
+     */
+    protected function iDecrypt($data)
+    {
+        return openssl_decrypt($data, $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector());
     }
 
     /**
@@ -107,7 +157,59 @@ class Secret extends Object
      */
     public function decrypt($data)
     {
-        return openssl_decrypt(base64_decode($data), $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector());
+        return $this->iDecrypt($this->base64Decode($data));
+    }
+
+    /**
+     * Uma string de 16 bits para ser utilizada como vector inicialização para 
+     * a criptografia
+     * @return string string de 16 bits
+     */
+    protected function getInitVector()
+    {
+        return static::$_iv;
+    }
+
+    /**
+     * Criptografa o conteúdo passada e retorna criptografado
+     * @param string $data A string a ser criptografada
+     * @return string O conteúdo criptografado
+     */
+    public function encrypt($data)
+    {
+        return $this->base64Encode($this->iCrypt($data));
+    }
+
+    /**
+     * Criptografa a string passada utilizando a chave de criptografia definida
+     * e o vetor de inicialização
+     * @param string $data A string a ser criptografada
+     * @return string O conteúdo criptografado
+     */
+    protected function iCrypt($data)
+    {
+        $string = (string) $data;
+        return openssl_encrypt($string, $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector());
+    }
+
+    /**
+     * Codifica a string passada para base64
+     * @param string $data A string a ser passada para base64
+     * @return string A string em base64
+     */
+    protected function base64Encode($data)
+    {
+        return base64_encode($data);
+    }
+
+    /**
+     * Decodifica a string em base64
+     * @param string $data A string a ser decodificada de base64
+     * @return string A string decodificada
+     */
+    protected function base64Decode($data)
+    {
+        return base64_decode($data);
     }
 
 }

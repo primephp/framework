@@ -13,9 +13,11 @@ use Prime\Controller\AbstractPageController;
 */
 class {{ controller }} extends AbstractPageController
 {
-public function handler() {
-$template = new \Prime\View\Template('@prime/200.twig');
-$template->assign('text', __METHOD__);
-return $this->getResponse()->setContent($template->getOutput());
-}
+    
+    public function handler() 
+    {
+        $template = new \Prime\View\Template('@prime/200.twig');
+        $template->assign('text', __METHOD__);
+        return $this->getResponse()->setContent($template->getOutput());
+    }
 }
