@@ -40,8 +40,7 @@ use Symfony\Component\Debug\Debug;
  * @package Prime\Server\Http
  * @createAt 06/08/2015
  */
-class Application
-{
+class Application {
 
     /**
      * Armazena a instância única de instância do objeto Application
@@ -66,8 +65,7 @@ class Application
      * @param RouteCollection $routes Coleção de rotas para o mapeamento da aplicação
      * @param array $config Array de configurações da aplicação
      */
-    private function __construct($routes = NULL)
-    {
+    private function __construct($routes = NULL) {
         if (!is_null($routes)) {
             $this->kernel = Kernel::getInstance($routes);
         }
@@ -77,16 +75,15 @@ class Application
      * Retorna a instância do Kernel do Framework
      * @return Kernel
      */
-    public function getKernel()
-    {
+    public function getKernel() {
         return $this->kernel;
     }
-    
+
     /**
      * Implementação na aplicação para registrar os Listeners utilizados na aplicação
      * através do arquivo de configuração de Listeners
      */
-    protected function registerListeners(){
+    protected function registerListeners() {
         
     }
 
@@ -96,9 +93,8 @@ class Application
      * @param array $config Array de configurações da aplicação
      * @return Application
      */
-    public static function getInstance($routes = NULL)
-    {
-        if (is_null(self::$instance)) {
+    public static function getInstance($routes = NULL) {
+        if (is_null(static::$instance)) {
             static::$instance = new static($routes);
         }
         return static::$instance;
@@ -108,8 +104,7 @@ class Application
      * Inicializa a aplicação
      * @param boolean $debug Caso TRUE define o debug da aplicação
      */
-    public function init($debug = FALSE)
-    {
+    public function init($debug = FALSE) {
         $this->debug($debug);
         $this->database();
         $this->template();
@@ -120,8 +115,7 @@ class Application
      * Configura o debug da aplicação
      * @param boolean $debug
      */
-    private function debug($debug)
-    {
+    private function debug($debug) {
         if ($debug === TRUE) {
             $debug = Debug::enable();
         }
@@ -131,16 +125,14 @@ class Application
      * Finaliza a Aplicação chamando Kernel->handle() para manipular a 
      * requisição
      */
-    public function finalyze()
-    {
+    public function finalyze() {
         $this->kernel->handle();
     }
 
     /**
      * Carrega a configuração do banco de dados e abre uma conexão
      */
-    protected function database()
-    {
+    protected function database() {
         $array = require Filesystem::getInstance()->getPath('root') . '/config/database.php';
         Connection::open($array);
     }
@@ -149,8 +141,7 @@ class Application
      * Carrega as configurações e faz a configuração inicial do uso do Twig
      * para a manipulação dos templates na aplicação
      */
-    protected function template()
-    {
+    protected function template() {
         $config = require Filesystem::getInstance()->getPath('root') . '/config/view.php';
         Template::setEnviroment($config);
         $filesystem = Filesystem::getInstance();
