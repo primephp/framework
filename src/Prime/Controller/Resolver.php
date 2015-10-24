@@ -2,14 +2,14 @@
 
 namespace Prime\Controller;
 
-use \Closure,
-    \InvalidArgumentException,
-    \ReflectionFunction,
-    \ReflectionMethod,
-    \ReflectionObject,
-    \RuntimeException,
-    \Symfony\Component\HttpFoundation\Request,
-    \Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Closure;
+use InvalidArgumentException;
+use ReflectionFunction;
+use ReflectionMethod;
+use ReflectionObject;
+use RuntimeException;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 
 /**
  * Classe Resolver <br>
@@ -43,7 +43,6 @@ class Resolver implements ControllerResolverInterface
         if (!$controller = $request->attributes->get('_controller')) {
             return false;
         }
-
         if (is_array($controller)) {
             return $controller;
         }
@@ -57,13 +56,12 @@ class Resolver implements ControllerResolverInterface
         }
 
         if (false === strpos($controller, '@')) {
-            if (method_exists($controller, '__invoke')) {
-                return $this->instantiateController($controller);
+            if (method_exists($controller, 'handler')) {
+                return $this->instantiatePageController($request, $controller);
             } elseif (function_exists($controller)) {
                 return $controller;
             }
         }
-
         $callable = $this->createController($controller);
 
         if (!is_callable($callable)) {
@@ -82,6 +80,9 @@ class Resolver implements ControllerResolverInterface
     {
         if (is_array($controller)) {
             $r = new ReflectionMethod($controller[0], $controller[1]);
+        } elseif (is_object($controller) && ($controller instanceof AbstractPageController)) {
+            $r = new ReflectionObject($controller);
+            $r = $r->getMethod('__construct');
         } elseif (is_object($controller) && !$controller instanceof Closure) {
             $r = new ReflectionObject($controller);
             $r = $r->getMethod('__invoke');
@@ -111,11 +112,38 @@ class Resolver implements ControllerResolverInterface
                 } else {
                     $repr = $controller;
                 }
-
                 throw new RuntimeException(sprintf('Controller "%s" requer que você forneça um valor para o parâmetro "$%s" (porque não há nenhum valor padrão ou porque há um parâmetro não opcional após este).', $repr, $param->name));
             }
         }
 
+        return $arguments;
+    }
+
+    protected function doGetPageControllerArguments(Request $request, $pageController)
+    {
+        $attributes = $request->attributes->all();
+        $arguments = [];
+        $r = new \ReflectionClass($pageController);
+        $r = $r->getMethod('__construct');
+
+        foreach ($r->getParameters() as $param) {
+            if (array_key_exists($param->name, $attributes)) {
+                $arguments[] = $attributes[$param->name];
+            } elseif ($param->getClass() && $param->getClass()->isInstance($request)) {
+                $arguments[] = $request;
+            } elseif ($param->isDefaultValueAvailable()) {
+                $arguments[] = $param->getDefaultValue();
+            } else {
+                if (is_array($pageController)) {
+                    $repr = sprintf('%s@%s()', get_class($pageController[0]), $pageController[1]);
+                } elseif (is_object($pageController)) {
+                    $repr = get_class($pageController);
+                } else {
+                    $repr = $pageController;
+                }
+                throw new RuntimeException(sprintf('Controller "%s" requer que você forneça um valor para o parâmetro "$%s" (porque não há nenhum valor padrão ou porque há um parâmetro não opcional após este).', $repr, $param->name));
+            }
+        }
         return $arguments;
     }
 
@@ -133,7 +161,6 @@ class Resolver implements ControllerResolverInterface
         if (false === strpos($controller, '@')) {
             throw new InvalidArgumentException(sprintf('Não foi possível encontrar o controller "%s".', $controller));
         }
-
         list($class, $method) = explode('@', $controller, 2);
 
         if (!class_exists($class)) {
@@ -141,6 +168,21 @@ class Resolver implements ControllerResolverInterface
         }
 
         return [$this->instantiateController($class), $method];
+    }
+
+    /**
+     * Retorna uma instância do PageController
+     *
+     * @param string $constroller O nome da Classe
+     *
+     * @return object
+     */
+    protected function instantiatePageController(Request $request, $constroller)
+    {
+        $args = $this->doGetPageControllerArguments($request, $constroller);
+        $class = new \ReflectionClass($constroller);
+        $class->newInstanceArgs($args);
+        return $class->newInstanceArgs($args);
     }
 
     /**
