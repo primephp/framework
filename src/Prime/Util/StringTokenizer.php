@@ -2,7 +2,7 @@
 
 namespace Prime\util;
 
-use Prime\core\Object;
+use Prime\core\TObject;
 
 /**
  * Descrição de StringTokenizer
@@ -16,7 +16,7 @@ use Prime\core\Object;
  * @dateCreate 28/05/2014
  * @author Elton Luiz
  */
-class StringTokenizer extends Object implements IEnumeration
+class StringTokenizer extends TObject implements IEnumeration
 {
 
     /**

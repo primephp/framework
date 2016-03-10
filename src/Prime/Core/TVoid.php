@@ -9,9 +9,7 @@ namespace Prime\Core;
  * @author Elton Luiz
  * @dateCreate 28/05/2014
  */
-final class Void extends Object
+final class TVoid extends TObject
 {
     
 }
-
-?>

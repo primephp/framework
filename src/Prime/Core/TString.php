@@ -4,7 +4,7 @@ namespace Prime\Core;
 
 use InvalidArgumentException;
 
-final class String extends Object
+final class TString extends TObject
 {
 
     public function __construct($string = NULL)
@@ -19,17 +19,17 @@ final class String extends Object
      * Este método retorna uma String que representa a seqüência de 
      * caracteres passado como parâmetro  
      * @param string $str
-     * @return String
+     * @return TString
      */
     public static function create($str)
     {
-        return new String($str);
+        return new TString($str);
     }
 
     /**
      * Retorna a própria instância de String pronta para ser manipulada ou 
      * impressa
-     * @return String
+     * @return TString
      */
     public function toString()
     {
@@ -60,12 +60,12 @@ final class String extends Object
     /**
      * Remove qualquer tipo de tag e deixa a string pura
      * @param string $string
-     * @return String
+     * @return TString
      */
     public function sanitize($string)
     {
         $v = filter_var($string, FILTER_SANITIZE_STRING);
-        return new String($v);
+        return new TString($v);
     }
 
     /**
@@ -119,11 +119,11 @@ final class String extends Object
      * Supondo que a especificada string representa uma cadeia de caracteres, 
      * retorna um novo objeto String inicializado pelo valor passado
      * @param str $str
-     * @return String
+     * @return TString
      */
     public static function valueOf($str)
     {
-        return new String($str);
+        return new TString($str);
     }
 
     /**
@@ -168,8 +168,8 @@ final class String extends Object
      */
     public function compareTo($str)
     {
-        if (!$str instanceof String) {
-            $str = new String((string) $str);
+        if (!$str instanceof TString) {
+            $str = new TString((string) $str);
         }
         if ($this->getValue() === $str->getValue()) {
             return TRUE;
@@ -182,12 +182,12 @@ final class String extends Object
      * Compara a string de dois objetos String ignorando caixa alta e caixa
      * baixa
      * @param string $str
-     * @return Boolean
+     * @return TBoolean
      */
     public function compareToIgnoreCase($str)
     {
-        if (!$str instanceof String) {
-            $str = new String((string) $str);
+        if (!$str instanceof TString) {
+            $str = new TString((string) $str);
         }
         if ($this->toUpper()->getValue() === $str->toUpper()->getValue()) {
             return TRUE;
@@ -199,12 +199,12 @@ final class String extends Object
     /**
      * Concatena a seqüência especificada para o final desta string.
      * @param string $str
-     * @return String
+     * @return TString
      */
     public function concat($str)
     {
-        if (!$str instanceof String) {
-            $str = new String((string) $str);
+        if (!$str instanceof TString) {
+            $str = new TString((string) $str);
         }
         $this->setValue($this->getValue() . $str->getValue());
         return $this;
@@ -214,7 +214,7 @@ final class String extends Object
      * Retorna true se e somente se esta string contém a seqüência 
      * especificada de valores char.
      * @param char $s
-     * @return Boolean
+     * @return TBoolean
      */
     public function contains($s)
     {
@@ -225,11 +225,11 @@ final class String extends Object
      * Retorna uma nova instância de String que é uma substring desta string. 
      * @param int $beginIndex
      * @param int $length
-     * @return String
+     * @return TString
      */
     public function subString($beginIndex, $length)
     {
-        return new String(mb_substr($this->getValue(), $beginIndex, $length, $this->getEncoding()));
+        return new TString(mb_substr($this->getValue(), $beginIndex, $length, $this->getEncoding()));
     }
 
     /**
@@ -258,7 +258,7 @@ final class String extends Object
 
     /**
      * Remove os principais espaços em branco e omitido.
-     * @return String
+     * @return TString
      */
     public function trim()
     {
@@ -281,7 +281,7 @@ final class String extends Object
      * Substitui um carater ou uma cadeia de caracteres dentro de String
      * @param string $pattern string a ser substituída
      * @param string $replacement string que substituirá os valores encontrados
-     * @return String 
+     * @return TString 
      */
     public function replace($pattern, $replacement)
     {
@@ -291,7 +291,7 @@ final class String extends Object
 
     /**
      * Converte todos os caracteres alfabéticos para maiúsculo. 
-     * @return String
+     * @return TString
      */
     public function toUpper()
     {
@@ -301,7 +301,7 @@ final class String extends Object
 
     /**
      * Converte todos os caracteres alfabéticos para minúsculos. 
-     * @return String
+     * @return TString
      */
     public function toLower()
     {
@@ -331,7 +331,7 @@ final class String extends Object
      * @param int $width A largura da string desejada.
      * @param int $start Posição inicial
      * @param string $trimMarker Uma seqüência que é adicionado ao final da string quando a string é truncada. 
-     * @return String
+     * @return TString
      */
     public function strimWidth($width, $start = 0, $trimMarker = '')
     {
@@ -347,14 +347,14 @@ final class String extends Object
      * ocorrência de $char <br>
      * Caso seja <b>FALSE</b> retornará toda a string a partir da última 
      * ocorrência de $char
-     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
     public function lastOccurrence($str, $part = false)
     {
         $r = mb_strrchr($this->getValue(), $str, $part, $this->getEncoding());
         if ($r) {
-            return new String($r);
+            return new TString($r);
         } else {
             return false;
         }
@@ -368,14 +368,14 @@ final class String extends Object
      * ocorrência de $char <br>
      * Caso seja <b>FALSE</b> retornará toda a string a partir da última 
      * ocorrência de $char
-     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
     public function iLastOccurrence($str, $before_char = false)
     {
         $r = mb_strrichr($this->getValue(), $str, $before_char, $this->getEncoding());
         if ($r) {
-            return new String($r);
+            return new TString($r);
         } else {
             return false;
         }
@@ -383,20 +383,20 @@ final class String extends Object
 
     /**
      * Busca a primeira ocorrência de um caracter na string
-     * @param string $char A string a ser localizada
+     * @param TString $char A string a ser localizada
      * @param boolean $before_char Define qual parte da string será retornada<br>
      * Caso seja <b>TRUE</b> retornará toda a string até o início da primeira 
      * ocorrência de $char <br>
      * Caso seja <b>FALSE</b> retornará toda a string a partir da primeira 
      * ocorrência de $char
-     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
     public function firstOccurrence($char, $before_char = false)
     {
         $r = mb_strstr($this->getValue(), $char, $before_char, $this->getEncoding());
         if ($r) {
-            return new String($r);
+            return new TString($r);
         } else {
             return false;
         }
@@ -410,14 +410,14 @@ final class String extends Object
      * ocorrência de $char <br>
      * Caso seja <b>FALSE</b> retornará toda a string a partir da primeira 
      * ocorrência de $char
-     * @return String|boolean Retorna um objeto String contendo o conteúdo de acordo com
+     * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
     public function iFirstOccurrence($char, $before_char = false)
     {
         $r = mb_stristr($this->getValue(), $char, $before_char, $this->getEncoding());
         if ($r) {
-            return new String($r);
+            return new TString($r);
         } else {
             return false;
         }
@@ -429,13 +429,13 @@ final class String extends Object
      * @param int $width A largura da string desejada
      * @param string $trimmarker A string que será adicionada no final da string
      * truncada
-     * @return String Retorna um objeto string contendo a string truncada, caso
+     * @return TString Retorna um objeto string contendo a string truncada, caso
      * seja passado $trimmarker, esse será adicionado no seu fina.
      */
     public function trimWidth($start, $width, $trimmarker = NULL)
     {
         $r = mb_strimwidth($this->getValue(), $start, $width, $trimmarker, $this->getEncoding());
-        return new String($r);
+        return new TString($r);
     }
 
     /**

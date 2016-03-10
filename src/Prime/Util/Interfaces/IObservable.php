@@ -47,5 +47,5 @@ interface IObservable extends SplSubject
      * em seguida, notificar todos os seus observadores e, em seguida, chamar 
      * o método clearChanged para indicar que este objeto não mudou.
      */
-    public function notifyObservers(Object $arg = NULL);
+    public function notifyObservers(TObject $arg = NULL);
 }

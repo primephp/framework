@@ -8,7 +8,7 @@ namespace Prime\Core;
  * @author comforsup-0212
  * @dateCreate $(date)
  */
-class Boolean extends Object
+class TBoolean extends TObject
 {
 
     const B_TRUE = TRUE;
@@ -58,8 +58,8 @@ class Boolean extends Object
 
     /**
      * Compara dois valores booleanos
-     * @param Boolean $x
-     * @param Boolean $y
+     * @param TBoolean $x
+     * @param TBoolean $y
      * @return boolean
      */
     public static function compare($x, $y)
@@ -73,10 +73,10 @@ class Boolean extends Object
 
     /**
      * Compara esta instancia de Boolean com uma outra instância
-     * @param Boolean $b
-     * @return Boolean
+     * @param TBoolean $b
+     * @return TBoolean
      */
-    public function compareTo(Boolean $b)
+    public function compareTo(TBoolean $b)
     {
         if ($this->getValue() === $b->getValue()) {
             return TRUE;
@@ -93,7 +93,7 @@ class Boolean extends Object
      */
     public static function parseBoolean($s)
     {
-        return new Boolean($s);
+        return new TBoolean($s);
     }
 
     /**
@@ -102,16 +102,16 @@ class Boolean extends Object
      * este método retorna Boolean.TRUE; se for falsa, este método 
      * retorna Boolean.FALSE.
      * @param mixed $b
-     * @return Boolean uma instância de Boolean $b
+     * @return TBoolean uma instância de Boolean $b
      */
     public static function valueOf($b)
     {
-        return new Boolean($b);
+        return new TBoolean($b);
     }
 
     /**
      * Retorna um objeto String representando o boolean especificado.
-     * @return String
+     * @return TString
      */
     public function toString()
     {
@@ -120,16 +120,16 @@ class Boolean extends Object
 
     /**
      * Retorna um objeto String representando o boolean especificado.
-     * @param Boolean $b
-     * @return String
+     * @param TBoolean $b
+     * @return TString
      */
     public static function getString($b)
     {
         if ($b == TRUE) {
-            return new String('TRUE');
+            return new TString('TRUE');
         } else
         if ($b == FALSE) {
-            return new String('FALSE');
+            return new TString('FALSE');
         } else {
             throw new \InvalidArgumentException('Não suportado valores diferentes de booleans');
         }

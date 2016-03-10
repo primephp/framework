@@ -27,7 +27,7 @@
 namespace Prime\Console\Command;
 
 use Prime\Console\BaseCommand;
-use Prime\Core\String;
+use Prime\Core\TString;
 use Prime\FileSystem\File;
 use Prime\FileSystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;
@@ -91,7 +91,7 @@ class CreateControllerCommand extends BaseCommand
             $filename .= 'controller.php.twig';
         }
         if (file_exists($filename)) {
-            $string = new String(file_get_contents($filename));
+            $string = new TString(file_get_contents($filename));
             $string->replace('{{ controller }}', $controller)->replace('{{ module }}', $module);
         } else {
             throw new FileNotFoundException("$filename nao encontrado");

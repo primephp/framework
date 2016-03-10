@@ -20,5 +20,5 @@ interface IComparable
      * positivo como este é menor, igual ou maior do que o objeto passado como 
      * parâmetro
      */
-    public function compareTo(Object $o);
+    public function compareTo(TObject $o);
 }

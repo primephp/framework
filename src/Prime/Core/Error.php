@@ -12,7 +12,7 @@ use ArrayObject,
  * @author tom
  * @since 26/06/2013
  */
-class Error extends Object
+class Error extends TObject
 {
 
     /**

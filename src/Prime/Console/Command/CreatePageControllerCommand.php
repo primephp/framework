@@ -86,7 +86,7 @@ class CreatePageControllerCommand extends BaseCommand
         $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
         $filename .= 'page_controller.php.twig';
         if (file_exists($filename)) {
-            $string = new String(file_get_contents($filename));
+            $string = new TString(file_get_contents($filename));
             $string->replace('{{ controller }}', $controller)
                     ->replace('{{ module }}', $module)
                     ->replace('{{ date }}', date('d/m/Y'));

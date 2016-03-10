@@ -26,7 +26,7 @@
 
 namespace Prime\EventDispatcher;
 
-use Prime\Core\Object;
+use Prime\Core\TObject;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
@@ -37,7 +37,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-abstract class AbstractListener extends Object implements EventSubscriberInterface
+abstract class AbstractListener extends TObject implements EventSubscriberInterface
 {
 
     /**

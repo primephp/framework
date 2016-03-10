@@ -11,7 +11,7 @@ use stdClass;
  * @author TomSailor
  * @since 03/08/2011
  */
-class Object extends stdClass
+class TObject extends stdClass
 {
 
     /**
@@ -126,16 +126,16 @@ class Object extends stdClass
     public static function create($value)
     {
         if (is_float($value)) {
-            return new Float($value);
+            return new TFloat($value);
         } else
         if (is_integer($value)) {
-            return new Integer($value);
+            return new TInteger($value);
         } else
         if (is_bool($value)) {
-            return new Boolean($value);
+            return new TBoolean($value);
         } else
         if (is_string($value)) {
-            return new String($value);
+            return new TString($value);
         }
     }
 

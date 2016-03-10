@@ -2,7 +2,7 @@
 
 namespace Prime\Security;
 
-use Prime\Core\Object;
+use Prime\Core\TObject;
 
 /**
  * Classe utilizada para criptografia de dados, sendo utilizada um chave para 
@@ -14,7 +14,7 @@ use Prime\Core\Object;
  * @since 25/08/2015
  * @access public
  */
-class Secret extends Object
+class Secret extends TObject
 {
 
     /**

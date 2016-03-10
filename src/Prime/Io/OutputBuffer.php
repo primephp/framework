@@ -2,7 +2,7 @@
 
 namespace Prime\Io;
 
-use Prime\Core\Object;
+use Prime\Core\TObject;
 use Prime\Pattern\Singleton\ISingleton;
 
 /**
@@ -12,7 +12,7 @@ use Prime\Pattern\Singleton\ISingleton;
  * (exceto cabeçalhos), ao invés da saída é armazenada em um buffer interno. 
  * @author Elton Luiz <contato@eltonluiz.com.br>
  */
-class OutputBuffer extends Object implements ISingleton
+class OutputBuffer extends TObject implements ISingleton
 {
 
     private static $_instance = NULL;

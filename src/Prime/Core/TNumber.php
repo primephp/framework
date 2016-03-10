@@ -12,7 +12,7 @@ namespace Prime\Core;
  *  @dateCreate 29/05/2014
  * 
  */
-abstract class Number extends Object
+abstract class TNumber extends TObject
 {
 
     abstract function getValue();

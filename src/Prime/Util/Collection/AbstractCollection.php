@@ -7,7 +7,7 @@
 namespace Prime\Util\Collection;
 
 use ArrayObject;
-use Prime\Core\Object;
+use Prime\Core\TObject;
 use Prime\Util\Interfaces\ICollection;
 
 /**
@@ -62,7 +62,7 @@ abstract class AbstractCollection implements ICollection
     public function add($e)
     {
         if (!is_object($e)) {
-            $e = Object::create($e);
+            $e = TObject::create($e);
         }
         $index = array_search($e, $this->_collection);
         if ($index === FALSE) {

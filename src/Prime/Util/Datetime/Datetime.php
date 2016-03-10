@@ -3,7 +3,7 @@
 namespace Prime\Util\Datetime;
 
 use ArrayObject;
-use Prime\Core\Object;
+use Prime\Core\TObject;
 use UnexpectedValueException;
 
 /*
@@ -17,7 +17,7 @@ use UnexpectedValueException;
  * @author Elton Luiz
  *         @dateCreate 10/06/2014
  */
-class Datetime extends Object
+class Datetime extends TObject
 {
 
     const SECONDS_PER_DAY = 86400;
@@ -226,7 +226,7 @@ class Datetime extends Object
     /**
      * Retorna o conteúdo do objeto no formato "Y-m-d H:i:s"
      *
-     * @see Object::toString()
+     * @see TObject::toString()
      */
     public function toString()
     {

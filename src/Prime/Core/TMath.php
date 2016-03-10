@@ -6,7 +6,7 @@ namespace Prime\Core;
  * @name TMath
  * @package Prime\DataTypes
  */
-class Math extends Object
+class TMath extends TObject
 {
 
     /**
@@ -21,7 +21,7 @@ class Math extends Object
     /**
      *
      */
-    public function Math($leftNumber, $rightNumber)
+    public function TMath($leftNumber, $rightNumber)
     {
         if (gettype($leftNumber) == "string") {
             self :: stringVerify($leftNumber);
@@ -296,7 +296,7 @@ class Math extends Object
         return $this->lastOutputValue;
     }
 
-    private function numberLeftVerify(Object $number)
+    private function numberLeftVerify(TObject $number)
     {
         if (!is_numeric($number)) {
             throw new Exception("Tipo ilegal, deveria ser num�rico... ");

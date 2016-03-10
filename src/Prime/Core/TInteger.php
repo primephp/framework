@@ -2,7 +2,7 @@
 
 namespace Prime\Core;
 
-use Prime\Core\Number;
+use Prime\Core\TNumber;
 
 /**
  * Definição da Classe Integer
@@ -10,12 +10,12 @@ use Prime\Core\Number;
  * @dateCreate 30/05/2014
  * @author Elton Luiz
  */
-class Integer extends Number
+class TInteger extends TNumber
 {
 
     /**
      * Instancia um objeto do tipo Inteiro
-     * @param int|string|String|NULL $int
+     * @param int|string|TString|NULL $int
      */
     public function __construct($int = NULL)
     {
@@ -113,11 +113,11 @@ class Integer extends Number
 
     /**
      * Retorna o valor deste Integer como uma String
-     * @return String
+     * @return TString
      */
     public function toString()
     {
-        return new String($this->getValue());
+        return new TString($this->getValue());
     }
 
     /**
@@ -143,7 +143,7 @@ class Integer extends Number
         if (is_string($int)) {
             $value = (int) $int;
         } else
-        if ($int instanceof String) {
+        if ($int instanceof TString) {
             $value = (int) $int->getValue();
         }
         $this->data['value'] = (int) $value;
@@ -160,11 +160,11 @@ class Integer extends Number
 
     /**
      * Retorna o valor deste integer como Float
-     * @return Float
+     * @return TFloat
      */
     public function toFloat()
     {
-        return new Float($this->getValue());
+        return new TFloat($this->getValue());
     }
 
     /**
@@ -184,11 +184,11 @@ class Integer extends Number
      * caso o valor seja um inteiro, do contrário sanitiza a string passada para
      * inteiro
      * @param type $str
-     * @return Integer
+     * @return TInteger
      */
     public static function parseInteger($str)
     {
-        return new Integer((int) $str);
+        return new TInteger((int) $str);
     }
 
     /**
@@ -211,11 +211,11 @@ class Integer extends Number
      * Supondo que o especificado String representa um número inteiro, 
      * retorna um novo objeto Integer inicializado para que o Integer
      * @param str $str
-     * @return Integer
+     * @return TInteger
      */
     public static function valueOf($str)
     {
-        return new Integer($str);
+        return new TInteger($str);
     }
 
 }
