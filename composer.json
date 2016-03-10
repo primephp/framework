@@ -26,6 +26,7 @@
         "twig/twig": "1.*",
         "monolog/monolog": "1.*"
     },
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Prime\\": "src/Prime/"
