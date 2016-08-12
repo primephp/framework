@@ -69,9 +69,112 @@ class CreateSetterGetter
 
     private function getter()
     {
-        return "\npublic function get{$this->method}(){\n" .
+        $getter = NULL;
+        switch ($this->type) {
+            case 'string':
+                $getter = $this->getterString();
+                break;
+            case 'int':
+                $getter = $this->getterInteger();
+                break;
+            case 'timestamp':
+                $getter = $this->getterInteger();
+                break;
+            case 'float':
+                $getter = $this->getterFloat();
+                break;
+            case 'datetime':
+                $getter = $this->getterDatetime();
+                break;
+            case 'date':
+                $getter = $this->getterDatetime();
+                break;
+            default:
+                $getter = $this->getterDefault();
+                break;
+        }
+        return $getter;
+    }
+
+    public function setterDefault($value)
+    {
+        $this->data[self::FIELD_ID_MENSAGEM] = $integer;
+    }
+
+    public function getterDefault()
+    {
+        return "/**
+                  * Retorna uma string contendo o valor de {$this->name}
+                  * ou NULL   
+                  * @return string|NULL
+                  */"
+                . "\npublic function get{$this->method}(){\n" .
                 "if(!empty(\$this->data[{$this->const}])){
             return htmlspecialchars(\$this->data[{$this->const}]);
+        }\n"
+                . "return NULL;\n"
+                . "}\n";
+    }
+
+    public function getterString()
+    {
+        return " /**
+                  * Retorna um objeto TStrig contendo o valor de {$this->name}
+                  * ou NULL   
+                  * @return \Prime\Core\TString|NULL
+                  */"
+                . "\npublic function get{$this->method}(){\n" .
+                "if(!empty(\$this->data[{$this->const}])){
+            \$value = htmlspecialchars(\$this->data[{$this->const}]);
+                return new \Prime\Core\TString(\$value); 
+        }\n"
+                . "return NULL;\n"
+                . "}\n";
+    }
+
+    public function getterInteger()
+    {
+        return " /**
+                  * Retorna um objeto TInteger contendo o valor de {$this->name}
+                  * ou NULL   
+                  * @return \Prime\Core\TInteger|NULL
+                  */"
+                . "\npublic function get{$this->method}(){\n" .
+                "if(!empty(\$this->data[{$this->const}])){
+            \$value = \$this->data[{$this->const}];
+                return new \Prime\Core\TInteger(\$value); 
+        }\n"
+                . "return NULL;\n"
+                . "}\n";
+    }
+
+    public function getterDatetime()
+    {
+        return " /**
+                  * Retorna um objeto Datetime contendo o valor de {$this->name}
+                  * ou NULL   
+                  * @return \Prime\Util\Datetime\Datetime|NULL
+                  */"
+                . "\npublic function get{$this->method}(){\n" .
+                "if(!empty(\$this->data[{$this->const}])){
+            \$value = \$this->data[{$this->const}];
+                return new \Prime\Util\Datetime\Datetime(\$value); 
+        }\n"
+                . "return NULL;\n"
+                . "}\n";
+    }
+
+    public function getterFloat()
+    {
+        return " /**
+                  * Retorna um objeto TFloat contendo o valor de {$this->name}
+                  * ou NULL   
+                  * @return \Prime\Core\TFloat|NULL
+                  */"
+                . "\npublic function get{$this->method}(){\n" .
+                "if(!empty(\$this->data[{$this->const}])){
+            \$value = \$this->data[{$this->const}];
+                return new \Prime\Core\TFloat(\$value); 
         }\n"
                 . "return NULL;\n"
                 . "}\n";
@@ -80,13 +183,25 @@ class CreateSetterGetter
     private function setter()
     {
         $value = strtolower($this->type);
-        $return = "public function set{$this->method}(\$$value){";
+        $body = "";
+        if (in_array($this->type, array('int', 'float', 'string'))) {
+            $body .= "\n\$this->data[$this->const] = ({$this->type})\$$value;";
+        } else {
+            $body .= "\n\$this->data[$this->const] = \$$value;";
+        }
+
+        $return = " /**
+                  * Define o valor para o campo '{$this->name}'
+                  * 
+                  * @param {$this->type} \$$value O valor a ser definido para o campo '{$this->name}'
+                  */"
+                . "\npublic function set{$this->method}(\$$value){";
         if ($this->notNull) {
             $return .= "if(!is_null(\$$value)){
-                \$this->data[$this->const] = \$$value;
+                $body
             }";
         } else {
-            $return .= "\$this->data[$this->const] = \$$value;";
+            $return .= $body;
         }
         $return .= "\n}";
         return $return;

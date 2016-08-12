@@ -10,8 +10,6 @@ namespace Prime\Model\SQL;
 abstract class SQLExpression
 {
 
-    // operadores lógicos
-
     const AND_OPERATOR = 'AND ';
     const OR_OPERATOR = 'OR ';
     // operadores de comparação

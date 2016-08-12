@@ -48,12 +48,11 @@ final class SQLSelect extends SQLStatement
                 $this->sql .= ' WHERE ' . $expression;
             }
 
-            // obtém as propriedades do critério
             if ($this->criteria instanceof SQLCriteria) {
-                $order = $this->criteria->getProperty(SQLCriteria::ORDER_BY);
-                $limit = $this->criteria->getProperty(SQLCriteria::LIMIT);
-                $offset = $this->criteria->getProperty(SQLCriteria::OFFSET);
-                $group = $this->criteria->getProperty(SQLCriteria::GROUP_BY);
+                $order = $this->criteria->getOrderBy();
+                $limit = $this->criteria->getLimit();
+                $offset = $this->criteria->getOffset();
+                $group = $this->criteria->getGroupBy();
             }
 
             // obtém a ordenação do SELECT

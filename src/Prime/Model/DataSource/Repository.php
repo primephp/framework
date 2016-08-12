@@ -2,11 +2,11 @@
 
 namespace Prime\Model\DataSource;
 
-use Prime\Model\SQL\SQLDelete,
-    Prime\Model\SQL\SQLExpression,
-    Prime\Model\SQL\SQLSelect,
-    Prime\Model\SQL\SQLUpdate,
-    Exception;
+use Exception;
+use Prime\Model\SQL\SQLDelete;
+use Prime\Model\SQL\SQLExpression;
+use Prime\Model\SQL\SQLSelect;
+use Prime\Model\SQL\SQLUpdate;
 
 /**
  * Classe Repository
@@ -56,35 +56,24 @@ final class Repository
      * Recuperar um conjunto de objetos (collection) da base de dados
      * através de um critério de seleção, e instanciá-los em memória
      * @param $criteria = objeto do tipo TCriteria
-     * @return array Retorna um array com os objetos do tipo passado como parâmetro
+     * @return Model[] Retorna um array com os objetos do tipo passado como parâmetro
      * ou false caso a criteria não retorne nenhum conteúdo
      */
     function load(SQLExpression $criteria)
     {
-        // instancia a instrução de SELECT
         $sql = new SQLSelect();
-        // Verifica se há um array de Colunas
         if (is_array($this->columns)) {
             foreach ($this->columns as $value) {
                 $sql->addColumn($value);
             }
-        } else { // do contrário adiciona todas
+        } else {
             $sql->addColumn('*');
         }
-
-        // define o nome da tabela de acordo com a classe passada
         $sql->setEntity(constant($this->class . '::TABLENAME'));
-
-        // atribui o critério passado como parâmetro
         $sql->setCriteria($criteria);
-
-        // obtém transação ativa
-        if ($conn = Transaction::get()) {
-            // registra mensagem de log
-            Transaction::log($sql->getStatement());
-
-            // executa a consulta no banco de dados
+        if ($conn = Connection::get()) {
             $result = $conn->query($sql->getStatement());
+            $this->sql = $sql->getStatement();
             $results = [];
 
             if ($result) {
@@ -116,12 +105,9 @@ final class Repository
 
         // atribui o critério passado como parâmetro
         $sql->setCriteria($criteria);
-
+$this->sql = $sql->getStatement();
         // obtém transação ativa
-        if ($conn = Transaction::get()) {
-            // registra mensagem de log
-            Transaction::log($sql->getStatement());
-            // executa instrução de DELETE
+        if ($conn = Connection::get()) {
             $result = $conn->exec($sql->getStatement());
             return $result;
         } else {
@@ -150,11 +136,7 @@ final class Repository
             foreach ($columns as $key => $value) {
                 $sql->setRowData($key, $value);
             }
-            //obtém a transação ativa
-            if ($conn = Transaction::get()) {
-                //registra a mensagem de log
-                Transaction::log($sql->getStatement());
-                // executa a instrução de UPDATE
+            if ($conn = Connection::get()) {
                 $result = $conn->exec($sql->getStatement());
                 return $result;
             } else {
@@ -183,17 +165,13 @@ final class Repository
         // atribui o critério passado como parâmetro
         $sql->setCriteria($criteria);
 
-        // obtém transação ativa
-        if ($conn = Transaction::get()) {
-            // registra mensagem de log
-            Transaction::log($sql->getStatement());
-
-            // executa instrução de SELECT
+        $this->sql = $sql->getStatement();
+        if ($conn = Connection::get()) {
+            $row = array();
             $result = $conn->query($sql->getStatement());
             if ($result) {
                 $row = $result->fetch();
             }
-            // retorna o resultado
             return $row[0];
         } else {
             // se não tiver transação, retorna uma exceção
@@ -223,4 +201,11 @@ final class Repository
         return explode(",", $this->columns);
     }
 
+    /**
+     * Retorna a instrução sql executada
+     * @return string
+     */
+    public function getSqlStatement(){
+        return $this->sql;
+    }
 }

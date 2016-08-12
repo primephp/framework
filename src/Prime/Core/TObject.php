@@ -28,7 +28,7 @@ class TObject extends stdClass
      */
     public function __toString()
     {
-        return get_class($this);
+        return $this->toString();
     }
 
     /**
@@ -139,9 +139,13 @@ class TObject extends stdClass
         }
     }
 
+    /**
+     * Retorna o nome da classe do objeto
+     * @return string O nome da classe do objeto instanciado
+     */
     public function toString()
     {
-        
+        return $this->getType();
     }
 
 }

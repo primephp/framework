@@ -6,6 +6,7 @@ use Prime\Core\Error;
 
 /**
  * Descrição da Classe AbstractAction
+ * Classe Abstrata que define a interface para as classes de negócio
  * @name AbstractAction
  * @package Prime\Business
  * @author TomSailor

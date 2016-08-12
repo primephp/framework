@@ -7,32 +7,44 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê uma interface utilizada para definição de critérios
  */
-class SQLCriteria extends SQLExpression
-{
-
-    const ORDER_BY = 'order';
-    const GROUP_BY = 'group';
-    const LIMIT = 'limit';
-    const OFFSET = 'offset';
+class SQLCriteria extends SQLExpression {
 
     private $expressions; // armazena a lista de expressões
     private $operators;     // armazena a lista de operadores
-    private $properties;    // propriedades do critério
+    /**
+     * Limite de registros a serem retornados
+     * @var int 
+     */
+    private $limit = NULL;
+
+    /**
+     * Quantidades de linhas a serem puladas
+     * @var int 
+     */
+    private $offset = NULL;
+
+    /**
+     * Critério de ordenamento da consulta
+     * @var string
+     */
+    private $order = NULL;
+
+    /**
+     * Critério de agrupamento da consulta
+     * @var string 
+     */
+    private $group = NULL;
 
     /**
      * Método Construtor
      */
-
-    function __construct()
-    {
+    function __construct() {
         $this->reset();
     }
 
-    public function reset()
-    {
+    public function reset() {
         $this->expressions = [];
         $this->operators = [];
-        $this->properties = [self::GROUP_BY => NULL, self::LIMIT => NULL, self::OFFSET => NULL, self::ORDER_BY => NULL];
     }
 
     /**
@@ -41,8 +53,7 @@ class SQLCriteria extends SQLExpression
      * @param $expression = expressão (objeto TExpression)
      * @param $operator     = operador lógico de comparação
      */
-    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR)
-    {
+    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR) {
         // na primeira vez, não precisamos de operador lógico para concatenar
         if (empty($this->expressions)) {
             $operator = NULL;
@@ -57,48 +68,92 @@ class SQLCriteria extends SQLExpression
      * método dump()
      * retorna a expressão final
      */
-    public function dump()
-    {
-        // concatena a lista de expressões
-        if (is_array($this->expressions)) {
-            if (count($this->expressions) > 0) {
-                $result = '';
-                foreach ($this->expressions as $i => $expression) {
-                    $operator = $this->operators[$i];
-                    // concatena o operador com a respectiva expressão
-                    $result .= $operator . $expression->dump() . ' ';
-                }
-                $result = trim($result);
-                return "({$result})";
+    public function dump() {
+        $result = '';
+        if (count($this->expressions) > 0) {
+            foreach ($this->expressions as $i => $expression) {
+                $operator = $this->operators[$i];
+                // concatena o operador com a respectiva expressão
+                $result .= $operator . $expression->dump() . ' ';
             }
+            $result = trim($result);
+            return "({$result})";
         }
     }
 
     /**
-     * método setProperty()
-     * define o valor de uma propriedade
-     * @param $property = propriedade
-     * @param $value      = valor
+     * Define os campos para ordenamentos dos registros que serão retornados
+     * @param string|SQLOrderBy $field
+     * @param string $order ASC ou DESC
      */
-    public function setProperty($property, $value)
-    {
-        if (isset($value)) {
-            $this->properties[$property] = $value;
+    public function setOrderBy($field, $order = '') {
+        if ($field instanceof SQLOrderBy) {
+            $this->order = $field->dump();
         } else {
-            $this->properties[$property] = NULL;
+            $this->order = $field . " " . $order;
         }
     }
 
     /**
-     * método getProperty()
-     * retorna o valor de uma propriedade
-     * @param $property = propriedade
+     * Retorna o critério de ordenamentos dos registros a serem retornados
+     * @return string
      */
-    public function getProperty($property)
-    {
-        if ($this->properties[$property]) {
-            return $this->properties[$property];
+    public function getOrderBy() {
+        return $this->order;
+    }
+
+    /**
+     * Define os critérios para o agrupamento dos registros a serem retornados
+     * @param string|SQLGroupBy $fields
+     */
+    public function setGroupBy($fields) {
+        if ($fields instanceof SQLGroupBy) {
+            $this->group = $fields->dump();
+        } else {
+            $this->group = $fields;
         }
+    }
+
+    /**
+     * Retorna os critérios de agrupamento dos registros a serem retornados
+     * @return string
+     */
+    public function getGroupBy() {
+        return $this->group;
+    }
+
+    /**
+     * Define o limit de registros a serem retornados
+     * @param int $limit
+     */
+    public function setLimit($limit) {
+        $this->limit = $limit;
+    }
+
+    /**
+     * Retorna o limite de registros a serem retornados 
+     * @return int
+     */
+    public function getLimit() {
+        return $this->limit;
+    }
+
+    /**
+     * Define a quantidade de linhas que devem ser puladas antes
+     * de começar a retornar os registros
+     * @param int $offset
+     */
+    public function setOffset($offset) {
+        $this->offset = $offset;
+    }
+
+    /**
+     * Retorna a quantidade de linha que devem ser puladas antes
+     * de começar a retorna os registros
+     * @return int
+     */
+    public function getOffset() {
+        return $this->offset;
     }
 
 }

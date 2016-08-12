@@ -7,6 +7,7 @@ use Prime\EventDispatcher\Dispatcher;
 use Prime\Server\Listener\KernelExceptionListener;
 use Prime\Server\Routing\RouteCollection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
@@ -68,7 +69,7 @@ class Kernel {
         $this->matcher = new UrlMatcher($routes, $this->requestContext->fromRequest($this->getRequest()));
 
         $this->dispatcher = new Dispatcher();
-        $this->dispatcher->addSubscriber(new RouterListener($this->matcher));
+        $this->dispatcher->addSubscriber(new RouterListener($this->matcher, new RequestStack()));
         $this->dispatcher->addSubscriber(new KernelExceptionListener());
         $this->dispatcher->addSubscriber(new ResponseListener('UTF-8'));
     }

@@ -27,12 +27,11 @@
 namespace Prime\Console\Command;
 
 use Prime\Console\BaseCommand;
-use Prime\Core\String;
+use Prime\Core\TString;
 use Prime\FileSystem\File;
 use Prime\FileSystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -98,6 +97,8 @@ class CreatePageControllerCommand extends BaseCommand
 
         if (file_exists($this->modulesPath . $module)) {
             Filesystem::getInstance()->touch($fileController);
+            Filesystem::getInstance()->chmod($fileController, 0660);
+            
 
             $file = new File($fileController);
             $fileObject = $file->openFile('w');

@@ -110,9 +110,8 @@ class Secret extends TObject
         if (!is_null($iv)) {
             $s = substr($iv, 0, 16);
             static::$_iv = $s;
-        } else {
-            return static::$_iv;
         }
+        return static::$_iv;
     }
 
     /**

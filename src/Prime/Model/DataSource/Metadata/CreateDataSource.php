@@ -127,7 +127,7 @@ class CreateDataSource
                     . "const FIELD_" . strtoupper($value['name']) . " = \"{$value['name']}\";\n";
             if ($value['pkey']) {
                 $pk = $value['name'];
-                $pkType = ($value['type'] == 'INTEGER') ? 'SERIAL' : 'MD5';
+                $pkType = ($value['type'] == 'int') ? 'SERIAL' : 'MD5';
             }
         }
         $constFields .= "\t\tconst PRIMARY_KEY = '$pk';\n";

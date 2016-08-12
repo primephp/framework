@@ -19,7 +19,7 @@ trait SingletonTrait
      *
      * @staticvar Singleton $instance A instância única dessa classe.
      *
-     * @return __CLASS__ A Instância única.
+     * @return static A Instância única.
      */
     public static function getInstance()
     {

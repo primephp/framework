@@ -38,7 +38,7 @@ use Twig_TemplateInterface;
  * @author TomSailor
  * @createAt 24/07/2015
  */
-class Template
+class Template extends View
 {
 
     /**
@@ -127,12 +127,31 @@ class Template
         return $env->loadTemplate($this->name, $this->index);
     }
 
+    /**
+     * Adiciona conteúdo no template que será introduzido no local onde estiver
+     * a variável {{ a_content }}
+     * @param mixed $content
+     */
+    public function addContent($content)
+    {
+        parent::addContent($content);
+    }
+
+    /**
+     * Retorna o conteúdo do template
+     * @return string
+     */
     public function getOutput()
     {
         $template = $this->load();
+//        \App\Application::dd($this->getContents());
+        $this->assign('a_content', $this->getContents());
         return $template->render($this->changeList);
     }
 
+    /**
+     * Imprime na tela o conteúdo do template
+     */
     public function printOut()
     {
         echo $this->getOutput();

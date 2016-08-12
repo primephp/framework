@@ -75,12 +75,15 @@ class CreateDataSourceCommand extends BaseCommand
         $filename = realpath($dirBase) . DIRECTORY_SEPARATOR . $dataSource->getClassName() . '.php';
 
         Filesystem::getInstance()->touch($filename);
+        Filesystem::getInstance()->chmod($filename, 0660);
 
         $file = new File($filename);
         $fileObject = $file->openFile('w');
         $fileObject->fwrite($dataSource->getOutput());
+        
 
         $output->writeln("<info>$filename criado com sucesso!!!</info>");
+        $output->writeln('<comment>Cria sua classe de modelo de dados e estenda de '. $dataSource->getClassName().'</comment>');
     }
 
 }

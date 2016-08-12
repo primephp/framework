@@ -80,6 +80,7 @@ class CreateModuleCommand extends BaseCommand
                 $baseDir . 'Controller'
             ]);
         }
+        $fs->chmod($baseDir, 0770, 0000, TRUE);
         $output->writeln('<info>Módulo ' . $this->moduleName . ' criado com sucesso</info>');
     }
 

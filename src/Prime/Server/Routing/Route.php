@@ -54,10 +54,12 @@ class Route extends BaseRoute
      * Retorna o nome da rota 
      * @return string
      */
-    public function getName()
+    public function getName($method = 'GET')
     {
         if (!is_null($this->name)) {
-            return $ths->name;
+            return $this->name;
+        } else {
+            $method = strtolower($method);
         }
         $path = $this->getPath();
         $name = '';
@@ -70,7 +72,7 @@ class Route extends BaseRoute
                 $name .= $value;
             }
         }
-        return $name;
+        return $name . '_' . $method;
     }
 
 }

@@ -13,8 +13,7 @@ namespace Prime\Util\Datetime;
  * @author Elton Luiz
  *         @dateCreate 10/06/2014
  */
-class DatetimeString
-{
+class DatetimeString {
 
     const SECONDS_PER_DAY = 86400;
 
@@ -91,13 +90,11 @@ class DatetimeString
      * @param string $date        	
      * @param boolean $iso        	
      */
-    public function __construct($fullDate = null, $iso = false)
-    {
+    public function __construct($fullDate = null, $iso = false) {
         $this->setValue($fullDate, $iso);
     }
 
-    public function setValue($fullDate, $iso = FALSE)
-    {
+    public function setValue($fullDate, $iso = FALSE) {
         date_default_timezone_set("Brazil/East");
         if (!is_null($fullDate)) {
             $fullDate = str_replace('/', '-', $fullDate);
@@ -114,8 +111,7 @@ class DatetimeString
      * 
      * @return date Y-m-d H:i:s
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->format('Y-m-d H:i:s');
     }
 
@@ -124,8 +120,7 @@ class DatetimeString
      * @return void Reconfigura o estado de date;
      * @param string $fullDate        	
      */
-    public function changeDate($fullDate = null, $iso = false)
-    {
+    public function changeDate($fullDate = null, $iso = false) {
         $fullDate = str_replace('/', '-', $fullDate);
         // echo $fullDate;
         $this->inputDate = $fullDate;
@@ -139,8 +134,7 @@ class DatetimeString
      * @param type $format        	
      * @return type
      */
-    public function format($format)
-    {
+    public function format($format) {
         if (isset($this->startTimeStamp [0])) {
             return date($format, $this->startTimeStamp [0]);
         } else {
@@ -154,8 +148,7 @@ class DatetimeString
      * 
      * @return string
      */
-    public function getDatePTBR()
-    {
+    public function getDatePTBR() {
         return $this->format('d/m/Y');
     }
 
@@ -165,8 +158,7 @@ class DatetimeString
      * 
      * @return type
      */
-    public function getDateTimeBR()
-    {
+    public function getDateTimeBR() {
         return $this->format('d/m/Y H:i:s');
     }
 
@@ -175,13 +167,11 @@ class DatetimeString
      *
      * @return string
      */
-    public function getDateUS()
-    {
+    public function getDateUS() {
         return $this->format('Y-m-d');
     }
 
-    public function getDateTimeUSA()
-    {
+    public function getDateTimeUSA() {
         return $this->format('Y-m-d H:i:s');
     }
 
@@ -192,8 +182,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getTime()
-    {
+    public function getTime() {
         return $this->startTimeStamp [0];
     }
 
@@ -202,8 +191,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getDate()
-    {
+    public function getDate() {
         return $this->format('d');
     }
 
@@ -214,8 +202,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getMonth()
-    {
+    public function getMonth() {
         return $this->startTimeStamp ['mon'];
     }
 
@@ -226,8 +213,7 @@ class DatetimeString
      * 
      * @return string
      */
-    public function getMonthName()
-    {
+    public function getMonthName() {
         if ($this->iso == true) {
             return $this->startTimeStamp ['month'];
         }
@@ -241,8 +227,7 @@ class DatetimeString
      * 
      * @return string
      */
-    public function getMonthShort()
-    {
+    public function getMonthShort() {
         if ($this->iso == true) {
             return substr($this->startTimeStamp ['month'], 0, 3);
         }
@@ -255,8 +240,7 @@ class DatetimeString
      *         alfabética, por extenso
      *        
      */
-    public function getDayOfWeek()
-    {
+    public function getDayOfWeek() {
         if ($this->iso == true) {
             return $this->startTimeStamp ['weekday'];
         }
@@ -268,13 +252,11 @@ class DatetimeString
      * 
      * @return int
      */
-    public function getDay()
-    {
+    public function getDay() {
         return $this->startTimeStamp ['mday'];
     }
 
-    public function getDayName()
-    {
+    public function getDayName() {
         $names = [
             1 => 'primeiro',
             2 => 'dois',
@@ -318,8 +300,7 @@ class DatetimeString
      *         alfabética
      *        
      */
-    public function getShortDayOfWeek()
-    {
+    public function getShortDayOfWeek() {
         if ($this->iso == true) {
             return substr($this->startTimeStamp ['weekday'], 0, 3);
         }
@@ -333,8 +314,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getNumericalDayOfWeek()
-    {
+    public function getNumericalDayOfWeek() {
         return $this->startTimeStamp ['wday'];
     }
 
@@ -343,8 +323,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getYear()
-    {
+    public function getYear() {
         return $this->startTimeStamp ['year'];
     }
 
@@ -353,8 +332,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getHours()
-    {
+    public function getHours() {
         return $this->startTimeStamp ['hours'];
     }
 
@@ -363,8 +341,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getHoursString()
-    {
+    public function getHoursString() {
         return $this->format('H:i:s');
     }
 
@@ -373,8 +350,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getMinutes()
-    {
+    public function getMinutes() {
         return $this->startTimeStamp ['minutes'];
     }
 
@@ -383,18 +359,15 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function getSeconds()
-    {
+    public function getSeconds() {
         return $this->startTimeStamp ['seconds'];
     }
 
-    public function getNow()
-    {
+    public function getNow() {
         return strtotime("now");
     }
 
-    public function teste()
-    {
+    public function teste() {
         echo "<pre>";
         var_dump($this->startTimeStamp);
         echo "</pre>";
@@ -409,8 +382,7 @@ class DatetimeString
      * @param string $seconds        	
      * @return integer
      */
-    public function quantityOfMiliseconds(Date $date)
-    {
+    public function quantityOfMiliseconds(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         $seconds = ($seconds < 0) ? (- 1 * $seconds) : $seconds;
         return $seconds * 1000;
@@ -423,8 +395,7 @@ class DatetimeString
      * @return string
      * @param string $seconds        	
      */
-    public function quantityOfSeconds(Date $date)
-    {
+    public function quantityOfSeconds(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
         return $seconds;
@@ -435,8 +406,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function quantityOfMinutes(Date $date)
-    {
+    public function quantityOfMinutes(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
         return ($seconds / 60);
@@ -446,8 +416,7 @@ class DatetimeString
      *
      * @return integer
      */
-    public function quantityOfHours(Date $date)
-    {
+    public function quantityOfHours(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
         return ($seconds / 3600);
@@ -457,8 +426,7 @@ class DatetimeString
      *
      * @return integer
      */
-    public function quantityOfDays(Date $date)
-    {
+    public function quantityOfDays(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
 
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
@@ -469,8 +437,7 @@ class DatetimeString
      *
      * @return integer
      */
-    public function quantityOfWeeks(Date $date)
-    {
+    public function quantityOfWeeks(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
         return ($seconds / 3600 / (7 * 24));
@@ -481,8 +448,7 @@ class DatetimeString
      * 
      * @return interger
      */
-    public function quantityOfMonths(Date $date)
-    {
+    public function quantityOfMonths(Date $date) {
         $seconds = $this->startTimeStamp [0] - $date->getTime();
         // $seconds =($seconds < 0 ) ? (-1 * $seconds) : $seconds;
         return ($seconds / 3600 / (24 * 30));
@@ -493,8 +459,7 @@ class DatetimeString
      * 
      * @return integer
      */
-    public function quantityOfYears(Datetime $date = NULL)
-    {
+    public function quantityOfYears(Datetime $date = NULL) {
         if (is_null($date)) {
             $date = new TDatetime ();
         }
@@ -517,19 +482,16 @@ class DatetimeString
      *        	unix timestamp
      * @return float number of days
      */
-    static function DiffDays($day1, $day2)
-    {
+    static function DiffDays($day1, $day2) {
         return IntVal(abs($day2 - $day1) / self::SECONDS_PER_DAY);
     }
 
-    public function getDateTimeIso()
-    {
+    public function getDateTimeIso() {
         $date = new DateTime($this->getDateTimeUSA());
         return $date->format(DateTime::ISO8601);
     }
 
-    public function getTimeElapsed()
-    {
+    public function getTimeElapsed() {
         $timeNow = time();
         $timeRes = $timeNow - $this->startTimeStamp [0];
         $nar = 0;
@@ -544,16 +506,16 @@ class DatetimeString
         // Segundos
         if
         ($timeRes > 0 and $timeRes < 60) {
-            $r = $timeRes . " segundos atr&aacute;s";
+            $r = $timeRes . " segundos atrás";
         } else
         // Minutos
         if
         (($timeRes > 59) and ( $timeRes < 3599)) {
             $timeRes = $timeRes / 60;
             if (round($timeRes, $nar) >= 1 and round($timeRes, $nar) < 2) {
-                $r = round($timeRes, $nar) . " minuto atr&aacute;s";
+                $r = round($timeRes, $nar) . " minuto atrás";
             } else {
-                $r = round($timeRes, $nar) . " minutos atr&aacute;s";
+                $r = round($timeRes, $nar) . " minutos atrás";
             }
         } else
         // Horas
@@ -563,9 +525,9 @@ class DatetimeString
             $timeRes = $timeRes / 3600;
 
             if (round($timeRes, $nar) >= 1 and round($timeRes, $nar) < 2) {
-                $r = round($timeRes, $nar) . " hora atr&aacute;s";
+                $r = round($timeRes, $nar) . " hora atrás";
             } else {
-                $r = round($timeRes, $nar) . " horas atr&aacute;s";
+                $r = round($timeRes, $nar) . " horas atrás";
             }
         } else
         // Dias
@@ -575,7 +537,7 @@ class DatetimeString
 
             $timeRes = $timeRes / 86400;
             if (round($timeRes, $nar) >= 1 and round($timeRes, $nar) < 2) {
-                $r = round($timeRes, $nar) . " dia atr&aacute;s";
+                $r = round($timeRes, $nar) . " dia atrás";
             } else {
 
                 preg_match('/(\d*)\.(\d)/', $timeRes, $matches);
@@ -594,9 +556,9 @@ class DatetimeString
                     }
 
                     // Imprime o final da data
-                    $r .= "&frac12; atr&aacute;s";
+                    $r .= "1/2 atrás";
                 } else {
-                    $r = round($timeRes, 0) . " dias atr&aacute;s";
+                    $r = round($timeRes, 0) . " dias atrás";
                 }
             }
         } else
@@ -606,7 +568,7 @@ class DatetimeString
 
             $timeRes = $timeRes / 2592000;
             if (round($timeRes, $nar) >= 1 and round($timeRes, $nar) < 2) {
-                $r = round($timeRes, $nar) . " mês atr&aacute;s";
+                $r = round($timeRes, $nar) . " mês atrás";
             } else {
 
                 preg_match('/(\d*)\.(\d)/', $timeRes, $matches);
@@ -625,9 +587,9 @@ class DatetimeString
                     }
 
                     // Imprime o final da data
-                    $r .= "&frac12; atr&aacute;s";
+                    $r .= "1/2 atrás";
                 } else {
-                    $r = round($timeRes, 0) . " meses atr&aacute;s";
+                    $r = round($timeRes, 0) . " meses atrás";
                 }
             }
         } else
@@ -644,8 +606,7 @@ class DatetimeString
      * 
      * @return string
      */
-    public function getLongPtBr()
-    {
+    public function getLongPtBr() {
         return $this->getDay() . ' de ' . $this->getMonthName() . ' de ' . $this->getYear();
     }
 
@@ -656,10 +617,13 @@ class DatetimeString
      * @param type $dataNascimento        	
      * @return int $ano
      */
-    public static function getAge($dataNascimento)
-    {
-        $date = new TDatetime($dataNascimento);
-        $nascimento = $date->getDateUS();
+    public static function getAge($dataNascimento) {
+        if ($dataNascimento instanceof Datetime) {
+            $date = $dataNascimento;
+        } else {
+            $date = new Datetime($dataNascimento);
+        }
+        $nascimento = $date->get('Y-m-d');
         $hoje = date('Y-m-d');
 
         $ano = $hoje - $nascimento;
@@ -681,8 +645,7 @@ class DatetimeString
         return (int) $ano;
     }
 
-    public function decrease($param)
-    {
+    public function decrease($param) {
         $value = Sanitize::integer($param);
         $param = Sanitize::letters($param);
 
@@ -719,8 +682,7 @@ class DatetimeString
         $this->changeDate(date('Y-m-d H:m:s', mktime($hour, $minute, $second, $month, $day, $year)));
     }
 
-    public function add($param)
-    {
+    public function add($param) {
         $value = Sanitize::integer($param);
         $param = Sanitize::letters($param);
 
@@ -756,8 +718,7 @@ class DatetimeString
         $this->changeDate(date('Y-m-d H:i:s', mktime($hour, $minute, $second, $month, $day, $year)));
     }
 
-    public function getClone()
-    {
+    public function getClone() {
         return clone $this;
     }
 

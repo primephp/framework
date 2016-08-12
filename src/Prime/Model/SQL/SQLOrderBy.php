@@ -8,8 +8,7 @@ namespace Prime\Model\SQL;
  * @since 21/01/2012
  * @author TomSailor
  */
-final class SQLOrderBy extends SQLExpression
-{
+final class SQLOrderBy extends SQLExpression {
 
     const DESC_OPERATOR = " desc ";
     const ASC_OPERATOR = " asc ";
@@ -22,8 +21,7 @@ final class SQLOrderBy extends SQLExpression
      * @param array $column
      * @param string $order 
      */
-    public function __construct($column = NULL, $order = self::ASC_OPERATOR)
-    {
+    public function __construct($column = NULL, $order = self::ASC_OPERATOR) {
         self::$struct = [];
         if (is_array($column) || is_string($column)) {
             $this->add($column, $order);
@@ -36,22 +34,27 @@ final class SQLOrderBy extends SQLExpression
      * String que representam números não serão usados.
      * @param {string|array} $column
      */
-    public function add($column = [], $order = self::ASC_OPERATOR)
-    {
-        self::$order = $order;
+    public function add($column = [], $order = self::ASC_OPERATOR) {
+        self::$order[] = $order;
         if (is_array($column)) {
-            self::$struct = array_merge(self::$struct, $column);
+            foreach ($column as $value) {
+                $this->add($value, $order);
+            }
         } elseif (is_string($column) && !is_numeric($column)) {
             self::$struct[] = $column;
         }
     }
 
-    public function dump()
-    {
-        if (count(self::$struct)) {
-            return (implode(", ", self::$struct) . self::$order);
+    public function dump() {
+        $dump = '';
+        $total = count(self::$struct);
+        for ($index = 0; $index < $total; $index++) {
+            $dump .= self::$struct[$index].' '.self::$order[$index];
+            if($index < ($total -1)){
+                $dump .= ', ';
+            }
         }
-        return "";
+        return $dump;
     }
 
 }

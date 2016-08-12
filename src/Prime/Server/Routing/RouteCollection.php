@@ -52,7 +52,7 @@ class RouteCollection extends BaseCollection
     {
         $route = new Route($path);
         if (is_null($name)) {
-            $name = $route->getName();
+            $name = $route->getName('MULTI');
         }
         $route->setDefault('_controller', $callable);
         $route->setMethods(['POST', 'GET', 'HEAD']);
@@ -73,7 +73,7 @@ class RouteCollection extends BaseCollection
     {
         $route = new Route($path);
         if (is_null($name)) {
-            $name = $route->getName();
+            $name = $route->getName('POST');
         }
         $route->setDefault('_controller', $callable);
         $route->setMethods(['POST']);
@@ -94,7 +94,7 @@ class RouteCollection extends BaseCollection
     {
         $route = new Route($path);
         if (is_null($name)) {
-            $name = $route->getName();
+            $name = $route->getName('GET');
         }
         $route->setDefault('_controller', $callable);
         $route->setMethods(['GET']);

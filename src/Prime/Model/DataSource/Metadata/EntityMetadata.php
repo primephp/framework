@@ -61,25 +61,29 @@ class EntityMetadata
     {
         $this->types = [
             //text
-            'VARCHAR' => 'VARCHAR',
-            'varchar' => 'VARCHAR',
-            'bpchar' => 'VARCHAR',
-            'VAR_STRING' => 'VARCHAR',
-            'BLOB' => 'VARCHAR',
-            'STRING' => 'VARCHAR',
+            'VARCHAR' => 'string',
+            'varchar' => 'string',
+            'bpchar' => 'string',
+            'VAR_STRING' => 'string',
+            'BLOB' => 'string',
+            'STRING' => 'string',
             //integer
-            'TINY' => 'INTEGER',
-            'LONG' => 'INTEGER',
-            'int4' => 'INTEGER',
-            'int' => 'INTEGER',
-            'integer' => 'INTEGER',
+            'TINY' => 'int',
+            'LONG' => 'int',
+            'int4' => 'int',
+            'int' => 'int',
+            'integer' => 'int',
+            'FLOAT' => 'float',
+            'float' => 'float',
+            'double' => 'float',
+            'DOUBLE' => 'float',
             //datetime
-            'DATE' => 'DATE',
-            'DATETIME' => 'DATETIME',
-            'timestamp' => 'TIMESTAMP',
-            'TIMESTAMP' => 'TIMESTAMP',
-            'date' => 'DATE',
-            'time' => 'TIME'
+            'DATE' => 'date',
+            'DATETIME' => 'datetime',
+            'timestamp' => 'int',
+            'TIMESTAMP' => 'int',
+            'date' => 'date',
+            'time' => 'time'
         ];
     }
 

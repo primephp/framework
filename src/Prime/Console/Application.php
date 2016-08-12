@@ -52,6 +52,7 @@ class Application extends ConsoleApplication
         $this->add(new Command\CreateModuleCommand());
         $this->add(new Command\CreateControllerCommand());
         $this->add(new Command\CreatePageControllerCommand());
+        $this->add(new Command\CreateBusinessCommand());
     }
 
 }

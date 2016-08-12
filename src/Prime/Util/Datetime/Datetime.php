@@ -74,8 +74,9 @@ class Datetime extends TObject
     /**
      * Define o valor de Datetime, caso seja um valor inválido lança uma UnexpectedValueException
      *
-     * @param string $value        	
-     * @throws UnexpectedValueException
+     * @param string $value        
+     * @return boolean Retorna TRUE se o valor é uma data válida e FALSE se o 
+     * valor informado for um formato inválido
      */
     public function setValue($value)
     {
@@ -84,8 +85,9 @@ class Datetime extends TObject
         if ($this->dateVerify($parse)) {
             $get = getdate(strtotime($value));
             $this->_date = new ArrayObject(array_merge($parse, $get));
+            return true;
         } else {
-            throw new UnexpectedValueException('Valor de data em ' . __CLASS__ . ' não é válido');
+            return false;
         }
     }
 
@@ -209,7 +211,6 @@ class Datetime extends TObject
             return date($format, $this->getTimestamp());
         } else {
             return NULL;
-            $this->__destruct();
         }
     }
 
@@ -220,7 +221,7 @@ class Datetime extends TObject
      */
     public function isValid()
     {
-        return $this->dateVerify(checkdate($this->getMonth(), $this->getDay(), $this->getYear()));
+        return checkdate($this->getMonth(), $this->getDay(), $this->getYear());
     }
 
     /**
