@@ -86,6 +86,9 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @return mixed|NULL
      */
     public function getIn($index) {
+        if ($index < 0 || $index > $this->size()) {
+            throw new IndexOutOfBoundsException('Indice fora do range de elementos');
+        }
         if (is_null($index)) {
             return NULL;
         }
@@ -178,6 +181,9 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param mixed $element
      */
     public function set($index, $element) {
+        if ($index < 0 || $index > $this->size()) {
+            throw new IndexOutOfBoundsException('Indice fora do range de elementos');
+        }
         $this->checkIndex($index);
         $this->checkType($element);
         $this->collection [$index] = $element;
