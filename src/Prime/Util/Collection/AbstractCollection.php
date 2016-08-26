@@ -6,9 +6,16 @@
 
 namespace Prime\Util\Collection;
 
+use ArrayIterator;
 use ArrayObject;
+use Prime\Core\TBoolean;
+use Prime\Core\TFloat;
+use Prime\Core\TInteger;
 use Prime\Core\TObject;
+use Prime\Core\TString;
 use Prime\Util\Interfaces\ICollection;
+use Prime\Util\Interfaces\IIterator;
+use UnexpectedValueException;
 
 /**
  * Descrição de AbstractCollection
@@ -18,23 +25,29 @@ use Prime\Util\Interfaces\ICollection;
  * @author tom
  * @dateCreate 05JUN2014
  */
-abstract class AbstractCollection implements ICollection
-{
-
-    protected $_collection = [];
+abstract class AbstractCollection extends TObject implements ICollection {
 
     /**
-     * Cria uma coleção a partir de um array passado como parâmetro
-     *
-     * @param array $array        	
+     * Array que armazena os objetos da coleção
+     * @var array
      */
-    public function __construct(array $array = NULL)
-    {
-        if (!is_null($array)) {
-            foreach ($array as $value) {
-                $this->add($value);
-            }
-        }
+    protected $collection = [];
+
+    /**
+     * O tipo de objetos que devem ser aceitos, 
+     * caso seja mixed, vai aceitar tipos diversos, no caso de tipos "primitivos"
+     * serão convertidos ao serem adicionados
+     * @var string
+     */
+    private $typeCast = 'mixed';
+
+    /**
+     * Cria uma coleção do tipo passado como parâmetro
+     * @param string $typeCast Define o tipo de objeto que deve ser aceito
+     * na coleção
+     */
+    public function __construct($typeCast = 'mixed') {
+        $this->setTypeCast($typeCast);
     }
 
     /**
@@ -43,74 +56,101 @@ abstract class AbstractCollection implements ICollection
      *
      * @param ICollection $collection        	
      */
-    public static function ofCollection(ICollection $collection)
-    {
+    public static function ofCollection(ICollection $collection) {
         $class = get_called_class();
         return new $class($collection->toArray());
     }
 
     /**
-     * Adiciona um elemento a coleção
-     * Caso a coleção não aceite elementos repetidos, e o mesmo já esteja adicionado
-     * returna FALSE
+     * Adiciona um elemento a coleção no final da coleção
      *
      * @param mixed $e
      *        	O elemento a ser adicionado
      * @return boolean Returna FALSE caso o elemento já esteja adicionado e não aceite
      *         duplicatas e TRUE caso tenha sido adicionado com sucesso.
+     * @throws UnexpectedValueException
+     * @return int O total de elementos da coleção
      */
-    public function add($e)
-    {
+    public function add($e) {
         if (!is_object($e)) {
             $e = TObject::create($e);
         }
-        $index = array_search($e, $this->_collection);
-        if ($index === FALSE) {
-            $this->_collection [] = $e;
-            return TRUE;
-        } else {
-            return FALSE;
+        if (!$this->checkType($e)) {
+            throw new UnexpectedValueException("Tipo de dados esperado {$this->getTypeCast()} em " . __METHOD__);
         }
+        return array_push($this->collection, $e);
+    }
+
+    /**
+     * Verifica se o tipo do elemento passado é o aceito pela coleção
+     * @param mixed $e
+     * @return boolean Retorna TRUE caso seja um tipo aceito
+     */
+    protected function checkType($e) {
+        if ($this->getTypeCast() == 'mixed') {
+            return true;
+        }
+        if (is_object($e) && is_a($e, $this->getTypeCast())) {
+            return true;
+        }
+        if (!is_object($e)) {
+            $n = TObject::create($e);
+            if (is_a($n, $this->getTypeCast())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
      * Adiciona todos os elementos da coleção passada nesta coleção
      *
-     * @param ICollection $collection        	
+     * @param ICollection $collection Coleção de dados que devem ser adicionados
+     * na coleção atual.      	
      * @return boolean Retorna TRUE se os objetos foram adicionados
      */
-    public function addAll(ICollection $collection)
-    {
-        for ($index = 0; $index < $collection->size(); $index ++) {
-            $this->add($collection->iterator());
+    public function addAll(ICollection $collection) {
+        $r = false;
+        foreach ($collection as $value) {
+            $this->add($value);
+            $r = true;
         }
-    }
-
-    public function clear()
-    {
-        $this->_collection = [];
-    }
-
-    public function contains($o)
-    {
-        if (array_search($o, $this->_collection)) {
-            return TRUE;
-        } else {
-            return FALSE;
-        }
+        return $r;
     }
 
     /**
-     *
-     * @param ICollection $collection        	
+     * Remove todos os elemenos desta coleção
      */
-    public function containAll(ICollection $collection)
-    {
-        $iterator = $collection->iterator();
+    public function clear() {
+        $this->collection = [];
+    }
 
-        for ($index = 0; $index < $collection->size(); $index ++) {
-            
+    /**
+     * Retorna TRUE se a coleção contém o referido elemeto
+     * @param mixed $o
+     * @return boolean
+     */
+    public function contains($o) {
+        if (array_search($o, $this->collection) === false) {
+            return FALSE;
         }
+        return TRUE;
+    }
+
+    /**
+     * Retorna TRUE se esta coleção contem todos os elementos da coleção
+     * especificada
+     * @param ICollection $collection
+     * @return boolean Retorna TRUE caso todos os elementos estejam contidos
+     * na coleção
+     */
+    public function containAll(ICollection $collection) {
+        foreach ($collection as $value) {
+            if (!$this->contains($value)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -119,18 +159,16 @@ abstract class AbstractCollection implements ICollection
      *
      * @return boolean
      */
-    public function isEmpty()
-    {
-        if ((boolean) count($this->_collection)) {
-            return FALSE;
-        } else {
-            return TRUE;
-        }
+    public function isEmpty() {
+        return (bool) $this->size();
     }
 
-    public function iterator()
-    {
-        ;
+    /**
+     * Retorna um iterados para os elementos contidos na coleção
+     * @return CollectionIterator
+     */
+    public function iterator() {
+        return $this->getIterator();
     }
 
     /**
@@ -141,11 +179,10 @@ abstract class AbstractCollection implements ICollection
      * @return boolean Caso o elemeto passado como parâmetro exista na
      *         Collection, o remove e retorna TRUE, do contrário e retorna FALSE
      */
-    public function remove($o)
-    {
-        $index = array_search($o, $this->_collection);
+    public function remove($o) {
+        $index = array_search($o, $this->collection);
         if ($index !== FALSE) {
-            unset($this->_collection [$index]);
+            unset($this->collection [$index]);
             return TRUE;
         } else {
             return FALSE;
@@ -153,19 +190,41 @@ abstract class AbstractCollection implements ICollection
     }
 
     /**
-     * Retorna todos os elementos contidos na collection passado como parâmetro
-     * que existam na presente Collection
-     *
-     * @param ICollection $collection        	
+     * Remove todos os elementos desta coleção, que também estão contidos na 
+     * coleção especificada
+     * @param ICollection $collection
+     * @return boolean Retorna TRUE se a coleção foi alterada
      */
-    public function removeAll(ICollection $collection)
-    {
-        ;
+    public function removeAll(ICollection $collection) {
+        $r = false;
+        foreach ($collection as $element) {
+            if ($this->remove($element)) {
+                $r = true;
+            }
+        }
+        return $r;
     }
 
-    public function retainAll(ICollection $collection)
-    {
-        ;
+    /**
+     * Mantém apenas os elementos nesta coleção que estão contidos na coleção 
+     * especificada
+     * @param ICollection $collection
+     * @return boolean Retorna TRUE se a coleção foi alterada
+     */
+    public function retainAll(ICollection $collection) {
+        $array = array();
+        $r = false;
+        foreach ($collection as $key => $value) {
+            if ($this->contains($value)) {
+                $array[$key] = $value;
+                $r = true;
+            }
+        }
+        $this->clear();
+        foreach ($array as $value) {
+            $this->add($value);
+        }
+        return $r;
     }
 
     /**
@@ -173,9 +232,8 @@ abstract class AbstractCollection implements ICollection
      *
      * @return int
      */
-    public function size()
-    {
-        return count($this->_collection);
+    public function size() {
+        return count($this->collection);
     }
 
     /**
@@ -183,20 +241,16 @@ abstract class AbstractCollection implements ICollection
      *
      * @return array
      */
-    public function toArray()
-    {
-        return $this->_collection;
+    public function toArray() {
+        return $this->collection;
     }
 
-    /**
-     * Retorna uma instância de ArrayList contendo os elementos da presente
-     * Collection
-     *
-     * @return ArrayList
-     */
-    public function toArrayList()
-    {
-        return new ArrayList($this->_collection);
+    public function toJson() {
+        $r = array();
+        foreach ($this as $key => $value) {
+            $r[(string) $key] = (string) $value;
+        }
+        return json_encode($r);
     }
 
     /**
@@ -205,36 +259,53 @@ abstract class AbstractCollection implements ICollection
      *
      * @return \ArrayObject
      */
-    public function toArrayObject()
-    {
-        return new ArrayObject($this->_collection);
+    public function toArrayObject() {
+        return new ArrayObject($this->collection);
     }
 
     /**
-     * Verifica se o hashCode da Collection passada como parâmemtro é igual
-     * ao do presente objeto.
-     *
-     * @param ICollection $o        	
-     * @return boolean Caso sejam iguais o hashCode retorna TRUE, do contário
-     *         retorna FALSE
+     * Define o estereotipo dos objetos suportados
+     * @param string $typeCast
      */
-    public function equals(ICollection $o)
-    {
-        if ($this->hashCode() === $o->hashCode()) {
-            return TRUE;
+    protected function setTypeCast($typeCast) {
+        if (in_array($typeCast, array('string', 'String', 'STRING'))) {
+            $this->typeCast = TString::class;
+        } else
+        if (in_array($typeCast, array('int', 'integer', 'INT', 'INTEGER'))) {
+            $this->typeCast = TInteger::class;
+        } else
+        if (in_array($typeCast, array('bool', 'boolean', 'BOOL', 'BOOLEAN'))) {
+            $this->typeCast = TBoolean::class;
+        } else
+        if (in_array($typeCast, array('float', 'FLOAT', 'double', 'DOUBLE'))) {
+            $this->typeCast = TFloat::class;
         } else {
-            return FALSE;
+            $this->typeCast = $typeCast;
         }
     }
 
     /**
-     * Retorna o hashCode do presente objeto
-     *
+     * Retorna um Iterador contendo todos os elementos da coleção
+     * @return ArrayIterator
+     */
+    public function getIterator() {
+        return new CollectionIterator($this);
+    }
+
+    /**
+     * Retorna o tipo de objetos que a coleção aceita
      * @return string
      */
-    public function hashCode()
-    {
-        return hash('md5', $this);
+    protected function getTypeCast() {
+        return $this->typeCast;
+    }
+
+    public function __toString() {
+        return $this->hashCode();
+    }
+
+    public function __debugInfo() {
+        return $this->toArray();
     }
 
 }

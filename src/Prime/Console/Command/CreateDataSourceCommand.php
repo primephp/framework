@@ -44,18 +44,15 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @createAt 22/07/2015
  * @author Elton Luiz
  */
-class CreateDataSourceCommand extends BaseCommand
-{
+class CreateDataSourceCommand extends BaseCommand {
 
-    private function isConnected()
-    {
+    private function isConnected() {
         if (!Connection::get()) {
             throw new RuntimeException('Há conexão com com banco de dados.');
         }
     }
 
-    protected function configure()
-    {
+    protected function configure() {
         $this->setName('create:datasource')
                 ->setProcessTitle('DataSource Create')
                 ->setDescription('Cria um objeto para acesso aos dados de uma tabela do banco de dados da aplicação')
@@ -64,8 +61,7 @@ class CreateDataSourceCommand extends BaseCommand
                 ->setHelp('console create:DataSource {NomeDaTabela} para criar uma classe de acesso ao banco de dados');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $this->isConnected();
         $entity = $input->getArgument('entity');
 
@@ -80,10 +76,10 @@ class CreateDataSourceCommand extends BaseCommand
         $file = new File($filename);
         $fileObject = $file->openFile('w');
         $fileObject->fwrite($dataSource->getOutput());
-        
+
 
         $output->writeln("<info>$filename criado com sucesso!!!</info>");
-        $output->writeln('<comment>Cria sua classe de modelo de dados e estenda de '. $dataSource->getClassName().'</comment>');
+        $output->writeln('<comment>Cria sua classe de modelo de dados e estenda de ' . $dataSource->getClassName() . '</comment>');
     }
 
 }

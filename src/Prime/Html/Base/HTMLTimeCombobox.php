@@ -8,13 +8,11 @@ namespace Prime\Html\Base;
  * e comparar valores provenientes de fontes externas
  * para marcar como selecionado.
  */
-class HTMLTimeCombobox
-{
+class HTMLTimeCombobox {
 
     private static $meses;
 
-    public function __construct()
-    {
+    public function __construct() {
         date_default_timezone_set("America/Sao_Paulo");
         self::$meses[] = "Janeiro";
         self::$meses[] = "Fevereiro";
@@ -36,14 +34,13 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getDateOptions($e = "")
-    {
+    public function getDateOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("Data");
         $opt = $option->getOutput();
         for ($d = 1; $d <= 31; $d++) {
-            $opt.= $this->optionGenerator($d, $e);
+            $opt .= $this->optionGenerator($d, $e);
         }
         return $opt;
     }
@@ -53,14 +50,13 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getMonthOptions($e = "")
-    {
+    public function getMonthOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("M�s");
         $opt = $option->getOutput();
         for ($d = 1; $d <= 12; $d++) {
-            $opt.= $this->optionGenerator($d, $e);
+            $opt .= $this->optionGenerator($d, $e);
         }
         return $opt;
     }
@@ -70,13 +66,12 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getLongMonthOptions($e = "")
-    {
+    public function getLongMonthOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("Mês");
         $opt = $option->getOutput();
-        $e = (int) $e;
+        $e = (int)$e;
         for ($d = 1; $d <= 12; $d++) {
             $option = new HTMLElement("option");
             if ($d == $e) {
@@ -84,7 +79,7 @@ class HTMLTimeCombobox
             }
             $option->value = "$d";
             $option->appendChild(self::$meses[$d - 1]);
-            $opt .=$option->getOutput();
+            $opt .= $option->getOutput();
         }
         return $opt;
     }
@@ -94,13 +89,12 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getShortMonthOptions($e = "")
-    {
+    public function getShortMonthOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("M�s");
         $opt = $option->getOutput();
-        $e = (int) $e;
+        $e = (int)$e;
         for ($d = 1; $d <= 12; $d++) {
             $option = new HTMLElement("option");
             if ($d == $e) {
@@ -108,7 +102,7 @@ class HTMLTimeCombobox
             }
             $option->value = "$d";
             $option->appendChild(strtoupper(substr(self::$meses[$d - 1], 0, 3)));
-            $opt .=$option->getOutput();
+            $opt .= $option->getOutput();
         }
         return $opt;
     }
@@ -118,14 +112,13 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getYearsOptions($e = "")
-    {
+    public function getYearsOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("Ano");
         $opt = $option->getOutput();
         for ($d = (date("Y") - 5); $d <= (2020); $d++) {
-            $opt.= $this->optionGenerator($d, $e);
+            $opt .= $this->optionGenerator($d, $e);
         }
         return $opt;
     }
@@ -135,14 +128,13 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getHoursOptions($e = "")
-    {
+    public function getHoursOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("Hora");
         $opt = $option->getOutput();
         for ($d = 0; $d <= 23; $d++) {
-            $opt.= $this->optionGenerator($d, $e);
+            $opt .= $this->optionGenerator($d, $e);
         }
         return $opt;
     }
@@ -152,14 +144,13 @@ class HTMLTimeCombobox
      * @param string $e
      * @return string
      */
-    public function getMinutesOptions($e = "")
-    {
+    public function getMinutesOptions($e = "") {
         $option = new HTMLElement("option");
         $option->value = "null";
         $option->appendChild("Min");
         $opt = $option->getOutput();
         for ($d = 0; $d < 60; $d++) {
-            $opt.= $this->optionGenerator($d, $e);
+            $opt .= $this->optionGenerator($d, $e);
         }
         return $opt;
     }
@@ -170,8 +161,7 @@ class HTMLTimeCombobox
      * @param mixed $comparator
      * @return HTMLElement
      */
-    private function optionGenerator($instante, $comparator)
-    {
+    private function optionGenerator($instante, $comparator) {
         $instante = ($instante < 10) ? "0" . $instante : $instante;
         $option = new HTMLElement("option");
         if ($instante == $comparator) {
@@ -188,8 +178,8 @@ class HTMLTimeCombobox
      * @param string $name
      * @return string
      */
-    public function getSelectShortMonth($name = "shortMonth", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectShortMonth($name = "shortMonth", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("m");
         }
@@ -207,8 +197,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectLongMonth($name = "shortMonth", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectLongMonth($name = "shortMonth", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("m");
         }
@@ -226,8 +216,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectYear($name = "years", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectYear($name = "years", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("Y");
         }
@@ -245,8 +235,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectMonth($name = "month", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectMonth($name = "month", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("m");
         }
@@ -265,8 +255,7 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectDate($name = "date", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectDate($name = "date", $cmp = NULL, $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("d");
         }
@@ -284,8 +273,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectHours($name = "hours", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectHours($name = "hours", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("H");
         }
@@ -303,8 +292,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectMinutes($name = "minutes", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectMinutes($name = "minutes", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("i");
         }
@@ -322,8 +311,8 @@ class HTMLTimeCombobox
      * @param  boolean $autoDraw
      * @return mixed
      */
-    public function getSelectSeconds($name = "seconds", $cmp = NULL, $autoDraw = FALSE)
-    {
+    public function getSelectSeconds($name = "seconds", $cmp = NULL,
+            $autoDraw = FALSE) {
         if (!$cmp) {
             $cmp = date("s");
         }
@@ -334,8 +323,7 @@ class HTMLTimeCombobox
         return $this->autoDraw($select, $autoDraw);
     }
 
-    private function autoDraw($select, $autoDraw = FALSE)
-    {
+    private function autoDraw($select, $autoDraw = FALSE) {
         if ($autoDraw === TRUE) {
             $select->printOut();
             return FALSE;

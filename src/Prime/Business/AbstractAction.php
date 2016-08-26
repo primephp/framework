@@ -11,13 +11,11 @@ use Prime\Core\Error;
  * @package Prime\Business
  * @author TomSailor
  */
-abstract class AbstractAction implements ActionInterface
-{
+abstract class AbstractAction implements ActionInterface {
 
     private $errors = NULL;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->errors = new Error();
     }
 
@@ -25,8 +23,7 @@ abstract class AbstractAction implements ActionInterface
      * Adiciona uma mensagem de erro ao Action
      * @param str $text
      */
-    protected function addError($text)
-    {
+    protected function addError($text) {
         $this->errors->add($text);
     }
 
@@ -34,8 +31,7 @@ abstract class AbstractAction implements ActionInterface
      * Adiciona um array de errors
      * @param array $errors
      */
-    public function addErrors(array $errors)
-    {
+    public function addErrors(array $errors) {
         foreach ($errors as $value) {
             $this->addError($value);
         }
@@ -45,8 +41,7 @@ abstract class AbstractAction implements ActionInterface
      * Retorna o objeto do Tipo Error instanciado
      * @return Error
      */
-    public function getObjectErrors()
-    {
+    public function getObjectErrors() {
         return $this->errors;
     }
 
@@ -55,8 +50,7 @@ abstract class AbstractAction implements ActionInterface
      * ou FALSE caso não haja
      * @return boolean
      */
-    public function hasErrors()
-    {
+    public function hasErrors() {
         if ($this->errors->count()) {
             return TRUE;
         } else {

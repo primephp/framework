@@ -12,8 +12,7 @@ use UnexpectedValueException;
  * @createAt 28/07/2015
  * @author TomSailor
  */
-class Filesystem extends SymfonyFilesystem
-{
+class Filesystem extends SymfonyFilesystem {
 
     /**
      * Armazena uma instância única do objeto Filesystem
@@ -26,8 +25,7 @@ class Filesystem extends SymfonyFilesystem
     /**
      * Construtor privado para impedir múltiplas instância do objeto filesystem
      */
-    private function __construct()
-    {
+    private function __construct() {
         
     }
 
@@ -35,8 +33,7 @@ class Filesystem extends SymfonyFilesystem
      * Retorna a instância única de FileSystem
      * @return Filesystem
      */
-    public static function getInstance()
-    {
+    public static function getInstance() {
         if (is_null(self::$instance)) {
             self::$instance = new Filesystem();
         }
@@ -48,8 +45,7 @@ class Filesystem extends SymfonyFilesystem
      * @param string $path
      * @throws FileNotFoundException
      */
-    public static function setDocumentRoot($path)
-    {
+    public static function setDocumentRoot($path) {
         $fs = self::getInstance();
         if ($fs->exists($path)) {
             self::$documentRoot = $path;
@@ -64,8 +60,7 @@ class Filesystem extends SymfonyFilesystem
      * @param array $paths
      * @example $array = ['alias1' => 'path1', 'alias2' => 'path2'];
      */
-    public static function addPaths(array $paths)
-    {
+    public static function addPaths(array $paths) {
         $fs = self::getInstance();
         foreach ($paths as $key => $value) {
             $fs->addPath($key, $value);
@@ -80,8 +75,7 @@ class Filesystem extends SymfonyFilesystem
      * @throws UnexpectedValueException Caso o alias já esteja em uso
      * @throws FileNotFoundException Caso o diretório definido não exista
      */
-    public function addPath($alias, $path)
-    {
+    public function addPath($alias, $path) {
         if ($this->exists($path)) {
             if (!key_exists($alias, self::$paths)) {
                 self::$paths[$alias] = $path;
@@ -99,8 +93,7 @@ class Filesystem extends SymfonyFilesystem
      * @param string $alias
      * @return string
      */
-    public function getPath($alias)
-    {
+    public function getPath($alias) {
         if (isset(self::$paths[$alias])) {
             return self::$paths[$alias];
         }
@@ -112,8 +105,7 @@ class Filesystem extends SymfonyFilesystem
      *
      * @return void
      */
-    private function __clone()
-    {
+    private function __clone() {
         
     }
 
@@ -123,8 +115,7 @@ class Filesystem extends SymfonyFilesystem
      *
      * @return void
      */
-    private function __wakeup()
-    {
+    private function __wakeup() {
         
     }
 

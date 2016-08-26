@@ -8,8 +8,7 @@ namespace Prime\Model\SQL;
  * Esta classe provê meios para manipulação de uma instrução de UPDATE no banco de dados
  */
 
-final class SQLUpdate extends SQLStatement
-{
+final class SQLUpdate extends SQLStatement {
 
     private $columnValues;
 
@@ -19,8 +18,7 @@ final class SQLUpdate extends SQLStatement
      * @param $column = coluna da tabela
      * @param $value = valor a ser armazenado
      */
-    public function setRowData($column, $value)
-    {
+    public function setRowData($column, $value) {
         // verifica se é um dado escalar (string, inteiro,...)
         if (is_scalar($value)) {
             if (is_string($value) and ( !empty($value))) {
@@ -45,8 +43,7 @@ final class SQLUpdate extends SQLStatement
      * método getSQL()
      * retorna a instrução de UPDATE em forma de string.
      */
-    public function getStatement()
-    {
+    public function getStatement() {
         // monsta a string de UPDATE
         $this->sql = "UPDATE {$this->entity}";
         // monta os pares: coluna=valor,...

@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Cookie as BaseCookie;
  * @package Prime\Server\Http
  * @author TomSailor <www.eltonluiz@hotmail.com> 
  */
-class Cookie extends BaseCookie
-{
+class Cookie extends BaseCookie {
     
 }

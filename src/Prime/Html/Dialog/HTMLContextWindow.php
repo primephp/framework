@@ -8,8 +8,7 @@ use Prime\Html\Base\HTMLDiv,
 /**
  * @package Prime\Html\Dialog
  */
-final class HTMLContextWindow
-{
+final class HTMLContextWindow {
 
     private $wnd;
     private $w_id;
@@ -27,8 +26,7 @@ final class HTMLContextWindow
      * @param int $width
      * @param int $height
      */
-    public function __construct($object, $width = 420, $height = 320)
-    {
+    public function __construct($object, $width = 420, $height = 320) {
         $this->content = $object;
         $this->wth = intval($width);
         $this->hgt = intval($height);
@@ -45,8 +43,7 @@ final class HTMLContextWindow
      * @param mixed $top
      * @param mixed $left
      */
-    public function setPosition($top, $left)
-    {
+    public function setPosition($top, $left) {
         $this->t = $top;
         $this->l = $left;
     }
@@ -57,8 +54,7 @@ final class HTMLContextWindow
      * documentos HTML.
      * @return string
      */
-    public function getOutput()
-    {
+    public function getOutput() {
         $w_id = $this->w_id;
         $cssLook = $this->createLook($w_id);
         $posLeft = (strpos($this->l, "%")) ? $this->l : $this->l . "px";
@@ -74,8 +70,7 @@ final class HTMLContextWindow
      * Imprime a janela computada diretamente na saida do servidor
      * @return void
      */
-    public function printOut()
-    {
+    public function printOut() {
         echo $this->getOutput();
     }
 
@@ -84,8 +79,7 @@ final class HTMLContextWindow
      *
      * @param string $class
      */
-    private function createLook($class)
-    {
+    private function createLook($class) {
         $style = new HTMLStyle("$class");
         $style->width = "{$this->wth}px";
         $style->height = ($this->hgt + 2) . "px";
@@ -95,8 +89,7 @@ final class HTMLContextWindow
         return $style->getOutput();
     }
 
-    public function getDialogId()
-    {
+    public function getDialogId() {
         return $this->w_id;
     }
 

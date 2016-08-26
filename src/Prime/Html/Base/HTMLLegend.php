@@ -7,11 +7,9 @@ namespace Prime\Html\Base;
  *
  * @author tom
  */
-class HTMLLegend extends HTMLElement
-{
+class HTMLLegend extends HTMLElement {
 
-    public function __construct($text = NULL)
-    {
+    public function __construct($text = NULL) {
         parent::__construct('legend');
 
         if (!is_null($text)) {

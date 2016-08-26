@@ -40,13 +40,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author TomSailor
  * @createAt 30/07/2015
  */
-class CreateApplicationCommand extends BaseCommand
-{
+class CreateApplicationCommand extends BaseCommand {
 
     private $dirBase;
 
-    protected function configure()
-    {
+    protected function configure() {
         $this->setName('create:app')
                 ->setProcessTitle('Criar Skeleton da Aplicação')
                 ->setDescription('Cria a estrutura de diretórios para a aplicação')
@@ -55,8 +53,7 @@ class CreateApplicationCommand extends BaseCommand
                 ->setHelp('console create:app {diretório} para criar o skeleton da aplicação');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $dir = $input->getArgument('directory');
         if ($dir) {
             $this->dirBase = $dir;
@@ -70,8 +67,7 @@ class CreateApplicationCommand extends BaseCommand
     /**
      * Cria a estrutura de diretórios utilizados na aplicação
      */
-    private function createSkeleton()
-    {
+    private function createSkeleton() {
         $fileSystem = Filesystem::getInstance();
 
         $fileSystem->mkdir([

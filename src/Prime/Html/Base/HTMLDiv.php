@@ -7,11 +7,9 @@ namespace Prime\Html\Base;
  * 
  * @author TomSailor
  */
-class HTMLDiv extends HTMLElement
-{
+class HTMLDiv extends HTMLElement {
 
-    public function __construct($nameId = null)
-    {
+    public function __construct($nameId = null) {
         parent::__construct('div');
 
         if (!is_null($nameId)) {

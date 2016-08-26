@@ -11,11 +11,10 @@ namespace Prime\Model\SQL;
  * 
  * @author David Regla Demaree <dreglad@gmail.com>
  */
-if ((int) phpversion() < 5)
+if ((int)phpversion() < 5)
     die("Sorry, This class is written for PHP 5, maybe later I'll re-write it for PHP 4");
 
-class SQLQueryBuilder
-{
+class SQLQueryBuilder {
 
     const VERSION = "1.3";
 
@@ -59,8 +58,7 @@ class SQLQueryBuilder
      *
      * @param string $queryType
      */
-    public function __construct($queryType)
-    {
+    public function __construct($queryType) {
         $this->queryType = strtoupper($queryType);
     }
 
@@ -69,8 +67,7 @@ class SQLQueryBuilder
      *
      * @param string $tableName
      */
-    public function setTable($tableName)
-    {
+    public function setTable($tableName) {
         $this->table = $tableName;
     }
 
@@ -79,8 +76,7 @@ class SQLQueryBuilder
      *
      * @param unknown_type $colName
      */
-    public function addColumn($colName)
-    {
+    public function addColumn($colName) {
         $this->columns[] = $colName;
     }
 
@@ -89,8 +85,7 @@ class SQLQueryBuilder
      *
      * @param string $value
      */
-    public function addValue($value)
-    {
+    public function addValue($value) {
         $value = (get_magic_quotes_gpc()) ? $value : addslashes($value);
         $this->values[] = "'" . $value . "'";
     }
@@ -98,38 +93,31 @@ class SQLQueryBuilder
     /**
      * These methods set the query clauses
      */
-    public function setWhere($where)
-    {
+    public function setWhere($where) {
         $this->where = $where;
     }
 
-    public function setGroupBy($groupBy)
-    {
+    public function setGroupBy($groupBy) {
         $this->groupBy = $groupBy;
     }
 
-    public function setHaving($having)
-    {
+    public function setHaving($having) {
         $this->having = $having;
     }
 
-    public function setOrderBy($orderBy)
-    {
+    public function setOrderBy($orderBy) {
         $this->orderBy = $orderBy;
     }
 
-    public function setQuery($query)
-    {
+    public function setQuery($query) {
         $this->query = $query;
     }
 
-    public function setLimit($limit)
-    {
+    public function setLimit($limit) {
         $this->limit = $limit;
     }
 
-    public function showErrors($showErrors)
-    {
+    public function showErrors($showErrors) {
         $this->showErrors = ($showErrors) ? true : false;
     }
 
@@ -140,8 +128,7 @@ class SQLQueryBuilder
      * @param string $message
      * @return boolean
      */
-    private function error($message)
-    {
+    private function error($message) {
         if ($this->showErrors) {
             print "<font size='10' face='arial' color='red'>\n";
             print "<p>SQLQueryBuilder v" . self::VERSION . "</p>";
@@ -158,77 +145,76 @@ class SQLQueryBuilder
      *
      * @return string
      */
-    public function buildQuery()
-    {
+    public function buildQuery() {
         if (empty($this->table) and ( $this->queryType != "QUERY"))
             return $this->error("Error - No table selected");
 
         $sqlString = "";
         switch ($this->queryType) {
             case "SELECT":
-                $sqlString.= "SELECT ";
-                $sqlString.= implode(", ", $this->columns);
-                $sqlString.=" FROM {$this->table}";
+                $sqlString .= "SELECT ";
+                $sqlString .= implode(", ", $this->columns);
+                $sqlString .= " FROM {$this->table}";
 
                 if ($this->where)
-                    $sqlString.= " WHERE $this->where";
+                    $sqlString .= " WHERE $this->where";
                 if ($this->groupBy)
-                    $sqlString.= " GROUP BY $this->groupBy";
+                    $sqlString .= " GROUP BY $this->groupBy";
                 if ($this->having)
-                    $sqlString.= " HAVING $this->having";
+                    $sqlString .= " HAVING $this->having";
                 if ($this->orderBy)
-                    $sqlString.= " ORDER BY $this->orderBy";
+                    $sqlString .= " ORDER BY $this->orderBy";
                 if ($this->limit)
-                    $sqlString.= " LIMIT $this->limit";
+                    $sqlString .= " LIMIT $this->limit";
 
                 break;
             case "INSERT":
                 if (count($this->columns) != count($this->values))
                     return $this->error("Error - Column list doesn't match the value list");
-                $sqlString.= "INSERT INTO {$this->table} ";
+                $sqlString .= "INSERT INTO {$this->table} ";
 
-                $sqlString.= "(";
-                $sqlString.= implode(", ", $this->columns);
-                $sqlString.= ") ";
+                $sqlString .= "(";
+                $sqlString .= implode(", ", $this->columns);
+                $sqlString .= ") ";
 
-                $sqlString.= "VALUES";
+                $sqlString .= "VALUES";
 
-                $sqlString.= " (";
-                $sqlString.= implode(", ", $this->values);
-                $sqlString.= ")";
+                $sqlString .= " (";
+                $sqlString .= implode(", ", $this->values);
+                $sqlString .= ")";
                 break;
             case "UPDATE":
                 if (count($this->columns) != count($this->values))
                     return $this->error("Error - Column list doesn't match the value list");
-                $sqlString.= "UPDATE {$this->table} SET ";
+                $sqlString .= "UPDATE {$this->table} SET ";
 
                 $noColumns = count($this->columns);
                 for ($i = 0; $i < $noColumns; $i++) {
-                    $sqlString.= "{$this->columns[$i]} = {$this->values[$i]}";
+                    $sqlString .= "{$this->columns[$i]} = {$this->values[$i]}";
                     if ($i < $noColumns - 1)
-                        $sqlString.= ", ";
+                        $sqlString .= ", ";
                 }
 
 
                 if ($this->where)
-                    $sqlString.= " WHERE $this->where";
+                    $sqlString .= " WHERE $this->where";
                 if ($this->limit)
-                    $sqlString.= " LIMIT $this->limit";
+                    $sqlString .= " LIMIT $this->limit";
 
                 break;
             case "DELETE":
-                $sqlString.= "DELETE FROM {$this->table} ";
+                $sqlString .= "DELETE FROM {$this->table} ";
 
                 if ($this->where)
-                    $sqlString.= "WHERE $this->where";
+                    $sqlString .= "WHERE $this->where";
                 break;
             case "QUERY":
                 if (!$this->query)
                     $this->error("Warning - There's no SQL");
-                $sqlString.= $this->query;
+                $sqlString .= $this->query;
         }
 
-        $sqlString.=";";
+        $sqlString .= ";";
         return $sqlString;
     }
 

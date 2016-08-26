@@ -7,8 +7,7 @@ namespace Prime\Html\Page;
  * Cria e manipula todos os elementos de uma p�gina HTML Index
  * @author TomSailor
  */
-class Index extends HTMLPage
-{
+class Index extends HTMLPage {
 
     private $container;
     private $leftContent;
@@ -22,8 +21,7 @@ class Index extends HTMLPage
     private $topContent;
     private $mainContent;
 
-    public function __construct()
-    {
+    public function __construct() {
         //cria a p�gina e define o t�tulo
         parent::__construct(IConfig::INDEX_TITLE);
         //define os Metadados do HEAD
@@ -48,16 +46,14 @@ class Index extends HTMLPage
         $this->addScriptLink("jquery-ui.min.js");
     }
 
-    private function barraSuperior()
-    {
+    private function barraSuperior() {
         $barTop = new HTMLDiv("barra_superior");
         $barTop->class = "barra_superior";
         $this->body->appendChild($barTop);
         return $barTop;
     }
 
-    private function container()
-    {
+    private function container() {
         $container = new HTMLDiv("container");
         $container->class = "container";
         $this->container = $container;
@@ -65,8 +61,7 @@ class Index extends HTMLPage
         return $container;
     }
 
-    private function leftContent()
-    {
+    private function leftContent() {
         $leftMenu = $this->leftMenu();
         $content = new HTMLDiv("leftContent");
         $img = new HTMLImage(Config::baseImages() . "logoCKcom.png");
@@ -79,8 +74,7 @@ class Index extends HTMLPage
         return $content;
     }
 
-    private function leftMenu()
-    {
+    private function leftMenu() {
         $div = new HTMLDiv("leftMenu");
 
         $ul = new HTMLElement("ul");
@@ -100,8 +94,7 @@ class Index extends HTMLPage
         return $div;
     }
 
-    private function topHeader()
-    {
+    private function topHeader() {
         $div = new HTMLDiv("topHeader");
         $div->class = "clear paddtop";
 
@@ -123,8 +116,7 @@ class Index extends HTMLPage
         return $this->topHeader;
     }
 
-    private function topContent()
-    {
+    private function topContent() {
         $div = new HTMLDiv("top_content");
 
         if (is_array($this->topContent)) {
@@ -138,8 +130,7 @@ class Index extends HTMLPage
         return $div;
     }
 
-    private function topMenu()
-    {
+    private function topMenu() {
         $div = new HTMLDiv("topMenu");
 
         $leftMenu = $this->topLeftMenu();
@@ -152,8 +143,7 @@ class Index extends HTMLPage
         return $this->topMenu;
     }
 
-    private function topLeftMenu()
-    {
+    private function topLeftMenu() {
         $div = new HTMLDiv("float_left");
         $div->class = "float_left";
 
@@ -174,8 +164,7 @@ class Index extends HTMLPage
         return $this->topLeftMenu;
     }
 
-    private function topRightMenu()
-    {
+    private function topRightMenu() {
         $div = new HTMLDiv("float_right");
         $div->class = "float_right";
 
@@ -196,8 +185,7 @@ class Index extends HTMLPage
         return $this->topRightMenu;
     }
 
-    private function content()
-    {
+    private function content() {
         $div = new HTMLDiv('content');
         $div->class = "clear";
 
@@ -212,8 +200,7 @@ class Index extends HTMLPage
         return $this->content;
     }
 
-    private function mainContainer()
-    {
+    private function mainContainer() {
         $div = new HTMLDiv("mainContainer");
 
         $main = new HTMLDiv("mainContent");
@@ -238,8 +225,7 @@ class Index extends HTMLPage
      * abaixo dos menus
      * @param HTMLElement $child conte�do a ser adicionado
      */
-    public function addTopContent(HTMLElement $child)
-    {
+    public function addTopContent(HTMLElement $child) {
         $this->topContent[] = $child;
     }
 
@@ -248,8 +234,7 @@ class Index extends HTMLPage
      * @param HTMLElement $child Elemento HTML a ser adicionado na �rea
      * de conte�do principal do site
      */
-    public function addMainContent($child)
-    {
+    public function addMainContent($child) {
         $this->mainContent[] = $child;
     }
 
@@ -258,8 +243,7 @@ class Index extends HTMLPage
      * Adiciona mais �tens no Menu superior esquerdo da p�gina
      * @param HTMLAnchor $link link a ser adicionado
      */
-    public function addTopLeftMenu(HTMLAnchor $link)
-    {
+    public function addTopLeftMenu(HTMLAnchor $link) {
         $this->topLeftMenu[] = $link;
     }
 
@@ -268,8 +252,7 @@ class Index extends HTMLPage
      * Adiciona mais �tens no Menu superior esquerdo da p�gina
      * @param HTMLAnchor $link link a ser adicionado
      */
-    public function addTopRightMenu(HTMLAnchor $link)
-    {
+    public function addTopRightMenu(HTMLAnchor $link) {
         $this->topRightMenu[] = $link;
     }
 
@@ -278,18 +261,15 @@ class Index extends HTMLPage
      * Adiciona mais �tens no Menu esquerdo da p�gina
      * @param HTMLAnchor $link link a ser adicionado
      */
-    public function addLeftMenu(HTMLAnchor $link)
-    {
+    public function addLeftMenu(HTMLAnchor $link) {
         $this->leftMenu[] = $link;
     }
 
-    public function addContainer(HTMLElement $container)
-    {
+    public function addContainer(HTMLElement $container) {
         $this->container->appendChild($container);
     }
 
-    public function getOutput()
-    {
+    public function getOutput() {
         //cria a barra superior
         $this->barraSuperior();
 

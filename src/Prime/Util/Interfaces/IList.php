@@ -20,16 +20,14 @@
 namespace Prime\Util\Interfaces;
 
 /**
- * Defina uma Interface para uma coleção ordenada (também conhecido como uma 
- * seqüência). O usuário deste interface tem um controle preciso sobre onde na 
- * lista é inserido cada  elemento. O usuário pode acessar elementos por seu 
- * índice inteiro  (posição na lista), e procurar elementos na lista.
- * Permite também a inserção de elementos duplicados, sendo que em posições 
- * diferentes, assim como também elementos nulos
+ * Interface que extende Collection, e que define coleções ordenadas 
+ * (sequências), onde se tem o controle total sobre a posição de cada elemento, 
+ * identificado por um índice numérico. Na maioria dos casos, pode ser encarado 
+ * como um "array de tamanho variável" pois, como os arrays primitivos, é 
+ * acessível por índices, mas além disso possui métodos de inserção e remoção.
  * @author tom
  */
-interface IList extends ICollection
-{
+interface IList extends ICollection {
 
     /**
      * Insere o elemento especificado na posição especificada nesta lista.
@@ -42,7 +40,7 @@ interface IList extends ICollection
      * Retorna o elemento na posição especificada na lista.
      * @param int $index
      */
-    public function get($index);
+    public function getIn($index);
 
     /**
      * Retorna o índice da primeira ocorrência do elemento especificado na lista,

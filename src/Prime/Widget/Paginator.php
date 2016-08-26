@@ -15,8 +15,8 @@ use Prime\Model\SQL\SQLGroupBy;
 use Prime\Model\SQL\SQLOrderBy;
 
 /**
- * Descrição da Classe Paginator
- * @name Paginator '
+ * Descri��o da Classe Paginator
+ * @name Paginator
  * @package Prime\Widget
  * @author Tom Sailor
  * @create 09/06/2016
@@ -43,7 +43,7 @@ class Paginator {
     private $records = null;
 
     /**
-     * Cria uma instância de Paginator
+     * Cria uma inst�ncia de Paginator
      * @param int $page
      */
     public function __construct($page = null) {
@@ -60,7 +60,7 @@ class Paginator {
     }
 
     /**
-     * Define o Critéria para definir os filtros da respectiva consulta
+     * Define o Crit�ria para definir os filtros da respectiva consulta
      * @param SQLCriteria $criteria
      */
     public function setCriteria(SQLCriteria $criteria) {
@@ -68,9 +68,9 @@ class Paginator {
     }
 
     /**
-     * Define o model responsável para a manipulação de cada recordset de dados
+     * Define o model respons�vel para a manipula��o de cada recordset de dados
      * retornados
-     * @param string $model_name o Nome da classe Model responsável para a 
+     * @param string $model_name o Nome da classe Model respons�vel para a 
      * manipulação de cada recordset
      */
     public function setModel($model_name) {
@@ -78,7 +78,7 @@ class Paginator {
     }
 
     /**
-     * Define os campos para ordenamentos dos registros que serão retornados
+     * Define os campos para ordenamentos dos registros que ser�o retornados
      * @param string|SQLOrderBy $field
      * @param string $order ASC ou DESC
      */
@@ -103,18 +103,18 @@ class Paginator {
     }
 
     /**
-     * método load()
+     * M�todo load()
      * Recuperar um conjunto de objetos (collection) da base de dados
-     * através de um critério de seleção, e instanciá-los em memória
-     * @return Model[] Retorna um array com os objetos do tipo passado como parâmetro
-     * ou false caso a criteria não retorne nenhum conteúdo
-     * @throws Exception Caso o Model não seja definido
+     * atrav�s de um  crit�rio de sela��o, e instanci�-los em mem�ria
+     * @return Model[] Retorna um array com os objetos do tipo passado como par�metro
+     * ou false caso a criteria n�o retorne nenhum conte�do
+     * @throws Exception Caso o Model n�o seja definido
      */
     public function load() {
         if ($this->model) {
             $repository = new Repository($this->model);
         } else {
-            throw new Exception("ModelClass não definido");
+            throw new Exception("ModelClass n�o definido");
         }
 
         if (!$this->criteria) {
@@ -138,7 +138,7 @@ class Paginator {
     }
 
     /**
-     * Retorna um array de Models do tipo definido no setModel, uma instância 
+     * Retorna um array de Models do tipo definido no setModel, uma inst�ncia
      * para cada recordset retornado
      * @return Model[]
      */
@@ -151,10 +151,10 @@ class Paginator {
     }
 
     /**
-     * Método setTotalRecords
+     * M�todo setTotalRecords
      * Define o total de registros que deverão
-     * ser exibidos por página e o total de registros existentes
-     * @param int $numberRecords Número de registros por página
+     * ser exibidos por p�gina e o total de registros existentes
+     * @param int $numberRecords n�mero de registros por página
      * @param int $totalRecords total de registros existentes
      */
     private function setTotalRecords($numberRecords, $totalRecords) {
@@ -182,15 +182,15 @@ class Paginator {
 
     /**
      * Define a página atual que se encontra
-     * @param int $value Número da página atual
+     * @param int $value n�mre da p�gina atual
      */
     public function setPage($value = 1) {
         $this->page = $value;
     }
 
     /**
-     * Método setLimit()
-     * Define o limite de registro por página
+     * M�todo setLimit()
+     * Define o limite de registro por p�gina
      * @param int $limit 
      */
     public function setLimit($limit = 10) {
@@ -199,15 +199,15 @@ class Paginator {
 
     /**
      * Retorna o total de registros retornados de acordo com o Crteria passado com os
-     * parâmetros da consulta SQL
-     * @return type
+     * par�metros da consulta SQL
+     * @return int
      */
     public function getTotal() {
         return $this->total;
     }
 
     /**
-     * Retorna o total de páginas
+     * Retorna o total de p�ginas
      * @return int 
      */
     public function getTotalPages() {
@@ -215,7 +215,7 @@ class Paginator {
     }
 
     /**
-     * Retorna o valor da primeira página
+     * Retorna o valor da primeira p�gina
      * @return int
      */
     public function getFirstPage() {
@@ -223,7 +223,7 @@ class Paginator {
     }
 
     /**
-     * Retorna o valor da página atual
+     * Retorna o valor da p�gina atual
      * @return int
      */
     public function getCurrentPage() {
@@ -231,7 +231,7 @@ class Paginator {
     }
 
     /**
-     * Retorna o valor da página anterior
+     * Retorna o valor da p�gina anterior
      * @return int
      */
     public function getPreviousPage() {
@@ -239,7 +239,7 @@ class Paginator {
     }
 
     /**
-     * Retorna o valor da última página
+     * Retorna o valor da �ltima p�gina
      * @return int
      */
     public function getLastPage() {
@@ -247,18 +247,18 @@ class Paginator {
     }
 
     /**
-     * Retorna o valor da próxima página
+     * Retorna o valor da pr�xima p�gina
      * @return int
      */
     public function getNextPage() {
-        if($this->next > $this->last){
+        if ($this->next > $this->last) {
             return $this->last;
         }
         return $this->next;
     }
 
     /**
-     * Retorna a posição do último registro da página
+     * Retorna a posição do �ltimo registro da p�gina
      * @return int
      */
     public function getlastRegistryOfPage() {
@@ -270,7 +270,7 @@ class Paginator {
     }
 
     /**
-     * Retorna a posição do primeiro registro da página
+     * Retorna a posi��o do primeiro registro da p�gina
      * @return int
      */
     public function getFirstRegistryOfPage() {

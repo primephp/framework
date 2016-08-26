@@ -22,13 +22,16 @@ namespace Prime\Util\Interfaces;
 use Prime\Core\Interfaces\IIterable;
 
 /**
- * A interface de raiz na hierarquia coleção. A coleção representa um grupo de 
- * objetos, conhecidos como seus elementos. Algumas coleções permitem elementos 
- * duplicados e outros não. Alguns são ordenados e os outros não ordenada. 
- * @author tom
+ * Interface base para todos os tipos de coleção, a Interface raiz na hierarquia
+ * das coleções. Uma coleção representa um grupo de objetos, com seus elementos
+ * conhecidos. Ela define as operações mais básicas para coleções de objetos, 
+ * como adição (add) e remoção (remove) abstratos (sem informações quanto à 
+ * ordenação dos elementos), esvaziamento (clear), tamanho (size), conversão 
+ * para array (toArray), objeto de iteração (iterator), e verificações de 
+ * existência (contains e isEmpty).
+ * @author 
  */
-interface ICollection extends IIterable
-{
+interface ICollection extends IIterable {
 
     public function add($e);
 
@@ -39,8 +42,6 @@ interface ICollection extends IIterable
     public function contains($o);
 
     public function containAll(ICollection $collection);
-
-    public function equals(ICollection $collection);
 
     public function hashCode();
 
@@ -55,8 +56,6 @@ interface ICollection extends IIterable
     public function size();
 
     public function toArray();
-
-    public function toArrayList();
 
     public function toArrayObject();
 }

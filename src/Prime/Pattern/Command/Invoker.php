@@ -5,8 +5,7 @@ namespace Prime\Pattern\Command;
 /**
  * TODO Auto-generated comment.
  */
-class Invoker
-{
+class Invoker {
 
     /**
      * TODO Auto-generated comment.

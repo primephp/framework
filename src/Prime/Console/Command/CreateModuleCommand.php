@@ -22,8 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @author tom
  * @createAt 01/08/2015
  */
-class CreateModuleCommand extends BaseCommand
-{
+class CreateModuleCommand extends BaseCommand {
 
     /**
      * Diretório raiz da aplicação
@@ -32,14 +31,12 @@ class CreateModuleCommand extends BaseCommand
     private $appRoot = NULL;
     private $moduleName = NULL;
 
-    public function __construct($name = 'create:module')
-    {
+    public function __construct($name = 'create:module') {
         parent::__construct($name);
         $this->appRoot = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR;
     }
 
-    protected function configure()
-    {
+    protected function configure() {
         $this->setProcessTitle('Module Create')
                 ->setDescription('Cria um módulo dentro da aplicação')
                 ->addArgument(
@@ -54,13 +51,11 @@ class CreateModuleCommand extends BaseCommand
      * @param string $name
      * @return string
      */
-    private function createModuleName($name)
-    {
+    private function createModuleName($name) {
         return ucfirst($name);
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $this->moduleName = $this->createModuleName($input->getArgument('name'));
 
         $baseDir = $this->appRoot . 'Modules' . DIRECTORY_SEPARATOR . $this->moduleName . DIRECTORY_SEPARATOR;

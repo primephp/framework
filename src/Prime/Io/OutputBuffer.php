@@ -12,8 +12,7 @@ use Prime\Pattern\Singleton\ISingleton;
  * (exceto cabeçalhos), ao invés da saída é armazenada em um buffer interno. 
  * @author Elton Luiz <contato@eltonluiz.com.br>
  */
-class OutputBuffer extends TObject implements ISingleton
-{
+class OutputBuffer extends TObject implements ISingleton {
 
     private static $_instance = NULL;
 
@@ -43,13 +42,12 @@ class OutputBuffer extends TObject implements ISingleton
      * PHP_OUTPUT_HANDLER_STDFLAGS como taquigrafia.
      * @return void
      */
-    private function __construct($output_callback, $chunk_size, $flags)
-    {
+    private function __construct($output_callback, $chunk_size, $flags) {
         return ob_start($output_callback, $chunk_size, $flags);
     }
 
-    public static function getInstance($output_callback = NULL, $chunk_size = NULL, $flags = NULL)
-    {
+    public static function getInstance($output_callback = NULL,
+            $chunk_size = NULL, $flags = NULL) {
         if (is_null(self::$_instance)) {
             self::$_instance = new OutputBuffer($output_callback, $chunk_size, $flags);
         }
@@ -60,8 +58,8 @@ class OutputBuffer extends TObject implements ISingleton
      * Inicializa o buffer e retorna uma instância única do objeto OutputBuffer
      * @return OutputBuffer
      */
-    public static function initialize($output_callback = NULL, $chunk_size = NULL, $flags = NULL)
-    {
+    public static function initialize($output_callback = NULL,
+            $chunk_size = NULL, $flags = NULL) {
         return self::getInstance($output_callback, $chunk_size, $flags);
     }
 
@@ -69,8 +67,7 @@ class OutputBuffer extends TObject implements ISingleton
      * Limpa e apaga o buffer de saída
      * @return void Nenhum valor é retornado.
      */
-    public function clean()
-    {
+    public function clean() {
         ob_clean();
     }
 
@@ -78,8 +75,7 @@ class OutputBuffer extends TObject implements ISingleton
      * Limpo (apagar) o buffer de saída e desligue o buffer de saída
       @return boolean <b> TRUE </ b> em caso de sucesso ou <b> FALSE </ b> em caso de falha
      */
-    public function endClean()
-    {
+    public function endClean() {
         return ob_end_clean();
     }
 
@@ -87,8 +83,7 @@ class OutputBuffer extends TObject implements ISingleton
      * Descarrega (enviar) o buffer de saída e desligue o buffer de saída
      * @return boolean <b> TRUE </ b> em caso de sucesso ou <b> FALSE </ b> em caso de falha
      */
-    public function endFlush()
-    {
+    public function endFlush() {
         return ob_end_flush();
     }
 
@@ -96,8 +91,7 @@ class OutputBuffer extends TObject implements ISingleton
      * Descarrega (envia) o buffer de saída
      * @return void Nenhum valor é retornado.
      */
-    public function flush()
-    {
+    public function flush() {
         return ob_flush();
     }
 
@@ -106,8 +100,7 @@ class OutputBuffer extends TObject implements ISingleton
      * @return string Retorna o conteúdo do buffer de saída e saída final 
      * buffering. Se o buffer de saída não está ativo, então FALSE é retornado.
      */
-    public function getClean()
-    {
+    public function getClean() {
         return ob_get_clean();
     }
 
@@ -115,8 +108,7 @@ class OutputBuffer extends TObject implements ISingleton
      * Obtém o conteúdo do buffer de saída sem limpá-lo
      * @return string O conteúdo armazenado no buffer de saída
      */
-    public function getContents()
-    {
+    public function getContents() {
         return ob_get_contents();
     }
 
@@ -125,8 +117,7 @@ class OutputBuffer extends TObject implements ISingleton
      * buffer de saída.
      * @return string O conteúdo armazenado no buffer de saída
      */
-    public function getFlush()
-    {
+    public function getFlush() {
         return ob_get_flush();
     }
 
@@ -135,8 +126,7 @@ class OutputBuffer extends TObject implements ISingleton
      * @return mixed Retorna o comprimento de o conteúdo do buffer de saída, 
      * em bytes, ou FALSE se sem buffer está ativo. 
      */
-    public function getLength()
-    {
+    public function getLength() {
         return ob_get_length();
     }
 
@@ -145,8 +135,7 @@ class OutputBuffer extends TObject implements ISingleton
      * @return int Retorna o nível de manipuladores de buffer de saída 
      * aninhados ou zero se o buffer de saída não está ativa. 
      */
-    public function getLevel()
-    {
+    public function getLevel() {
         return ob_get_level();
     }
 
@@ -158,16 +147,14 @@ class OutputBuffer extends TObject implements ISingleton
      * @return type Se chamado sem o parâmetro full_status ou com 
      * full_status = FALSE uma matriz simples com os elementos retornado
      */
-    public function getStatus($full_status)
-    {
+    public function getStatus($full_status) {
         return ob_get_status($full_status);
     }
 
     /**
      * Descarrega o conteúdo do buffer armazenado
      */
-    public function dump()
-    {
+    public function dump() {
         return $this->endFlush();
     }
 

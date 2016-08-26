@@ -6,15 +6,13 @@ use Prime\Html\Base\HTMLElement,
     Prime\Html\Style\HTMLStyleInline,
     Prime\View\View;
 
-class HTMLPanel extends View
-{
+class HTMLPanel extends View {
 
     private $panel;
     private $id;
     private $style;
 
-    public function __construct($width = 300, $height = 150, $border = 0)
-    {
+    public function __construct($width = 300, $height = 150, $border = 0) {
         $this->style = new HTMLStyleInline();
         $this->panel = new HTMLElement("div");
         $this->id = 'panel_' . uniqid();
@@ -31,8 +29,7 @@ class HTMLPanel extends View
         $this->overflow = "hidden";
     }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -43,8 +40,7 @@ class HTMLPanel extends View
      * @param int $row
      * @param int $col
      */
-    public function appendChild($child, $top = 0, $left = 0)
-    {
+    public function appendChild($child, $top = 0, $left = 0) {
         //cria uma div para o elemento filho
         $camada = new HTMLElement("div");
         //define a posicao da camada
@@ -60,8 +56,7 @@ class HTMLPanel extends View
         $this->panel->appendChild($camada);
     }
 
-    private function createLook()
-    {
+    private function createLook() {
         $this->style->setProperty('position', 'absolute');
         $this->style->setProperty('min-width', $this->width . 'px');
         $this->style->setProperty('min-height', $this->height . 'px');
@@ -80,8 +75,7 @@ class HTMLPanel extends View
      * @param string $name
      * @param string $value 
      */
-    public function setStyle($name, $value)
-    {
+    public function setStyle($name, $value) {
         $this->style->setProperty($name, $value);
     }
 
@@ -91,20 +85,17 @@ class HTMLPanel extends View
      * @param integer $width
      * @param integer $height
      */
-    public function setSize($width = 350, $height = 150)
-    {
+    public function setSize($width = 350, $height = 150) {
         $this->width = intval($width);
         $this->height = intval($height);
     }
 
-    public function setPosition($top, $left)
-    {
+    public function setPosition($top, $left) {
         $this->top = $top;
         $this->left = $left;
     }
 
-    public function setAttribute($name, $value)
-    {
+    public function setAttribute($name, $value) {
         $this->panel->setAttribute($name, $value);
     }
 
@@ -112,8 +103,7 @@ class HTMLPanel extends View
      * Retorna a altura do painel
      * @return int 
      */
-    public function getHeight()
-    {
+    public function getHeight() {
         return $this->height;
     }
 
@@ -121,8 +111,7 @@ class HTMLPanel extends View
      * Retorna a larguda do painel
      * @return int 
      */
-    public function getWidth()
-    {
+    public function getWidth() {
         return $this->width;
     }
 
@@ -130,8 +119,7 @@ class HTMLPanel extends View
      *
      * @return string
      */
-    public function getOutput()
-    {
+    public function getOutput() {
         $this->panel->setAttribute('style', $this->createLook());
         $this->panel->setAttribute('class', 'ui-widget ui-corner-bottom');
         $this->panel->setAttribute('id', $this->getId());

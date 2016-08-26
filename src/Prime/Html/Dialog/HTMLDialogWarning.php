@@ -5,12 +5,11 @@ namespace Prime\Html\Dialog;
 use App\Config\AppConfig,
     Prime\Html\Base\HTMLImage;
 
-class HTMLDialogWarning extends HTMLDialog
-{
+class HTMLDialogWarning extends HTMLDialog {
 
 //instancia uma nova linha
-    public function __construct($message, $title = "ATENÇÃO", $width = 360, $height = 180)
-    {
+    public function __construct($message, $title = "ATENÇÃO", $width = 360,
+            $height = 180) {
         parent::__construct($message, $title, $width, $height);
         $warningPicture = new HTMLImage(AppConfig::baseIcons() . "dialog-warning-48.png");
         $this->dialog->setPosition(50, 50);
@@ -26,8 +25,7 @@ class HTMLDialogWarning extends HTMLDialog
      * @param type $event
      * @param type $handler 
      */
-    public function addConfirmEvent($event, $handler)
-    {
+    public function addConfirmEvent($event, $handler) {
         if ($this->btnOk->getAttribute($event)) {
             $onclick = $this->btnOk->getAttribute($event);
             $this->btnOk->{$event} = $onclick . $handler;
@@ -41,8 +39,7 @@ class HTMLDialogWarning extends HTMLDialog
      * @param type $event
      * @param type $handler 
      */
-    public function addCancelEvent($event, $handler)
-    {
+    public function addCancelEvent($event, $handler) {
         trigger_error("Classe: " . __CLASS__ . " Método: " . __METHOD__ . " não utilizável neste escopo.", E_USER_WARNING);
     }
 

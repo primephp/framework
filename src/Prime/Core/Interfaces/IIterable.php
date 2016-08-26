@@ -17,20 +17,26 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-namespace Prime\core\interfaces;
+namespace Prime\Core\Interfaces;
 
+use IteratorAggregate;
 use Prime\Util\Interfaces\IIterator;
 
 /**
  * Define uma interface para objetos que possam ser iteráveis
  * @author tom
  */
-interface IIterable
-{
+interface IIterable extends IteratorAggregate {
 
     /**
      * Retorna um iterador sobre um conjunto de elementos do Tipo X
      * @return IIterator Um Iterador com a interface de IITerator
      */
     public function iterator();
+
+    /**
+     * Retorna um iterador sobre um conjunto de elementos do Tipo X
+     * @return IIterator Um Iterador com a interface de IITerator
+     */
+    public function getIterator();
 }

@@ -3,16 +3,17 @@
 namespace Prime\Core;
 
 use stdClass;
+use UnexpectedValueException;
 
 /**
- * Descrição da Classe Object
+ * A classe TObject foi criada para ser a raiz da hierarquia de classes do
+ * PrimePHP Framework.
  * @name TObject
  * @package Prime\core
  * @author TomSailor
  * @since 03/08/2011
  */
-class TObject extends stdClass
-{
+class TObject extends stdClass {
 
     /**
      * Armazena todos os dados do Objeto
@@ -26,8 +27,7 @@ class TObject extends stdClass
      * quando for convertida para uma string. 
      * @return string 
      */
-    public function __toString()
-    {
+    public function __toString() {
         return $this->toString();
     }
 
@@ -37,17 +37,15 @@ class TObject extends stdClass
      * @param string $name
      * @param mixed $value 
      */
-    public function __set($name, $value)
-    {
+    public function __set($name, $value) {
         $this->data[$name] = $value;
     }
 
     /**
-     * 
+     * Método mágico __unset é executado ao 
      * @param type $name 
      */
-    public function __unset($name)
-    {
+    public function __unset($name) {
         unset($this->data[$name]);
     }
 
@@ -57,8 +55,7 @@ class TObject extends stdClass
      * @param string $name
      * @return mixed 
      */
-    public function __get($name)
-    {
+    public function __get($name) {
         if (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
@@ -70,8 +67,7 @@ class TObject extends stdClass
      * O método __destruct remove todo conteúdo do atributo $data do objeto, para remover
      * o uso da memória
      */
-    public function __destruct()
-    {
+    public function __destruct() {
         unset($this->data);
     }
 
@@ -79,17 +75,15 @@ class TObject extends stdClass
      * O método __invoke é chamado quando um script
      * tenta chamar um objeto como uma função. 
      */
-    public function __invoke()
-    {
-        ;
+    public function __invoke() {
+        return $this->toString();
     }
 
     /**
      * Retorna o tipo do objeto atual
      * @return string O nome da classe do objeto instanciado
      */
-    public function getType()
-    {
+    public function getType() {
         return get_class($this);
     }
 
@@ -97,34 +91,35 @@ class TObject extends stdClass
      * Retorna o nome da classe do objeto
      * @return string O nome da classe do objeto instanciado
      */
-    public function getClass()
-    {
+    public function getClass() {
         return $this->getType();
     }
 
     /**
-     * Retorna um código hash do tipo MD5 representando o objeto atual
-     * @return str
+     * Retorna um código hash do tipo SHA256 da serialização do presente
+     * objeto
+     * @return str Código Hash do presente objeto
      */
-    public function getHashCode()
-    {
-        return hash('md5', $this);
+    public function hashCode() {
+        return hash('SHA256', serialize($this));
     }
 
     /**
      * Retorna um clone do objeto atual
-     * @return unknown
+     * @return $this
      */
-    protected function getClone()
-    {
+    public function getClone() {
         return clone $this;
     }
 
     /**
-     * Cria um objeto através do valor passado
+     * Cria um objeto para os principais tipos escalares, através do
+     * parâmetro passado
+     * @param string|integer|float|boolean $value
+     * @return TBoolean|TInteger|TString|TFloat
+     * @throws UnexpectedValueException
      */
-    public static function create($value)
-    {
+    public static function create($value) {
         if (is_float($value)) {
             return new TFloat($value);
         } else
@@ -136,6 +131,8 @@ class TObject extends stdClass
         } else
         if (is_string($value)) {
             return new TString($value);
+        } else {
+            throw new UnexpectedValueException("$value nao e do tipo string, integer, boolean ou float");
         }
     }
 
@@ -143,9 +140,20 @@ class TObject extends stdClass
      * Retorna o nome da classe do objeto
      * @return string O nome da classe do objeto instanciado
      */
-    public function toString()
-    {
+    public function toString() {
         return $this->getType();
+    }
+
+    /**
+     * Verifica se os objetos são iguais
+     * @param TObject $o
+     * @return boolean
+     */
+    public function equals(TObject $o) {
+        if ($this->hashCode() == $o->hashCode()) {
+            return TRUE;
+        }
+        return FALSE;
     }
 
 }

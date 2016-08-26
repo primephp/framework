@@ -10,16 +10,14 @@ use Symfony\Component\HttpFoundation\JsonResponse as SymfonyJsonResponse;
  * @author tom
  *        
  */
-class JsonResponse extends SymfonyJsonResponse
-{
+class JsonResponse extends SymfonyJsonResponse {
 
     /**
      * Adiciona um conteúdo para o Json encode
      * @param mixed $item
      * @param mixed $value
      */
-    public function addData($item, $value)
-    {
+    public function addData($item, $value) {
         $data = $this->data;
         $data[$item] = $value;
         $this->setData($data);

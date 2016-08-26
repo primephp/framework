@@ -217,7 +217,7 @@ class DatetimeString {
         if ($this->iso == true) {
             return $this->startTimeStamp ['month'];
         }
-        return $this->months [(int) $this->getMonth()];
+        return $this->months [(int)$this->getMonth()];
     }
 
     /**
@@ -231,7 +231,7 @@ class DatetimeString {
         if ($this->iso == true) {
             return substr($this->startTimeStamp ['month'], 0, 3);
         }
-        return substr($this->months [(int) $this->getMonth()], 0, 3);
+        return substr($this->months [(int)$this->getMonth()], 0, 3);
     }
 
     /**
@@ -642,7 +642,7 @@ class DatetimeString {
             }
         }
 
-        return (int) $ano;
+        return (int)$ano;
     }
 
     public function decrease($param) {

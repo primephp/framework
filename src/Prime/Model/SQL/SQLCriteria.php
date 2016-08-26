@@ -53,7 +53,8 @@ class SQLCriteria extends SQLExpression {
      * @param $expression = expressão (objeto TExpression)
      * @param $operator     = operador lógico de comparação
      */
-    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR) {
+    public function add(SQLExpression $expression,
+            $operator = self::AND_OPERATOR) {
         // na primeira vez, não precisamos de operador lógico para concatenar
         if (empty($this->expressions)) {
             $operator = NULL;

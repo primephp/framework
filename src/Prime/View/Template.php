@@ -38,8 +38,7 @@ use Twig_TemplateInterface;
  * @author TomSailor
  * @createAt 24/07/2015
  */
-class Template extends View
-{
+class Template extends View {
 
     /**
      *
@@ -56,14 +55,12 @@ class Template extends View
     private $index;
     private $changeList = [];
 
-    public function __construct($path = null, $index = null)
-    {
+    public function __construct($path = null, $index = null) {
         $this->setPath($path, $index);
         $this->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'prime', 'prime');
     }
 
-    public function setPath($path, $index = null)
-    {
+    public function setPath($path, $index = null) {
         if (!is_null($path)) {
             $this->name = $path;
         }
@@ -72,36 +69,33 @@ class Template extends View
         }
     }
 
-    public static function initLoader()
-    {
+    public static function initLoader() {
         if (is_null(self::$loader)) {
             self::$loader = new Twig_Loader_Filesystem(__DIR__);
         }
         return self::$loader;
     }
 
-    public static function initEnviroment(array $env = [])
-    {
+    public static function initEnviroment(array $env = []) {
         if (is_null(self::$env)) {
             self::$env = new Twig_Environment(self::initLoader(), $env);
         }
         return self::$env;
     }
 
-    public static function addPath($path, $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE)
-    {
+    public static function addPath($path,
+            $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
         $loader->addPath($path, $namespace);
     }
 
-    public static function prependPath($path, $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE)
-    {
+    public static function prependPath($path,
+            $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
         $loader->prependPath($path, $namespace);
     }
 
-    public static function setEnviroment(array $env)
-    {
+    public static function setEnviroment(array $env) {
         self::initEnviroment($env);
     }
 
@@ -111,8 +105,7 @@ class Template extends View
      * @param string $var nome da variável
      * @param mixed $value valor a ser atribuído à variável
      */
-    public function assign($var, $value)
-    {
+    public function assign($var, $value) {
         $this->changeList[$var] = $value;
     }
 
@@ -120,8 +113,7 @@ class Template extends View
      * 
      * @return Twig_TemplateInterface
      */
-    public function load($name = null, $index = null)
-    {
+    public function load($name = null, $index = null) {
         $this->setPath($name, $index);
         $env = self::initEnviroment();
         return $env->loadTemplate($this->name, $this->index);
@@ -132,8 +124,7 @@ class Template extends View
      * a variável {{ a_content }}
      * @param mixed $content
      */
-    public function addContent($content)
-    {
+    public function addContent($content) {
         parent::addContent($content);
     }
 
@@ -141,8 +132,7 @@ class Template extends View
      * Retorna o conteúdo do template
      * @return string
      */
-    public function getOutput()
-    {
+    public function getOutput() {
         $template = $this->load();
 //        \App\Application::dd($this->getContents());
         $this->assign('a_content', $this->getContents());
@@ -152,8 +142,7 @@ class Template extends View
     /**
      * Imprime na tela o conteúdo do template
      */
-    public function printOut()
-    {
+    public function printOut() {
         echo $this->getOutput();
     }
 

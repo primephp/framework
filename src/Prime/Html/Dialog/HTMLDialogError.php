@@ -5,12 +5,11 @@ namespace Prime\Html\Dialog;
 use App\Config\AppConfig,
     Prime\Html\Base\HTMLImage;
 
-class HTMLDialogError extends HTMLDialog
-{
+class HTMLDialogError extends HTMLDialog {
 
     //instancia uma nova linha
-    public function __construct($message, $title = "INFORMATIVO", $width = 360, $height = 180)
-    {
+    public function __construct($message, $title = "INFORMATIVO", $width = 360,
+            $height = 180) {
         parent::__construct($message, $title, $width, $height);
         $errorPicture = new HTMLImage(AppConfig::baseIcons() . "dialog-error-48.png");
         $this->dialog->setPosition(50, 50);

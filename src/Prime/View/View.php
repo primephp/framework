@@ -8,8 +8,7 @@ namespace Prime\View;
  *
  * @author tom
  */
-abstract class View implements ViewInterface
-{
+abstract class View implements ViewInterface {
 
     /**
      * Armazena os conteúdos adicionados dentro de um array
@@ -21,8 +20,7 @@ abstract class View implements ViewInterface
      * Adiciona conteúdo no objeto
      * @param mixed $content
      */
-    public function addContent($content)
-    {
+    public function addContent($content) {
         $this->content[] = $content;
     }
 
@@ -30,8 +28,7 @@ abstract class View implements ViewInterface
      * Retorna uma string mixed com todos o conteúdo adicionado no objeto
      * @return str
      */
-    protected function getContents()
-    {
+    protected function getContents() {
         $content = '';
         foreach ($this->content as $value) {
             if ($value instanceof ViewInterface) {
@@ -48,16 +45,14 @@ abstract class View implements ViewInterface
      * pro navegador
      * @return str
      */
-    public function getOutput()
-    {
+    public function getOutput() {
         return $this->getContents();
     }
 
     /**
      * Imprime na saída o conteúdo do objeto
      */
-    public function printOut()
-    {
+    public function printOut() {
         echo $this->getOutput();
     }
 

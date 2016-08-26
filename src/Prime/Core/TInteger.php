@@ -108,7 +108,7 @@ class TInteger extends TNumber {
      * @return string
      */
     public function toString() {
-        return (string) $this->getValue();
+        return (string)$this->getValue();
     }
 
     /**
@@ -116,7 +116,7 @@ class TInteger extends TNumber {
      * @return int
      */
     public function getValue() {
-        return (string) $this->data['value'];
+        return (string)$this->data['value'];
     }
 
     /**
@@ -130,10 +130,10 @@ class TInteger extends TNumber {
             $value = $int;
         } else
         if (is_string($int)) {
-            $value = (int) $int;
+            $value = (int)$int;
         } else
         if ($int instanceof TString) {
-            $value = (int) $int->getValue();
+            $value = (int)$int->getValue();
         } else if ($int instanceof TInteger) {
             $value = $int->getValue();
         } else {
@@ -148,7 +148,7 @@ class TInteger extends TNumber {
      * @return int
      */
     public function intValue() {
-        return (int) $this->getValue();
+        return (int)$this->getValue();
     }
 
     /**
@@ -167,7 +167,7 @@ class TInteger extends TNumber {
      * @return int
      */
     public static function parseInt($str) {
-        return (int) $str;
+        return (int)$str;
     }
 
     /**
@@ -178,14 +178,14 @@ class TInteger extends TNumber {
      * @return TInteger
      */
     public static function parseInteger($str) {
-        return new TInteger((int) $str);
+        return new TInteger((int)$str);
     }
 
     /**
-     * 
-     * @param type $x
-     * @param type $y
-     * @return Boolean
+     * Verifica se os valores inteiros são iguais
+     * @param int $x
+     * @param int $y
+     * @return boolean
      */
     public static function compare($x, $y) {
         if (is_int($x) && is_int($y)) {

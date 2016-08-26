@@ -40,8 +40,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
  *
  * @author TomSailor
  */
-class CreatePageControllerCommand extends BaseCommand
-{
+class CreatePageControllerCommand extends BaseCommand {
 
     /**
      * Path do diretório de Módulos
@@ -49,8 +48,7 @@ class CreatePageControllerCommand extends BaseCommand
      */
     private $modulesPath = NULL;
 
-    public function __construct($name = 'create:pagecontroller')
-    {
+    public function __construct($name = 'create:pagecontroller') {
         parent::__construct($name);
         $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Modules';
         $this->modulesPath = realpath($this->modulesPath) . DIRECTORY_SEPARATOR;
@@ -59,8 +57,7 @@ class CreatePageControllerCommand extends BaseCommand
     /**
      * Configura o Command
      */
-    protected function configure()
-    {
+    protected function configure() {
         $this->setProcessTitle('PageController Create')
                 ->setDescription('Cria um PageController dentro de um módulo específico, de acordo com os parâmetros passados')
                 ->addArgument(
@@ -70,8 +67,7 @@ class CreatePageControllerCommand extends BaseCommand
                 ->setHelp('console create:pagecontroller {ModuleName} {PageControllerName} cria o esqueleto de uma classe PageController');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         $module = ucfirst($input->getArgument('module'));
         $controller = $input->getArgument('controller');
 
@@ -98,7 +94,7 @@ class CreatePageControllerCommand extends BaseCommand
         if (file_exists($this->modulesPath . $module)) {
             Filesystem::getInstance()->touch($fileController);
             Filesystem::getInstance()->chmod($fileController, 0660);
-            
+
 
             $file = new File($fileController);
             $fileObject = $file->openFile('w');

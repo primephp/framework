@@ -11,8 +11,7 @@ use Prime\Html\Base\HTMLDiv;
  * @since 24/03/2011
  * @author TomSailor <www.eltonluiz@hotmail.com>
  */
-class StaticPanel extends HTMLDiv
-{
+class StaticPanel extends HTMLDiv {
 
     /**
      *  @var $title HTMLDiv
@@ -22,8 +21,7 @@ class StaticPanel extends HTMLDiv
     private $panel;
     private $footer = [];
 
-    public function __construct($nameId = null)
-    {
+    public function __construct($nameId = null) {
         parent::__construct($nameId);
         $this->addClass('box box-primary');
 
@@ -40,8 +38,7 @@ class StaticPanel extends HTMLDiv
         return $this;
     }
 
-    public function divContentSetStyle($property, $value)
-    {
+    public function divContentSetStyle($property, $value) {
         $this->panel->setStyle($property, $value);
     }
 
@@ -50,8 +47,7 @@ class StaticPanel extends HTMLDiv
      * @param string $title
      * @param string $size 
      */
-    public function setTitle($title, $size = NULL)
-    {
+    public function setTitle($title, $size = NULL) {
         if (!is_null($size)) {
             if ($size < 20) {
                 $this->title->setStyle("font-size", $size . "px");
@@ -68,25 +64,21 @@ class StaticPanel extends HTMLDiv
      * Adiciona conteúdo dentro do Panel
      * @param mixed $child 
      */
-    public function appendChild($child)
-    {
+    public function appendChild($child) {
         $this->panel->appendChild($child);
     }
 
-    public function addFooterContent($content)
-    {
+    public function addFooterContent($content) {
         $this->footer->appendChild($content);
     }
 
-    private function getTitle()
-    {
+    private function getTitle() {
         $this->title->appendChild($this->titleText);
 
         return $this->title->getOutput();
     }
 
-    public function getOutput()
-    {
+    public function getOutput() {
         parent::appendChild($this->getTitle());
 
         parent::appendChild($this->panel);

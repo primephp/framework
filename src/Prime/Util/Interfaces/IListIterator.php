@@ -24,12 +24,11 @@ namespace Prime\Util\Interfaces;
  * @dateCreate 09/06/2014
  * @author Elton Luiz
  */
-interface IListIterator extends IIterator
-{
+interface IListIterator extends IIterator {
 
     /**
      * Insere o elemento especificado na lista
-     * @param type $e
+     * @param mixed $e
      */
     public function add($e);
 
@@ -46,39 +45,33 @@ interface IListIterator extends IIterator
     public function hasPrevious();
 
     /**
-     * Retorna o próximo elemento da lista e avança a posição do cursor.
+     * Avança a posição do cursor para o próximo elemento
      */
     public function next();
 
     /**
-     * Retorna o índice do elemento que seria devolvido por uma chamada 
-     * subseqüente a next ().
+     * Retorna o próximo índice
      */
     public function nextIndex();
 
     /**
-     * Retorna o elemento anterior da lista e move a posição do cursor
-     * para trás.
+     * Move a posição do cursor para trás.
      */
     public function previous();
 
     /**
-     * Retorna o índice do elemento que seria retornado por uma chamada subsequente
-     * ao previous()
+     * Retorna a posição anterior do cursos
      */
     public function previousIndex();
 
     /**
-     * Remove da lista o último elemento retornado por next() ou previous()
+     * Remove da lista o último elemento corrente
      */
     public function remove();
 
     /**
-     * Substitui o último elemento retornado por next() ou previous() pelo 
-     * elemento especificado
-     * @param type $e
+     * Substitui o último elemento da posição corrente do cursor
+     * @param mixed $e
      */
     public function set($e);
 }
-
-?>

@@ -33,8 +33,7 @@ namespace Prime\Pattern\Singleton;
  * @createAt 13/08/2015
  * @author TomSailor
  */
-interface SingletonInterface
-{
+interface SingletonInterface {
 
     /**
      * Retorna uma instância única do objeto em questão

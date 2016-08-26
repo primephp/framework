@@ -13,15 +13,13 @@ use Symfony\Component\HttpFoundation\Request as BaseRequest;
  * @since 12/09/2011
  * @access public
  */
-class Request extends BaseRequest
-{
+class Request extends BaseRequest {
 
     /**
      * Retorna TRUE se for uma requisição ajax
      * @return type
      */
-    public function isAjax()
-    {
+    public function isAjax() {
         return parent::isXmlHttpRequest();
     }
 

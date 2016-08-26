@@ -8,8 +8,7 @@ namespace Prime\Model\SQL;
  * @since 21/01/2012
  * @author TomSailor
  */
-final class SQLGroupBy extends SQLExpression
-{
+final class SQLGroupBy extends SQLExpression {
 
     private static $struct = NULL;
 
@@ -17,8 +16,7 @@ final class SQLGroupBy extends SQLExpression
      *
      * @param array $column     
      */
-    public function __construct($column = NULL)
-    {
+    public function __construct($column = NULL) {
         self::$struct = [];
         if (is_array($column) || is_string($column)) {
             $this->add($column);
@@ -31,8 +29,7 @@ final class SQLGroupBy extends SQLExpression
      * String que representam números não serão usados.
      * @param {string|array} $column
      */
-    public function add($column = [])
-    {
+    public function add($column = []) {
         if (is_array($column)) {
             self::$struct = array_merge($column, self::$struct);
         } elseif (is_string($column) && !is_numeric($column)) {
@@ -40,8 +37,7 @@ final class SQLGroupBy extends SQLExpression
         }
     }
 
-    public function dump()
-    {
+    public function dump() {
         if (count(self::$struct)) {
             return implode(", ", self::$struct);
         }

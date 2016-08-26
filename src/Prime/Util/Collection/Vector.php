@@ -1,127 +1,156 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace Prime\Util\Collection;
 
-use Prime\core\interfaces\IClonable;
-use Prime\io\interfaces\ISerializable;
+use Prime\Core\Interfaces\IClonable;
+use Prime\Io\Interfaces\ISerializable;
+use Prime\Util\Interfaces\ICollection;
 use Prime\Util\Interfaces\IList;
 
 /**
- * Descrição de Vector
- * A classe Vector implementa uma matriz volume crescente de objetos. 
- * Como uma matriz, que contém componentes que podem ser acessados ​​
- * usando um índice inteiro. No entanto, o tamanho de um vector pode aumentar 
- * .ou diminuir, conforme necessário para acomodar a adição e remoção de itens 
- * depois do vector foi criado. 
+ * A classe Vector implementa uma matriz que aceita strings como índices de seus 
+ * elementos. Porém os mesmos podem ser acessados além de seus índices de string 
+ * por índices inteiros ordenados por ordem de adição a partir do 0 até o seu 
+ * limite
  * @author tom
+ * @createAt 19/08/2016
  */
-class Vector extends AbstractList implements IList, IClonable, ISerializable
-{
+class Vector extends AbstractList implements IList, IClonable, ISerializable {
 
-    public function getClone()
-    {
-        
-    }
+    /**
+     * Armazena a associação do índices inteiros com os índices definidos pelo 
+     * usuário
+     * @var array
+     */
+    protected $indexes = [];
 
-    public function serialize()
-    {
-        
-    }
+    /**
+     * Armazena o último índice 
+     * @var int
+     */
+    protected $lastIndex = 0;
 
-    public function subList($fromIndex, $toIndex)
-    {
-        
+    /**
+     * Associa o índice definido pelo usuários ao índice inteiro ordenado da 
+     * coleção e incrementa o último índice inteiro utilizado
+     * @param int $int
+     * @param string $index
+     */
+    protected function associateIndex($int, $index) {
+        $this->indexes[$int] = $index;
+        $this->lastIndex++;
     }
 
     /**
-     * Aumenta a capacidade deste vector, se necessário, para assegurar que ele 
-     * pode conter, pelo menos, o número de componentes especificados pelo 
-     * argumento de capacidade mínima. 
+     * Retorna o índice definido pelo usuário para o elemento da definida 
+     * posição
+     * @param int $index A posição do referido elemento armazenado 
+     * internamete
+     * @return string|NULL A chave do elemento dentro da coleção
+     */
+    protected function getAssociateIndex($index) {
+        if (isset($this->indexes[$index])) {
+            return (int)$this->indexes[$index];
+        }
+        return NULL;
+    }
+
+    /**
+     * @inherit
+     */
+    public function add($e) {
+        parent::add($e);
+        $this->associateIndex($this->lastIndex, (string)$this->lastIndex);
+    }
+
+    /**
+     * @inherit
+     */
+    public function addIn($index, $element) {
+        parent::addIn($index, $element);
+        $this->associateIndex($this->lastIndex, $index);
+    }
+
+    /**
+     * @inherit
+     */
+    public function addAll(ICollection $collection) {
+        foreach ($collection as $value) {
+            $this->add($value);
+        }
+    }
+
+    /**
+     * Retorna o elemento contido no index inteiro especificado
+     * @param $index
+     * @return mixed|NULL
+     */
+    public function elementAt($index) {
+        if (isset($this->collection[$index])) {
+            return $this->collection[$index];
+        }
+        return NULL;
+    }
+
+    /**
+     * Retorna o conteúdo da coleção serializado
+     * @return string
+     */
+    public function serialize() {
+        return serialize($this->toArray());
+    }
+
+    /**
+     * Copia os elementos do array para o vetor, incluindo os índices
+     * casos o índice existe o elementos o mesmo é substituído
      * @param array $anArray
      */
-    public function copyInto(array $anArray)
-    {
-        
+    public function copyInto(array $anArray) {
+        foreach ($anArray as $key => $value) {
+            $this->set($key, $value);
+        }
     }
 
     /**
-     * Recorta a capacidade deste vetor para ser o tamanho atual do vetor. Se a 
-     * capacidade deste vector é maior do que a sua dimensão actual, então a 
-     * capacidade é alterada para corresponder ao tamanho, substituindo o seu 
-     * conjunto de dados interno, mantido no campo elementData, com um menor. 
-     * Um aplicativo pode usar esta operação para minimizar o armazenamento de um vetor.
+     * Retorn um array contendo todos os elementos do Vector indexados por
+     * inteiros
+     * @return array
      */
-    public function trimToSize()
-    {
-        
+    public function elements() {
+        $array = [];
+        foreach ($this->toArray() as $element) {
+            $array[] = $element;
+        }
+        return $array;
     }
 
     /**
-     * Aumenta a capacidade deste vector, se necessário, para assegurar que ele 
-     * pode conter, pelo menos, o número de componentes especificados pelo 
-     * argumento de capacidade mínima. 
-     * @param int $minCapacity
+     * Retorna o primeiro elemento de Vector
+     * @return mixed
      */
-    public function ensureCapacity($minCapacity)
-    {
-        
+    public function firstElement() {
+        reset($this->collection);
+        return current($this->collection);
     }
 
     /**
-     * Define o tamanho desse vetor. Se o novo tamanho é maior do que o tamanho 
-     * actual, novos itens nulos são adicionados ao final do vector. Se o novo 
-     * tamanho é menos do que o tamanho actual, todos os componentes no índice 
-     * newSize e maior são descartadas.
-     * @param int $newSize
+     * Retorna o último elemento de Vector
+     * @return mixed
      */
-    public function setSize($newSize)
-    {
-        
+    public function lastElement() {
+        end($this->collection);
+        return current($this->collection);
     }
 
     /**
-     * Retorna a capacidade atual desse vetor.
-     * @return int A capacidade atual do vetor
+     * Define o elemento para o índice especificado. Descartando se houver o 
+     * elemento na referida posição
+     * @param $e
+     * @param $index
      */
-    public function capacity()
-    {
-        
-    }
-
-    /**
-     * Retorna uma enumeração das componentes deste vetor. O objeto Enumeration 
-     * voltou irá gerar todos os itens deste vetor. O primeiro ponto é gerado o 
-     * item no índice 0, então o item no índice 1, e assim por diante.
-     */
-    public function elements()
-    {
-        
-    }
-
-    public function elementAt($index)
-    {
-        
-    }
-
-    public function firstElement()
-    {
-        
-    }
-
-    public function lastElement()
-    {
-        
-    }
-
-    public function setElementAt($e, $index)
-    {
-        
+    public function setElementAt($e, $index) {
+        $this->set($index, $e);
+        $this->associateIndex($this->lastIndex, $index);
     }
 
     /**
@@ -132,8 +161,7 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable
      * @param int $index
      * @return boolean
      */
-    public function removeElementAt($index)
-    {
+    public function removeElementAt($index) {
         return $this->removeIn($index);
     }
 
@@ -145,8 +173,7 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable
      * @param mixed $e
      * @param int $index
      */
-    public function intertElementAt($e, $index)
-    {
+    public function intertElementAt($e, $index) {
         return $this->addIn($index, $e);
     }
 
@@ -157,8 +184,7 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable
      * @param boolean $e Returna FALSE caso o elemento já esteja adicionado e não 
      * aceite duplicatas e TRUE caso tenha sido adicionado com sucesso.
      */
-    public function addElement($e)
-    {
+    public function addElement($e) {
         return $this->add($e);
     }
 
@@ -169,8 +195,7 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable
      * ter um índice de um menor do que o valor que tinha antes. 
      * @param boolean $e
      */
-    public function removeElement($e)
-    {
+    public function removeElement($e) {
         return $this->remove($e);
     }
 
@@ -178,8 +203,7 @@ class Vector extends AbstractList implements IList, IClonable, ISerializable
      * Remove todos os componentes deste vetor e define o seu tamanho para zero. 
      * @return type
      */
-    public function removeAllElements()
-    {
+    public function removeAllElements() {
         return $this->clear();
     }
 

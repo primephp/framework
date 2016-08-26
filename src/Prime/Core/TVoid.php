@@ -9,7 +9,6 @@ namespace Prime\Core;
  * @author Elton Luiz
  * @dateCreate 28/05/2014
  */
-final class TVoid extends TObject
-{
+final class TVoid extends TObject {
     
 }

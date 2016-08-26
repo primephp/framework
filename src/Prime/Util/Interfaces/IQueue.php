@@ -19,16 +19,15 @@
 
 namespace Prime\Util\Interfaces;
 
-use Prime\Core\Interfaces\IIterable;
+use Prime\Core\TBoolean;
 
 /**
- * Descrição da Interface IQueue
- * @package Prime\util;
+ * Esta interface define uma estrutura de fila, que tipicamente (mas não necessariamente) guarda seus elementos na ordem em que foram inseridos. Ela define o sistema conhecido como “first-in, first out”, onde os elementos são inseridos no fim da fila e removidos do seu início
+ * @package Prime\Util;
  * @dateCreate 10/06/2014
  * @author Elton Luiz
  */
-interface IQueue extends ICollection, IIterable
-{
+interface IQueue extends ICollection {
 
     /**
      * Insere o elemento especificado para esta fila se for possível fazê-lo imediatamente, 
@@ -58,9 +57,4 @@ interface IQueue extends ICollection, IIterable
      * Recupera e remove o cabeça desta fila, ou retorna null se esta fila está vazia.
      */
     public function poll();
-
-    /**
-     * Recupera e remove o elemento superior da fila
-     */
-    public function remove();
 }

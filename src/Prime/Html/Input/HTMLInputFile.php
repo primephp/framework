@@ -2,11 +2,9 @@
 
 namespace Prime\Html\Input;
 
-class HTMLInputFile extends HTMLInput
-{
+class HTMLInputFile extends HTMLInput {
 
-    public function __construct($name)
-    {
+    public function __construct($name) {
         parent::__construct();
         $this->element->name = $name;
         $this->element->id = $name;
@@ -17,18 +15,15 @@ class HTMLInputFile extends HTMLInput
      *
      * @param integer $maxFilesize
      */
-    public function setMaxFilesize($maxFilesize = 1024)
-    {
+    public function setMaxFilesize($maxFilesize = 1024) {
         $this->element->MAX_FILE_SIZE = $maxFilesize;
     }
 
-    public function acceptImageFiles()
-    {
+    public function acceptImageFiles() {
         $this->element->accept = "image/gif, image/jpeg, image/png";
     }
 
-    public function acceptPDFFiles()
-    {
+    public function acceptPDFFiles() {
         $this->element->accept = "application/pdf";
     }
 

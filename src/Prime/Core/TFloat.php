@@ -27,11 +27,9 @@ use Prime\Core\TString;
  * @author Elton Luiz
  * @status Finalizada
  */
-class TFloat extends TNumber
-{
+class TFloat extends TNumber {
 
-    public function __construct($value = NULL)
-    {
+    public function __construct($value = NULL) {
         if (!is_null($value)) {
             $this->setValue($value);
         }
@@ -41,20 +39,18 @@ class TFloat extends TNumber
      * Define o valor do objeto TFloat
      * @param int|float|string $value
      */
-    public function setValue($value)
-    {
+    public function setValue($value) {
         if ($value instanceof TString) {
             $value = $value->getValue();
         }
-        $this->data['value'] = (float) $value;
+        $this->data['value'] = (float)$value;
     }
 
     /**
      * Retorna o valor do objeto TFloat
      * @return float
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->data['value'];
     }
 
@@ -63,8 +59,7 @@ class TFloat extends TNumber
      * @param float $float
      * @return TString
      */
-    public static function toString($float)
-    {
+    public static function toString($float) {
         return new TString($float);
     }
 
@@ -72,8 +67,7 @@ class TFloat extends TNumber
      * Retorna um Objeto String desse objeto Float
      * @return TString
      */
-    public function getString()
-    {
+    public function getString() {
         return new TString($this->getValue());
     }
 
@@ -82,8 +76,7 @@ class TFloat extends TNumber
      * @param float|TString $float
      * @return TFloat
      */
-    public static function valueOf($float)
-    {
+    public static function valueOf($float) {
         return new TFloat($float);
     }
 
@@ -93,8 +86,7 @@ class TFloat extends TNumber
      * @param \Prime\Core\TString $string
      * @return \Prime\core\TFloat
      */
-    public static function parseFloat(TString $string)
-    {
+    public static function parseFloat(TString $string) {
         return new TFloat($string->getValue());
     }
 
@@ -102,8 +94,7 @@ class TFloat extends TNumber
      * Retorna true se o número especificado é um Not-a-Number (NaN) valor, falso caso contrário.
      * @return boolean
      */
-    public function isNaN()
-    {
+    public function isNaN() {
         if (is_nan($this->getValue())) {
             return TRUE;
         } else {
@@ -115,8 +106,7 @@ class TFloat extends TNumber
      * Verifica se o valor deste objeto Float é um infinito
      * @return boolean
      */
-    public function isInfinite()
-    {
+    public function isInfinite() {
         if (is_infinite($this->getValue())) {
             return TRUE;
         } else {
@@ -130,8 +120,7 @@ class TFloat extends TNumber
      * @param float $f2
      * @return boolean
      */
-    public function compare($f1, $f2)
-    {
+    public function compare($f1, $f2) {
         $x = new TFloat($f1);
         $y = new TFloat($f2);
         if ($x->getValue() === $y->getValue()) {
@@ -146,8 +135,7 @@ class TFloat extends TNumber
      * @param float $float
      * @return boolean
      */
-    public function compareTo($float)
-    {
+    public function compareTo($float) {
         if (!$float instanceof TFloat) {
             $float = new TFloat($float);
         }

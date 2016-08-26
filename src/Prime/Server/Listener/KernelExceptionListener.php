@@ -45,20 +45,17 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @author tom
  * @createAt 25/07/2015
  */
-class KernelExceptionListener implements EventSubscriberInterface
-{
+class KernelExceptionListener implements EventSubscriberInterface {
 
-    public static function getSubscribedEvents()
-    {
+    public static function getSubscribedEvents() {
         return [
             KernelEvents::EXCEPTION => [
-                ['onKernelException', 20]
+                    ['onKernelException', 20]
             ]
         ];
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event)
-    {
+    public function onKernelException(GetResponseForExceptionEvent $event) {
         $exception = $event->getException();
 
         if ($exception instanceof UnauthorizedHttpException) {

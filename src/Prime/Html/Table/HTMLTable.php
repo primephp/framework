@@ -4,15 +4,13 @@ namespace Prime\Html\Table;
 
 use Prime\Html\Base\HTMLElement;
 
-class HTMLTable extends HTMLElement
-{
+class HTMLTable extends HTMLElement {
 
     /**
      * Instancia uma nova tabela
      * 
      */
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct('table');
     }
 
@@ -24,8 +22,7 @@ class HTMLTable extends HTMLElement
      * @return HTMLTableRow
      *
      */
-    public function insertRow()
-    {
+    public function insertRow() {
         $row = new HTMLTableRow();
         //armazena no array de linhas
         parent::appendChild($row);

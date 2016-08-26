@@ -12,8 +12,7 @@ namespace Prime\Core;
  *  @dateCreate 29/05/2014
  * 
  */
-abstract class TNumber extends TObject
-{
+abstract class TNumber extends TObject {
 
     abstract function getValue();
 
@@ -25,9 +24,8 @@ abstract class TNumber extends TObject
      * para o tipo <code> int </ code>.
      * 
      */
-    public function intValue()
-    {
-        return (int) $this->getValue();
+    public function intValue() {
+        return (int)$this->getValue();
     }
 
     /**
@@ -38,9 +36,8 @@ abstract class TNumber extends TObject
      *           to type <code>float</code>.
      * 
      */
-    public function floatValue()
-    {
-        return (float) $this->getValue();
+    public function floatValue() {
+        return (float)$this->getValue();
     }
 
     /**
@@ -52,8 +49,7 @@ abstract class TNumber extends TObject
      *  @since   JDK1.1
      * 
      */
-    public function byteValue()
-    {
+    public function byteValue() {
         return $this->getValue();
     }
 

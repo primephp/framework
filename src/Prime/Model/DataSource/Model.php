@@ -370,7 +370,7 @@ abstract class Model implements IModel {
             $sq1->setEntity($this->getEntity());
             $resu1t = $this->getConnection()->query($sq1->getStatement());
             $row = $resu1t->fetch();
-            return ((int) $row[0]) + 1;
+            return ((int)$row[0]) + 1;
         }
     }
 

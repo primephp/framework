@@ -36,8 +36,7 @@ use Symfony\Component\Routing\Route as BaseRoute;
  * @createAt 18/07/2015
  * @author Elton Luiz
  */
-class Route extends BaseRoute
-{
+class Route extends BaseRoute {
 
     /**
      * Define um nome para a rota;
@@ -45,8 +44,7 @@ class Route extends BaseRoute
      */
     protected $name;
 
-    public function setName($name)
-    {
+    public function setName($name) {
         $this->name = $name;
     }
 
@@ -54,8 +52,7 @@ class Route extends BaseRoute
      * Retorna o nome da rota 
      * @return string
      */
-    public function getName($method = 'GET')
-    {
+    public function getName($method = 'GET') {
         if (!is_null($this->name)) {
             return $this->name;
         } else {

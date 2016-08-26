@@ -9,8 +9,7 @@ namespace Prime\Controller;
  * @author TomSailor
  * Define a interface para o tipo Controller
  */
-interface ControllerInterface
-{
+interface ControllerInterface {
 
     public function dispatch();
 }

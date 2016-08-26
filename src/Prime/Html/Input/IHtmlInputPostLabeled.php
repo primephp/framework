@@ -7,7 +7,6 @@ namespace Prime\Html\Input;
  * input
  * @author tom
  */
-interface IHtmlInputPostLabeled
-{
+interface IHtmlInputPostLabeled {
     //put your code here
 }

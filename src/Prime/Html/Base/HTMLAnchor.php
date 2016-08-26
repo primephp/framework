@@ -5,8 +5,7 @@ namespace Prime\Html\Base;
 use Prime\Config\IMouseEvent,
     Prime\Server\Http\Url;
 
-class HTMLAnchor extends HTMLElement
-{
+class HTMLAnchor extends HTMLElement {
 
     /**
      * configuracao interna de dados
@@ -17,8 +16,7 @@ class HTMLAnchor extends HTMLElement
      *
      * @param string $href
      */
-    public function __construct($href = '', $text = '', $target = null)
-    {
+    public function __construct($href = '', $text = '', $target = null) {
         if ($href instanceof Url) {
             $href = $href->queryString();
         }
@@ -33,18 +31,15 @@ class HTMLAnchor extends HTMLElement
     /**
      * 
      */
-    public function setAssync()
-    {
+    public function setAssync() {
         $this->setAttribute(IMouseEvent::CLICK, 'return $.callAssync(this);');
     }
 
-    public function setText($text)
-    {
+    public function setText($text) {
         $this->text = $text;
     }
 
-    public function getOutput()
-    {
+    public function getOutput() {
         $this->prependChild($this->text);
         return parent::getOutput();
     }

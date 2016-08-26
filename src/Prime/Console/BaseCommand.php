@@ -38,16 +38,14 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @since 23/07/2015
  * @author TomSailor
  */
-class BaseCommand extends SymfonyCommand
-{
+class BaseCommand extends SymfonyCommand {
 
     /**
      * Define uma ajuda par ao comando
      * @param string $help
      * @return BaseCommand
      */
-    public function setHelp($help)
-    {
+    public function setHelp($help) {
         parent::setHelp($help);
         return $this;
     }
@@ -58,8 +56,7 @@ class BaseCommand extends SymfonyCommand
      * @param OutputInterface $output
      * @throws LogicException
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
+    protected function execute(InputInterface $input, OutputInterface $output) {
         throw new LogicException('Esse método deve ser substituído na classe command concreta.');
     }
 

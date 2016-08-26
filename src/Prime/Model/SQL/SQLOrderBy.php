@@ -49,8 +49,8 @@ final class SQLOrderBy extends SQLExpression {
         $dump = '';
         $total = count(self::$struct);
         for ($index = 0; $index < $total; $index++) {
-            $dump .= self::$struct[$index].' '.self::$order[$index];
-            if($index < ($total -1)){
+            $dump .= self::$struct[$index] . ' ' . self::$order[$index];
+            if ($index < ($total - 1)) {
                 $dump .= ', ';
             }
         }

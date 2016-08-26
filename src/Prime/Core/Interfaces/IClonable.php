@@ -1,14 +1,13 @@
 <?php
 
-namespace Prime\core\interfaces;
+namespace Prime\Core\Interfaces;
 
 /**
  * Descrição da Interface IClonable
  * @dateCreate 06/06/2014
  * @author comforsup-0215
  */
-interface IClonable
-{
+interface IClonable {
 
     /**
      * Retorna o clone do objeto instanciado

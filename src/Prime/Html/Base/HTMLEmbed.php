@@ -12,20 +12,17 @@ namespace Prime\Html\Base;
  * @access public
  * @author tom
  */
-class HTMLEmbed extends HTMLElement
-{
+class HTMLEmbed extends HTMLElement {
 
     private $type;
 
-    public function __construct($filename)
-    {
+    public function __construct($filename) {
         parent::__construct('embed');
 
         $this->setAttribute('src', $filename);
     }
 
-    public function getMimeType()
-    {
+    public function getMimeType() {
         return $this->type;
     }
 
