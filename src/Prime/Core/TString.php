@@ -27,7 +27,7 @@ final class TString extends TObject {
     /**
      * Retorna a própria instância de String pronta para ser manipulada ou 
      * impressa
-     * @return TString
+     * @return string
      */
     public function toString() {
         return (string)$this->getValue();
