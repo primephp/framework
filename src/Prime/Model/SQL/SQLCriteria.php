@@ -42,16 +42,18 @@ class SQLCriteria extends SQLExpression {
         $this->reset();
     }
 
+    /**
+     * Resseta os critérios de consulta
+     */
     public function reset() {
         $this->expressions = [];
         $this->operators = [];
     }
 
-    /**
-     * método add()
-     * adiciona uma expressão ao critério
-     * @param $expression = expressão (objeto TExpression)
-     * @param $operator     = operador lógico de comparação
+    /** 
+     * Adiciona um expressão de critério de consulta
+     * @param \Prime\Model\SQL\SQLExpression $expression
+     * @param string $operator Operador lógico de comparação
      */
     public function add(SQLExpression $expression,
             $operator = self::AND_OPERATOR) {

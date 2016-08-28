@@ -13,16 +13,17 @@ final class SQLOrderBy extends SQLExpression {
     const DESC_OPERATOR = " desc ";
     const ASC_OPERATOR = " asc ";
 
-    private static $struct = NULL;
-    private static $order = "";
+    private $struct = NULL;
+    private $order = NULL;
 
     /**
      *
      * @param array $column
      * @param string $order 
      */
-    public function __construct($column = NULL, $order = self::ASC_OPERATOR) {
-        self::$struct = [];
+    public function __construct($column = NULL, $order = '') {
+        $this->struct = '';
+        $this->order = '';
         if (is_array($column) || is_string($column)) {
             $this->add($column, $order);
         }
@@ -34,22 +35,26 @@ final class SQLOrderBy extends SQLExpression {
      * String que representam números não serão usados.
      * @param {string|array} $column
      */
-    public function add($column = [], $order = self::ASC_OPERATOR) {
-        self::$order[] = $order;
+    public function add($column = [], $order = '') {
         if (is_array($column)) {
             foreach ($column as $value) {
                 $this->add($value, $order);
             }
         } elseif (is_string($column) && !is_numeric($column)) {
-            self::$struct[] = $column;
+            $this->struct[] = $column;
+            $this->order[] = $order;
         }
     }
 
+    /**
+     * 
+     * @inheritDoc
+     */
     public function dump() {
         $dump = '';
-        $total = count(self::$struct);
+        $total = count($this->struct);
         for ($index = 0; $index < $total; $index++) {
-            $dump .= self::$struct[$index] . ' ' . self::$order[$index];
+            $dump .= $this->struct[$index] . ' ' . $this->order[$index];
             if ($index < ($total - 1)) {
                 $dump .= ', ';
             }
