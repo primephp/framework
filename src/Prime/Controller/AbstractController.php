@@ -50,6 +50,10 @@ abstract class AbstractController implements ControllerInterface {
         return new RedirectResponse($url, $status);
     }
 
+    /**
+     * Define a requisição a ser utilizada pelo controller
+     * @param Request $request
+     */
     public function setRequest(Request $request) {
         $this->request = $request;
     }
@@ -88,6 +92,9 @@ abstract class AbstractController implements ControllerInterface {
         
     }
 
+    /**
+     * Executa as ações antes da finalização do objeto 
+     */
     protected function finalize() {
         
     }

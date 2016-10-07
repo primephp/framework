@@ -6,6 +6,8 @@
 
 namespace Prime\Util\Datetime;
 
+use DateTime as PHPDatetime;
+use Prime\Util\Datetime\Datetime as Datetime;
 /**
  * Descrição de DatetimeString
  *
@@ -97,6 +99,9 @@ class DatetimeString {
     public function setValue($fullDate, $iso = FALSE) {
         date_default_timezone_set("Brazil/East");
         if (!is_null($fullDate)) {
+            if($fullDate instanceof Datetime){
+                $fullDate = $fullDate->get();
+            }
             $fullDate = str_replace('/', '-', $fullDate);
         }
         // echo $fullDate;
@@ -461,7 +466,7 @@ class DatetimeString {
      */
     public function quantityOfYears(Datetime $date = NULL) {
         if (is_null($date)) {
-            $date = new TDatetime ();
+            $date = new Datetime ();
         }
         $seconds = $this->startTimeStamp [0] - $date->getTimeStamp();
         $seconds = ($seconds < 0) ? (- 1 * $seconds) : $seconds;

@@ -51,7 +51,7 @@ class CreateControllerCommand extends BaseCommand {
 
     public function __construct($name = 'create:controller') {
         parent::__construct($name);
-        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Modules';
+        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
         $this->modulesPath = realpath($this->modulesPath) . DIRECTORY_SEPARATOR;
     }
 

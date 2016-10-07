@@ -50,6 +50,8 @@ class Datetime extends TObject {
         $this->_date = new ArrayObject([]);
         if (!is_null($datetime)) {
             $this->setValue($datetime);
+        } else {
+            $this->setValue(date('Y-m-d H:i:s'));
         }
     }
 
@@ -81,9 +83,9 @@ class Datetime extends TObject {
         if ($this->dateVerify($parse)) {
             $get = getdate(strtotime($value));
             $this->_date = new ArrayObject(array_merge($parse, $get));
-            return true;
+            return TRUE;
         } else {
-            return false;
+            return FALSE;
         }
     }
 
@@ -190,7 +192,8 @@ class Datetime extends TObject {
      * nenhum parâmetro, retorna NULL
      *
      * @param string $format
-     *        	O formato que deverá ser retornada a datahora
+     *        	O formato que deverá ser retornada a datahora, caso não informadoretorna no formato
+     *          Y-m-d H:i:s
      * @return string NULL a string representando a datahora do objeto, ou NULL caso não
      *         se tenha sido configurado a datahora
      */

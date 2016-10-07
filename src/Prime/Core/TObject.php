@@ -156,4 +156,16 @@ class TObject extends stdClass {
         return FALSE;
     }
 
+    /**
+     * Verifica se o objeto está vazio
+     * @return boolean
+     */
+    public function isEmpty() {
+        if (count($this->data)) {
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+
 }

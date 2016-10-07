@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\EventListener\ResponseListener;
 use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\HttpKernel\HttpKernel;
+use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
 
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\RequestContext;
 class Kernel {
 
     /**
-     * Store unique instance from Kernel
+     * Armazena a instância única do Kernel
      * @var static
      */
     private static $instance = null;
@@ -37,28 +38,34 @@ class Kernel {
     private $request;
 
     /**
-     * Store Event Dispatcher object
+     * Armazena o objeto Event Dispatcher
      * @var EventDispatcher 
      */
     private $dispatcher;
 
     /**
-     * Store UrlMatcher object
+     * Armazena o objeto UrlMatcher
      * @var UrlMatcher
      */
     private $matcher;
 
     /**
-     * Store RouteCollection object
+     * Armazena o objeto RouteCollection
      * @var RouteCollection
      */
     private $routeCollection;
 
     /**
-     * Store RequestContext object
+     * Armazena o objeto RequestContext
      * @var RequestContext 
      */
     private $requestContext;
+    
+    /**
+     * Arzmena o objeto UrlGenerator
+     * @var UrlGenerator 
+     */
+    private $generator;
 
     private function __construct($routes) {
 

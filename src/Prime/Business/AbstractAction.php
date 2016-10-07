@@ -13,6 +13,10 @@ use Prime\Core\Error;
  */
 abstract class AbstractAction implements ActionInterface {
 
+    /**
+     * Objeto que armazena erros
+     * @var Error
+     */
     private $errors = NULL;
 
     public function __construct() {

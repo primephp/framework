@@ -120,7 +120,17 @@ class CreateDataSource {
                     . "const FIELD_" . strtoupper($value['name']) . " = \"{$value['name']}\";\n";
             if ($value['pkey']) {
                 $pk = $value['name'];
-                $pkType = ($value['type'] == 'int') ? 'SERIAL' : 'MD5';
+                $size = filter_var($value['size'], FILTER_SANITIZE_NUMBER_INT);
+                if ($value['type'] == 'int') {
+                    $pkType = 'SERIAL';
+                } else {
+                    if ($size == 32) {
+                        $pkType = 'MD5';
+                    } else
+                    if ($size >= 13) {
+                        $pkType = 'ID';
+                    }
+                }
             }
         }
         $constFields .= "\t\tconst PRIMARY_KEY = '$pk';\n";

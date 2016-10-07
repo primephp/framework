@@ -33,6 +33,11 @@ $routes = require_once '../config/routes.php';
   | Inicializa a aplicaçao
  */
 $app = Application::getInstance($routes);
-$app->init(true); //TRUE caso queira usar o debug
+/**
+ * //TRUE caso queira usar o debug, caso FALSE os erros serão lançados como
+ * Exception e registrados no log da aplicação
+ */
+$app->init(true);
+
 $app->finalyze();
 

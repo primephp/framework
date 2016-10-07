@@ -24,7 +24,7 @@ class TBoolean extends TObject {
      * @return string
      */
     public function __toString() {
-        return (string)$this->getValue();
+        return (string) $this->getValue();
     }
 
     /**
@@ -121,6 +121,17 @@ class TBoolean extends TObject {
             return new TString('FALSE');
         } else {
             throw new \InvalidArgumentException('Não suportado valores diferentes de booleans');
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEmpty() {
+        if (empty($this->data['value'])) {
+            return TRUE;
+        } else {
+            return FALSE;
         }
     }
 

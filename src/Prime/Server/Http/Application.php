@@ -26,6 +26,9 @@
 
 namespace Prime\Server\Http;
 
+use Exception;
+use Monolog\Handler\RotatingFileHandler;
+use Monolog\Logger;
 use Prime\FileSystem\Filesystem;
 use Prime\Model\DataSource\Connection;
 use Prime\Server\Routing\RouteCollection;
@@ -118,6 +121,11 @@ class Application {
     private function debug($debug) {
         if ($debug === TRUE) {
             $debug = Debug::enable();
+        } else {
+            set_error_handler('primeErrorHandler');
+            set_exception_handler('primeExceptionHandler');
+            ini_set("display_errors", "off");
+            error_reporting(E_ALL);
         }
     }
 

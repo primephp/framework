@@ -2,13 +2,15 @@
 
 namespace Prime\View;
 
+use \Prime\Core\TObject;
+
 /**
  * Description of View
  * @package Prime\View
  *
  * @author tom
  */
-abstract class View implements ViewInterface {
+abstract class View extends TObject implements ViewInterface {
 
     /**
      * Armazena os conteúdos adicionados dentro de um array
@@ -39,7 +41,15 @@ abstract class View implements ViewInterface {
         }
         return $content;
     }
-
+    
+    /**
+     * Retorna uma string representando o conteúdo da View
+     * @return string
+     */
+    public function toString() {
+        return $this->getOutput();
+    }
+    
     /**
      * Retorna na forma de uma string ao invés de escrever na saida de dados
      * pro navegador

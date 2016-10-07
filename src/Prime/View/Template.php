@@ -60,6 +60,11 @@ class Template extends View {
         $this->addPath(__DIR__ . DIRECTORY_SEPARATOR . 'prime', 'prime');
     }
 
+    /**
+     * Define o caminho do template que deverá ser utilizado
+     * @param string $path
+     * @param int $index
+     */
     public function setPath($path, $index = null) {
         if (!is_null($path)) {
             $this->name = $path;
@@ -69,6 +74,10 @@ class Template extends View {
         }
     }
 
+    /**
+     * Inicializa o Carregador de templates
+     * @return \Twig_Loader_Filesystem
+     */
     public static function initLoader() {
         if (is_null(self::$loader)) {
             self::$loader = new Twig_Loader_Filesystem(__DIR__);
@@ -76,6 +85,11 @@ class Template extends View {
         return self::$loader;
     }
 
+    /**
+     * Inicializa o ambiente de templates
+     * @param array $env
+     * @return Twig_Environment
+     */
     public static function initEnviroment(array $env = []) {
         if (is_null(self::$env)) {
             self::$env = new Twig_Environment(self::initLoader(), $env);
@@ -83,12 +97,23 @@ class Template extends View {
         return self::$env;
     }
 
+    /**
+     * Adiciona um novo caminho de templates e define um namespace para o mesmo
+     * @param string $path
+     * @param string $namespace
+     */
     public static function addPath($path,
             $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
         $loader->addPath($path, $namespace);
     }
 
+    /**
+     * Adiciona um novo caminho de templates e define um namespace para o mesmo 
+     * no início 
+     * @param string $path
+     * @param string $namespace
+     */
     public static function prependPath($path,
             $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
@@ -110,7 +135,7 @@ class Template extends View {
     }
 
     /**
-     * 
+     * Carrega o template baseado no nome passado
      * @return Twig_TemplateInterface
      */
     public function load($name = null, $index = null) {
@@ -134,7 +159,6 @@ class Template extends View {
      */
     public function getOutput() {
         $template = $this->load();
-//        \App\Application::dd($this->getContents());
         $this->assign('a_content', $this->getContents());
         return $template->render($this->changeList);
     }

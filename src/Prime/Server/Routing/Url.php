@@ -51,7 +51,7 @@ class Url {
     }
 
     /**
-     * Returns the url as a string
+     * retorna a url como uma string
      * @return string
      */
     public function toString() {
@@ -69,18 +69,18 @@ class Url {
     }
 
     /**
-     * Sets the value for the parameter to be used for the creation of Url 
-     * @param string $name The param name
-     * @param string $value The param value
+     * Define o valor para o parâmetro a ser utilizado para a criação da URL
+     * @param string $name Nome do parâmetro
+     * @param string $value O valor para o parâmetro
      */
     public function setParam($name, $value) {
         $this->_params[$name] = $value;
     }
 
     /**
-     * Returns the value of the parameter, if given, according to the name 
-     * passed as a parameter in the method
-     * @param string $name
+     * Retorna o valor do parâmetro, se houver, de acordo o nome passado como
+     * parâmetro
+     * @param string $name O nome do parâmetro a ser retornado o seu valor
      * @return mixed
      */
     public function getParam($name) {
@@ -91,7 +91,7 @@ class Url {
     }
 
     /**
-     * Returns a string identifying the Url to be created
+     * Retorna uma string que identifica a url a ser criada
      * @return string
      */
     public function getName() {
@@ -99,7 +99,7 @@ class Url {
     }
 
     /**
-     * Returns an array containing the parameters for the creation of Url
+     * Retorna um array contendo os parâmetros para a criação da Url
      * @return array
      */
     public function getParams() {

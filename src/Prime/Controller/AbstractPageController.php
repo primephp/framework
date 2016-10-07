@@ -12,9 +12,11 @@ use Prime\Server\Http\Response;
 use Symfony\Component\HttpFoundation\Response as SCHR;
 
 /**
- * Classe ControllerAction <br>
- * 
- * @name ControllerAction
+ * Classe AbstractPageController <br>
+ * Classe unitária para controle de uma ação específica, diferente do Controller
+ * onde pode controlar várias ações, sendo o PageController especialista em
+ * apenas uma ação
+ * @name AbstractPageController
  * @package Prime\Controller
  * @author tom
  * 

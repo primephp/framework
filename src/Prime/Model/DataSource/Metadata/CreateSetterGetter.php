@@ -119,9 +119,10 @@ class CreateSetterGetter {
                 . "\npublic function get{$this->method}(){\n" .
                 "if(!empty(\$this->data[{$this->const}])){
             \$value = htmlspecialchars(\$this->data[{$this->const}]);
-                return new \Prime\Core\TString(\$value); 
-        }\n"
-                . "return NULL;\n"
+        }else{\n"
+                . "\$value = '';\n"
+                . "}\n"
+                . "return new \Prime\Core\TString(\$value);\n"
                 . "}\n";
     }
 
@@ -129,14 +130,15 @@ class CreateSetterGetter {
         return " /**
                   * Retorna um objeto TInteger contendo o valor de {$this->name}
                   * ou NULL   
-                  * @return \Prime\Core\TInteger|NULL
+                  * @return \Prime\Core\TInteger
                   */"
                 . "\npublic function get{$this->method}(){\n" .
                 "if(!empty(\$this->data[{$this->const}])){
             \$value = \$this->data[{$this->const}];
-                return new \Prime\Core\TInteger(\$value); 
-        }\n"
-                . "return NULL;\n"
+        }else{\n"
+                . "\$value='';\n"
+                . "}\n"
+                . "return new \Prime\Core\TInteger(\$value);\n"
                 . "}\n";
     }
 

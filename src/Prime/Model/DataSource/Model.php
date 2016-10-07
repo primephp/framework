@@ -7,6 +7,7 @@ use PDO;
 use PDOException;
 use PDOStatement;
 use Prime\Core\Error;
+use Prime\Core\TObject;
 use Prime\Model\Interfaces\IModel;
 use Prime\Model\SQL\SQLCriteria;
 use Prime\Model\SQL\SQLDelete;
@@ -27,7 +28,7 @@ use Prime\Model\SQL\SQLUpdate;
  * @since 18/08/2011
  * @access public
  */
-abstract class Model implements IModel {
+abstract class Model extends TObject implements IModel {
 
     /**
      * Armazena os dados do Objeto Row DataGateway
@@ -49,6 +50,12 @@ abstract class Model implements IModel {
      * @var Error
      */
     protected $error;
+
+    /**
+     * TRUE caso o model carregou algum dado da base de dados
+     * @var boolean
+     */
+    protected $isLoad = FALSE;
 
     public function __construct($id = null) {
         if (!is_null($id)) {
@@ -216,10 +223,31 @@ abstract class Model implements IModel {
                 $this->data[$key] = $value;
                 $this->oldData[$key] = $value;
             }
+            $this->isLoad = TRUE;
             return TRUE;
         } else {
+            $this->isLoad = FALSE;
             return FALSE;
         }
+    }
+
+    /**
+     * Retorna TRUE caso o model carregou algum dado do Banco de Dados
+     * @return boolean
+     */
+    public function isLoaded() {
+        return $this->isLoad;
+    }
+
+    /**
+     * Retorna TRUE caso o model contenha algum dado
+     * @return boolean
+     */
+    public function isEmpty() {
+        if (count($this->data)) {
+            return FALSE;
+        }
+        return TRUE;
     }
 
     /**
@@ -364,13 +392,16 @@ abstract class Model implements IModel {
         if ($this->typePK() == 'MD5') {
             return md5(uniqid($this->getEntity(), TRUE));
         }
+        if ($this->typePK() == 'STRING' || $this->typePK() == 'ID') {
+            return uniqid();
+        }
         if ($this->typePK() == 'SERIAL') {
             $sq1 = new SQLSelect();
             $sq1->addColumn('max(' . $this->getPrimaryKey() . ') as ' . $this->getPrimaryKey());
             $sq1->setEntity($this->getEntity());
             $resu1t = $this->getConnection()->query($sq1->getStatement());
             $row = $resu1t->fetch();
-            return ((int)$row[0]) + 1;
+            return ((int) $row[0]) + 1;
         }
     }
 

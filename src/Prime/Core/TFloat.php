@@ -43,7 +43,7 @@ class TFloat extends TNumber {
         if ($value instanceof TString) {
             $value = $value->getValue();
         }
-        $this->data['value'] = (float)$value;
+        $this->data['value'] = (float) $value;
     }
 
     /**
@@ -140,6 +140,17 @@ class TFloat extends TNumber {
             $float = new TFloat($float);
         }
         if ($this->getValue() === $float->getValue()) {
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function isEmpty() {
+        if (empty($this->data['value'])) {
             return TRUE;
         } else {
             return FALSE;

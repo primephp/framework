@@ -30,7 +30,7 @@ final class TString extends TObject {
      * @return string
      */
     public function toString() {
-        return (string)$this->getValue();
+        return (string) $this->getValue();
     }
 
     /**
@@ -124,10 +124,10 @@ final class TString extends TObject {
      * string
      */
     private function setValue($value) {
-        if (empty($value)) {
-            throw new UnexpectedValueException(__CLASS__ . ' não aceita string '
-            . 'vazias');
-        }
+//        if (empty($value)) {
+//            throw new UnexpectedValueException(__CLASS__ . ' não aceita string '
+//            . 'vazias');
+//        }
         if (is_string($value)) {
             $this->data['value'] = $value;
             $this->data['length'] = $this->length();
@@ -161,7 +161,7 @@ final class TString extends TObject {
      */
     public function compareTo($str) {
         if (!$str instanceof TString) {
-            $str = new TString((string)$str);
+            $str = new TString((string) $str);
         }
         if ($this->getValue() === $str->getValue()) {
             return TRUE;
@@ -178,7 +178,7 @@ final class TString extends TObject {
      */
     public function compareToIgnoreCase($str) {
         if (!$str instanceof TString) {
-            $str = new TString((string)$str);
+            $str = new TString((string) $str);
         }
         if ($this->toUpper()->getValue() === $str->toUpper()->getValue()) {
             return TRUE;
@@ -194,7 +194,7 @@ final class TString extends TObject {
      */
     public function concat($str) {
         if (!$str instanceof TString) {
-            $str = new TString((string)$str);
+            $str = new TString((string) $str);
         }
         $this->setValue($this->getValue() . $str->getValue());
         return $this;
@@ -207,7 +207,7 @@ final class TString extends TObject {
      * @return TBoolean
      */
     public function contains($s) {
-        return (bool)mb_strstr($this->getValue(), $s, FALSE, $this->getEncoding());
+        return (bool) mb_strstr($this->getValue(), $s, FALSE, $this->getEncoding());
     }
 
     /**

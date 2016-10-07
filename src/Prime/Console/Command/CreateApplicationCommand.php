@@ -71,14 +71,14 @@ class CreateApplicationCommand extends BaseCommand {
         $fileSystem = Filesystem::getInstance();
 
         $fileSystem->mkdir([
-            'app/Modules',
-            'app/Console',
-            'app/DataSource',
-            'app/Templates',
+            'src/App/Modules',
+            'src/App/Console',
+            'src/App/DataSource',
+            'src/App/Templates',
             'public/assets/css',
             'public/assets/js',
             'public/storage',
-            'app/Templates',
+            'src/App/Templates',
             'data/log',
             'data/cache',
             'data/doc'
