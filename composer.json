@@ -24,6 +24,7 @@
         "symfony/filesystem": "3.0.*",
         "symfony/console": "3.0.*",
         "twig/twig": "1.*",
+        "phpmailer/phpmailer": "5.*",
         "monolog/monolog": "1.*"
     },
     "require-dev": {
@@ -32,9 +33,9 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Prime\\": "src/Prime/",
-            "App\\": "src/App/"
+            "Prime\\": "resource/Prime/",
+            "App\\": "App/"
         },
-        "files": ["src/Prime/Core/functions.php"]
+        "files": ["resource/Prime/Core/functions.php"]
     }
 }

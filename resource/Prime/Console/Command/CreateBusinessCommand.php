@@ -36,11 +36,11 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
- * Descrição de CreateControllerCommand
+ * Descrição de CreateBusinessCommand
  *
  * @author TomSailor
  */
-class CreatePageControllerCommand extends BaseCommand {
+class CreateBusinessCommand extends BaseCommand {
 
     /**
      * Path do diretório de Módulos
@@ -48,9 +48,9 @@ class CreatePageControllerCommand extends BaseCommand {
      */
     private $modulesPath = NULL;
 
-    public function __construct($name = 'create:pagecontroller') {
+    public function __construct($name = 'create:business') {
         parent::__construct($name);
-        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
+        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
         $this->modulesPath = realpath($this->modulesPath) . DIRECTORY_SEPARATOR;
     }
 
@@ -58,38 +58,38 @@ class CreatePageControllerCommand extends BaseCommand {
      * Configura o Command
      */
     protected function configure() {
-        $this->setProcessTitle('PageController Create')
-                ->setDescription('Cria um PageController dentro de um módulo específico, de acordo com os parâmetros passados')
+        $this->setProcessTitle('Business Create')
+                ->setDescription('Cria uma classe de negócio dentro de um módulo específico, de acordo com os parâmetros passados')
                 ->addArgument(
-                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado o PageController')
+                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado a classe de negócio')
                 ->addArgument(
-                        'controller', InputArgument::OPTIONAL, 'O nome do PageController a ser criado, caso seja omitido, será criado um PageController com o mesmo nome do módulo')
-                ->setHelp('console create:pagecontroller {ModuleName} {PageControllerName} cria o esqueleto de uma classe PageController');
+                        'business', InputArgument::OPTIONAL, 'O nome da classe de negócio a ser criada, caso seja omitido, será criado um PageController com o mesmo nome do módulo')
+                ->setHelp('console create:business {ModuleName} {BusinessName} cria o esqueleto de uma classe de negócio');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $module = ucfirst($input->getArgument('module'));
-        $controller = $input->getArgument('controller');
+        $business = $input->getArgument('business');
 
-        if (!empty($controller)) {
-            $controller = ucfirst($controller);
+        if (!empty($business)) {
+            $business = ucfirst($business);
         } else {
-            $controller = $module;
+            $business = $module;
         }
-        $controller .= 'PageController';
+        $business .= 'Action';
 
         $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
-        $filename .= 'page_controller.php.twig';
+        $filename .= 'business.php.twig';
         if (file_exists($filename)) {
             $string = new TString(file_get_contents($filename));
-            $string->replace('{{ controller }}', $controller)
+            $string->replace('{{ business }}', $business)
                     ->replace('{{ module }}', $module)
                     ->replace('{{ date }}', date('d/m/Y'));
         } else {
             throw new FileNotFoundException("$filename nao encontrado");
         }
 
-        $fileController = $this->modulesPath . $module . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . $controller . '.php';
+        $fileController = $this->modulesPath . $module . DIRECTORY_SEPARATOR . 'Business' . DIRECTORY_SEPARATOR . $business . '.php';
 
         if (file_exists($this->modulesPath . $module)) {
             Filesystem::getInstance()->touch($fileController);

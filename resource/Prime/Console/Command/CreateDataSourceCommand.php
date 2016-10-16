@@ -67,7 +67,7 @@ class CreateDataSourceCommand extends BaseCommand {
 
         $dataSource = new CreateDataSource($entity);
 
-        $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'DataSource';
+        $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'DataSource';
         $filename = realpath($dirBase) . DIRECTORY_SEPARATOR . $dataSource->getClassName() . '.php';
 
         Filesystem::getInstance()->touch($filename);

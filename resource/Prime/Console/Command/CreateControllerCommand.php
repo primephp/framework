@@ -32,15 +32,16 @@ use Prime\FileSystem\File;
 use Prime\FileSystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 /**
- * Descrição de CreateBusinessCommand
+ * Descrição de CreateControllerCommand
  *
  * @author TomSailor
  */
-class CreateBusinessCommand extends BaseCommand {
+class CreateControllerCommand extends BaseCommand {
 
     /**
      * Path do diretório de Módulos
@@ -48,9 +49,9 @@ class CreateBusinessCommand extends BaseCommand {
      */
     private $modulesPath = NULL;
 
-    public function __construct($name = 'create:business') {
+    public function __construct($name = 'create:controller') {
         parent::__construct($name);
-        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
+        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
         $this->modulesPath = realpath($this->modulesPath) . DIRECTORY_SEPARATOR;
     }
 
@@ -58,43 +59,45 @@ class CreateBusinessCommand extends BaseCommand {
      * Configura o Command
      */
     protected function configure() {
-        $this->setProcessTitle('Business Create')
-                ->setDescription('Cria uma classe de negócio dentro de um módulo específico, de acordo com os parâmetros passados')
+        $this->setProcessTitle('Controller Create')
+                ->setDescription('Cria um Controller dentro de um módulo específico, de acordo com os parâmetros passados')
                 ->addArgument(
-                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado a classe de negócio')
+                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado o Controller')
                 ->addArgument(
-                        'business', InputArgument::OPTIONAL, 'O nome da classe de negócio a ser criada, caso seja omitido, será criado um PageController com o mesmo nome do módulo')
-                ->setHelp('console create:business {ModuleName} {BusinessName} cria o esqueleto de uma classe de negócio');
+                        'controller', InputArgument::OPTIONAL, 'O nome do controller a ser criado, caso seja omitido, será criado um controller com o mesmo nome do módulo')
+                ->addOption('plain', 'p', InputOption::VALUE_NONE, 'Define se o Controller vai ser criado sem os seus metodos padrao')
+                ->setHelp('console create:controller {ModuleName} {ControllerName} cria o esqueleto de uma classe controller');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
         $module = ucfirst($input->getArgument('module'));
-        $business = $input->getArgument('business');
+        $controller = $input->getArgument('controller');
 
-        if (!empty($business)) {
-            $business = ucfirst($business);
+        if (!empty($controller)) {
+            $controller = ucfirst($controller);
         } else {
-            $business = $module;
+            $controller = $module;
         }
-        $business .= 'Action';
+        $controller .= 'Controller';
 
         $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
-        $filename .= 'business.php.twig';
+        if ($input->getOption('plain')) {
+            $filename .= 'controller_plain.php.twig';
+        } else {
+            $filename .= 'controller.php.twig';
+        }
         if (file_exists($filename)) {
             $string = new TString(file_get_contents($filename));
-            $string->replace('{{ business }}', $business)
-                    ->replace('{{ module }}', $module)
-                    ->replace('{{ date }}', date('d/m/Y'));
+            $string->replace('{{ controller }}', $controller)->replace('{{ module }}', $module);
         } else {
             throw new FileNotFoundException("$filename nao encontrado");
         }
 
-        $fileController = $this->modulesPath . $module . DIRECTORY_SEPARATOR . 'Business' . DIRECTORY_SEPARATOR . $business . '.php';
+        $fileController = $this->modulesPath . $module . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . $controller . '.php';
 
         if (file_exists($this->modulesPath . $module)) {
             Filesystem::getInstance()->touch($fileController);
             Filesystem::getInstance()->chmod($fileController, 0660);
-
 
             $file = new File($fileController);
             $fileObject = $file->openFile('w');

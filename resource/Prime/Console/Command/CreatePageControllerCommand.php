@@ -32,7 +32,6 @@ use Prime\FileSystem\File;
 use Prime\FileSystem\Filesystem;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
@@ -41,7 +40,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
  *
  * @author TomSailor
  */
-class CreateControllerCommand extends BaseCommand {
+class CreatePageControllerCommand extends BaseCommand {
 
     /**
      * Path do diretório de Módulos
@@ -49,9 +48,9 @@ class CreateControllerCommand extends BaseCommand {
      */
     private $modulesPath = NULL;
 
-    public function __construct($name = 'create:controller') {
+    public function __construct($name = 'create:pagecontroller') {
         parent::__construct($name);
-        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'src' . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
+        $this->modulesPath = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'Modules';
         $this->modulesPath = realpath($this->modulesPath) . DIRECTORY_SEPARATOR;
     }
 
@@ -59,14 +58,13 @@ class CreateControllerCommand extends BaseCommand {
      * Configura o Command
      */
     protected function configure() {
-        $this->setProcessTitle('Controller Create')
-                ->setDescription('Cria um Controller dentro de um módulo específico, de acordo com os parâmetros passados')
+        $this->setProcessTitle('PageController Create')
+                ->setDescription('Cria um PageController dentro de um módulo específico, de acordo com os parâmetros passados')
                 ->addArgument(
-                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado o Controller')
+                        'module', InputArgument::REQUIRED, 'O nome do módulo aonde deve ser criado o PageController')
                 ->addArgument(
-                        'controller', InputArgument::OPTIONAL, 'O nome do controller a ser criado, caso seja omitido, será criado um controller com o mesmo nome do módulo')
-                ->addOption('plain', 'p', InputOption::VALUE_NONE, 'Define se o Controller vai ser criado sem os seus metodos padrao')
-                ->setHelp('console create:controller {ModuleName} {ControllerName} cria o esqueleto de uma classe controller');
+                        'controller', InputArgument::OPTIONAL, 'O nome do PageController a ser criado, caso seja omitido, será criado um PageController com o mesmo nome do módulo')
+                ->setHelp('console create:pagecontroller {ModuleName} {PageControllerName} cria o esqueleto de uma classe PageController');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output) {
@@ -78,17 +76,15 @@ class CreateControllerCommand extends BaseCommand {
         } else {
             $controller = $module;
         }
-        $controller .= 'Controller';
+        $controller .= 'PageController';
 
         $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR;
-        if ($input->getOption('plain')) {
-            $filename .= 'controller_plain.php.twig';
-        } else {
-            $filename .= 'controller.php.twig';
-        }
+        $filename .= 'page_controller.php.twig';
         if (file_exists($filename)) {
             $string = new TString(file_get_contents($filename));
-            $string->replace('{{ controller }}', $controller)->replace('{{ module }}', $module);
+            $string->replace('{{ controller }}', $controller)
+                    ->replace('{{ module }}', $module)
+                    ->replace('{{ date }}', date('d/m/Y'));
         } else {
             throw new FileNotFoundException("$filename nao encontrado");
         }
@@ -98,6 +94,7 @@ class CreateControllerCommand extends BaseCommand {
         if (file_exists($this->modulesPath . $module)) {
             Filesystem::getInstance()->touch($fileController);
             Filesystem::getInstance()->chmod($fileController, 0660);
+
 
             $file = new File($fileController);
             $fileObject = $file->openFile('w');

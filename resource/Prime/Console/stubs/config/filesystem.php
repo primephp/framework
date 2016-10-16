@@ -30,7 +30,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os logs da aplicação
       |
      */
-    'log' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'log',
+    'log' => dirname(__DIR__) . DS . 'data' . DS . 'log',
     /*
       |-------------------------------------------------------------------------
       | Diretório dos Templates
@@ -39,7 +39,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os templates que serão utilizados na aplicação
       |
      */
-    'templates' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'Templates',
+    'templates' => dirname(__DIR__) . DS . 'App' . DS . 'Templates',
     /*
       |-------------------------------------------------------------------------
       | Diretório de cache
@@ -48,7 +48,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os caches dos templates da aplicação
       |
      */
-    'cache' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'cache',
+    'cache' => dirname(__DIR__) . DS . 'data' . DS . 'cache',
     /*
       |-------------------------------------------------------------------------
       | Diretório de armazenamento
@@ -58,5 +58,5 @@ Filesystem::addPaths([
       | ícones ou conteúdo diversos, podendo ser subdividido a critério do
       | utilizador
      */
-    'storage' => dirname(__DIR__) . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'storage',
+    'storage' => dirname(__DIR__) . DS . 'public' . DS . 'storage',
 ]);

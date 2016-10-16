@@ -17,6 +17,6 @@ return [
     'cache' => $cacheDirectory,
     'auto_reload' => true,
     'strict_variables' => false,
-    'autoescape' => true,
+    'autoescape' => 'html',
     'optimizations' => -1
 ];

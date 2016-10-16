@@ -39,7 +39,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os templates que serão utilizados na aplicação
       |
      */
-    'templates' => dirname(__DIR__) . DS . 'src' . DS . 'App' . DS . 'Templates',
+    'templates' => dirname(__DIR__) . DS . 'App' . DS . 'Templates',
     /*
       |-------------------------------------------------------------------------
       | Diretório de cache
