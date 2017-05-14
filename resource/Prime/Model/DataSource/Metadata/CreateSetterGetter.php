@@ -93,7 +93,7 @@ class CreateSetterGetter {
     }
 
     public function setterDefault($value) {
-        $this->data[self::FIELD_ID_MENSAGEM] = $integer;
+        $this->data[self::FIELD_ID_MENSAGEM] = $value;
     }
 
     public function getterDefault() {

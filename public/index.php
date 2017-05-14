@@ -1,6 +1,6 @@
 <?php
 
-use App\Application;
+use Prime\Server\Http\Application;
 
 /*
   |-------------------------------------------------------------------------
@@ -15,29 +15,15 @@ require '../bootstrap.php';
 
 /*
   |-------------------------------------------------------------------------
-  | ROTAS
-  |-------------------------------------------------------------------------
-  |
-  | Carrega o arquivo contento as definiçoes de rota
-  |
- */
-$routes = require_once '../config/routes.php';
-
-
-
-/*
-  |-------------------------------------------------------------------------
   | APLICAÇAO
   |-------------------------------------------------------------------------
   |
   | Inicializa a aplicaçao
  */
-$app = Application::getInstance($routes);
+$app = Application::getInstance();
 /**
- * //TRUE caso queira usar o debug, caso FALSE os erros serão lançados como
+ * TRUE caso queira usar o debug, caso FALSE os erros serão lançados como
  * Exception e registrados no log da aplicação
  */
-$app->init(true);
-
-$app->finalyze();
-
+$app->init(true)
+        ->finalyze();

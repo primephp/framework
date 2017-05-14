@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Elton Luiz.
+ * Copyright 2016 Tom Sailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,33 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\EventDispatcher;
+namespace Prime\View;
 
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Prime\Server\Http\Application;
+use Twig_Extension;
+use Twig_SimpleFunction;
 
 /**
- * Descrição da Classe BaseEvent
- *
- * @name BaseEvent
- * @package Prime\EventDispatcher
- * @createAt 03/08/2015
- * @author Elton Luiz
+ * Classe Tom Sailor <br>
+ * Classe responsável por extender o Twig
+ * @name TwigExtension
+ * @package Prime\View
+ * @author Tom Sailor
+ * @createAt 24/10/2016
  */
-class BaseEvent extends GenericEvent {
-    
+class TwigExtension extends Twig_Extension {
+
+    public function getName() {
+        return 'PrimeExtension';
+    }
+
+    public function getFunctions() {
+        return array(
+            new Twig_SimpleFunction('tokenId', array($this, 'tokenId')),
+        );
+    }
+
+    public function tokenId() {
+        return Application::getInstance()->getKernel()->getRequest()->getSession()->get('token.id');
+    }
 }

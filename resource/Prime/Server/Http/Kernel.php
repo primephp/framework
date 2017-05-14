@@ -5,6 +5,7 @@ namespace Prime\Server\Http;
 use Prime\Controller\Resolver;
 use Prime\EventDispatcher\Dispatcher;
 use Prime\Server\Listener\KernelExceptionListener;
+use Prime\Server\Listener\RequestListener;
 use Prime\Server\Routing\RouteCollection;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -78,6 +79,7 @@ class Kernel {
         $this->dispatcher = new Dispatcher();
         $this->dispatcher->addSubscriber(new RouterListener($this->matcher, new RequestStack()));
         $this->dispatcher->addSubscriber(new KernelExceptionListener());
+        $this->dispatcher->addSubscriber(new RequestListener());
         $this->dispatcher->addSubscriber(new ResponseListener('UTF-8'));
     }
 

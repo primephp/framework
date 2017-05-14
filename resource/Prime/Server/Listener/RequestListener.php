@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 Elton Luiz.
+ * Copyright 2016 Tom Sailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,40 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\EventDispatcher;
+namespace Prime\Server\Listener;
 
-use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpKernel\KernelEvents;
 
 /**
- * Descrição da Classe BaseEvent
- *
- * @name BaseEvent
- * @package Prime\EventDispatcher
- * @createAt 03/08/2015
- * @author Elton Luiz
+ * Classe Tom Sailor <br>
+ * Responsável por manipular a requisição
+ * @name RequestListener
+ * @package Prime\Server\Listener
+ * @author Tom Sailor
+ * @createAt 24/10/2016
  */
-class BaseEvent extends GenericEvent {
-    
+class RequestListener implements EventSubscriberInterface {
+
+    public static function getSubscribedEvents() {
+        return [
+            KernelEvents::REQUEST => 'createTokenId'
+        ];
+    }
+
+    /**
+     * Responsável por criar um TokenId para validação das requisições
+     * do usuário
+     * @param GetResponseEvent $event
+     */
+    public function createTokenId(GetResponseEvent $event) {
+        $request = $event->getRequest();
+        $session = $request->getSession();
+        if (!$request->isXmlHttpRequest()) {
+            $session->set('token.id', sha1(uniqid()));
+            $session->save();
+        }
+    }
+
 }

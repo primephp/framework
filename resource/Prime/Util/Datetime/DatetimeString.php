@@ -496,6 +496,10 @@ class DatetimeString {
         return $date->format(DateTime::ISO8601);
     }
 
+    /**
+     * Retorna o tempo decorrido desde o evento
+     * @return string
+     */
     public function getTimeElapsed() {
         $timeNow = time();
         $timeRes = $timeNow - $this->startTimeStamp [0];
@@ -620,13 +624,16 @@ class DatetimeString {
      * na data atual
      * 
      * @param type $dataNascimento        	
-     * @return int $ano
+     * @return int|null $ano
      */
     public static function getAge($dataNascimento) {
         if ($dataNascimento instanceof Datetime) {
             $date = $dataNascimento;
         } else {
             $date = new Datetime($dataNascimento);
+        }
+        if(!$date->isValid()){
+            return (int) 0;
         }
         $nascimento = $date->get('Y-m-d');
         $hoje = date('Y-m-d');

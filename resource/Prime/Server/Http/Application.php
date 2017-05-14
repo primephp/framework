@@ -26,13 +26,12 @@
 
 namespace Prime\Server\Http;
 
-use Exception;
-use Monolog\Handler\RotatingFileHandler;
-use Monolog\Logger;
+use FilesystemIterator;
 use Prime\FileSystem\Filesystem;
 use Prime\Model\DataSource\Connection;
 use Prime\Server\Routing\RouteCollection;
 use Prime\View\Template;
+use Prime\View\TwigExtension;
 use Symfony\Component\Debug\Debug;
 
 /**
@@ -52,16 +51,22 @@ class Application {
     protected static $instance = NULL;
 
     /**
+     * Coleção de rotas da aplicação
+     * @var RouteCollection
+     */
+    protected static $routes;
+
+    /**
      * Armazena a instância única de 
      * @var Kernel
      */
-    private $kernel = NULL;
+    private $kernel = null;
 
     /**
      * Define se o DEBUG da aplicação está ou não habilitado
      * @var boolean
      */
-    private $debug = FALSE;
+    private $debug = false;
 
     /**
      * Instancia a aplicação
@@ -69,8 +74,9 @@ class Application {
      * @param array $config Array de configurações da aplicação
      */
     private function __construct($routes = NULL) {
-        if (!is_null($routes)) {
-            $this->kernel = Kernel::getInstance($routes);
+        if (is_null(static::$instance)) {
+            static::$routes = new RouteCollection();
+            $this->kernel = Kernel::getInstance(static::$routes);
         }
     }
 
@@ -86,19 +92,50 @@ class Application {
      * Implementação na aplicação para registrar os Listeners utilizados na aplicação
      * através do arquivo de configuração de Listeners
      */
-    protected function registerListeners() {
-        
+    private function registerListeners() {
+        $listeners = require Filesystem::getInstance()->getPath('root') . '/config/listeners.php';
+        $dispatcher = $this->getKernel()->getDispatcher();
+        foreach ($listeners as $listener) {
+            $dispatcher->addSubscriber($listener);
+        }
+    }
+
+    /**
+     * Recupera o arquivo de configuração dos módulos e adiciona as suas respectivas 
+     * rotas
+     */
+    private function getModulesConfig() {
+        $dirModules = Filesystem::getInstance()->getPath('modules');
+        $file = new FilesystemIterator($dirModules);
+        foreach ($file as $fileinfo) {
+            if ($fileinfo->isDir()) {
+                $fileConfig = $this->getConfigFile($dirModules . DS . $fileinfo->getFilename());
+                if ($fileConfig instanceof RouteCollection) {
+                    static::$routes->addCollection($fileConfig);
+                }
+            }
+        }
+    }
+
+    /**
+     * Retorna a configuração de rotas do Módulo
+     * @param string $module
+     * @return RouteCollection
+     */
+    private function getConfigFile($module) {
+        $file = $module . DS . 'config.php';
+        if (file_exists($file)) {
+            return require $file;
+        }
     }
 
     /**
      * Returns a single instance of the application Kernel
-     * @param RouteCollection $routes Coleção de rotas para o mapeamento da aplicação
-     * @param array $config Array de configurações da aplicação
      * @return Application
      */
-    public static function getInstance($routes = NULL) {
+    public static function getInstance() {
         if (is_null(static::$instance)) {
-            static::$instance = new static($routes);
+            static::$instance = new static();
         }
         return static::$instance;
     }
@@ -106,12 +143,15 @@ class Application {
     /**
      * Inicializa a aplicação
      * @param boolean $debug Caso TRUE define o debug da aplicação
+     * @return Application
      */
     public function init($debug = FALSE) {
+        $this->getModulesConfig();
         $this->debug($debug);
         $this->database();
         $this->template();
         $this->registerListeners();
+        return $this;
     }
 
     /**
@@ -130,11 +170,13 @@ class Application {
     }
 
     /**
-     * Finaliza a Aplicação chamando Kernel->handle() para manipular a 
+     * Finaliza a Aplicação chamando Kernel->handle() para manipular a
      * requisição
+     * @return Application
      */
     public function finalyze() {
         $this->kernel->handle();
+        return $this;
     }
 
     /**
@@ -151,9 +193,12 @@ class Application {
      */
     protected function template() {
         $config = require Filesystem::getInstance()->getPath('root') . '/config/view.php';
-        Template::setEnviroment($config);
+        $twig = Template::setEnviroment($config);
+        $twig->addExtension(new TwigExtension());
         $filesystem = Filesystem::getInstance();
         Template::addPath($filesystem->getPath('templates'));
+        mb_internal_encoding($twig->getCharset());
+        mb_http_output($twig->getCharset());
     }
 
 }

@@ -56,6 +56,7 @@ final class Connection {
         $host = isset($conn_var['host']) ? $conn_var['host'] : NULL;
         $type = isset($conn_var['type']) ? $conn_var['type'] : NULL;
         $port = isset($conn_var['port']) ? $conn_var['port'] : NULL;
+        $charset = isset($conn_var['charset']) ? $conn_var['charset'] : 'utf8mb4';
 
         $conn = NULL;
 
@@ -70,7 +71,7 @@ final class Connection {
                 break;
             case 'mysql':
                 $port = $port ? $port : '3306';
-                $option = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"];
+                $option = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset"];
                 $conn = new PDO("mysql:host={$host};port={$port};dbname={$name}", $user, $pass, $option);
                 break;
             case 'sqlite':

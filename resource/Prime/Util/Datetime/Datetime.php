@@ -222,5 +222,14 @@ class Datetime extends TObject {
     public function toString() {
         return $this->get();
     }
+    
+    /**
+     * Retorna o tempo decorrido desde o evento
+     * @return string
+     */
+    public function getTimeElapsed(){
+        $string = new DatetimeString($this->get());
+        return $string->getTimeElapsed();
+    }
 
 }

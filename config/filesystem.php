@@ -14,6 +14,25 @@ use Prime\FileSystem\Filesystem;
 Filesystem::addPaths([
     /*
       |-------------------------------------------------------------------------
+      | Diretório raiz
+      |-------------------------------------------------------------------------
+      |
+      | Define o diretório raiz onde estão os arquivos
+      |
+     */
+    'root' => dirname(__DIR__),
+    /*
+      |-------------------------------------------------------------------------
+      | Diretório raiz da aplicação
+      |-------------------------------------------------------------------------
+      |
+      | Define o diretório raiz da aplicação, que serve de base para todos os
+      | demais diretórios básicos da aplicação
+      |
+     */
+    'app' => dirname(__DIR__) . DS . 'App',
+    /*
+      |-------------------------------------------------------------------------
       | Diretório raiz da aplicação
       |-------------------------------------------------------------------------
       |
@@ -21,7 +40,7 @@ Filesystem::addPaths([
       | demais diretórios
       |
      */
-    'root' => dirname(__DIR__),
+    'modules' => dirname(__DIR__) . DS . 'App' . DS . 'Modules',
     /*
       |-------------------------------------------------------------------------
       | Diretório de log

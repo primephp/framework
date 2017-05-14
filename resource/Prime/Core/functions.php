@@ -1,5 +1,6 @@
 <?php
 
+use App\Application;
 use Monolog\Handler\RotatingFileHandler;
 use Monolog\Logger;
 use Prime\Core\Exceptions\CompileErrorException;
@@ -35,6 +36,14 @@ function dump($value) {
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
+}
+
+/**
+ * Retorna uma string contendo sha1 de 40 caracteres
+ * @return string
+ */
+function tokenId() {
+    return Application::getInstance()->getKernel()->getRequest()->getSession()->get('token.id');
 }
 
 function primeErrorHandler($err_severity, $err_msg, $err_file, $err_line) {

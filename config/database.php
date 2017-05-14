@@ -20,7 +20,7 @@ return [
       | Define o nome do usuário com permissão de acesso ao banco de dados
       |
      */
-    'user' => 'nome_usuario_do_banco',
+    'user' => 'user_candomble',
     /*
       |-------------------------------------------------------------------------
       | Senha do Usuário
@@ -29,7 +29,8 @@ return [
       | Define a senha de acesso do usuário com permissão de acesso ao BD
       |
      */
-    'pass' => 'senha_usuario_banco',
+    'pass' => 'C@rp1B@t1st@',
+//    'pass' => 'Oloore25@',
     /*
       |-------------------------------------------------------------------------
       | Nome da Base de Dados
@@ -38,7 +39,7 @@ return [
       | Nome do banco de dados que a aplicação utilizará
       |
      */
-    'name' => 'nome_banco_de_dados',
+    'name' => 'candomble_online',
     /*
       |-------------------------------------------------------------------------
       | HostName
@@ -47,7 +48,7 @@ return [
       | IP do host aonde está hospedado a base de dados a qual se quer acessar
       |
      */
-    'host' => 'IP_servidor_dados',
+    'host' => 'localhost',
     /*
       |-------------------------------------------------------------------------
       | Porta
@@ -56,5 +57,14 @@ return [
       | Porta para acesso à base de dados
       |
      */
-    'port' => '3306'
+    'port' => '3306',
+    /*
+      |-------------------------------------------------------------------------
+      | Charset
+      |-------------------------------------------------------------------------
+      |
+      | Porta para acesso à base de dados
+      |
+     */
+    'charset' => 'utf8mb4'
 ];

@@ -23,13 +23,13 @@ abstract class AbstractController implements ControllerInterface {
      * Armazena a instância de request que será utilizada pelo controller
      * @var Request
      */
-    protected $request = null;
+    private $request = null;
 
     /**
      * Armazena a instância de response que será utilizada pelo controller
      * @var Response
      */
-    protected $response = null;
+    private $response = null;
 
     public function __construct() {
         $this->initialize();
@@ -46,7 +46,7 @@ abstract class AbstractController implements ControllerInterface {
      * @param int $status O status HTTP, por padrão é 302
      * @return RedirectResponse retorna uma instância da classe RedirectResponse
      */
-    public function redirect($url, $status = 302) {
+    public function redirect($url, $status = 301) {
         return new RedirectResponse($url, $status);
     }
 

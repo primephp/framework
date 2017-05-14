@@ -1,6 +1,5 @@
 <?php
 
-use Prime\Server\Http\Response;
 use Prime\Server\Routing\RouteCollection;
 
 /*

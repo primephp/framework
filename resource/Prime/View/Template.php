@@ -102,8 +102,7 @@ class Template extends View {
      * @param string $path
      * @param string $namespace
      */
-    public static function addPath($path,
-            $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
+    public static function addPath($path, $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
         $loader->addPath($path, $namespace);
     }
@@ -114,14 +113,18 @@ class Template extends View {
      * @param string $path
      * @param string $namespace
      */
-    public static function prependPath($path,
-            $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
+    public static function prependPath($path, $namespace = Twig_Loader_Filesystem::MAIN_NAMESPACE) {
         $loader = self::initLoader();
         $loader->prependPath($path, $namespace);
     }
 
+    /**
+     * Define o ambiemte de visões
+     * @param array $env Recebe um array contendo as configurações do Twig
+     * @return Twig_Environment Retorna a classe de ambiente
+     */
     public static function setEnviroment(array $env) {
-        self::initEnviroment($env);
+        return self::initEnviroment($env);
     }
 
     /**
