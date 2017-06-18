@@ -78,7 +78,6 @@ class CreateApplicationCommand extends BaseCommand {
             'public/assets/css',
             'public/assets/js',
             'public/storage',
-            'App/Templates',
             'data/log',
             'data/cache',
             'data/doc'

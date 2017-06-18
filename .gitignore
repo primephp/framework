@@ -17,4 +17,4 @@
 /public/index.html
 /public/plugins/
 /composer.min.json
-/data/cache/
+/data/cache/**
