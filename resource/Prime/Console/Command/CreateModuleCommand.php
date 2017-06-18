@@ -73,7 +73,6 @@ class CreateModuleCommand extends BaseCommand {
     private function createConfigRouter() {
         $name = 'config.php';
         $filename = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR . $name;
-        $module = $this->moduleName;
         if (file_exists($filename)) {
             $string = new TString(file_get_contents($filename));
         } else {
