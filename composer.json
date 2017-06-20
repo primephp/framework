@@ -33,9 +33,9 @@
     "prefer-stable": true,
     "autoload": {
         "psr-4": {
-            "Prime\\": "resource/Prime/",
-            "App\\": "App/"
+            "Prime\\": "lib/Prime/",
+            "App\\": "app/"
         },
-        "files": ["resource/Prime/Core/functions.php"]
+        "files": ["lib/Prime/Core/functions.php"]
     }
 }

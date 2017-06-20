@@ -1,2 +1,2 @@
 # PrimePHP Framework
-Toolkit de Componentes php para criação de aplicações MVC
+Toolkit de Componentes para criação de aplicações PHP em camadas e modularizada
