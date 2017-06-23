@@ -11,6 +11,17 @@ use Prime\FileSystem\Filesystem;
   | como armazenamento de log, cache, arquivos diversos
   |
  */
+
+$root = dirname(__DIR__);
+$app = 'app';
+$public = 'public';
+$data = 'data';
+$modules = 'Modules';
+$templates = 'Templates';
+$storage = 'storage';
+$log = 'log';
+$cache = 'cache';
+
 Filesystem::addPaths([
     /*
       |-------------------------------------------------------------------------
@@ -20,7 +31,7 @@ Filesystem::addPaths([
       | Define o diretório raiz onde estão os arquivos
       |
      */
-    'root' => dirname(__DIR__),
+    'root' => $root,
     /*
       |-------------------------------------------------------------------------
       | Diretório raiz da aplicação
@@ -30,7 +41,7 @@ Filesystem::addPaths([
       | demais diretórios básicos da aplicação
       |
      */
-    'app' => dirname(__DIR__) . DS . 'app',
+    'app' => $root. DS . $app,
     /*
       |-------------------------------------------------------------------------
       | Diretório raiz da aplicação
@@ -40,7 +51,7 @@ Filesystem::addPaths([
       | demais diretórios
       |
      */
-    'modules' => dirname(__DIR__) . DS . 'app' . DS . 'Modules',
+    'modules' => $root . DS . $app . DS . $modules,
     /*
       |-------------------------------------------------------------------------
       | Diretório de log
@@ -49,7 +60,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os logs da aplicação
       |
      */
-    'log' => dirname(__DIR__) . DS . 'data' . DS . 'log',
+    'log' => $root . DS . $data . DS . $log,
     /*
       |-------------------------------------------------------------------------
       | Diretório dos Templates
@@ -58,7 +69,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os templates que serão utilizados na aplicação
       |
      */
-    'templates' => dirname(__DIR__) . DS . 'app' . DS . 'Templates',
+    'templates' => $root . DS . $app . DS . $templates,
     /*
       |-------------------------------------------------------------------------
       | Diretório de cache
@@ -67,7 +78,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os caches dos templates da aplicação
       |
      */
-    'cache' => dirname(__DIR__) . DS . 'data' . DS . 'cache',
+    'cache' => $root . DS . $data . DS . $cache,
     /*
       |-------------------------------------------------------------------------
       | Diretório de armazenamento
@@ -77,5 +88,5 @@ Filesystem::addPaths([
       | ícones ou conteúdo diversos, podendo ser subdividido a critério do
       | utilizador
      */
-    'storage' => dirname(__DIR__) . DS . 'public' . DS . 'storage',
+    'storage' => $root . DS . $public . DS . $storage,
 ]);
