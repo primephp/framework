@@ -180,11 +180,11 @@ class Application {
     }
 
     /**
-     * Carrega a configuração do banco de dados e abre uma conexão
+     * Carrega a configuração do banco de dados
      */
     protected function database() {
         $array = require Filesystem::getInstance()->getPath('root') . '/config/database.php';
-        Connection::open($array);
+        Connection::config($array);
     }
 
     /**

@@ -30,7 +30,7 @@ Filesystem::addPaths([
       | demais diretórios básicos da aplicação
       |
      */
-    'app' => dirname(__DIR__) . DS . 'App',
+    'app' => dirname(__DIR__) . DS . 'app',
     /*
       |-------------------------------------------------------------------------
       | Diretório raiz da aplicação
@@ -40,7 +40,7 @@ Filesystem::addPaths([
       | demais diretórios
       |
      */
-    'modules' => dirname(__DIR__) . DS . 'App' . DS . 'Modules',
+    'modules' => dirname(__DIR__) . DS . 'app' . DS . 'Modules',
     /*
       |-------------------------------------------------------------------------
       | Diretório de log
@@ -58,7 +58,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os templates que serão utilizados na aplicação
       |
      */
-    'templates' => dirname(__DIR__) . DS . 'App' . DS . 'Templates',
+    'templates' => dirname(__DIR__) . DS . 'app' . DS . 'Templates',
     /*
       |-------------------------------------------------------------------------
       | Diretório de cache

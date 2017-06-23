@@ -17,6 +17,12 @@ final class Connection {
      * @var PDO
      */
     private static $conn;
+    
+    /**
+     * Array contendo a configuração de conexão com a base de dados da aplicação
+     * @var array
+     */
+    private static $config;
 
     /**
      * método __construct()
@@ -25,15 +31,12 @@ final class Connection {
     private function __construct() {
         
     }
-
+    
     /**
-     * método open()
-     * recebe um String de Conexão, no formato:<br/>
-     * type:host:user:passwd:name:port
-     * ou um array associativo com as supracitadas chaves
-     * @return PDO
+     * Configura os dados para conexão com a base de dados da aplicação
+     * @param array|string $conn_var
      */
-    public static function open($conn_var) {
+    public static function config($conn_var){
         if (is_string($conn_var)) {
             $var = explode(':', $conn_var);
 
@@ -44,19 +47,29 @@ final class Connection {
             $conn_var['pass'] = $var[3];
             $conn_var['name'] = $var[4];
             $conn_var['port'] = isset($var[5]) ? $var[5] : NULL;
+            $conn_var['charset'] = isset($var[6]) ? $var[6] : NULL;
         }
         if (!is_array($conn_var)) {
             trigger_error('Parâmetro inválido. ' . __METHOD__, E_USER_ERROR);
         }
+    }
 
+    /**
+     * método open()
+     * recebe um String de Conexão, no formato:<br/>
+     * type:host:user:passwd:name:port
+     * ou um array associativo com as supracitadas chaves
+     * @return PDO
+     */
+    public static function open() {
         // lê as informações contidas no arquivo
-        $user = isset($conn_var['user']) ? $conn_var['user'] : NULL;
-        $pass = isset($conn_var['pass']) ? $conn_var['pass'] : NULL;
-        $name = isset($conn_var['name']) ? $conn_var['name'] : NULL;
-        $host = isset($conn_var['host']) ? $conn_var['host'] : NULL;
-        $type = isset($conn_var['type']) ? $conn_var['type'] : NULL;
-        $port = isset($conn_var['port']) ? $conn_var['port'] : NULL;
-        $charset = isset($conn_var['charset']) ? $conn_var['charset'] : 'utf8mb4';
+        $user = isset(self::$config['user']) ? self::$config['user'] : NULL;
+        $pass = isset(self::$config['pass']) ? self::$config['pass'] : NULL;
+        $name = isset(self::$config['name']) ? self::$config['name'] : NULL;
+        $host = isset(self::$config['host']) ? self::$config['host'] : NULL;
+        $type = isset(self::$config['type']) ? self::$config['type'] : NULL;
+        $port = isset(self::$config['port']) ? self::$config['port'] : NULL;
+        $charset = isset(self::$config['charset']) ? self::$config['charset'] : 'utf8mb4';
 
         $conn = NULL;
 
