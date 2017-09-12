@@ -35,6 +35,6 @@
         "psr-4": {
             "Prime\\": "src/Prime/"
         },
-        "files": ["lib/Prime/Core/functions.php"]
+        "files": ["src/Prime/Core/functions.php"]
     }
 }
