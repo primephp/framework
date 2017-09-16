@@ -52,6 +52,7 @@ final class Connection {
         if (!is_array($conn_var)) {
             trigger_error('Parâmetro inválido. ' . __METHOD__, E_USER_ERROR);
         }
+        self::$config = $conn_var;
     }
 
     /**
