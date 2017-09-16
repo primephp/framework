@@ -146,5 +146,4 @@ class EntityMetadata {
     public function get() {
         return $this->metadata;
     }
-
 }
