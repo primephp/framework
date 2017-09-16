@@ -72,6 +72,7 @@ class EntityMetadata {
             'integer' => 'int',
             'FLOAT' => 'float',
             'float' => 'float',
+            'float8' => 'float',
             'double' => 'float',
             'DOUBLE' => 'float',
             //datetime

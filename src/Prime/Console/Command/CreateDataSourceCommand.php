@@ -47,8 +47,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CreateDataSourceCommand extends BaseCommand {
 
     private function isConnected() {
-        if (!Connection::get()) {
-            throw new RuntimeException('Há conexão com com banco de dados.');
+        if (!Connection::open()) {
+           throw new RuntimeException('Há conexão com com banco de dados.');
         }
     }
 

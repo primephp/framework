@@ -118,7 +118,7 @@ class CreateDataSource {
         foreach ($this->metadata as $value) {
             $constFields .= "\t\t"
                     . "const FIELD_" . strtoupper($value['name']) . " = \"{$value['name']}\";\n";
-            if ($value['pkey']) {
+            if (isset($value['pkey'])) {
                 $pk = $value['name'];
                 $size = filter_var($value['size'], FILTER_SANITIZE_NUMBER_INT);
                 if ($value['type'] == 'int') {
@@ -134,7 +134,7 @@ class CreateDataSource {
             }
         }
         $constFields .= "\t\tconst PRIMARY_KEY = '$pk';\n";
-        $constFields .= "\t\tconst KEY_TYPE = '$pkType';\n";
+        $constFields .= "\t\tconst KEY_TYPE = '$pkType';#SERIAL|MD5|ID\n";
         return $constFields;
     }
 
