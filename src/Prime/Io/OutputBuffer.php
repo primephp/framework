@@ -3,7 +3,8 @@
 namespace Prime\Io;
 
 use Prime\Core\TObject;
-use Prime\Pattern\Singleton\ISingleton;
+use Prime\Pattern\Singleton\SingletonInterface;
+
 
 /**
  * Descrição de OutputBuffer
@@ -12,7 +13,7 @@ use Prime\Pattern\Singleton\ISingleton;
  * (exceto cabeçalhos), ao invés da saída é armazenada em um buffer interno. 
  * @author Elton Luiz <contato@eltonluiz.com.br>
  */
-class OutputBuffer extends TObject implements ISingleton {
+class OutputBuffer extends TObject implements SingletonInterface {
 
     private static $_instance = NULL;
 
@@ -43,11 +44,11 @@ class OutputBuffer extends TObject implements ISingleton {
      * @return void
      */
     private function __construct($output_callback, $chunk_size, $flags) {
-        return ob_start($output_callback, $chunk_size, $flags);
+        ob_start($output_callback, $chunk_size, $flags);
     }
 
     public static function getInstance($output_callback = NULL,
-            $chunk_size = NULL, $flags = NULL) {
+            $chunk_size = 0, $flags = PHP_OUTPUT_HANDLER_STDFLAGS) {
         if (is_null(self::$_instance)) {
             self::$_instance = new OutputBuffer($output_callback, $chunk_size, $flags);
         }
@@ -59,7 +60,7 @@ class OutputBuffer extends TObject implements ISingleton {
      * @return OutputBuffer
      */
     public static function initialize($output_callback = NULL,
-            $chunk_size = NULL, $flags = NULL) {
+            $chunk_size = 0, $flags = PHP_OUTPUT_HANDLER_STDFLAGS) {
         return self::getInstance($output_callback, $chunk_size, $flags);
     }
 
@@ -72,7 +73,7 @@ class OutputBuffer extends TObject implements ISingleton {
     }
 
     /**
-     * Limpo (apagar) o buffer de saída e desligue o buffer de saída
+     * Limpa (apaga) o buffer de saída e desligue o buffer de saída
       @return boolean <b> TRUE </ b> em caso de sucesso ou <b> FALSE </ b> em caso de falha
      */
     public function endClean() {
@@ -80,7 +81,7 @@ class OutputBuffer extends TObject implements ISingleton {
     }
 
     /**
-     * Descarrega (enviar) o buffer de saída e desligue o buffer de saída
+     * Descarrega (envia) o buffer de saída e desligue o buffer de saída
      * @return boolean <b> TRUE </ b> em caso de sucesso ou <b> FALSE </ b> em caso de falha
      */
     public function endFlush() {

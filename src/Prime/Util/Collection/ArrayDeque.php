@@ -3,7 +3,7 @@
 namespace Prime\Util\Collection;
 
 use Prime\core\interfaces\IClonable;
-use Prime\io\interfaces\ISerializable;
+use Prime\io\interfaces\SerializableInterface;
 use Prime\Util\Interfaces\IDeque;
 
 /**
@@ -11,7 +11,7 @@ use Prime\Util\Interfaces\IDeque;
  *
  * @author tom
  */
-class ArrayDeque extends AbstractCollection implements IDeque, IClonable, ISerializable {
+class ArrayDeque extends AbstractCollection implements IDeque, IClonable, SerializableInterface {
 
     public function addFirst($e) {
         

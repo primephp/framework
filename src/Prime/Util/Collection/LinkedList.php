@@ -10,7 +10,7 @@ namespace Prime\Util\Collection;
 
 use Prime\Core\Interfaces\IClonable;
 use Prime\Core\TObject;
-use Prime\Io\Interfaces\ISerializable;
+use Prime\Io\Interfaces\SerializableInterface;
 use Prime\Util\Exception\NoSuchElementException;
 use Prime\Util\Interfaces\IDeque;
 use Prime\Util\Interfaces\IIterator;
@@ -29,7 +29,7 @@ use UnexpectedValueException;
  * @createAt 23/08/2016
  */
 class LinkedList extends AbstractSequentialList implements IList, IDeque, IClonable,
-        ISerializable {
+        SerializableInterface {
 
     /**
      * Inverte a ordem dos elementos contidos na lista

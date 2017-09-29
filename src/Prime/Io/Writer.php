@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 85101346.
+ * Copyright 2016 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,10 +26,11 @@
 
 namespace Prime\Io;
 
+use Prime\Core\Exceptions\IndexOutOfBoundsException;
 use Prime\Core\Interfaces\IAppendable;
 use Prime\Core\TObject;
-use Prime\Io\Interfaces\ICloseable;
-use Prime\Io\Interfaces\IFlushable;
+use Prime\Io\Interfaces\CloseableInterface;
+use Prime\Io\Interfaces\FlushableInterface;
 
 /**
  * Descrição de Writer <br>
@@ -39,20 +40,9 @@ use Prime\Io\Interfaces\IFlushable;
  * @package Prime\Io
  * @createAt 25/08/2016
  */
-abstract class Writer extends TObject implements IAppendable, ICloseable, IFlushable {
+abstract class Writer extends TObject implements IAppendable, CloseableInterface, FlushableInterface {
 
-    /**
-     * Objeto utilizado para sincronizar as operações no stream
-     * @var TObject 
-     */
-    protected $lock;
-
-    public function __construct(TObject $lock = NULL) {
-        $this->data['value'] = '';
-        if (!is_null($lock)) {
-            $this->lock = $lock;
-        }
-    }
+    protected $charset = 'UTF8';
 
     /**
      * Adiciona uma sequência de caracteres a este appendable ou uma subsequencia
@@ -62,13 +52,13 @@ abstract class Writer extends TObject implements IAppendable, ICloseable, IFlush
      * @param int $end Fim da subsequência de caracteres a ser adiconada
      */
     public function append($char, $start = NULL, $end = NULL) {
-        $enc = 'UTF-8';
+        $enc = $this->charset;
         if (!is_null($start) && !is_null($end)) {
             $size = mb_strlen($char, $enc);
             if ($end > $size || $end < 0 || $start < 0 || $start > $end) {
-                throw new \Prime\Core\Exceptions\IndexOutOfBoundsException("$start e $end nao sao valores validos");
+                throw new IndexOutOfBoundsException("$start e $end nao sao valores validos");
             }
-            $length = (int)$end - (int)$start + 1;
+            $length = (int) $end - (int) $start + 1;
             $str = mb_substr($char, $start, $length);
         } else {
             $str = $char;
@@ -77,17 +67,10 @@ abstract class Writer extends TObject implements IAppendable, ICloseable, IFlush
     }
 
     /**
-     * @inheritDoc
-     */
-    public function close();
-
-    /**
-     * @inheritDoc
-     */
-    abstract public function flush();
-
-    /**
-     * @inheritDoc
+     * Escreve uma string
+     * @param string $str Uma string
+     * @param int $off Posição a partir da qual começará escrever os caracteres
+     * @param int $len Número de caracteres a serem escritos
      */
     abstract public function write($str, $off = NULL, $len = NULL);
 }

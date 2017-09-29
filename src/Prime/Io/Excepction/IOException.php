@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 85101346.
+ * Copyright 2017 quantum.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,21 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Io\Interfaces;
+namespace Prime\Io\Excepction;
+
+use Exception;
 
 /**
- * Descrição de IFlushable <br>
- * Um Flushable é um destino de dados, que pode ser liberado. O método flush é 
- * invocado para escrever qualquer saída para o fluxo subjacente.
- * @author 85101346
- * @name IFlushable
- * @package Prime\Io\Interfaces
- * @createAt 25/08/2016
+ * Description of IOException
+ *
+ * @author TomSailor
  */
-interface IFlushable {
+class IOException extends Exception{
     
-    /**
-     * Libera o fluxo escrevendo qualquer saída para o fluxo subjacente
-     */
-    public function flush();
 }

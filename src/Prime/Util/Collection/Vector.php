@@ -3,7 +3,7 @@
 namespace Prime\Util\Collection;
 
 use Prime\Core\Interfaces\IClonable;
-use Prime\Io\Interfaces\ISerializable;
+use Prime\Io\Interfaces\SerializableInterface;
 use Prime\Util\Interfaces\ICollection;
 use Prime\Util\Interfaces\IList;
 
@@ -15,7 +15,7 @@ use Prime\Util\Interfaces\IList;
  * @author tom
  * @createAt 19/08/2016
  */
-class Vector extends AbstractList implements IList, IClonable, ISerializable {
+class Vector extends AbstractList implements IList, IClonable, SerializableInterface {
 
     /**
      * Armazena a associação do índices inteiros com os índices definidos pelo 

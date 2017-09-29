@@ -3,7 +3,7 @@
 namespace Prime\Util\Collection;
 
 use Prime\Core\Interfaces\IClonable;
-use Prime\Io\Interfaces\ISerializable;
+use Prime\Io\Interfaces\SerializableInterface;
 use Prime\Util\Interfaces\IList;
 
 /**
@@ -16,7 +16,7 @@ use Prime\Util\Interfaces\IList;
  *          @dateCreate 06/06/2014
  * @author Elton Luiz
  */
-class ArrayList extends AbstractList implements IList, IClonable, ISerializable {
+class ArrayList extends AbstractList implements IList, IClonable, SerializableInterface {
 
     /**
      * Capacidade de elementos do ArrayList

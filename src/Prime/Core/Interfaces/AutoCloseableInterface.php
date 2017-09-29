@@ -3,14 +3,14 @@
 namespace Prime\Core\Interfaces;
 
 /**
- * Definição da Interface IAutoCloseable
+ * Definição da Interface AutoCloseableInterface
  * Um recurso que deve ser fechado quando não é mais necessário.
- * @name IAutoCloseable
+ * @name AutoCloseableInterface
  * @package Prime\core
  * @dateCreate 10/06/2014
  * @author Elton Luiz
  */
-interface IAutoCloseable {
+interface AutoCloseableInterface {
 
     /**
      * Fecha este recurso, abandonando todos os recursos subjacentes.

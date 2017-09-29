@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 85101346.
+ * Copyright 2016 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +26,7 @@
 
 namespace Prime\Io\Interfaces;
 
-use Prime\Core\Interfaces\IAutoCloseable;
+use Prime\Core\Interfaces\AutoCloseableInterface;
 
 /**
  * Descrição de ICloseable <br>
@@ -34,14 +34,10 @@ use Prime\Core\Interfaces\IAutoCloseable;
  * close é invocado para liberar recursos que o objeto está segurando 
  * (como arquivos abertos).
  * @author TomSailor
- * @name ICloseable
+ * @name CloseableInterface
  * @package Prime\Core\Interfaces
  * @createAt 25/08/2016
  */
-interface ICloseable extends IAutoCloseable{
+interface CloseableInterface extends AutoCloseableInterface{
     
-    /**
-     * Fechado este stream e libera os recursos associados ao sistema
-     */
-    public function close();
 }
