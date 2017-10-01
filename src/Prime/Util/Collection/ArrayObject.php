@@ -120,12 +120,76 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         ksort($this->collection);
     }
 
+    /**
+     * Preenche o arraym com $num elementos com o valor $value e chaves começando
+     * a partir de $start
+     * @param int $start O primeiro índice do array
+     * @param int $num Número de elementos a inserir, devendo ser maior ou igual a zero
+     * @param mixed $value Valor a preencer
+     */
     public function fill($start, $num, $value) {
         $array = array_fill($start, $num, $value);
         foreach ($array as $key => $value) {
             $this->collection[$key] = $value;
         }
         $this->sort();
+    }
+
+    public function flip() {
+        
+    }
+
+    public function keys() {
+        
+    }
+
+    public function map(callable $callback) {
+        
+    }
+
+    public function pad($size, $value) {
+        
+    }
+
+    public function pop() {
+        
+    }
+
+    public function push() {
+        
+    }
+
+    public function rand() {
+        
+    }
+
+    public function reduce() {
+        
+    }
+
+    public function replace(array $replace) {
+        $this->collection = array_replace_recursive($this->collection, $replace);
+    }
+
+    public function reverse($preserveKeys = false) {
+        $this->collection = array_reverse($this->collection, $preserveKeys);
+        ;
+    }
+
+    public function search($value) {
+        return array_search($value, $this->collection, true);
+    }
+    
+    
+    /**
+     * Retira o primeiro elemento do array e o retorna, diminuindo o array em um
+     * elemento e movendo todos os outros elemento para trás. Todas as chaves 
+     * numéricas alteradas para começar a contar a de 0 (zero), enquanto chaves 
+     * string permanecerão inalteradas.
+     * @return mixed|null Retorna o valor removido, ou NULL se array for vazio ou não é um array.
+     */
+    public function shift(){
+        return array_shift($this->collection);
     }
 
 }
