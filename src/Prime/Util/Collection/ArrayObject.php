@@ -15,7 +15,48 @@ namespace Prime\Util\Collection;
  * @author Tom Sailor
  * @create 14/08/2016
  */
-class ArrayObject extends AbstractCollection {
+class ArrayObject extends AbstractCollection implements \ArrayAccess {
+
+    /**
+     * Verifica se uma posição existe ou não
+     * @param int $offset
+     * @return boolean
+     */
+    public function offsetExists($offset) {
+        return isset($this->collection[$offset]);
+    }
+
+    /**
+     * Retorna o valor de uma posição específica
+     * @param int $offset
+     * @return mixed
+     */
+    public function offsetGet($offset) {
+        return isset($this->collection[$offset]) ? $this->collection[$offset] : null;
+    }
+
+    /**
+     * Atribui um valor a uma posição específica
+     * @param type $offset
+     * @param type $value
+     */
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
+            $this->collection[] = $value;
+        } else {
+            $this->collection[$offset] = $value;
+        }
+        $this->sort();
+    }
+
+    /**
+     * Remove o valor de uma posição específica
+     * @param int $offset
+     */
+    public function offsetUnset($offset) {
+        unset($this->collection[$offset]);
+        $this->sort();
+    }
 
     /**
      * Modifica a caixa de todas as chaves
@@ -60,10 +101,31 @@ class ArrayObject extends AbstractCollection {
     }
 
     /**
-     * 
+     * Preence o array nas posições das chaves passadas com o valor passado
+     * @param array $keys
+     * @param mixed $value
      */
     public function fillKeys(array $keys, $value) {
         $array = array_fill_keys($keys, $value);
+        foreach ($array as $key => $value) {
+            $this->collection[$key] = $value;
+        }
+        $this->sort();
+    }
+
+    /**
+     * Ordena o conteúdo da coleção pelo valor da sua chave;
+     */
+    protected function sort() {
+        ksort($this->collection);
+    }
+
+    public function fill($start, $num, $value) {
+        $array = array_fill($start, $num, $value);
+        foreach ($array as $key => $value) {
+            $this->collection[$key] = $value;
+        }
+        $this->sort();
     }
 
 }

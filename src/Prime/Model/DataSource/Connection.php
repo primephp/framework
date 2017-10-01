@@ -18,11 +18,7 @@ final class Connection {
      */
     private static $conn;
     
-    /**
-     * Array contendo a configuração de conexão com a base de dados da aplicação
-     * @var array
-     */
-    private static $config;
+            
 
     /**
      * método __construct()

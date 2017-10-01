@@ -14,7 +14,6 @@ use Prime\Core\TInteger;
 use Prime\Core\TObject;
 use Prime\Core\TString;
 use Prime\Util\Interfaces\ICollection;
-use Prime\Util\Interfaces\IIterator;
 use UnexpectedValueException;
 
 /**

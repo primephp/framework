@@ -1,7 +1,17 @@
 <?php
+
 require_once '../vendor/autoload.php';
 
-$write = new \Prime\Io\PrintWriter();
+function generate_uuid() {
+    return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0x0fff) | 0x4000, mt_rand(0, 0x3fff) | 0x8000, mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
+    );
+}
 
-$write->write($str);
-$write->close();
+$a = new Prime\Util\Collection\ArrayObject();
+
+$a->fill(0, 8, 'mixed');
+
+var_dump($a);
+foreach ($a as $value) {
+    echo "$value <br>";
+}
