@@ -7,11 +7,17 @@ function generate_uuid() {
     );
 }
 
-$a = new Prime\Util\Collection\ArrayObject();
+function cube($n) {
+    return($n * $n * $n);
+}
 
-$a->fill(0, 8, 'mixed');
+$a = array(1, 2,' 3', 4, 5);
+$a = new Prime\Util\Collection\ArrayObject('integer', $a);
+$a->add(1);
+$a->add(2);
+$a->add(3);
+$a->add(4);
+$a->add(5);
+
 
 var_dump($a);
-foreach ($a as $value) {
-    echo "$value <br>";
-}

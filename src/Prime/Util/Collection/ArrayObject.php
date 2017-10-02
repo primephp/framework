@@ -18,6 +18,28 @@ namespace Prime\Util\Collection;
 class ArrayObject extends AbstractCollection implements \ArrayAccess {
 
     /**
+     * Cria uma coleção do tipo passado como parâmetro
+     * @param string $typeCast Define o tipo de objeto que deve ser aceito
+     * na coleção
+     * @param array $array Array de dados a ser adicionado ao objeto
+     */
+    public function __construct($typeCast = 'mixed', array $array = null) {
+        parent::__construct($typeCast);
+        if(!is_null($array)){
+            $this->addArray($array);
+        }
+    }
+    
+    /**
+     * Adiciona um array de dados ao objeto
+     * @param array $array Array de dados a ser adicionado ao objeto
+     */
+    public function addArray(array $array){
+        foreach ($array as $value) {
+            $this->add($value);
+        }
+    }
+    /**
      * Verifica se uma posição existe ou não
      * @param int $offset
      * @return boolean
@@ -135,16 +157,21 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         $this->sort();
     }
 
-    public function flip() {
-        
-    }
-
+    /**
+     * Retorna todas as chaves ou uma parte das chaves do array
+     * @return array Retorna um array de todas as chaves em array.
+     */
     public function keys() {
-        
+        return array_keys($this->collection);
     }
 
+    /**
+     * Aplica uma função em todos os elementos do array
+     * @param callable $callback Função callback para executar para cada elemento
+     * do array
+     */
     public function map(callable $callback) {
-        
+        $this->collection = array_map($callback, $this->collection);
     }
 
     public function pad($size, $value) {
@@ -179,8 +206,7 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
     public function search($value) {
         return array_search($value, $this->collection, true);
     }
-    
-    
+
     /**
      * Retira o primeiro elemento do array e o retorna, diminuindo o array em um
      * elemento e movendo todos os outros elemento para trás. Todas as chaves 
@@ -188,7 +214,7 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
      * string permanecerão inalteradas.
      * @return mixed|null Retorna o valor removido, ou NULL se array for vazio ou não é um array.
      */
-    public function shift(){
+    public function shift() {
         return array_shift($this->collection);
     }
 

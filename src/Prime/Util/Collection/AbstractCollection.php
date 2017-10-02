@@ -71,11 +71,15 @@ abstract class AbstractCollection extends TObject implements ICollection {
      * @return int O total de elementos da coleção
      */
     public function add($e) {
-        if (!is_object($e)) {
+        if (
+                $this->getTypeCast() == TInteger::class && is_int($e) ||
+                $this->getTypeCast() == TFloat::class && is_float($e) ||
+                $this->getTypeCast() == TString::class && is_string($e)
+        ) {
             $e = TObject::create($e);
         }
         if (!$this->checkType($e)) {
-            throw new UnexpectedValueException("Tipo de dados esperado {$this->getTypeCast()} em " . __METHOD__);
+            throw new UnexpectedValueException("'$e' é do tipo (". gettype($e)."). Tipo de dados esperado em ". __METHOD__." ({$this->getTypeCast()}).");
         }
         return array_push($this->collection, $e);
     }
@@ -93,8 +97,19 @@ abstract class AbstractCollection extends TObject implements ICollection {
             return true;
         }
         if (!is_object($e)) {
-            $n = TObject::create($e);
-            if (is_a($n, $this->getTypeCast())) {
+            if (is_bool($e) && ($this->getTypeCast() == 'bool' || $this->getTypeCast() == 'boolean')) {
+                return true;
+            }
+            if (is_int($e) && ($this->getTypeCast() == 'int' || $this->getTypeCast() == 'integer')) {
+                return true;
+            }
+            if (is_float($e) && ($this->getTypeCast() == 'float' || $this->getTypeCast() == 'double')) {
+                return true;
+            }
+            if (is_string($e) && ($this->getTypeCast() == 'string' || $this->getTypeCast() == 'str')) {
+                return true;
+            }
+            if (is_array($e) && $this->getTypeCast() == 'array') {
                 return true;
             }
         }
@@ -268,16 +283,16 @@ abstract class AbstractCollection extends TObject implements ICollection {
      */
     protected function setTypeCast($typeCast) {
         if (in_array($typeCast, array('string', 'String', 'STRING'))) {
-            $this->typeCast = TString::class;
+            $this->typeCast = 'string';
         } else
         if (in_array($typeCast, array('int', 'integer', 'INT', 'INTEGER'))) {
-            $this->typeCast = TInteger::class;
+            $this->typeCast = 'integer';
         } else
         if (in_array($typeCast, array('bool', 'boolean', 'BOOL', 'BOOLEAN'))) {
-            $this->typeCast = TBoolean::class;
+            $this->typeCast = 'boolean';
         } else
         if (in_array($typeCast, array('float', 'FLOAT', 'double', 'DOUBLE'))) {
-            $this->typeCast = TFloat::class;
+            $this->typeCast = 'float';
         } else {
             $this->typeCast = $typeCast;
         }
