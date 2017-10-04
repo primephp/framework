@@ -1,5 +1,7 @@
 <?php
 
+use Prime\Util\Collection\ArrayObject;
+
 require_once '../vendor/autoload.php';
 
 function generate_uuid() {
@@ -7,17 +9,8 @@ function generate_uuid() {
     );
 }
 
-function cube($n) {
-    return($n * $n * $n);
-}
+$a = new ArrayObject();
 
-$a = array(1, 2,' 3', 4, 5);
-$a = new Prime\Util\Collection\ArrayObject('integer', $a);
-$a->add(1);
-$a->add(2);
-$a->add(3);
-$a->add(4);
-$a->add(5);
+$a->push('PRIMEIRO', 'Primeiro', 'primeiro', 'priMeiro', 'priMEiro');
 
-
-var_dump($a);
+var_dump($a->contains('PRIMEIRo'));

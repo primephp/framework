@@ -8,7 +8,6 @@ namespace Prime\Util\Collection;
 
 use ArrayIterator;
 use ArrayObject;
-use Prime\Core\TBoolean;
 use Prime\Core\TFloat;
 use Prime\Core\TInteger;
 use Prime\Core\TObject;
@@ -249,6 +248,14 @@ abstract class AbstractCollection extends TObject implements ICollection {
     public function size() {
         return count($this->collection);
     }
+    
+    /**
+     * Retorna o tamanho da collection
+     * @return int
+     */
+    public function sizeOf(){
+        return $this->size();
+    }
 
     /**
      * Retorna um array contendo os elementos da presente Collection
@@ -297,10 +304,10 @@ abstract class AbstractCollection extends TObject implements ICollection {
             $this->typeCast = $typeCast;
         }
     }
-
+    
     /**
-     * Retorna um Iterador contendo todos os elementos da coleção
-     * @return ArrayIterator
+     * Retorna um CollectionIterator para iteração dos elementos da coleção
+     * @return CollectionIterator
      */
     public function getIterator() {
         return new CollectionIterator($this);

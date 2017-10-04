@@ -8,6 +8,9 @@
 
 namespace Prime\Util\Collection;
 
+use ArrayAccess;
+use Countable;
+
 /**
  * Descrição da Classe ArrayObject
  * @name ArrayObject
@@ -15,7 +18,48 @@ namespace Prime\Util\Collection;
  * @author Tom Sailor
  * @create 14/08/2016
  */
-class ArrayObject extends AbstractCollection implements \ArrayAccess {
+class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
+
+    /**
+     * Flag para ordenação comparando os itens normalmente (não modifica o tipo)
+     */
+    const SORT_REGULAR = SORT_REGULAR;
+
+    /**
+     * Flag para ordenção comparando os itens numericamente
+     */
+    const SORT_NUMERIC = SORT_NUMERIC;
+
+    /**
+     * Flag para ordenação comparando os itens como string
+     */
+    const SORT_STRING = SORT_STRING;
+
+    /**
+     * Flag para ordenção comparando os itens como strings, utilizando o locale
+     * atual. Utiliza o local que poser ser modificado com setlocale()
+     */
+    const SORT_LOCALE_STRING = SORT_LOCALE_STRING;
+
+    /**
+     * Flag para ordenação comparando os itens como string utilizando "ordenação 
+     * natural" tipo natsort()
+     */
+    const SORT_NATURAL = SORT_NATURAL;
+
+    /**
+     * Floag para ordenção comparando os itens como string sem considerar maiúsculas e
+     * minúsculas
+     */
+    const SORT_FLAG_CASE = SORT_FLAG_CASE;
+
+    /**
+     * Conta o número de elementos do objeto
+     * @return int
+     */
+    public function count() {
+        return $this->size();
+    }
 
     /**
      * Cria uma coleção do tipo passado como parâmetro
@@ -25,20 +69,21 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
      */
     public function __construct($typeCast = 'mixed', array $array = null) {
         parent::__construct($typeCast);
-        if(!is_null($array)){
+        if (!is_null($array)) {
             $this->addArray($array);
         }
     }
-    
+
     /**
      * Adiciona um array de dados ao objeto
      * @param array $array Array de dados a ser adicionado ao objeto
      */
-    public function addArray(array $array){
+    public function addArray(array $array) {
         foreach ($array as $value) {
             $this->add($value);
         }
     }
+
     /**
      * Verifica se uma posição existe ou não
      * @param int $offset
@@ -68,7 +113,7 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         } else {
             $this->collection[$offset] = $value;
         }
-        $this->sort();
+        $this->ksort();
     }
 
     /**
@@ -77,7 +122,7 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
      */
     public function offsetUnset($offset) {
         unset($this->collection[$offset]);
-        $this->sort();
+        $this->ksort();
     }
 
     /**
@@ -132,13 +177,13 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         foreach ($array as $key => $value) {
             $this->collection[$key] = $value;
         }
-        $this->sort();
+        $this->ksort();
     }
 
     /**
      * Ordena o conteúdo da coleção pelo valor da sua chave;
      */
-    protected function sort() {
+    protected function ksort() {
         ksort($this->collection);
     }
 
@@ -154,7 +199,7 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         foreach ($array as $key => $value) {
             $this->collection[$key] = $value;
         }
-        $this->sort();
+        $this->ksort();
     }
 
     /**
@@ -174,35 +219,94 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
         $this->collection = array_map($callback, $this->collection);
     }
 
+    /**
+     * Expande o array para o comprimento especificado por size com o valor value. 
+     * Se $size for positivo então o array é expandido pela direita, se for 
+     * negativo, pela esquerda.
+     * @param int $size Novo tamanho do array
+     * @param mixed $value Valor para preencher se o array é menor que o $size
+     */
     public function pad($size, $value) {
-        
+        $this->collection = array_pad($this->collection, $size, $value);
     }
 
+    /**
+     * Extrai e retorna o último elemento do objeto, diminuindo o objeto em um
+     * elemento
+     * @return mixed Retorna o último valor do objeto. Se o objeto é vazio, NULL
+     * será retornado
+     */
     public function pop() {
-        
+        return array_pop($this->collection);
     }
 
-    public function push() {
-        
+    /**
+     * 
+     * @param mixed Primeiro valor a ser adicionado no final do objeto
+     * @param mixed $_values [valores opcionais]
+     * @return int Retorno o novo número de elementos do objeto
+     */
+    public function push($value, ...$_values) {
+        array_push($this->collection, $value);
+        if ($_values) {
+            foreach ($_values as $v) {
+                $this->push($v);
+            }
+        }
+        return $this->size();
     }
 
+    /**
+     * Escolhe aleatoriamente um elemento do objeto e retorna sua chave.
+     * @return int A chave para o elemento aleatório
+     */
     public function rand() {
-        
+        return array_rand($this->collection);
     }
 
-    public function reduce() {
-        
+    /**
+     * Escolhe aleatoriamente um elemento do objeto e retorna sua chave.
+     * @return int A chave para o elemento aleatório
+     */
+    public function random() {
+        return $this->rand();
     }
 
+    /**
+     * Escolhe aleatoriamente um elemento do objeto e o retorna.
+     * @return mixed O elemento aleatório escolhido
+     */
+    public function randomValue() {
+        return $this->offsetGet($this->rand());
+    }
+
+    /**
+     * Substitui os valores do objeto pelos mesmos valores do array $replace. Se
+     * a chave do elemento do objeto existir em $replace o seu valor será substituído
+     * pelo valor do elemento da mesma chave no array $replace. Se a chave existir
+     * em $replace e não no objeto, ela será criada no objeto. Se uma chave só 
+     * existir no objeto, ela será deixada como está.
+     * @param array $replace O array a partir do qual os lementos será extraídos
+     */
     public function replace(array $replace) {
         $this->collection = array_replace_recursive($this->collection, $replace);
     }
 
+    /**
+     * Inverte a ordem dos elementos do objeto
+     * @param boolean $preserveKeys Se definido para TRUE as chaves serão preservadas
+     */
     public function reverse($preserveKeys = false) {
         $this->collection = array_reverse($this->collection, $preserveKeys);
-        ;
     }
 
+    /**
+     * Procura por um valor no objeto e retorna sua chave correspondente, caso
+     * seja encontrado
+     * @param mixed $value
+     * @return int|false Retorna a chave correspondente se foi encontrada, ou 
+     * FALSE caso contrário
+     */
     public function search($value) {
         return array_search($value, $this->collection, true);
     }
@@ -216,6 +320,25 @@ class ArrayObject extends AbstractCollection implements \ArrayAccess {
      */
     public function shift() {
         return array_shift($this->collection);
+    }
+
+    /**
+     * Mistura os elementos do array de forma aleatória;
+     */
+    public function shuffle() {
+        shuffle($this->collection);
+    }
+
+    /**
+     * Ordena os elementos do objeto. Os elementos serão ordenados do menor para 
+     * o maior. Se dois itens são comparados como iguais, sua ordenção no final
+     * é indefinida
+     * @param int $sort_flags Parâmetro opcional $sort_flags, pode ser usado
+     * para modificar o comportamento da ordenação
+     * @return type
+     */
+    public function sort($sort_flags = ArrayObject::SORT_REGULAR) {
+        return sort($this->collection, $sort_flags);
     }
 
 }
