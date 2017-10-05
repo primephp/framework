@@ -2,13 +2,16 @@
 
 namespace Prime\Core;
 
+use InvalidArgumentException;
+use Prime\Core\Interfaces\StringInterface;
+
 /**
  * Descrição da Classe Boolean
  * @package Prime\core
  * @author comforsup-0212
  * @dateCreate $(date)
  */
-class TBoolean extends TObject
+class TBoolean extends TObject implements StringInterface
 {
 
     const B_TRUE = TRUE;
@@ -113,9 +116,18 @@ class TBoolean extends TObject
      * Retorna um objeto String representando o boolean especificado.
      * @return TString
      */
-    public function toString()
+    public function toTString()
     {
         return self::getString($this->getValue());
+    }
+
+    /**
+     * Retorna o valor como uma string;
+     * @return string
+     */
+    public function toString()
+    {
+        return (string) $this;
     }
 
     /**
@@ -131,7 +143,7 @@ class TBoolean extends TObject
         if ($b == FALSE) {
             return new TString('FALSE');
         } else {
-            throw new \InvalidArgumentException('Não suportado valores diferentes de booleans');
+            throw new InvalidArgumentException('Não suportado valores diferentes de booleans');
         }
     }
 

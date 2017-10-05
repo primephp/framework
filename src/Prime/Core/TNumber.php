@@ -2,6 +2,8 @@
 
 namespace Prime\Core;
 
+use Prime\Core\Interfaces\StringInterface;
+
 /**
  * Número classe abstrata é a superclasse das classes BigDecimal, BigInteger, 
  * byte, double, float, inteiro, longo e curto.<br>
@@ -12,7 +14,7 @@ namespace Prime\Core;
  *  @dateCreate 29/05/2014
  * 
  */
-abstract class TNumber extends TObject
+abstract class TNumber extends TObject implements StringInterface
 {
 
     abstract function getValue();
@@ -55,6 +57,15 @@ abstract class TNumber extends TObject
     public function byteValue()
     {
         return $this->getValue();
+    }
+
+    /**
+     * Retorna o valor deste Integer como uma String
+     * @return string
+     */
+    public function toString()
+    {
+        return (string) $this->getValue();
     }
 
 }

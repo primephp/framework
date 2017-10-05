@@ -2,18 +2,56 @@
 
 namespace Prime\Core;
 
-use InvalidArgumentException;
-use UnexpectedValueException;
+use Prime\Core\Exceptions\InvalidParamException;
+use Prime\Core\Interfaces\StringInterface;
+use function mb_convert_encoding;
+use function mb_stripos;
+use function mb_stristr;
+use function mb_strlen;
+use function mb_strpos;
+use function mb_strrchr;
+use function mb_strrichr;
+use function mb_strstr;
+use function mb_strtolower;
+use function mb_strtoupper;
+use function mb_strwidth;
+use function mb_substr;
+use function mb_substr_count;
 
-final class TString extends TObject
+final class TString extends TObject implements StringInterface
 {
+
+    /**
+     * Índice do array onde é armazenado a string
+     * @var string
+     */
+    private static $VALUE = 'value';
+
+    /**
+     * Índice do array onde é armazenado o tamanho da string
+     * @var string
+     */
+    private static $LENGTH = 'length';
+
+    /**
+     * Índice do array onde é armazenado o encoding da string
+     * @var string
+     */
+    private static $ENCODING = 'encoding';
 
     public function __construct($string = NULL)
     {
         $this->setEncoding('UTF8');
+        $this->setLength();
+        $this->setValue('');
         if (!is_null($string)) {
             $this->setValue($string);
         }
+    }
+
+    private function setLength($size = 0)
+    {
+        $this->data[self::$LENGTH] = $size;
     }
 
     /**
@@ -113,7 +151,7 @@ final class TString extends TObject
      */
     public function getValue()
     {
-        return $this->data['value'];
+        return $this->data[self::$VALUE];
     }
 
     /**
@@ -130,22 +168,16 @@ final class TString extends TObject
     /**
      * Define o valor da string
      * @param string $value
-     * @throws UnexpectedValueException Caso seja passada uma string vazia ou
-     * NULL
-     * @throws InvalidArgumentException Caso seja passado um tipo diferente de
+     * @throws InvalidParamException Caso seja passado um tipo diferente de
      * string
      */
     private function setValue($value)
     {
-//        if (empty($value)) {
-//            throw new UnexpectedValueException(__CLASS__ . ' não aceita string '
-//            . 'vazias');
-//        }
         if (is_string($value)) {
-            $this->data['value'] = $value;
-            $this->data['length'] = $this->length();
+            $this->data[self::$VALUE] = $value;
+            $this->data[self::$LENGTH] = $this->length();
         } else {
-            throw new InvalidArgumentException(__CLASS__ . ' aceita apenas '
+            throw new InvalidParamException(__CLASS__ . ' aceita apenas '
             . 'strings. Valor inválido passado: ' . $value);
         }
     }
@@ -156,7 +188,7 @@ final class TString extends TObject
      */
     public function getEncoding()
     {
-        return $this->data['encoding'];
+        return $this->data[self::$ENCODING];
     }
 
     /**
@@ -165,7 +197,7 @@ final class TString extends TObject
      */
     public function setEncoding($encoding)
     {
-        $this->data['encoding'] = $encoding;
+        $this->data[self::$ENCODING] = $encoding;
     }
 
     /**

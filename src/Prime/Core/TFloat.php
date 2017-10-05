@@ -59,11 +59,11 @@ class TFloat extends TNumber
     }
 
     /**
-     * Retorna um objeto String do parâmetro float passado
+     * Retorna um objeto TString do parâmetro float passado
      * @param float $float
      * @return TString
      */
-    public static function toString($float)
+    public static function toTString($float)
     {
         return new TString($float);
     }

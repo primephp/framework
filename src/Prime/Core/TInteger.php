@@ -112,15 +112,6 @@ class TInteger extends TNumber
     }
 
     /**
-     * Retorna o valor deste Integer como uma String
-     * @return string
-     */
-    public function toString()
-    {
-        return (string) $this->getValue();
-    }
-
-    /**
      * Retorna o valor interno do objeto Integer
      * @return int
      */
@@ -137,6 +128,7 @@ class TInteger extends TNumber
      */
     public function setValue($int)
     {
+        $this->verifyValue($int);
         if (is_int($int)) {
             $value = $int;
         } else
@@ -164,10 +156,10 @@ class TInteger extends TNumber
     }
 
     /**
-     * Retorna o valor deste integer como Float
+     * Retorna o valor deste integer como TFloat
      * @return TFloat
      */
-    public function toFloat()
+    public function toTFloat()
     {
         return new TFloat($this->getValue());
     }
