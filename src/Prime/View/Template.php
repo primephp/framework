@@ -38,7 +38,7 @@ use Twig_TemplateInterface;
  * @author Elton Luiz
  * @createAt 24/07/2015
  */
-class Template extends View
+class Template extends AbstractView
 {
 
     /**

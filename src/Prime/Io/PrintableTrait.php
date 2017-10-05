@@ -24,14 +24,29 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database;
+namespace Prime\Io;
 
 /**
- * Description of newPHPClass
+ * Descrição de PrintableTrait
  *
- * @author Elton Luiz
+ * @author quantum
  */
-class newPHPClass
+trait PrintableTrait
 {
-    //put your code here
+
+    /**
+     * Retorna o conteúdo do objeto
+     * @return string Retorna o conteúdo do objeto
+     */
+    abstract public function getOutput();
+
+    /**
+     * Imprime o conteúdo na tela
+     * @return string o conteudo a ser impresso na tela
+     */
+    public function printOut()
+    {
+        echo $this->getOutput();
+    }
+
 }

@@ -2,7 +2,7 @@
 
 namespace Prime\Html\Style;
 
-use Prime\View\View;
+use Prime\View\AbstractView;
 
 /**
  * Descrição de HTMLStyleInline
@@ -14,7 +14,7 @@ use Prime\View\View;
  * @access public
  * @author Tom Sailor
  */
-class HTMLStyleInline extends View
+class HTMLStyleInline extends AbstractView
 {
 
     private $properties;

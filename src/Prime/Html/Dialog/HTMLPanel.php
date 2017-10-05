@@ -4,9 +4,9 @@ namespace Prime\Html\Dialog;
 
 use Prime\Html\Base\HTMLElement,
     Prime\Html\Style\HTMLStyleInline,
-    Prime\View\View;
+    Prime\View\AbstractView;
 
-class HTMLPanel extends View
+class HTMLPanel extends AbstractView
 {
 
     private $panel;

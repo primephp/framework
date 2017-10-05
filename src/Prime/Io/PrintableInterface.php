@@ -12,6 +12,5 @@ namespace Prime\Io;
  */
 interface PrintableInterface
 {
-
     public function printOut();
 }

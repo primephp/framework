@@ -10,8 +10,9 @@ use \Prime\Core\TObject;
  *
  * @author Elton Luiz
  */
-abstract class View extends TObject implements ViewInterface
+abstract class AbstractView extends TObject implements ViewInterface
 {
+    use \Prime\Io\PrintableTrait;
 
     /**
      * Armazena os conteúdos adicionados dentro de um array
@@ -57,19 +58,10 @@ abstract class View extends TObject implements ViewInterface
     /**
      * Retorna na forma de uma string ao invés de escrever na saida de dados
      * pro navegador
-     * @return str
+     * @return string O conteúdo do objeto
      */
     public function getOutput()
     {
         return $this->getContents();
     }
-
-    /**
-     * Imprime na saída o conteúdo do objeto
-     */
-    public function printOut()
-    {
-        echo $this->getOutput();
-    }
-
 }
