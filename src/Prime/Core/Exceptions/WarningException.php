@@ -33,6 +33,7 @@ use ErrorException;
  *
  * @author Tom Sailor
  */
-class WarningException extends ErrorException{
+class WarningException extends ErrorException
+{
     
 }

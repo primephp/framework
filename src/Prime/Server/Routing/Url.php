@@ -13,7 +13,8 @@ use Symfony\Component\Routing\Generator\UrlGenerator;
  * @createAt 23/10/2015
  * @author Tom Sailor
  */
-class Url {
+class Url
+{
 
     /**
      * Stores the single instance of the URL object
@@ -36,7 +37,8 @@ class Url {
      */
     private $urlGenerator = null;
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         $this->_name = $name;
         if (is_null($this->routeCollection) && is_null($this->requestContext)) {
             $kernel = Application::getInstance()->getKernel();
@@ -46,7 +48,8 @@ class Url {
         $this->urlGenerator = new UrlGenerator($this->routeCollection, $this->requestContext);
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toString();
     }
 
@@ -54,7 +57,8 @@ class Url {
      * retorna a url como uma string
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return $this->urlGenerator->generate($this->getName(), $this->getParams());
     }
 
@@ -64,7 +68,8 @@ class Url {
      * @param string $name
      * @return static
      */
-    public static function generate($name) {
+    public static function generate($name)
+    {
         return new static($name);
     }
 
@@ -73,7 +78,8 @@ class Url {
      * @param string $name Nome do parâmetro
      * @param string $value O valor para o parâmetro
      */
-    public function setParam($name, $value) {
+    public function setParam($name, $value)
+    {
         $this->_params[$name] = $value;
     }
 
@@ -83,7 +89,8 @@ class Url {
      * @param string $name O nome do parâmetro a ser retornado o seu valor
      * @return mixed
      */
-    public function getParam($name) {
+    public function getParam($name)
+    {
         if (isset($this->_params[$name])) {
             return $this->_params[$name];
         }
@@ -94,7 +101,8 @@ class Url {
      * Retorna uma string que identifica a url a ser criada
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->_name;
     }
 
@@ -102,7 +110,8 @@ class Url {
      * Retorna um array contendo os parâmetros para a criação da Url
      * @return array
      */
-    public function getParams() {
+    public function getParams()
+    {
         return $this->_params;
     }
 

@@ -5,11 +5,13 @@ namespace Prime\Html\Base;
 /**
  * Descrição de HTMLLegend
  *
- * @author tom
+ * @author Elton Luiz
  */
-class HTMLLegend extends HTMLElement {
+class HTMLLegend extends HTMLElement
+{
 
-    public function __construct($text = NULL) {
+    public function __construct($text = NULL)
+    {
         parent::__construct('legend');
 
         if (!is_null($text)) {

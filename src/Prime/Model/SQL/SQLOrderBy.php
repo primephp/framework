@@ -6,9 +6,10 @@ namespace Prime\Model\SQL;
  * @name SQLOrderBy
  * @package Prime\Model\SQL
  * @since 21/01/2012
- * @author TomSailor
+ * @author Elton Luiz
  */
-final class SQLOrderBy extends SQLExpression {
+final class SQLOrderBy extends SQLExpression
+{
 
     const DESC_OPERATOR = " desc ";
     const ASC_OPERATOR = " asc ";
@@ -21,7 +22,8 @@ final class SQLOrderBy extends SQLExpression {
      * @param array $column
      * @param string $order 
      */
-    public function __construct($column = NULL, $order = '') {
+    public function __construct($column = NULL, $order = '')
+    {
         $this->struct = '';
         $this->order = '';
         if (is_array($column) || is_string($column)) {
@@ -35,7 +37,8 @@ final class SQLOrderBy extends SQLExpression {
      * String que representam números não serão usados.
      * @param {string|array} $column
      */
-    public function add($column = [], $order = '') {
+    public function add($column = [], $order = '')
+    {
         if (is_array($column)) {
             foreach ($column as $value) {
                 $this->add($value, $order);
@@ -50,7 +53,8 @@ final class SQLOrderBy extends SQLExpression {
      * 
      * @inheritDoc
      */
-    public function dump() {
+    public function dump()
+    {
         $dump = '';
         $total = count($this->struct);
         for ($index = 0; $index < $total; $index++) {

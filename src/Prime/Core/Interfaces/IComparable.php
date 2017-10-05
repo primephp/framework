@@ -8,7 +8,8 @@ namespace Prime\Core\Interfaces;
  * @dateCreate 28/05/2014
  * @author comforsup-0215
  */
-interface IComparable {
+interface IComparable
+{
 
     /**
      * Compara esse objeto com o objeto especificado para a ordem. Retorna um 

@@ -9,59 +9,73 @@ use Prime\Util\Interfaces\IDeque;
 /**
  * Descrição de ArrayDeque
  *
- * @author tom
+ * @author Elton Luiz
  */
-class ArrayDeque extends AbstractCollection implements IDeque, IClonable, SerializableInterface {
+class ArrayDeque extends AbstractCollection implements IDeque, IClonable, SerializableInterface
+{
 
-    public function addFirst($e) {
+    public function addFirst($e)
+    {
         
     }
 
-    public function addLast($e) {
+    public function addLast($e)
+    {
         
     }
 
-    public function element() {
+    public function element()
+    {
         
     }
 
-    public function getClone() {
+    public function getClone()
+    {
         
     }
 
-    public function getFirst() {
+    public function getFirst()
+    {
         
     }
 
-    public function offer($e) {
+    public function offer($e)
+    {
         
     }
 
-    public function offerLast($e) {
+    public function offerLast($e)
+    {
         
     }
 
-    public function peek() {
+    public function peek()
+    {
         
     }
 
-    public function peekFirst() {
+    public function peekFirst()
+    {
         
     }
 
-    public function poll() {
+    public function poll()
+    {
         
     }
 
-    public function pollFirst() {
+    public function pollFirst()
+    {
         
     }
 
-    public function removeFirst() {
+    public function removeFirst()
+    {
         
     }
 
-    public function serialize() {
+    public function serialize()
+    {
         
     }
 

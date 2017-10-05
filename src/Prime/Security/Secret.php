@@ -10,11 +10,12 @@ use Prime\Core\TObject;
  * @name Secret
  * @package Prime\Security
  * @version 1.0
- * @author TomSailor
+ * @author Elton Luiz
  * @since 25/08/2015
  * @access public
  */
-class Secret extends TObject {
+class Secret extends TObject
+{
 
     /**
      * Chave secreta que será utilizada para a criptografia
@@ -39,7 +40,8 @@ class Secret extends TObject {
      * @param string $key a chave utilizada para criptografar e descriptografar 
      * o conteúdo
      */
-    public function __construct($key = NULL) {
+    public function __construct($key = NULL)
+    {
         if (!is_null($key)) {
             $this->setKey($key);
         }
@@ -49,7 +51,8 @@ class Secret extends TObject {
      * Define a chave que será utilizada para a criptografia
      * @param string $key
      */
-    public function setKey($key) {
+    public function setKey($key)
+    {
         static::key($key);
     }
 
@@ -57,7 +60,8 @@ class Secret extends TObject {
      * Retorna a chave utilizada para a criptografia
      * @return string
      */
-    public function getKey() {
+    public function getKey()
+    {
         return static::key();
     }
 
@@ -66,7 +70,8 @@ class Secret extends TObject {
      * @param string $key
      * @return string|NULL
      */
-    public static function key($key = NULL) {
+    public static function key($key = NULL)
+    {
         if (is_null($key)) {
             return static::$_key;
         } else {
@@ -79,7 +84,8 @@ class Secret extends TObject {
      * Retorna o tipo de criptografia utilizado
      * @return string
      */
-    protected function getMethod() {
+    protected function getMethod()
+    {
         return static::$_method;
     }
 
@@ -88,7 +94,8 @@ class Secret extends TObject {
      * @param string $iv string de 16bits, podendo ser utilizado 16 caracteres que não 
      * sejam caracteres especiais
      */
-    public function setInitVector($iv) {
+    public function setInitVector($iv)
+    {
         static::initVector($iv);
     }
 
@@ -98,7 +105,8 @@ class Secret extends TObject {
      * retorna a string que está sendo utilizada
      * @return string
      */
-    public static function initVector($iv = null) {
+    public static function initVector($iv = null)
+    {
         if (!is_null($iv)) {
             $s = substr($iv, 0, 16);
             static::$_iv = $s;
@@ -111,7 +119,8 @@ class Secret extends TObject {
      * @param string $data A string que deve ser duplamente criptografada
      * @return string O conteúdo duplamento criptografado 
      */
-    public function doubleEncrypt($data) {
+    public function doubleEncrypt($data)
+    {
         return $this->base64Encode($this->iCrypt($this->iCrypt($data)));
     }
 
@@ -120,7 +129,8 @@ class Secret extends TObject {
      * @param string $data
      * @return string
      */
-    public function doubleDecrypt($data) {
+    public function doubleDecrypt($data)
+    {
         return $this->iDecrypt($this->iDecrypt($this->base64Decode($data)));
     }
 
@@ -130,7 +140,8 @@ class Secret extends TObject {
      * @return string|null Retorna a string descriptografada, ou null se a chave 
      * e o vetor de inicialização não foram os mesmos utilizados para a criptografia
      */
-    protected function iDecrypt($data) {
+    protected function iDecrypt($data)
+    {
         return openssl_decrypt($data, $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector());
     }
 
@@ -143,7 +154,8 @@ class Secret extends TObject {
      * criptografia, ou o vetor de inicialização, ou o string não combinam entre
      * si
      */
-    public function decrypt($data) {
+    public function decrypt($data)
+    {
         return $this->iDecrypt($this->base64Decode($data));
     }
 
@@ -152,7 +164,8 @@ class Secret extends TObject {
      * a criptografia
      * @return string string de 16 bits
      */
-    protected function getInitVector() {
+    protected function getInitVector()
+    {
         return static::$_iv;
     }
 
@@ -161,7 +174,8 @@ class Secret extends TObject {
      * @param string $data A string a ser criptografada
      * @return string O conteúdo criptografado
      */
-    public function encrypt($data) {
+    public function encrypt($data)
+    {
         return $this->base64Encode($this->iCrypt($data));
     }
 
@@ -171,8 +185,9 @@ class Secret extends TObject {
      * @param string $data A string a ser criptografada
      * @return string O conteúdo criptografado
      */
-    protected function iCrypt($data) {
-        $string = (string)$data;
+    protected function iCrypt($data)
+    {
+        $string = (string) $data;
         return openssl_encrypt($string, $this->getMethod(), $this->getKey(), OPENSSL_RAW_DATA, $this->getInitVector());
     }
 
@@ -181,7 +196,8 @@ class Secret extends TObject {
      * @param string $data A string a ser passada para base64
      * @return string A string em base64
      */
-    protected function base64Encode($data) {
+    protected function base64Encode($data)
+    {
         return base64_encode($data);
     }
 
@@ -190,7 +206,8 @@ class Secret extends TObject {
      * @param string $data A string a ser decodificada de base64
      * @return string A string decodificada
      */
-    protected function base64Decode($data) {
+    protected function base64Decode($data)
+    {
         return base64_decode($data);
     }
 

@@ -12,7 +12,8 @@ use SplSubject;
  * @dateCreate 28/05/2014
  * @author comforsup-0215
  */
-interface IObservable extends SplSubject {
+interface IObservable extends SplSubject
+{
 
     /**
      * Adiciona um observador para o conjunto de observadores para este objeto, 

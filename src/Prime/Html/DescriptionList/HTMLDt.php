@@ -9,9 +9,11 @@ use Prime\Html\Base\HTMLElement;
  * Cria um termo / nome na lista de descrição
  * @author Elton Luiz
  */
-class HTMLDt extends HTMLElement {
+class HTMLDt extends HTMLElement
+{
 
-    public function __construct($id = NULL) {
+    public function __construct($id = NULL)
+    {
         parent::__construct('dt');
         if (!is_null($id)) {
             $this->setAttribute('id', $id);

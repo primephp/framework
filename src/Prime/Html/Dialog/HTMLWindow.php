@@ -14,9 +14,10 @@ use App\Config\AppConfig,
 /**
  * Descrição de HTMLWindow
  *
- * @author tom
+ * @author Elton Luiz
  */
-class HTMLWindow implements IHTMLWindow {
+class HTMLWindow implements IHTMLWindow
+{
 
     private static $counter = 0;
     private $window;
@@ -32,9 +33,10 @@ class HTMLWindow implements IHTMLWindow {
     private $closeIcon;
     private $zIndex;
 
-    public function __construct($title = '', $width = 350, $height = 100) {
+    public function __construct($title = '', $width = 350, $height = 100)
+    {
         $this->content = [];
-        $this->title = (string)$title;
+        $this->title = (string) $title;
         $this->titleAlign = 'left';
         $this->width = intval($width);
         $this->height = intval($height);
@@ -54,22 +56,26 @@ class HTMLWindow implements IHTMLWindow {
         $this->zIndex = self::$counter + 1000;
     }
 
-    public function appendChild($child) {
+    public function appendChild($child)
+    {
         $this->content[] = $child;
     }
 
-    public function prependChild($child) {
+    public function prependChild($child)
+    {
         array_unshift($this->content, $child);
     }
 
-    public function zIndex($value) {
+    public function zIndex($value)
+    {
         $this->zIndex = $value;
     }
 
     /**
      * Retorna os conteúdos adicionados na Janela 
      */
-    private function getContent() {
+    private function getContent()
+    {
         $content = '';
         foreach ($this->content as $child) {
             if ($child instanceof ViewInterface) {
@@ -91,7 +97,8 @@ class HTMLWindow implements IHTMLWindow {
         return $div->getOutput();
     }
 
-    private function getTitle() {
+    private function getTitle()
+    {
         $div = new HTMLDiv('WindowTitle');
         $div->setAttribute('class', 'ui-widget-header');
         $div->setStyle('position', 'relative');
@@ -109,56 +116,68 @@ class HTMLWindow implements IHTMLWindow {
         return $div->getOutput();
     }
 
-    public function setAttribute($name, $value) {
+    public function setAttribute($name, $value)
+    {
         $this->window->setAttribute($name, $value);
     }
 
-    public function setPosition($top, $left) {
+    public function setPosition($top, $left)
+    {
         $this->top = $top;
         $this->left = $left;
     }
 
-    public function setSize($width = 350, $height = 150) {
+    public function setSize($width = 350, $height = 150)
+    {
         $this->width = intval($width);
         $this->height = intval($height);
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->title = $title;
     }
 
-    public function setTitleAlign($align) {
+    public function setTitleAlign($align)
+    {
         $this->titleAlign = $align;
     }
 
-    public function setClosingIcon($src) {
+    public function setClosingIcon($src)
+    {
         $this->closeIcon = new HTMLImage($src);
     }
 
-    public function setTitleIcon($src) {
+    public function setTitleIcon($src)
+    {
         $this->icon = new HTMLImage($src);
         $this->icon->setMaximumSize(24, 24);
     }
 
-    public function getAttribute($name) {
+    public function getAttribute($name)
+    {
         if (isset($this->{$name})) {
             return $this->{$name};
         }
     }
 
-    public function getHeight() {
+    public function getHeight()
+    {
         return $this->height;
     }
 
-    public function getWidth() {
+    public function getWidth()
+    {
         return $this->width;
     }
 
-    public function getWindowId() {
+    public function getWindowId()
+    {
         return $this->windowId;
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         $this->window->setStyle('height', $this->getHeight() . 'px');
         $this->window->setStyle('width', $this->getWidth() . 'px');
         $this->window->setStyle('z-index', $this->zIndex);
@@ -178,7 +197,8 @@ class HTMLWindow implements IHTMLWindow {
         return $this->window->getOutput();
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 

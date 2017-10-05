@@ -9,7 +9,8 @@ use SplObserver;
  *
  * @author Elton Luiz 
  */
-class Observable implements IObservable {
+class Observable implements IObservable
+{
 
     /**
      * Armazena os objetos Observer
@@ -27,7 +28,8 @@ class Observable implements IObservable {
     /**
      * 
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->observers = new ArrayList();
     }
 
@@ -36,7 +38,8 @@ class Observable implements IObservable {
      * que implementa apenas a interface SplObserver
      * @param SplObserver $observer
      */
-    public function attach(SplObserver $observer) {
+    public function attach(SplObserver $observer)
+    {
         $this->addObserver($observer);
     }
 
@@ -45,7 +48,8 @@ class Observable implements IObservable {
      * que implementa apenas a interface SplObserver
      * @param SplObserver $observer
      */
-    public function detach(SplObserver $observer) {
+    public function detach(SplObserver $observer)
+    {
         $this->deleteObserver($observer);
     }
 
@@ -53,7 +57,8 @@ class Observable implements IObservable {
      * Alias para NotifyObservers
      * @namespace
      */
-    public function notify() {
+    public function notify()
+    {
         $this->notifyObservers();
     }
 
@@ -62,7 +67,8 @@ class Observable implements IObservable {
      * não é o mesmo que alguns observadores já no set.
      * @param \Prime\util\Observer $o
      */
-    public function addObserver(Observer $o) {
+    public function addObserver(Observer $o)
+    {
         $this->observers->add($observer);
     }
 
@@ -71,14 +77,16 @@ class Observable implements IObservable {
      * observadores da sua alteração mais recente, de modo que o método 
      * hasChanged vai agora retornar false.
      */
-    protected function clearChanged() {
+    protected function clearChanged()
+    {
         $this->_change = FALSE;
     }
 
     /**
      * Retorna o número de observadores deste objeto observável.
      */
-    public function countObservers() {
+    public function countObservers()
+    {
         return $this->observers->size();
     }
 
@@ -86,14 +94,16 @@ class Observable implements IObservable {
      * Exclui um observador do conjunto de observadores deste objeto.
      * @param \Prime\util\Observer $o
      */
-    public function deleteObserver(Observer $o) {
+    public function deleteObserver(Observer $o)
+    {
         return $this->observers->remove($o);
     }
 
     /**
      * Limpa a lista observador para que este objeto não tem mais observadores.
      */
-    public function deleteObservers() {
+    public function deleteObservers()
+    {
         $this->observers->clear();
     }
 
@@ -102,7 +112,8 @@ class Observable implements IObservable {
      * @return TBoolean Caso o objeto tenha sido alterado retorna TRUE, do contrário retorna
      * FALSE;
      */
-    public function hasChanged() {
+    public function hasChanged()
+    {
         return $this->_change;
     }
 
@@ -112,7 +123,8 @@ class Observable implements IObservable {
      * para indicar que este objeto não mudou.
      * @param \Prime\util\Object $arg
      */
-    public function notifyObservers() {
+    public function notifyObservers()
+    {
         for ($index = 0; $index < count($this->observers->size()); $index++) {
             $observer = $this->observers->get($index);
             /* @var $observer IObserver */
@@ -125,7 +137,8 @@ class Observable implements IObservable {
      * Marca este objeto observável como tendo sido alterado;
      * o método hasChanged agora vai retornar true.
      */
-    protected function setChanged() {
+    protected function setChanged()
+    {
         $this->_change = TRUE;
     }
 

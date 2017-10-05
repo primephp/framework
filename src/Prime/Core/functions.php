@@ -27,12 +27,14 @@ if (!defined('DS')) {
  * o fluxo da aplicação
  * @param type $value
  */
-function dd($value) {
+function dd($value)
+{
     var_dump($value);
     die();
 }
 
-function dump($value) {
+function dump($value)
+{
     echo '<pre>';
     var_dump($value);
     echo '</pre>';
@@ -42,11 +44,13 @@ function dump($value) {
  * Retorna uma string contendo sha1 de 40 caracteres
  * @return string
  */
-function tokenId() {
+function tokenId()
+{
     return Application::getInstance()->getKernel()->getRequest()->getSession()->get('token.id');
 }
 
-function primeErrorHandler($err_severity, $err_msg, $err_file, $err_line) {
+function primeErrorHandler($err_severity, $err_msg, $err_file, $err_line)
+{
     switch ($err_severity) {
         case E_WARNING: throw new WarningException($err_msg, Logger::WARNING, $err_severity, $err_file, $err_line);
         case E_PARSE: throw new ParseException($err_msg, Logger::ERROR, $err_severity, $err_file, $err_line);
@@ -66,7 +70,8 @@ function primeErrorHandler($err_severity, $err_msg, $err_file, $err_line) {
     }
 }
 
-function primeExceptionHandler(Exception $exc) {
+function primeExceptionHandler(Exception $exc)
+{
     $logger = new Logger('app_runtime');
     $logger->pushHandler(new RotatingFileHandler(Filesystem::getInstance()->getPath('log') . '/app.log'));
     $code = $exc->getCode();

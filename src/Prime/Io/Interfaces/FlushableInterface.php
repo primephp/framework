@@ -30,13 +30,14 @@ namespace Prime\Io\Interfaces;
  * Descrição de IFlushable <br>
  * Um Flushable é um destino de dados, que pode ser liberado. O método flush é 
  * invocado para escrever qualquer saída para o fluxo subjacente.
- * @author TomSailor
+ * @author Elton Luiz
  * @name FlushableInterface
  * @package Prime\Io\Interfaces
  * @createAt 25/08/2016
  */
-interface FlushableInterface {
-    
+interface FlushableInterface
+{
+
     /**
      * Libera o fluxo escrevendo a saída para o destino pretendido
      */

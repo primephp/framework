@@ -20,7 +20,8 @@ use Prime\Util\Interfaces\ISet;
  * @author Tom Sailor
  * @create 14/08/2016
  */
-class AbstractSet extends AbstractCollection implements ISet {
+class AbstractSet extends AbstractCollection implements ISet
+{
 
     /**
      * Adiciona o elemento na coleção caso o mesmo não esteja já contido na 
@@ -29,7 +30,8 @@ class AbstractSet extends AbstractCollection implements ISet {
      * @return boolean Retorna TRUE se o elemento foi adicionado e FALSE
      * caso o elemetno já esteja contido na coleção
      */
-    public function add($e) {
+    public function add($e)
+    {
         if (!$this->contains($e)) {
             parent::add($e);
             return TRUE;
@@ -42,7 +44,8 @@ class AbstractSet extends AbstractCollection implements ISet {
      * coleção
      * @param ICollection $collection
      */
-    public function addAll(ICollection $collection) {
+    public function addAll(ICollection $collection)
+    {
         $iterator = $collection->iterator();
         while ($iterator->hasNext()) {
             $i = $iterator->next();
@@ -50,7 +53,8 @@ class AbstractSet extends AbstractCollection implements ISet {
         }
     }
 
-    public function iterator() {
+    public function iterator()
+    {
         ;
     }
 

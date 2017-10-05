@@ -31,7 +31,8 @@ use Prime\Core\Interfaces\IIterable;
  * existência (contains e isEmpty).
  * @author 
  */
-interface ICollection extends IIterable {
+interface ICollection extends IIterable
+{
 
     public function add($e);
 

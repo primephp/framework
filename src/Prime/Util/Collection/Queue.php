@@ -13,9 +13,11 @@ use SplQueue;
  *
  * @author comforsup-0213
  */
-class Queue extends SplQueue {
+class Queue extends SplQueue
+{
 
-    public function valid() {
+    public function valid()
+    {
         return $this->_i < $this->_c;
     }
 

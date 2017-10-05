@@ -28,14 +28,15 @@ use UnexpectedValueException;
  * @author Elton Luiz
  * @createAt 23/08/2016
  */
-class LinkedList extends AbstractSequentialList implements IList, IDeque, IClonable,
-        SerializableInterface {
+class LinkedList extends AbstractSequentialList implements IList, IDeque, IClonable, SerializableInterface
+{
 
     /**
      * Inverte a ordem dos elementos contidos na lista
      * @return void
      */
-    protected function reverse() {
+    protected function reverse()
+    {
         $this->collection = array_reverse($this->collection);
     }
 
@@ -44,7 +45,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e
      * @return boolean 
      */
-    public function add($e) {
+    public function add($e)
+    {
         parent::add($e);
     }
 
@@ -53,7 +55,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e
      * @return void
      */
-    public function addFirst($e) {
+    public function addFirst($e)
+    {
         if (!is_object($e)) {
             $e = TObject::create($e);
         }
@@ -68,7 +71,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e O elemento a ser adicionado na lista
      * @return void
      */
-    public function addLast($e) {
+    public function addLast($e)
+    {
         $this->add($e);
     }
 
@@ -77,7 +81,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $o
      * @return boolean
      */
-    public function contains($o) {
+    public function contains($o)
+    {
         return parent::contains($o);
     }
 
@@ -86,7 +91,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * inversa
      * @return IIterator Iterador para os elementos da fila
      */
-    public function descendingIterator() {
+    public function descendingIterator()
+    {
         $clone = $this->getClone();
         $clone->reverse();
         return new ListIterator($clone);
@@ -96,7 +102,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna, porém não remove, o primeiro elemento desta Deque
      * @return mixed
      */
-    public function element() {
+    public function element()
+    {
         return $this->getFirst();
     }
 
@@ -104,7 +111,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna, porém não remove, o primeiro elemento da Deque
      * @return mixed
      */
-    public function getFirst() {
+    public function getFirst()
+    {
         reset($this->collection);
         return current($this->collection);
     }
@@ -113,7 +121,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna, porém não remove, o último elemento da Deque
      * @return mixed
      */
-    public function getLast() {
+    public function getLast()
+    {
         end($this->collection);
         return current($this->collection);
     }
@@ -122,7 +131,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna um iterador sobre os elementos neste LinkedList na sequência correta.
      * @return IIterator
      */
-    public function iterator() {
+    public function iterator()
+    {
         return new ListIterator($this);
     }
 
@@ -132,7 +142,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e O elemento a ser adicionado
      * @return boolean Retorna TRUE caso seja adicionado com sucesso
      */
-    public function offer($e) {
+    public function offer($e)
+    {
         $this->add($e);
     }
 
@@ -141,7 +152,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e O elemento a ser adicionado
      * @return boolean Retorna TRUE caso seja adicionado com sucesso
      */
-    public function offerFirst($e) {
+    public function offerFirst($e)
+    {
         $this->addFirst($e);
     }
 
@@ -150,7 +162,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e O elemento a ser adicionado
      * @return boolean Retorna TRUE caso seja adicionado com sucesso
      */
-    public function offerLast($e) {
+    public function offerLast($e)
+    {
         $this->add($e);
     }
 
@@ -159,7 +172,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * essa Deque, ou retorna null se ese Deque estiver vazio
      * @return mixed|null
      */
-    public function peek() {
+    public function peek()
+    {
         return $this->peekFirst();
     }
 
@@ -168,7 +182,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * null se este LinkedList está vazio.
      * @return mixed|null
      */
-    public function peekFirst() {
+    public function peekFirst()
+    {
         $e = $this->getFirst();
         if ($e) {
             return $e;
@@ -181,7 +196,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * null se este LinkedList está vazio.
      * @return mixed|null
      */
-    public function peekLast() {
+    public function peekLast()
+    {
         $e = $this->getLast();
         if ($e) {
             return $e;
@@ -194,7 +210,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * null se este LinkedList está vazio.
      * @return mixed|null
      */
-    public function poll() {
+    public function poll()
+    {
         return $this->pollFirst();
     }
 
@@ -203,7 +220,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * null se este LinkedList está vazio.
      * @return mixed|null
      */
-    public function pollFirst() {
+    public function pollFirst()
+    {
         return array_shift($this->collection);
     }
 
@@ -212,7 +230,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * null se este LinkedList está vazio.
      * @return mixed|null
      */
-    public function pollLast() {
+    public function pollLast()
+    {
         return $this->pop();
     }
 
@@ -220,7 +239,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Recupera e remove o último elemento da pilha representada por este LinkedList.
      * @return mixed|NULL
      */
-    public function pop() {
+    public function pop()
+    {
         return array_pop($this->collection);
     }
 
@@ -230,7 +250,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $e
      * @return boolean 
      */
-    public function push($e) {
+    public function push($e)
+    {
         $this->addFirst($e);
         return TRUE;
     }
@@ -239,7 +260,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Remove a primeira ocorrência do elemento especificado a partir deste LinkedList.
      * @param mixed $o
      */
-    public function remove($o = NULL) {
+    public function remove($o = NULL)
+    {
         $this->removeObject($o);
     }
 
@@ -249,7 +271,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @throws NoSuchElementException Lança excessão se 
      * a lista estiver vazia
      */
-    public function removeFirst() {
+    public function removeFirst()
+    {
         if (!$this->pollFirst()) {
             throw new NoSuchElementException(__CLASS__ . ' vazia');
         }
@@ -260,7 +283,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $o
      * @return boolean Retorna
      */
-    public function removeFirstOccurrence($o) {
+    public function removeFirstOccurrence($o)
+    {
         $index = $this->indexOf($o);
         if ($index !== FALSE) {
             $this->modCount++;
@@ -275,7 +299,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @return mixed
      * @throws NoSuchElementException Lança excessão se a lista estiver vazia
      */
-    public function removeLast() {
+    public function removeLast()
+    {
         if (!$this->pollLast()) {
             throw new NoSuchElementException(__CLASS__ . ' vazia');
         }
@@ -286,7 +311,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * @param mixed $o
      * @return boolean
      */
-    public function removeLasttOccurrence($o) {
+    public function removeLasttOccurrence($o)
+    {
         $a = array_reverse($this->collection, TRUE);
         $o = array_search($o, $a);
         unset($a);
@@ -301,7 +327,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna o número de elementos desta lista
      * @return int
      */
-    public function size() {
+    public function size()
+    {
         return parent::size();
     }
 
@@ -309,7 +336,8 @@ class LinkedList extends AbstractSequentialList implements IList, IDeque, IClona
      * Retorna os elementos da lista serializado
      * @return string
      */
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this->toArray());
     }
 

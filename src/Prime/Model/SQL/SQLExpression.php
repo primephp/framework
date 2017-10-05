@@ -7,7 +7,8 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * classe abstrata para gerenciar expressões
  */
-abstract class SQLExpression {
+abstract class SQLExpression
+{
 
     const AND_OPERATOR = 'AND ';
     const OR_OPERATOR = 'OR ';

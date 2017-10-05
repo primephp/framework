@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class CoreErrorException  extends \ErrorException{
+class CoreErrorException extends \ErrorException
+{
     //put your code here
 }

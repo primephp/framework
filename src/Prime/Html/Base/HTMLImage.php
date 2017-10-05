@@ -6,7 +6,8 @@ namespace Prime\Html\Base;
  * Classe para a exibicao de imagem
  * @author gedal
  */
-class HTMLImage extends HTMLElement {
+class HTMLImage extends HTMLElement
+{
 
     private $info = [];
     private $height = NULL;
@@ -17,7 +18,8 @@ class HTMLImage extends HTMLElement {
      *
      * @param string $src = localizacao da imagem a partir da raiz do site.;
      */
-    public function __construct($src) {
+    public function __construct($src)
+    {
         parent::__construct("img");
 
         $file = PUBLIC_PATH . $src;
@@ -31,7 +33,8 @@ class HTMLImage extends HTMLElement {
         $this->border = '0';
     }
 
-    public function setAlt($text) {
+    public function setAlt($text)
+    {
         $this->setAttribute("alt", $text);
     }
 
@@ -39,11 +42,13 @@ class HTMLImage extends HTMLElement {
      * Define a largura da imagem
      * @param int $width
      */
-    public function setWidth($width) {
+    public function setWidth($width)
+    {
         $this->setStyle('width', $width . 'px');
     }
 
-    public function getWidth() {
+    public function getWidth()
+    {
         if (isset($this->info[0])) {
             return $this->info[0];
         }
@@ -53,19 +58,22 @@ class HTMLImage extends HTMLElement {
      * Define a altura da imagem
      * @param int $height
      */
-    public function setHeight($height) {
+    public function setHeight($height)
+    {
         $this->setStyle('height', $height . 'px');
     }
 
-    public function getHeight() {
+    public function getHeight()
+    {
         if (isset($this->info[1])) {
             return $this->info[1];
         }
     }
 
-    public function setMaximumSize($height, $width) {
-        $novaLargura = (int)$width;
-        $novaAltura = (int)$height;
+    public function setMaximumSize($height, $width)
+    {
+        $novaLargura = (int) $width;
+        $novaAltura = (int) $height;
         if ($this->info[1] > $height || $this->info[0] > $width) {
             // verifica se a largura é maior que a altura
             if ($this->height > $this->width) {
@@ -87,7 +95,8 @@ class HTMLImage extends HTMLElement {
         }
     }
 
-    public function setMaximumHeight($height) {
+    public function setMaximumHeight($height)
+    {
         if ($this->height > $height) {
             $width = round(($height / $this->height) * $this->width);
             $this->setHeight($height);
@@ -95,7 +104,8 @@ class HTMLImage extends HTMLElement {
         }
     }
 
-    public function setMaximumWidth($width) {
+    public function setMaximumWidth($width)
+    {
         if ($this->width > $width) {
             $height = round(($width / $this->width) * $this->height);
             $this->setWidth($width);

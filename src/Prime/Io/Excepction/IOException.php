@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 quantum.
+ * Copyright 2017 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,8 +31,9 @@ use Exception;
 /**
  * Description of IOException
  *
- * @author TomSailor
+ * @author Elton Luiz
  */
-class IOException extends Exception{
+class IOException extends Exception
+{
     
 }

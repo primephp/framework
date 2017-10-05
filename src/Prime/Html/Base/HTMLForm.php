@@ -14,9 +14,11 @@ use Prime\Html\Input\HTMLInput,
  * Concluida
  * 
  */
-class HTMLForm extends HTMLElement {
+class HTMLForm extends HTMLElement
+{
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct("form");
         $this->name = "$name";
         $this->id = "$name";
@@ -30,7 +32,8 @@ class HTMLForm extends HTMLElement {
      *
      * @param string $action
      */
-    public function setAction($action) {
+    public function setAction($action)
+    {
         if (is_string($action)) {
             $this->action = $action;
         } else {
@@ -40,7 +43,8 @@ class HTMLForm extends HTMLElement {
         }
     }
 
-    public function setMethod($method) {
+    public function setMethod($method)
+    {
         if (is_string($method)) {
             $this->method = $method;
         } else {
@@ -55,7 +59,8 @@ class HTMLForm extends HTMLElement {
      *
      * @param HTMLInput $element
      */
-    public function addElement(HTMLInput $element) {
+    public function addElement(HTMLInput $element)
+    {
         if ($element instanceof HTMLInput) {
             if ($element instanceof HTMLInputFile) {
                 $this->enctype = "multipart/form-data";
@@ -71,7 +76,8 @@ class HTMLForm extends HTMLElement {
      *
      * @param HTMLInput $element
      */
-    public function appendChild($element) {
+    public function appendChild($element)
+    {
         if ($element instanceof HTMLInputFile) {
             $this->enctype = "multipart/form-data";
         }
@@ -85,7 +91,8 @@ class HTMLForm extends HTMLElement {
      * @param string $eventName
      * @param string $functions
      */
-    public function addEvents($event, $funcList) {
+    public function addEvents($event, $funcList)
+    {
         if (is_string($event) && is_string($funcList)) {
             //acrescenta uma quantidade ilimitada de metodos javascript
             $this->$event = "$funcList";

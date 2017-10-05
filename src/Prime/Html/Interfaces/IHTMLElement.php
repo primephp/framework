@@ -6,9 +6,10 @@ use Prime\View\ViewInterface;
 
 /**
  * Descrição da Interface IHTMLElement
- * @author tom
+ * @author Elton Luiz
  */
-interface IHTMLElement extends ViewInterface {
+interface IHTMLElement extends ViewInterface
+{
 
     public function setAttribute($name, $value);
 

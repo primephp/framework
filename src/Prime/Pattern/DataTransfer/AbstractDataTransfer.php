@@ -36,30 +36,34 @@ namespace Prime\Pattern\DataTransfer;
  * @author Tom Sailor
  * @create 20/09/2016
  */
-abstract class AbstractDataTransfer extends \Prime\Core\TObject {
+abstract class AbstractDataTransfer extends \Prime\Core\TObject
+{
 
     /**
      * Armazena os dados do objeto
      * @var array
      */
     protected $data = [];
-    
+
     /**
      * Define um valor para a posição passada
      * @param mixed $key
      * @param mixed $value
      */
-    public function set($key, $value){
+    public function set($key, $value)
+    {
         $this->data[$key] = $value;
     }
+
     /**
      * Retorna o valor do elemento armazenado na referida posição, caso não existe
      * retorna NULL
      * @param mixed $key
      * @return mixed O valor do item armazenado ou NULL caso ele não exista
      */
-    public function get($key){
-        if(isset($this->data[$key])){
+    public function get($key)
+    {
+        if (isset($this->data[$key])) {
             return $this->data[$key];
         } else {
             return NULL;
@@ -70,7 +74,8 @@ abstract class AbstractDataTransfer extends \Prime\Core\TObject {
      * Retorna os dados do objeto no formato JSON
      * @return string
      */
-    public function toJson() {
+    public function toJson()
+    {
         return json_encode($this->data);
     }
 
@@ -78,11 +83,13 @@ abstract class AbstractDataTransfer extends \Prime\Core\TObject {
      * Retorna uma string contendo todo o conteúdo do objeto no formato JSON
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return $this->toJson();
     }
 
-    public function toXml() {
+    public function toXml()
+    {
         
     }
 

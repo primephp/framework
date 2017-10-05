@@ -37,8 +37,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-abstract class AbstractListener extends TObject
-        implements EventSubscriberInterface {
+abstract class AbstractListener extends TObject implements EventSubscriberInterface
+{
 
     /**
      * @TODO
@@ -48,7 +48,8 @@ abstract class AbstractListener extends TObject
      * ser invodos
      * 
      */
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         
     }
 

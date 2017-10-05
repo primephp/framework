@@ -35,6 +35,7 @@ namespace Prime\Util\Interfaces;
  * @author Tom Sailor
  * @createAt 24/08/2016
  */
-interface ISortedSet extends ISet {
+interface ISortedSet extends ISet
+{
     
 }

@@ -16,7 +16,8 @@ use Prime\Util\Interfaces\IList;
  *          @dateCreate 06/06/2014
  * @author Elton Luiz
  */
-class ArrayList extends AbstractList implements IList, IClonable, SerializableInterface {
+class ArrayList extends AbstractList implements IList, IClonable, SerializableInterface
+{
 
     /**
      * Capacidade de elementos do ArrayList
@@ -28,7 +29,8 @@ class ArrayList extends AbstractList implements IList, IClonable, SerializableIn
      * Instancia um ArrayList podendo receber como parâmetro o tipo de objetos
      * que aceita, capacidade mínima ou um array de dados a ser inserido
      */
-    public function __construct($param = 'mixed') {
+    public function __construct($param = 'mixed')
+    {
         if (is_int($param)) {
             $this->ensureCapacity($param);
         } else
@@ -48,7 +50,8 @@ class ArrayList extends AbstractList implements IList, IClonable, SerializableIn
      * atual da sua lista de elementos
      * @return void
      */
-    public function trimToSize() {
+    public function trimToSize()
+    {
         $this->capacity = $this->size();
     }
 
@@ -59,7 +62,8 @@ class ArrayList extends AbstractList implements IList, IClonable, SerializableIn
      * @param type $minCapacity
      * @return void
      */
-    public function ensureCapacity($minCapacity) {
+    public function ensureCapacity($minCapacity)
+    {
         $this->capacity = $minCapacity;
     }
 
@@ -68,14 +72,16 @@ class ArrayList extends AbstractList implements IList, IClonable, SerializableIn
      * 
      * @return string contendo o byte-stream representando o objeto ArrayList
      */
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this->toArray());
     }
 
     /**
      * @inheritdoc
      */
-    public function add($e) {
+    public function add($e)
+    {
         $t = parent::add($e);
         $this->ensureCapacity($t);
         return $t;

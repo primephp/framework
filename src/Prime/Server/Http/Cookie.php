@@ -9,8 +9,9 @@ use Symfony\Component\HttpFoundation\Cookie as BaseCookie;
  *
  * @create 18/07/2015
  * @package Prime\Server\Http
- * @author TomSailor <www.eltonluiz@hotmail.com> 
+ * @author Elton Luiz <www.eltonluiz@hotmail.com> 
  */
-class Cookie extends BaseCookie {
+class Cookie extends BaseCookie
+{
     
 }

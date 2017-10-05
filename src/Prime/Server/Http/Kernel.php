@@ -19,12 +19,13 @@ use Symfony\Component\Routing\RequestContext;
 /**
  * Descrição da Classe Kernel
  *
- * @author TomSailor
+ * @author Elton Luiz
  * @name Kernel
  * @package Prime\Server\Http
  * @createAt 16/07/2015
  */
-class Kernel {
+class Kernel
+{
 
     /**
      * Armazena a instância única do Kernel
@@ -61,14 +62,15 @@ class Kernel {
      * @var RequestContext 
      */
     private $requestContext;
-    
+
     /**
      * Arzmena o objeto UrlGenerator
      * @var UrlGenerator 
      */
     private $generator;
 
-    private function __construct($routes) {
+    private function __construct($routes)
+    {
 
         $this->routeCollection = $routes;
         $this->request = Request::createFromGlobals();
@@ -87,7 +89,8 @@ class Kernel {
      * Returns a single instance of the application Kernel
      * @return Kernel
      */
-    public static function getInstance($routes) {
+    public static function getInstance($routes)
+    {
         if (is_null(static::$instance)) {
             static::$instance = new static($routes);
         }
@@ -98,7 +101,8 @@ class Kernel {
      * Return request object
      * @return Request
      */
-    public function getRequest() {
+    public function getRequest()
+    {
         return $this->request;
     }
 
@@ -106,7 +110,8 @@ class Kernel {
      * Return Event Dispatcher object
      * @return EventDispatcher
      */
-    public function getDispatcher() {
+    public function getDispatcher()
+    {
         return $this->dispatcher;
     }
 
@@ -114,7 +119,8 @@ class Kernel {
      * Return RouteCollection object
      * @return RouteCollection
      */
-    public function getRouteCollection() {
+    public function getRouteCollection()
+    {
         return $this->routeCollection;
     }
 
@@ -122,11 +128,13 @@ class Kernel {
      * Return RequestContext object
      * @return RequestContext
      */
-    public function getRequestContext() {
+    public function getRequestContext()
+    {
         return $this->requestContext;
     }
 
-    public function handle() {
+    public function handle()
+    {
         $resolver = new Resolver();
         $kernel = new HttpKernel($this->getDispatcher(), $resolver);
 

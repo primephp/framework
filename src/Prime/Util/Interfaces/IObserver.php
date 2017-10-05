@@ -12,7 +12,8 @@ use \SplObserver;
  * @dateCreate 28/05/2014
  * @author comforsup-0215
  */
-interface IObserver extends SplObserver {
+interface IObserver extends SplObserver
+{
 
     /**
      * Este método é chamado sempre que o objecto observado é alterada. 

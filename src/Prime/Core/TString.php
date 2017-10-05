@@ -5,9 +5,11 @@ namespace Prime\Core;
 use InvalidArgumentException;
 use UnexpectedValueException;
 
-final class TString extends TObject {
+final class TString extends TObject
+{
 
-    public function __construct($string = NULL) {
+    public function __construct($string = NULL)
+    {
         $this->setEncoding('UTF8');
         if (!is_null($string)) {
             $this->setValue($string);
@@ -20,7 +22,8 @@ final class TString extends TObject {
      * @param string $str
      * @return TString
      */
-    public static function create($str) {
+    public static function create($str)
+    {
         return new TString($str);
     }
 
@@ -29,7 +32,8 @@ final class TString extends TObject {
      * impressa
      * @return string
      */
-    public function toString() {
+    public function toString()
+    {
         return (string) $this->getValue();
     }
 
@@ -37,7 +41,8 @@ final class TString extends TObject {
      * Retorna a string do objeto
      * @return string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toString();
     }
 
@@ -45,7 +50,8 @@ final class TString extends TObject {
      * Retorna true se, e somente se, length() é 0.
      * @return boolean
      */
-    public function isEmpty() {
+    public function isEmpty()
+    {
         if (!$this->length()) {
             return TRUE;
         }
@@ -57,7 +63,8 @@ final class TString extends TObject {
      * @param string $string
      * @return TString
      */
-    public function sanitize($string) {
+    public function sanitize($string)
+    {
         $v = filter_var($string, FILTER_SANITIZE_STRING);
         return new TString($v);
     }
@@ -66,7 +73,8 @@ final class TString extends TObject {
      * Retorna o total de caracteres da string
      * @return int
      */
-    public function length() {
+    public function length()
+    {
         return mb_strlen($this->getValue(), $this->getEncoding());
     }
 
@@ -74,7 +82,8 @@ final class TString extends TObject {
      * Largura de retorno de string
      * @return int
      */
-    public function width() {
+    public function width()
+    {
         return mb_strwidth($this->getValue(), $this->getEncoding());
     }
 
@@ -84,7 +93,8 @@ final class TString extends TObject {
      * @param string $input
      * @return array
      */
-    public function countChars($input) {
+    public function countChars($input)
+    {
         $l = mb_strlen($input, $this->getEncoding());
         $unique = [];
         for ($i = 0; $i < $l; $i++) {
@@ -101,7 +111,8 @@ final class TString extends TObject {
      * Retorna o conteúdo da string
      * @return string a string interna armazenada
      */
-    public function getValue() {
+    public function getValue()
+    {
         return $this->data['value'];
     }
 
@@ -111,7 +122,8 @@ final class TString extends TObject {
      * @param str $str
      * @return TString
      */
-    public static function valueOf($str) {
+    public static function valueOf($str)
+    {
         return new TString($str);
     }
 
@@ -123,7 +135,8 @@ final class TString extends TObject {
      * @throws InvalidArgumentException Caso seja passado um tipo diferente de
      * string
      */
-    private function setValue($value) {
+    private function setValue($value)
+    {
 //        if (empty($value)) {
 //            throw new UnexpectedValueException(__CLASS__ . ' não aceita string '
 //            . 'vazias');
@@ -141,7 +154,8 @@ final class TString extends TObject {
      * Retorna a codificação de caracteres da string
      * @return string 
      */
-    public function getEncoding() {
+    public function getEncoding()
+    {
         return $this->data['encoding'];
     }
 
@@ -149,7 +163,8 @@ final class TString extends TObject {
      * Define a codificação de caracteres da string
      * @param string $encoding
      */
-    public function setEncoding($encoding) {
+    public function setEncoding($encoding)
+    {
         $this->data['encoding'] = $encoding;
     }
 
@@ -159,7 +174,8 @@ final class TString extends TObject {
      * @return boolean Caso as string sejam iguais retorna TRUE do contrário
      * retorna FALSE
      */
-    public function compareTo($str) {
+    public function compareTo($str)
+    {
         if (!$str instanceof TString) {
             $str = new TString((string) $str);
         }
@@ -176,7 +192,8 @@ final class TString extends TObject {
      * @param string $str
      * @return TBoolean
      */
-    public function compareToIgnoreCase($str) {
+    public function compareToIgnoreCase($str)
+    {
         if (!$str instanceof TString) {
             $str = new TString((string) $str);
         }
@@ -192,7 +209,8 @@ final class TString extends TObject {
      * @param string $str
      * @return TString
      */
-    public function concat($str) {
+    public function concat($str)
+    {
         if (!$str instanceof TString) {
             $str = new TString((string) $str);
         }
@@ -206,7 +224,8 @@ final class TString extends TObject {
      * @param char $s
      * @return TBoolean
      */
-    public function contains($s) {
+    public function contains($s)
+    {
         return (bool) mb_strstr($this->getValue(), $s, FALSE, $this->getEncoding());
     }
 
@@ -216,7 +235,8 @@ final class TString extends TObject {
      * @param int $length
      * @return TString
      */
-    public function subString($beginIndex, $length) {
+    public function subString($beginIndex, $length)
+    {
         return new TString(mb_substr($this->getValue(), $beginIndex, $length, $this->getEncoding()));
     }
 
@@ -227,7 +247,8 @@ final class TString extends TObject {
      * @param int $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
-    public function iPosition($needle, $offset = 0) {
+    public function iPosition($needle, $offset = 0)
+    {
         return mb_stripos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
@@ -238,7 +259,8 @@ final class TString extends TObject {
      * @param int $offset A posição que vai ser iniciar a busca da string
      * @return int
      */
-    public function sensitivePosition($needle, $offset = 0) {
+    public function sensitivePosition($needle, $offset = 0)
+    {
         return mb_stripos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
@@ -246,7 +268,8 @@ final class TString extends TObject {
      * Remove os principais espaços em branco e omitido.
      * @return TString
      */
-    public function trim() {
+    public function trim()
+    {
         $this->setValue(trim($this->getValue()));
         return $this;
     }
@@ -257,7 +280,8 @@ final class TString extends TObject {
      * @param int $offset
      * @return int o index da posição da string passada
      */
-    public function indexOf($needle, $offset = 0) {
+    public function indexOf($needle, $offset = 0)
+    {
         return mb_strpos($this->getValue(), $needle, $offset, $this->getEncoding());
     }
 
@@ -267,7 +291,8 @@ final class TString extends TObject {
      * @param string $replacement string que substituirá os valores encontrados
      * @return TString 
      */
-    public function replace($pattern, $replacement) {
+    public function replace($pattern, $replacement)
+    {
         $this->setValue(mb_ereg_replace($pattern, $replacement, $this->getValue()));
         return $this;
     }
@@ -276,7 +301,8 @@ final class TString extends TObject {
      * Converte todos os caracteres alfabéticos para maiúsculo. 
      * @return TString
      */
-    public function toUpper() {
+    public function toUpper()
+    {
         $this->setValue(mb_strtoupper($this->getValue(), $this->getEncoding()));
         return $this;
     }
@@ -285,7 +311,8 @@ final class TString extends TObject {
      * Converte todos os caracteres alfabéticos para minúsculos. 
      * @return TString
      */
-    public function toLower() {
+    public function toLower()
+    {
         $this->setValue(mb_strtolower($this->getValue(), $this->getEncoding()));
         return $this;
     }
@@ -294,7 +321,8 @@ final class TString extends TObject {
      * Retorna um array dos caracteres que formam a String
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         $string = $this->getValue();
         $strlen = mb_strlen($string);
         $array = [];
@@ -313,7 +341,8 @@ final class TString extends TObject {
      * @param string $trimMarker Uma seqüência que é adicionado ao final da string quando a string é truncada. 
      * @return TString
      */
-    public function strimWidth($width, $start = 0, $trimMarker = '') {
+    public function strimWidth($width, $start = 0, $trimMarker = '')
+    {
         $this->setValue(mb_strimwidth($this->getValue(), $start, $width, $trimMarker, $this->getEncoding()));
         return $this;
     }
@@ -329,7 +358,8 @@ final class TString extends TObject {
      * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
-    public function lastOccurrence($str, $part = false) {
+    public function lastOccurrence($str, $part = false)
+    {
         $r = mb_strrchr($this->getValue(), $str, $part, $this->getEncoding());
         if ($r) {
             return new TString($r);
@@ -349,7 +379,8 @@ final class TString extends TObject {
      * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
-    public function iLastOccurrence($str, $before_char = false) {
+    public function iLastOccurrence($str, $before_char = false)
+    {
         $r = mb_strrichr($this->getValue(), $str, $before_char, $this->getEncoding());
         if ($r) {
             return new TString($r);
@@ -369,7 +400,8 @@ final class TString extends TObject {
      * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
-    public function firstOccurrence($char, $before_char = false) {
+    public function firstOccurrence($char, $before_char = false)
+    {
         $r = mb_strstr($this->getValue(), $char, $before_char, $this->getEncoding());
         if ($r) {
             return new TString($r);
@@ -389,7 +421,8 @@ final class TString extends TObject {
      * @return TString|boolean Retorna um objeto String contendo o conteúdo de acordo com
      * o parâmetro $before_char ou <b>false</b> caso não seja encontrada nenhuma ocorrência
      */
-    public function iFirstOccurrence($char, $before_char = false) {
+    public function iFirstOccurrence($char, $before_char = false)
+    {
         $r = mb_stristr($this->getValue(), $char, $before_char, $this->getEncoding());
         if ($r) {
             return new TString($r);
@@ -407,7 +440,8 @@ final class TString extends TObject {
      * @return TString Retorna um objeto string contendo a string truncada, caso
      * seja passado $trimmarker, esse será adicionado no seu fina.
      */
-    public function trimWidth($start, $width, $trimmarker = NULL) {
+    public function trimWidth($start, $width, $trimmarker = NULL)
+    {
         $r = mb_strimwidth($this->getValue(), $start, $width, $trimmarker, $this->getEncoding());
         return new TString($r);
     }
@@ -417,7 +451,8 @@ final class TString extends TObject {
      * @param string $str A string a ser localizada no objeto
      * @return int O total de ocorrências encontradas
      */
-    public function countOccurrence($str) {
+    public function countOccurrence($str)
+    {
         return mb_substr_count($this->getValue(), $str, $this->getEncoding());
     }
 
@@ -425,7 +460,8 @@ final class TString extends TObject {
      * Altera a codificação de caracteres
      * @param string $encoding
      */
-    public function convertEncoding($encoding) {
+    public function convertEncoding($encoding)
+    {
         $this->setValue(mb_convert_encoding($this->getValue(), $encoding, $this->getEncoding()));
         $this->setEncoding($encoding);
     }

@@ -11,13 +11,15 @@ use Prime\Model\SQL\SQLExpression;
  * @version 1.0
  * @since 10/06/2012
  * @access public
- * @author tom
+ * @author Elton Luiz
  */
-class SQLBetween extends SQLExpression {
+class SQLBetween extends SQLExpression
+{
 
     private $field, $initial, $final;
 
-    public function __construct($field, $initial, $final) {
+    public function __construct($field, $initial, $final)
+    {
         $this->field = $field;
         $this->initial = $initial;
         $this->final = $final;
@@ -27,7 +29,8 @@ class SQLBetween extends SQLExpression {
      * método dump()
      * retorna o filtro em forma de expressão
      */
-    public function dump() {
+    public function dump()
+    {
         // concatena a expressão
         return "{$this->field} BETWEEN '{$this->initial}' AND '{$this->final}'";
     }

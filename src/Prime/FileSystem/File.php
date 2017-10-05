@@ -15,8 +15,9 @@ use Symfony\Component\HttpFoundation\File\File as SymfonyFile;
  *
  * @package Prime\FileSystem
  * @createAt 28/07/2015
- * @author TomSailor
+ * @author Elton Luiz
  */
-class File extends SymfonyFile {
+class File extends SymfonyFile
+{
     
 }

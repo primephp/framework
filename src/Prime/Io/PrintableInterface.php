@@ -7,10 +7,11 @@ namespace Prime\Io;
  * 
  * @name PrintableInterface
  * @package Prime\Io
- * @author tom
+ * @author Elton Luiz
  * @createAt 19/07/2015
  */
-interface PrintableInterface {
+interface PrintableInterface
+{
 
     public function printOut();
 }

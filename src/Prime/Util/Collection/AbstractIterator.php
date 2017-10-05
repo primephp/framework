@@ -19,7 +19,8 @@ use Prime\Util\Interfaces\ICollection;
  *
  * @author 85101346
  */
-abstract class AbstractIterator extends ArrayIterator {
+abstract class AbstractIterator extends ArrayIterator
+{
 
     /**
      * Instacia um objeto do Tipo ListIterator para iteração com um objeto do tipo
@@ -28,7 +29,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @param AbstractList $list        	
      */
-    public function __construct(ICollection $list) {
+    public function __construct(ICollection $list)
+    {
         parent::__construct($list->toArray());
     }
 
@@ -37,7 +39,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @param mixed $e        	
      */
-    public function add($e) {
+    public function add($e)
+    {
         return $this->append($e);
     }
 
@@ -47,7 +50,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @return boolean
      */
-    public function hasNext() {
+    public function hasNext()
+    {
         if ($this->nextIndex() >= $this->count()) {
             return FALSE;
         }
@@ -60,7 +64,8 @@ abstract class AbstractIterator extends ArrayIterator {
     /**
      * Retorna o próximo elemento da lista e avança a posição do cursor.
      */
-    public function getNext() {
+    public function getNext()
+    {
         if ($this->hasNext()) {
             $this->next();
             return $this->current();
@@ -72,7 +77,8 @@ abstract class AbstractIterator extends ArrayIterator {
     /**
      * Move para o próximo elemento
      */
-    public function next() {
+    public function next()
+    {
         parent::next();
     }
 
@@ -83,14 +89,16 @@ abstract class AbstractIterator extends ArrayIterator {
      * @return int O próximo índice do elemento, caso a lista esteja no fim, retorna o
      *         tamanho da lista
      */
-    public function nextIndex() {
+    public function nextIndex()
+    {
         return $this->key() + 1;
     }
 
     /**
      * Remove da lista o último elemento retornado por next() ou previous()
      */
-    public function remove() {
+    public function remove()
+    {
         $this->offsetUnset($this->key());
     }
 
@@ -100,7 +108,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @param mixed $e        	
      */
-    public function set($e) {
+    public function set($e)
+    {
         $this->offsetSet($this->key(), $e);
     }
 
@@ -109,7 +118,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @return mixed
      */
-    public function current() {
+    public function current()
+    {
         return parent::current();
     }
 
@@ -118,7 +128,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * 
      * @return int O índice atual do Iterador
      */
-    public function key() {
+    public function key()
+    {
         return parent::key();
     }
 
@@ -126,7 +137,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * Rebobina o iterador para a posição inicial
      * 
      */
-    public function rewind() {
+    public function rewind()
+    {
         return parent::rewind();
     }
 
@@ -134,7 +146,8 @@ abstract class AbstractIterator extends ArrayIterator {
      * Verifica se a posição atual do iterador é uma posição válida
      * @return boolean Retorna TRUE se a posição atual é valida e FALSE caso não
      */
-    public function valid() {
+    public function valid()
+    {
         return parent::valid();
     }
 

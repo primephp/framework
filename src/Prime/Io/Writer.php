@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 TomSailor.
+ * Copyright 2016 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -40,7 +40,8 @@ use Prime\Io\Interfaces\FlushableInterface;
  * @package Prime\Io
  * @createAt 25/08/2016
  */
-abstract class Writer extends TObject implements IAppendable, CloseableInterface, FlushableInterface {
+abstract class Writer extends TObject implements IAppendable, CloseableInterface, FlushableInterface
+{
 
     protected $charset = 'UTF8';
 
@@ -51,7 +52,8 @@ abstract class Writer extends TObject implements IAppendable, CloseableInterface
      * @param int $start Início da subsequência de caracteres a ser adicionada
      * @param int $end Fim da subsequência de caracteres a ser adiconada
      */
-    public function append($char, $start = NULL, $end = NULL) {
+    public function append($char, $start = NULL, $end = NULL)
+    {
         $enc = $this->charset;
         if (!is_null($start) && !is_null($end)) {
             $size = mb_strlen($char, $enc);

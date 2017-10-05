@@ -7,7 +7,8 @@ use Prime\Util\Collection\ArrayList;
 use Prime\Util\Interfaces\ICollection;
 use Prime\Util\Interfaces\IList;
 
-class HTMLInputSelect extends HTMLInput {
+class HTMLInputSelect extends HTMLInput
+{
 
     private $options = [];
     private $selection = [];
@@ -16,7 +17,8 @@ class HTMLInputSelect extends HTMLInput {
      *
      * @param string $name
      */
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct("select");
         $this->element->name = $name;
         $this->element->id = $name;
@@ -28,7 +30,8 @@ class HTMLInputSelect extends HTMLInput {
      * @param string $value
      * @param string $label
      */
-    public function addOption($val, $text) {
+    public function addOption($val, $text)
+    {
         if (is_string($val) && is_string($text)) {
             $option = new HTMLElement("option");
             $option->value = $val;
@@ -44,7 +47,8 @@ class HTMLInputSelect extends HTMLInput {
      * de string html option value e text. Este metodo opera junto de  addOption().
      * @param ICollection $collection
      */
-    public function addOptions(IList $collection, $concat = false) {
+    public function addOptions(IList $collection, $concat = false)
+    {
         if ($collection instanceof IList) {
             while ($collection->hasNext()) {
                 $option = new HTMLElement("option");
@@ -71,7 +75,8 @@ class HTMLInputSelect extends HTMLInput {
      * @param boolean $multi
      * @param integer $size
      */
-    public function isMultiple($multi = false, $size = 10) {
+    public function isMultiple($multi = false, $size = 10)
+    {
         if ($multi === TRUE) {
             $name = $this->element->getAttribute("name");
             $this->element->setAttribute("name", "{$name}[]");
@@ -81,7 +86,8 @@ class HTMLInputSelect extends HTMLInput {
         $this->element->size = $size;
     }
 
-    public function setSize($size) {
+    public function setSize($size)
+    {
         $this->element->size = $size;
     }
 
@@ -90,7 +96,8 @@ class HTMLInputSelect extends HTMLInput {
      * @return void
      * @param mixed $selection;
      */
-    public function setSelected($selection) {
+    public function setSelected($selection)
+    {
         if (is_int($selection) || is_string($selection)) {
             $this->selection[] = $selection;
         } else if (is_array($selection)) {
@@ -104,7 +111,8 @@ class HTMLInputSelect extends HTMLInput {
     /**
      * @todo Verificar o uso dos métodos de ArrayList não disponíveis
      */
-    private function getSelected() {
+    private function getSelected()
+    {
         foreach ($this->selection as $value) {
             if ($value instanceof ArrayList) {
                 while ($value->hasNext()) {
@@ -128,7 +136,8 @@ class HTMLInputSelect extends HTMLInput {
         }
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         $this->getSelected();
         foreach ($this->options as $option) {
             $this->element->appendChild($option);
@@ -137,7 +146,8 @@ class HTMLInputSelect extends HTMLInput {
     }
 
     public
-            function getOutput() {
+            function getOutput()
+    {
         $this->getSelected();
         foreach ($this->options as $option) {
             $this->element->appendChild($option);

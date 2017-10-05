@@ -40,6 +40,7 @@ namespace Prime\Util\Set;
  * @author Tom Sailor
  * @createAt 24/08/2016
  */
-class LinkedHashSet extends HashSet {
+class LinkedHashSet extends HashSet
+{
     
 }

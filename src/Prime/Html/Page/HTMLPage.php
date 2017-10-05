@@ -14,9 +14,10 @@ use App\Config\Config,
 /**
  * Descrição da Classe HTMLPage
  *
- * @author TomSailor
+ * @author Elton Luiz
  */
-class HTMLPage extends HTMLElement {
+class HTMLPage extends HTMLElement
+{
 
     /**
      * Variável que armazena o conteúdo da tag HEAD
@@ -41,7 +42,8 @@ class HTMLPage extends HTMLElement {
      * Constrói uma Página HTML
      * @param <type> $tilePage
      */
-    public function __construct($titlePage = NULL) {
+    public function __construct($titlePage = NULL)
+    {
         parent::__construct('html');
         $this->head = new HTMLHead();
         $this->body = new HTMLBody();
@@ -54,7 +56,8 @@ class HTMLPage extends HTMLElement {
      * da página HTML
      * @param HTMLElemnt $child
      */
-    public function appendChild($child) {
+    public function appendChild($child)
+    {
         $this->body->appendChild($child);
     }
 
@@ -63,7 +66,8 @@ class HTMLPage extends HTMLElement {
      * Adiciona conteúdo na tag HEAD da página
      * @param HTMLElement $content
      */
-    public function addHeadContent($content) {
+    public function addHeadContent($content)
+    {
         $this->head->appendChild($content);
     }
 
@@ -72,7 +76,8 @@ class HTMLPage extends HTMLElement {
      * Retorna o HTML na forma de uma string ao invés de escrever na saida de dados
      * pro navegador
      */
-    public function getOutput() {
+    public function getOutput()
+    {
         $this->head->appendChild($this->title);
         parent::appendChild($this->head);
         parent::appendChild($this->body);
@@ -85,7 +90,8 @@ class HTMLPage extends HTMLElement {
      * @param String $nameId
      * @return HTMLDiv 
      */
-    public function addDiv($nameId = null) {
+    public function addDiv($nameId = null)
+    {
         $div = new HTMLDiv($nameId);
         return $div;
     }
@@ -95,7 +101,8 @@ class HTMLPage extends HTMLElement {
      * Adiciona um link de arquivo CSS na página
      * @param type $link 
      */
-    public function addStyleLink($href) {
+    public function addStyleLink($href)
+    {
         $link = new HTMLStyleLink(Config::baseCSS() . $href);
         $this->head->appendChild($link);
     }
@@ -104,7 +111,8 @@ class HTMLPage extends HTMLElement {
      * Adiciona um link para arquivos JavaScripts
      * @param type $src 
      */
-    public function addScriptLink($src) {
+    public function addScriptLink($src)
+    {
         $link = new HTMLScript(Config::baseScripts() . $src);
         $this->head->appendChild($link);
     }
@@ -114,7 +122,8 @@ class HTMLPage extends HTMLElement {
      * @param type $content
      * @return HTMLMeta 
      */
-    function setCharset($content) {
+    function setCharset($content)
+    {
         $meta = new HTMLMeta();
         $meta->setMetaAttibute("http_equiv", "Content-Type");
         $meta->setContent("text/html; charset=$content");
@@ -127,70 +136,80 @@ class HTMLPage extends HTMLElement {
      * @param type $content
      * @return HTMLMeta 
      */
-    function setOwner($content) {
+    function setOwner($content)
+    {
         $meta = new HTMLMeta("OWNER");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setSubject($content) {
+    function setSubject($content)
+    {
         $meta = new HTMLMeta("SUBJECT");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setRating($content = "GENERAL") {
+    function setRating($content = "GENERAL")
+    {
         $meta = new HTMLMeta("RATING");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setDescription($content) {
+    function setDescription($content)
+    {
         $meta = new HTMLMeta("DESCRIPTION");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setAbstract($content) {
+    function setAbstract($content)
+    {
         $meta = new HTMLMeta("ABSTRACT");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setKeywords($content) {
+    function setKeywords($content)
+    {
         $meta = new HTMLMeta("KEYWORDS");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setRevisitAfter($content) {
+    function setRevisitAfter($content)
+    {
         $meta = new HTMLMeta("REVISIT-AFTER");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setLanguage($content) {
+    function setLanguage($content)
+    {
         $meta = new HTMLMeta("LANGUAGE");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setRobots($content = "All") {
+    function setRobots($content = "All")
+    {
         $meta = new HTMLMeta("ROBOTS");
         $meta->setContent($content);
         $this->head->appendChild($meta);
         return $meta;
     }
 
-    function setPragma($content = "NO-CACHE") {
+    function setPragma($content = "NO-CACHE")
+    {
         $meta = new HTMLMeta();
         $meta->setMetaAttibute("http_equiv", "PRAGMA");
         $meta->setContent($content);
@@ -198,7 +217,8 @@ class HTMLPage extends HTMLElement {
         return $meta;
     }
 
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         if (is_string($title)) {
             $this->title = $title;
         }

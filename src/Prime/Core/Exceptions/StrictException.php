@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class StrictException extends \ErrorException {
+class StrictException extends \ErrorException
+{
     //put your code here
 }

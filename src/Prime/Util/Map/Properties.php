@@ -37,6 +37,7 @@ namespace Prime\Util\Map;
  * @package Prime\Util\Map
  * @createAt 24/08/2016
  */
-class Properties extends Hashtable {
+class Properties extends Hashtable
+{
     //put your code here
 }

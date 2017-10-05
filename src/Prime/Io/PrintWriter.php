@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 TomSailor.
+ * Copyright 2017 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -32,9 +32,10 @@ use Prime\Io\Excepction\IOException;
 /**
  * Description of PrintWriter
  *
- * @author quantum
+ * @author Elton Luiz
  */
-class PrintWriter extends Writer {
+class PrintWriter extends Writer
+{
 
     /**
      *
@@ -77,12 +78,14 @@ class PrintWriter extends Writer {
      * @param \Prime\Io\Writer $out
      * @param boolean $autoFlush
      */
-    public function __construct(Writer $out = NULL, $autoFlush = false) {
+    public function __construct(Writer $out = NULL, $autoFlush = false)
+    {
         parent::__construct($out);
         $this->out = $out;
         $this->autoFlush = $autoFlush;
         $this->lineSeparator = '\n';
     }
+
     /**
      * Adiciona uma sequência de caracteres a este appendable ou uma subsequencia
      * se forem informados os parâmetros $start e $end
@@ -91,7 +94,8 @@ class PrintWriter extends Writer {
      * @param int $end Fim da subsequência de caracteres a ser adiconada
      * @return $this
      */
-    public function append($char, $start = NULL, $end = NULL) {
+    public function append($char, $start = NULL, $end = NULL)
+    {
         parent::append($char, $start, $end);
         return $this;
     }
@@ -100,24 +104,27 @@ class PrintWriter extends Writer {
      * Verifica se o fluxo não foi fechado
      * @throws IOException Lança uma exceção se o fluxo foi fechado
      */
-    private function ensureOpen() {
+    private function ensureOpen()
+    {
         if ($this->out == null) {
             throw new IOException('Stream fechado');
         }
     }
-    
-    private function newLine(){
+
+    private function newLine()
+    {
         try {
             
         } catch (IOException $exc) {
             echo $exc->getTraceAsString();
         }
-        }
+    }
 
     /**
      * {@inheritDoc}
      */
-    public function write($str, $off = 0, $len = NULL) {
+    public function write($str, $off = 0, $len = NULL)
+    {
         try {
             if (!is_object($str)) {
                 $str = new TString($str);
@@ -134,33 +141,39 @@ class PrintWriter extends Writer {
     /**
      * {@inheritDoc}
      */
-    public function flush() {
+    public function flush()
+    {
         ;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function close() {
+    public function close()
+    {
         ;
     }
 
     /**
      * Define que um erro ocorreu
      */
-    protected function setError() {
+    protected function setError()
+    {
         $this->trouble = true;
     }
-    
-    public function printOut(){
+
+    public function printOut()
+    {
         
     }
-    
-    public function printf(){
+
+    public function printf()
+    {
         printf($format, $args);
     }
-    
-    public function println(){
+
+    public function println()
+    {
         
     }
 

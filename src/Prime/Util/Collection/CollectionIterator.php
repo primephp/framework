@@ -7,6 +7,7 @@ namespace Prime\Util\Collection;
  * @author Elton Luiz
  * @createAt 16/08/2016
  */
-class CollectionIterator extends AbstractIterator {
+class CollectionIterator extends AbstractIterator
+{
     
 }

@@ -7,18 +7,20 @@ namespace Prime\Filters;
  * @name Validate
  * @package Prime\Filters
  * @version 1.0
- * @author tom
+ * @author Elton Luiz
  * @since 22/10/2011
  * @access public
  */
-class Validate {
+class Validate
+{
 
     /**
      * Retorna TRUE para "1", "true", "on" e "yes". Retorna FALSE caso contrário.
      * @param type $value
      * @return type 
      */
-    public static function boolean($value) {
+    public static function boolean($value)
+    {
         return filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 
@@ -27,7 +29,8 @@ class Validate {
      * @param type $email
      * @return type 
      */
-    public static function email($email) {
+    public static function email($email)
+    {
 //        gethostbyname($hostname);
 //        getmxrr($hostname, $mxhosts);
         return filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -43,6 +46,8 @@ class Validate {
     return filter_var($float, FILTER_VALIDATE_FLOAT);
 
 
+
+
     }
 
 /**
@@ -50,7 +55,8 @@ class Validate {
  * @param type $integer
  * @return type 
  */
-public static function integer($integer) {
+public static function integer($integer)
+{
     return filter_var($integer, FILTER_VALIDATE_INT);
 }
 
@@ -59,7 +65,8 @@ public static function integer($integer) {
  * @param type $ip
  * @return type 
  */
-public static function ip($ip) {
+public static function ip($ip)
+{
     return filter_var($ip, FILTER_VALIDATE_IP);
 }
 
@@ -68,7 +75,8 @@ public static function ip($ip) {
  * @param type $value
  * @return type 
  */
-public static function regexp($value) {
+public static function regexp($value)
+{
     return filter_var($value, FILTER_VALIDATE_REGEXP);
 }
 
@@ -77,7 +85,8 @@ public static function regexp($value) {
  * @param type $url
  * @return type 
  */
-public static function url($url) {
+public static function url($url)
+{
     return filter_var($url, FILTER_VALIDATE_URL);
 }
 
@@ -91,7 +100,8 @@ public static function url($url) {
  * @param boolean $is_usa
  * @return boolean 
  */
-public static function date($date, $is_usa = true) {
+public static function date($date, $is_usa = true)
+{
     if (trim($sDate) == "") {
         return FALSE;
     }

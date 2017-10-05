@@ -16,7 +16,8 @@ use Prime\Model\SQL\SQLUpdate;
  * @package Prime\Model\DataSource
  * esta classe provê os métodos necessários para manipular coleções de objetos.
  */
-final class Repository {
+final class Repository
+{
 
     /**
      * @name $class
@@ -39,7 +40,8 @@ final class Repository {
      * instancia um Repositório de objetos
      * @param $class Classe dos Objetos
      */
-    function __construct($class) {
+    function __construct($class)
+    {
         if (is_object($class)) {
             /* @var $class Model */
             $class = $class->getClass();
@@ -59,7 +61,8 @@ final class Repository {
      * ou false caso a criteria não retorne nenhum conteúdo
      * @throws PDOException
      */
-    function load(SQLExpression $criteria) {
+    function load(SQLExpression $criteria)
+    {
         $sql = new SQLSelect();
         if (is_array($this->columns)) {
             foreach ($this->columns as $value) {
@@ -95,7 +98,8 @@ final class Repository {
      * através de um critério de seleção.
      * @param $criteria = objeto do tipo TCriteria
      */
-    function delete(SQLExpression $criteria) {
+    function delete(SQLExpression $criteria)
+    {
         // instancia instrução de DELETE
         $sql = new SQLDelete;
         $sql->setEntity(constant($this->class . '::TABLENAME'));
@@ -122,7 +126,8 @@ final class Repository {
      * @param array $columns Array associativo com o nome da coluna e seus valores
      * @return int $num Valores de linhas afetadas pela instrução 
      */
-    public function update(SQLExpression $criteria, $columns = []) {
+    public function update(SQLExpression $criteria, $columns = [])
+    {
         $sql = new SQLUpdate();
         $sql->setEntity(constant($this->class . '::TABLENAME'));
         $sql->setCriteria($criteria);
@@ -150,7 +155,8 @@ final class Repository {
      * que satisfazem um determinado critério de seleção.
      * @param $criteria = objeto do tipo TCriteria
      */
-    function count(SQLExpression $criteria) {
+    function count(SQLExpression $criteria)
+    {
 
         // instancia instrução de SELECT
         $sql = new SQLSelect();
@@ -180,7 +186,8 @@ final class Repository {
      * no repositório
      * @param [string] $columnName 
      */
-    public function addColumn($column) {
+    public function addColumn($column)
+    {
         $this->columns[] = $column;
     }
 
@@ -190,7 +197,8 @@ final class Repository {
      * um string '*'
      * @return String
      */
-    private function getColumns() {
+    private function getColumns()
+    {
         return explode(",", $this->columns);
     }
 
@@ -198,7 +206,8 @@ final class Repository {
      * Retorna a instrução sql executada
      * @return string
      */
-    public function getSqlStatement() {
+    public function getSqlStatement()
+    {
         return $this->sql;
     }
 

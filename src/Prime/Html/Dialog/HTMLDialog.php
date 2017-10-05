@@ -7,7 +7,8 @@ use App\Config\AppConfig,
     Prime\Html\Base\HTMLElement,
     Prime\Html\Base\HTMLParagraph;
 
-abstract class HTMLDialog {
+abstract class HTMLDialog
+{
 
     protected $dialog;
     protected $btnConfirm;
@@ -16,8 +17,8 @@ abstract class HTMLDialog {
     protected $panel;
 
     //instancia uma nova linha
-    public function __construct($message, $title = "", $width = 360,
-            $height = 180) {
+    public function __construct($message, $title = "", $width = 360, $height = 180)
+    {
         //Um HTMLWindow para posicionar os obetos na tela
         //mudancas na aprencia de HTMLWindow tambem deve ser realizada em HTMLPanel
         $this->dialog = new HTMLWindow("$title", $width, $height);
@@ -66,7 +67,8 @@ abstract class HTMLDialog {
      * @param integer $top
      * @param integer $left
      */
-    public function setPosition($top, $left) {
+    public function setPosition($top, $left)
+    {
         $this->dialog->setPosition($top, $left);
     }
 
@@ -77,7 +79,8 @@ abstract class HTMLDialog {
      * @param string $event
      * @param string $handler
      */
-    public function addConfirmEvent($event, $handler) {
+    public function addConfirmEvent($event, $handler)
+    {
         
     }
 
@@ -88,7 +91,8 @@ abstract class HTMLDialog {
      * @param string $event
      * @param string $handler
      */
-    public function addCancelEvent($event, $handler) {
+    public function addCancelEvent($event, $handler)
+    {
         if ($this->btnCancel->getAttribute($event)) {
             $onclick = $this->btnCancel->getAttribute($event);
             $this->btnCancel->{$event} = $onclick . $handler;
@@ -102,7 +106,8 @@ abstract class HTMLDialog {
      *
      * @return void
      */
-    public function printOut() {
+    public function printOut()
+    {
         $this->dialog->printOut();
     }
 
@@ -111,7 +116,8 @@ abstract class HTMLDialog {
      *
      * @return void
      */
-    public function getOutput() {
+    public function getOutput()
+    {
         $this->dialog->appendChild($this->panel);
         return $this->dialog->getOutput();
     }
@@ -120,11 +126,13 @@ abstract class HTMLDialog {
      * A identificação da caixa de diálogo sendo processada no momento.
      * @return string
      */
-    public function getDialogId() {
+    public function getDialogId()
+    {
         return $this->dialog->getWindowId();
     }
 
-    public function zIndex($value) {
+    public function zIndex($value)
+    {
         $this->dialog->zIndex($value);
     }
 

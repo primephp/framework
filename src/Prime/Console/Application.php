@@ -36,15 +36,17 @@ use Symfony\Component\Console\Application as ConsoleApplication;
  * @createAt 22/07/2015
  * @author Elton Luiz
  */
-class Application extends ConsoleApplication {
+class Application extends ConsoleApplication
+{
 
-    public function __construct($name = 'PrimePHP Application',
-            $version = '0.1alpha') {
+    public function __construct($name = 'PrimePHP Application', $version = '0.1alpha')
+    {
         parent::__construct($name, $version);
         $this->setPrimeCommands();
     }
 
-    public function setPrimeCommands() {
+    public function setPrimeCommands()
+    {
         $this->add(new Command\CreateDataSourceCommand());
         $this->add(new Command\CreateApplicationCommand());
         $this->add(new Command\CreateModuleCommand());

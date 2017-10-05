@@ -38,9 +38,11 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * @author Tom Sailor
  * @createAt 24/10/2016
  */
-class RequestListener implements EventSubscriberInterface {
+class RequestListener implements EventSubscriberInterface
+{
 
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return [
             KernelEvents::REQUEST => 'createTokenId'
         ];
@@ -51,7 +53,8 @@ class RequestListener implements EventSubscriberInterface {
      * do usuário
      * @param GetResponseEvent $event
      */
-    public function createTokenId(GetResponseEvent $event) {
+    public function createTokenId(GetResponseEvent $event)
+    {
         $request = $event->getRequest();
         $session = $request->getSession();
         if (!$request->isXmlHttpRequest()) {

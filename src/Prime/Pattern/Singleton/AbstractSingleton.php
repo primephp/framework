@@ -34,7 +34,8 @@ namespace Prime\Pattern\Singleton;
  * @createAt 24/07/2015
  * @author Elton Luiz
  */
-abstract class AbstractSingleton implements SingletonInterface {
+abstract class AbstractSingleton implements SingletonInterface
+{
 
     /**
      * Retorna uma instância única de uma classe.
@@ -43,7 +44,8 @@ abstract class AbstractSingleton implements SingletonInterface {
      *
      * @return static A Instância única.
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         static $instance = null;
         if (null === $instance) {
             $instance = new static();
@@ -56,7 +58,8 @@ abstract class AbstractSingleton implements SingletonInterface {
      * Construtor do tipo protegido previne que uma nova instância da
      * Classe seja criada através do operador `new` de fora dessa classe.
      */
-    protected function __construct() {
+    protected function __construct()
+    {
         
     }
 
@@ -66,7 +69,8 @@ abstract class AbstractSingleton implements SingletonInterface {
      *
      * @return void
      */
-    private function __clone() {
+    private function __clone()
+    {
         
     }
 
@@ -76,7 +80,8 @@ abstract class AbstractSingleton implements SingletonInterface {
      *
      * @return void
      */
-    private function __wakeup() {
+    private function __wakeup()
+    {
         
     }
 

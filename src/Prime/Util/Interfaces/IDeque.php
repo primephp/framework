@@ -10,9 +10,10 @@ namespace Prime\Util\Interfaces;
  * interface suporta deques com restrição de capacidade, bem como aqueles que 
  * não têm limite de tamanho fixo. 
  * @dateCreate 17/06/2014
- * @author tom
+ * @author Elton Luiz
  */
-interface IDeque extends IQueue {
+interface IDeque extends IQueue
+{
 
     /**
      * Insere o elemento especificado an fila

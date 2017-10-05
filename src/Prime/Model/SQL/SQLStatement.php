@@ -8,7 +8,8 @@ namespace Prime\Model\SQL;
  * Esta classe provê os métodos em comum entre todas
  * instruções SQL (SELECT, INSERT, DELETE e UPDATE)
  */
-abstract class SQLStatement {
+abstract class SQLStatement
+{
 
     protected $sql;       // armazena a instrução SQL
     /**
@@ -23,7 +24,8 @@ abstract class SQLStatement {
      * define o nome da entidade (tabela) manipulada pela instrução SQL
      * @param $entity = tabela
      */
-    final public function setEntity($entity) {
+    final public function setEntity($entity)
+    {
         $this->entity = $entity;
     }
 
@@ -31,7 +33,8 @@ abstract class SQLStatement {
      * método getEntity()
      * retorna o nome da entidade (tabela)
      */
-    final public function getEntity() {
+    final public function getEntity()
+    {
         return $this->entity;
     }
 
@@ -41,7 +44,8 @@ abstract class SQLStatement {
      * do tipo TCriteria, que oferece uma interface para definição de critérios
      * @param $criteria = objeto do tipo TSqlExpression
      */
-    public function setCriteria(SQLExpression $criteria) {
+    public function setCriteria(SQLExpression $criteria)
+    {
         $this->criteria = $criteria;
     }
 

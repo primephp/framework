@@ -10,15 +10,16 @@ use App\Config\AppConfig,
     Prime\Html\Input\HTMLInputText,
     Prime\Html\Table\HTMLTable;
 
-class HTMLDialogPassword extends HTMLDialog {
+class HTMLDialogPassword extends HTMLDialog
+{
 
     private $form;
     private $tblLogin;
     private static $icon;
 
     //instancia uma nova linha
-    public function __construct($message = "", $title = "Login...",
-            $width = 360, $height = 180) {
+    public function __construct($message = "", $title = "Login...", $width = 360, $height = 180)
+    {
         parent::__construct($message, $title, $width, $height);
         $this->dialog->setPosition(150, 150);
         self::$icon = new HTMLImage(AppConfig::baseIcons() . "dialog-password.png");
@@ -63,7 +64,8 @@ class HTMLDialogPassword extends HTMLDialog {
         $cclCol->style = "height:50px;vertical-align:bottom;text-align:right";
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         $this->form->appendChild($this->tblLogin);
         $this->panel->appendChild($this->form, 60, 80);
         $this->panel->appendChild(self::$icon, 60, 15);
@@ -71,24 +73,29 @@ class HTMLDialogPassword extends HTMLDialog {
         $this->dialog->printOut();
     }
 
-    public function setId($fLogin) {
+    public function setId($fLogin)
+    {
         $this->form->name = "$fLogin";
         $this->form->id = "$fLogin";
     }
 
-    public function setMethod($method = "post") {
+    public function setMethod($method = "post")
+    {
         $this->form->method = "$method";
     }
 
-    public function setEncType($encType = "multipart/form-data") {
+    public function setEncType($encType = "multipart/form-data")
+    {
         $this->form->enctype = "$encType";
     }
 
-    public function setAction($action = "../processa/") {
+    public function setAction($action = "../processa/")
+    {
         $this->form->action = "$action";
     }
 
-    public function addConfirmEvent($event, $handler) {
+    public function addConfirmEvent($event, $handler)
+    {
         $this->btnConfirm->$event = "$handler";
     }
 

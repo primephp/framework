@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2016 TomSailor.
+ * Copyright 2016 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,11 +33,12 @@ use Prime\Core\Interfaces\AutoCloseableInterface;
  * Um IClosable é uma fonte ou destino de dados que pode ser fechada. O método 
  * close é invocado para liberar recursos que o objeto está segurando 
  * (como arquivos abertos).
- * @author TomSailor
+ * @author Elton Luiz
  * @name CloseableInterface
  * @package Prime\Core\Interfaces
  * @createAt 25/08/2016
  */
-interface CloseableInterface extends AutoCloseableInterface{
+interface CloseableInterface extends AutoCloseableInterface
+{
     
 }

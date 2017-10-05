@@ -7,7 +7,8 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê uma interface utilizada para definição de critérios
  */
-class SQLCriteria extends SQLExpression {
+class SQLCriteria extends SQLExpression
+{
 
     private $expressions; // armazena a lista de expressões
     private $operators;     // armazena a lista de operadores
@@ -38,25 +39,27 @@ class SQLCriteria extends SQLExpression {
     /**
      * Método Construtor
      */
-    function __construct() {
+    function __construct()
+    {
         $this->reset();
     }
 
     /**
      * Resseta os critérios de consulta
      */
-    public function reset() {
+    public function reset()
+    {
         $this->expressions = [];
         $this->operators = [];
     }
 
-    /** 
+    /**
      * Adiciona um expressão de critério de consulta
      * @param \Prime\Model\SQL\SQLExpression $expression
      * @param string $operator Operador lógico de comparação
      */
-    public function add(SQLExpression $expression,
-            $operator = self::AND_OPERATOR) {
+    public function add(SQLExpression $expression, $operator = self::AND_OPERATOR)
+    {
         // na primeira vez, não precisamos de operador lógico para concatenar
         if (empty($this->expressions)) {
             $operator = NULL;
@@ -71,7 +74,8 @@ class SQLCriteria extends SQLExpression {
      * método dump()
      * retorna a expressão final
      */
-    public function dump() {
+    public function dump()
+    {
         $result = '';
         if (count($this->expressions) > 0) {
             foreach ($this->expressions as $i => $expression) {
@@ -89,7 +93,8 @@ class SQLCriteria extends SQLExpression {
      * @param string|SQLOrderBy $field
      * @param string $order ASC ou DESC
      */
-    public function setOrderBy($field, $order = '') {
+    public function setOrderBy($field, $order = '')
+    {
         if ($field instanceof SQLOrderBy) {
             $this->order = $field->dump();
         } else {
@@ -101,7 +106,8 @@ class SQLCriteria extends SQLExpression {
      * Retorna o critério de ordenamentos dos registros a serem retornados
      * @return string
      */
-    public function getOrderBy() {
+    public function getOrderBy()
+    {
         return $this->order;
     }
 
@@ -109,7 +115,8 @@ class SQLCriteria extends SQLExpression {
      * Define os critérios para o agrupamento dos registros a serem retornados
      * @param string|SQLGroupBy $fields
      */
-    public function setGroupBy($fields) {
+    public function setGroupBy($fields)
+    {
         if ($fields instanceof SQLGroupBy) {
             $this->group = $fields->dump();
         } else {
@@ -121,7 +128,8 @@ class SQLCriteria extends SQLExpression {
      * Retorna os critérios de agrupamento dos registros a serem retornados
      * @return string
      */
-    public function getGroupBy() {
+    public function getGroupBy()
+    {
         return $this->group;
     }
 
@@ -129,7 +137,8 @@ class SQLCriteria extends SQLExpression {
      * Define o limit de registros a serem retornados
      * @param int $limit
      */
-    public function setLimit($limit) {
+    public function setLimit($limit)
+    {
         $this->limit = $limit;
     }
 
@@ -137,7 +146,8 @@ class SQLCriteria extends SQLExpression {
      * Retorna o limite de registros a serem retornados 
      * @return int
      */
-    public function getLimit() {
+    public function getLimit()
+    {
         return $this->limit;
     }
 
@@ -146,7 +156,8 @@ class SQLCriteria extends SQLExpression {
      * de começar a retornar os registros
      * @param int $offset
      */
-    public function setOffset($offset) {
+    public function setOffset($offset)
+    {
         $this->offset = $offset;
     }
 
@@ -155,7 +166,8 @@ class SQLCriteria extends SQLExpression {
      * de começar a retorna os registros
      * @return int
      */
-    public function getOffset() {
+    public function getOffset()
+    {
         return $this->offset;
     }
 

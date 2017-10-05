@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014 tom This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
+ * Copyright (C) 2014 Elton Luiz This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version. This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details. You should have received a copy of the GNU General Public License along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
 namespace Prime\Util\Collection;
@@ -20,9 +20,10 @@ use UnexpectedValueException;
  * inserção de elementos repetidos ou iguais. Para acessar os 
  * dados sequenciais (como uma lista ligada), AbstractSequentialList deve ser 
  * usado de preferência a esta classe.
- * @author tom
+ * @author Elton Luiz
  */
-abstract class AbstractList extends AbstractCollection implements IList {
+abstract class AbstractList extends AbstractCollection implements IList
+{
 
     /**
      * O número de vezes que esta lista foi estruturalmente modificado.
@@ -37,7 +38,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param int $index
      * @param mixed $element
      */
-    public function addIn($index, $element) {
+    public function addIn($index, $element)
+    {
         if (!is_int($index)) {
             throw new UnexpectedValueException('Índice informado não é um INTEIRO');
         }
@@ -65,7 +67,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @throws UnexpectedValueException
      * @throws IndexOutOfBoundsException
      */
-    public function removeIn($index) {
+    public function removeIn($index)
+    {
         if (!is_int($index)) {
             throw new UnexpectedValueException('Índice informado não é um INTEIRO');
         }
@@ -85,7 +88,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param int $index
      * @return mixed|NULL
      */
-    public function getIn($index) {
+    public function getIn($index)
+    {
         if ($index < 0 || $index > $this->size()) {
             throw new IndexOutOfBoundsException('Indice fora do range de elementos');
         }
@@ -107,7 +111,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param mixed $o
      * @return int
      */
-    public function indexOf($o) {
+    public function indexOf($o)
+    {
         return array_search($o, $this->collection);
     }
 
@@ -117,7 +122,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param mixed $o
      * @return int
      */
-    public function lastIndexOf($o) {
+    public function lastIndexOf($o)
+    {
         $array = array_reverse($this->collection, TRUE);
         return array_search($o, $array);
     }
@@ -126,7 +132,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * Retorna o índice do primeiro elemento da lista
      * @return int
      */
-    public function getFirstIndex() {
+    public function getFirstIndex()
+    {
         reset($this->collection);
         return key($this->collection);
     }
@@ -135,7 +142,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * Retorna o índice do último elemento da lista
      * @return int
      */
-    public function getLastIndex() {
+    public function getLastIndex()
+    {
         end($this->collection);
         return key($this->collection);
     }
@@ -144,7 +152,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * Remove o item especificado se o mesmo contém na lista 
      * @param mixed $o
      */
-    public function removeObject($o) {
+    public function removeObject($o)
+    {
         $index = $this->indexOf($o);
         if ($index !== FALSE) {
             $this->modCount++;
@@ -160,7 +169,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param int $fromIndex
      * @param int $toIndex
      */
-    public function removeRange($fromIndex, $toIndex) {
+    public function removeRange($fromIndex, $toIndex)
+    {
         if (!is_int($fromIndex)) {
             throw UnexpectedValueException('Índice inicial informado não é um INTEIRO');
         }
@@ -180,7 +190,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @param int $index
      * @param mixed $element
      */
-    public function set($index, $element) {
+    public function set($index, $element)
+    {
         if ($index < 0 || $index > $this->size()) {
             throw new IndexOutOfBoundsException('Indice fora do range de elementos');
         }
@@ -199,7 +210,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @throws IndexOutOfBoundsException
      * @throws IllegalArgumentException
      */
-    public function subList($fromIndex, $toIndex) {
+    public function subList($fromIndex, $toIndex)
+    {
         end($this->collection);
         $lastIndex = key($this->collection);
 
@@ -230,7 +242,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * Retorn o Iterado para os elementos da lista
      * @return ListIterator
      */
-    public function getIterator() {
+    public function getIterator()
+    {
         return new ListIterator($this);
     }
 
@@ -241,7 +254,8 @@ abstract class AbstractList extends AbstractCollection implements IList {
      * @throws IndexOutOfBoundsException Lança excessão caso o índice seja menor
      * que zero ou maior que o tamanho da lista
      */
-    protected function checkIndex($i) {
+    protected function checkIndex($i)
+    {
         if (!is_int($i)) {
             return FALSE;
         }

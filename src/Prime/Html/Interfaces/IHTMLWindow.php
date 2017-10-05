@@ -4,9 +4,10 @@ namespace Prime\Html\Interfaces;
 
 /**
  * Descrição da Interface IHTMLWindow
- * @author tom
+ * @author Elton Luiz
  */
-interface IHTMLWindow extends IHTMLElement {
+interface IHTMLWindow extends IHTMLElement
+{
 
     public function setPosition($top, $left);
 

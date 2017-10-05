@@ -18,7 +18,8 @@ use Countable;
  * @author Tom Sailor
  * @create 14/08/2016
  */
-class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
+class ArrayObject extends AbstractCollection implements ArrayAccess, Countable
+{
 
     /**
      * Flag para ordenação comparando os itens normalmente (não modifica o tipo)
@@ -57,7 +58,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Conta o número de elementos do objeto
      * @return int
      */
-    public function count() {
+    public function count()
+    {
         return $this->size();
     }
 
@@ -67,7 +69,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * na coleção
      * @param array $array Array de dados a ser adicionado ao objeto
      */
-    public function __construct($typeCast = 'mixed', array $array = null) {
+    public function __construct($typeCast = 'mixed', array $array = null)
+    {
         parent::__construct($typeCast);
         if (!is_null($array)) {
             $this->addArray($array);
@@ -78,7 +81,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Adiciona um array de dados ao objeto
      * @param array $array Array de dados a ser adicionado ao objeto
      */
-    public function addArray(array $array) {
+    public function addArray(array $array)
+    {
         foreach ($array as $value) {
             $this->add($value);
         }
@@ -89,7 +93,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param int $offset
      * @return boolean
      */
-    public function offsetExists($offset) {
+    public function offsetExists($offset)
+    {
         return isset($this->collection[$offset]);
     }
 
@@ -98,7 +103,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param int $offset
      * @return mixed
      */
-    public function offsetGet($offset) {
+    public function offsetGet($offset)
+    {
         return isset($this->collection[$offset]) ? $this->collection[$offset] : null;
     }
 
@@ -107,7 +113,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param type $offset
      * @param type $value
      */
-    public function offsetSet($offset, $value) {
+    public function offsetSet($offset, $value)
+    {
         if (is_null($offset)) {
             $this->collection[] = $value;
         } else {
@@ -120,7 +127,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Remove o valor de uma posição específica
      * @param int $offset
      */
-    public function offsetUnset($offset) {
+    public function offsetUnset($offset)
+    {
         unset($this->collection[$offset]);
         $this->ksort();
     }
@@ -129,7 +137,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Modifica a caixa de todas as chaves
      * @param int $case CASE_UPPER ou CASE_LOWER
      */
-    public function changeKeyCase($case) {
+    public function changeKeyCase($case)
+    {
         $this->collection = array_change_key_case($this->collection, $case);
     }
 
@@ -141,7 +150,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @return array Retorna um array multidimensional numericamente indexado, 
      * iniciando com 0, com cada dimensão contendo size elementos. 
      */
-    public function chunk($size, $preserve_keys = false) {
+    public function chunk($size, $preserve_keys = false)
+    {
         return array_chunk($this->collection, $size, $preserve_keys);
     }
 
@@ -150,7 +160,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param array $keys Array a ser usado como chaves
      * @param array $values Array a ser usado como valores
      */
-    public function combine(array $keys, array $values) {
+    public function combine(array $keys, array $values)
+    {
         foreach (array_combine($keys, $values) as $key => $value) {
             $this->collection[$key] = $value;
         }
@@ -163,7 +174,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @return array Retorna um array associativo de valores de array como 
      * chaves e suas quantias como valor. 
      */
-    public function countValues() {
+    public function countValues()
+    {
         return array_count_values($this->collection);
     }
 
@@ -172,7 +184,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param array $keys
      * @param mixed $value
      */
-    public function fillKeys(array $keys, $value) {
+    public function fillKeys(array $keys, $value)
+    {
         $array = array_fill_keys($keys, $value);
         foreach ($array as $key => $value) {
             $this->collection[$key] = $value;
@@ -183,7 +196,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
     /**
      * Ordena o conteúdo da coleção pelo valor da sua chave;
      */
-    protected function ksort() {
+    protected function ksort()
+    {
         ksort($this->collection);
     }
 
@@ -194,7 +208,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param int $num Número de elementos a inserir, devendo ser maior ou igual a zero
      * @param mixed $value Valor a preencer
      */
-    public function fill($start, $num, $value) {
+    public function fill($start, $num, $value)
+    {
         $array = array_fill($start, $num, $value);
         foreach ($array as $key => $value) {
             $this->collection[$key] = $value;
@@ -206,7 +221,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Retorna todas as chaves ou uma parte das chaves do array
      * @return array Retorna um array de todas as chaves em array.
      */
-    public function keys() {
+    public function keys()
+    {
         return array_keys($this->collection);
     }
 
@@ -215,7 +231,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param callable $callback Função callback para executar para cada elemento
      * do array
      */
-    public function map(callable $callback) {
+    public function map(callable $callback)
+    {
         $this->collection = array_map($callback, $this->collection);
     }
 
@@ -226,7 +243,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param int $size Novo tamanho do array
      * @param mixed $value Valor para preencher se o array é menor que o $size
      */
-    public function pad($size, $value) {
+    public function pad($size, $value)
+    {
         $this->collection = array_pad($this->collection, $size, $value);
     }
 
@@ -236,7 +254,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @return mixed Retorna o último valor do objeto. Se o objeto é vazio, NULL
      * será retornado
      */
-    public function pop() {
+    public function pop()
+    {
         return array_pop($this->collection);
     }
 
@@ -246,7 +265,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @param mixed $_values [valores opcionais]
      * @return int Retorno o novo número de elementos do objeto
      */
-    public function push($value, ...$_values) {
+    public function push($value, ...$_values)
+    {
         array_push($this->collection, $value);
         if ($_values) {
             foreach ($_values as $v) {
@@ -260,7 +280,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Escolhe aleatoriamente um elemento do objeto e retorna sua chave.
      * @return int A chave para o elemento aleatório
      */
-    public function rand() {
+    public function rand()
+    {
         return array_rand($this->collection);
     }
 
@@ -268,7 +289,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Escolhe aleatoriamente um elemento do objeto e retorna sua chave.
      * @return int A chave para o elemento aleatório
      */
-    public function random() {
+    public function random()
+    {
         return $this->rand();
     }
 
@@ -276,7 +298,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Escolhe aleatoriamente um elemento do objeto e o retorna.
      * @return mixed O elemento aleatório escolhido
      */
-    public function randomValue() {
+    public function randomValue()
+    {
         return $this->offsetGet($this->rand());
     }
 
@@ -288,7 +311,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * existir no objeto, ela será deixada como está.
      * @param array $replace O array a partir do qual os lementos será extraídos
      */
-    public function replace(array $replace) {
+    public function replace(array $replace)
+    {
         $this->collection = array_replace_recursive($this->collection, $replace);
     }
 
@@ -296,7 +320,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * Inverte a ordem dos elementos do objeto
      * @param boolean $preserveKeys Se definido para TRUE as chaves serão preservadas
      */
-    public function reverse($preserveKeys = false) {
+    public function reverse($preserveKeys = false)
+    {
         $this->collection = array_reverse($this->collection, $preserveKeys);
     }
 
@@ -307,7 +332,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * @return int|false Retorna a chave correspondente se foi encontrada, ou 
      * FALSE caso contrário
      */
-    public function search($value) {
+    public function search($value)
+    {
         return array_search($value, $this->collection, true);
     }
 
@@ -318,14 +344,16 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * string permanecerão inalteradas.
      * @return mixed|null Retorna o valor removido, ou NULL se array for vazio ou não é um array.
      */
-    public function shift() {
+    public function shift()
+    {
         return array_shift($this->collection);
     }
 
     /**
      * Mistura os elementos do array de forma aleatória;
      */
-    public function shuffle() {
+    public function shuffle()
+    {
         shuffle($this->collection);
     }
 
@@ -337,7 +365,8 @@ class ArrayObject extends AbstractCollection implements ArrayAccess, Countable {
      * para modificar o comportamento da ordenação
      * @return type
      */
-    public function sort($sort_flags = ArrayObject::SORT_REGULAR) {
+    public function sort($sort_flags = ArrayObject::SORT_REGULAR)
+    {
         return sort($this->collection, $sort_flags);
     }
 

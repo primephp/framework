@@ -10,14 +10,16 @@ namespace Prime\Html\Input;
  * Concluida
  *
  */
-class HTMLButton extends HTMLInput {
+class HTMLButton extends HTMLInput
+{
 
     /**
      * Cria um elemento HTML Button
      * @param string $name
      * @param bool $assync se TRUE o evento será executado de maneira assíncrona
      */
-    public function __construct($name, $assync = FALSE) {
+    public function __construct($name, $assync = FALSE)
+    {
         parent::__construct();
         $this->element->type = "button";
         $this->element->name = $name;

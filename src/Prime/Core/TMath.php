@@ -6,7 +6,8 @@ namespace Prime\Core;
  * @name TMath
  * @package Prime\DataTypes
  */
-class TMath extends TObject {
+class TMath extends TObject
+{
 
     /**
      *
@@ -20,7 +21,8 @@ class TMath extends TObject {
     /**
      *
      */
-    public function TMath($leftNumber, $rightNumber) {
+    public function TMath($leftNumber, $rightNumber)
+    {
         if (gettype($leftNumber) == "string") {
             self :: stringVerify($leftNumber);
         } else if (gettype($leftNumber) == "integer") {
@@ -34,12 +36,14 @@ class TMath extends TObject {
         $this->initialValue = $leftNumber;
     }
 
-    public function getAbsoluteValueOf() {
+    public function getAbsoluteValueOf()
+    {
         $this->lastOutputValue = abs($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getInverseCossinOf() {
+    public function getInverseCossinOf()
+    {
         $this->lastOutputValue = acos($this->calcNumber);
         return $this->lastOutputValue;
     }
@@ -47,12 +51,14 @@ class TMath extends TObject {
     /**
      *
      */
-    public function getInverseHiperbolicCossinOf() {
+    public function getInverseHiperbolicCossinOf()
+    {
         $this->lastOutputValue = acosh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getInverseSinOf() {
+    public function getInverseSinOf()
+    {
         $this->lastOutputValue = asin($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
@@ -60,77 +66,92 @@ class TMath extends TObject {
     /**
      *
      */
-    public function getInverseHiperbolicSinOf() {
+    public function getInverseHiperbolicSinOf()
+    {
         $this->lastOutputValue = asinh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getInverseTangentOf() {
+    public function getInverseTangentOf()
+    {
         $this->lastOutputValue = atan($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getInverseHiperbolicTangentOf() {
+    public function getInverseHiperbolicTangentOf()
+    {
         $this->lastOutputValue = atanh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertBinaryToDecimalOf($binary_string) {
+    public function convertBinaryToDecimalOf($binary_string)
+    {
         $this->lastOutputValue = bindec($binary_string);
         return $this->lastOutputValue;
     }
 
-    public function roundToHighier() {
+    public function roundToHighier()
+    {
         $this->lastOutputValue = ceil($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getCossinOf() {
+    public function getCossinOf()
+    {
         $this->lastOutputValue = cos($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getHiperbolicCossinOf() {
+    public function getHiperbolicCossinOf()
+    {
         $this->lastOutputValue = cosh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertDecimalToBinary() {
+    public function convertDecimalToBinary()
+    {
         $this->lastOutputValue = decbin($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertDecimalToHex() {
+    public function convertDecimalToHex()
+    {
         $this->lastOutputValue = dechex($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertDecimalToOctal() {
+    public function convertDecimalToOctal()
+    {
         $this->lastOutputValue = decoct($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertDegreeToRadian() {
+    public function convertDegreeToRadian()
+    {
         $this->lastOutputValue = deg2rad($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function roundToLower() {
+    public function roundToLower()
+    {
         $this->lastOutputValue = floor($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getRemainder($divisor) {
+    public function getRemainder($divisor)
+    {
         $this->lastOutputValue = ($this->calcLeftNumber % $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function getRandomicBetween() {
+    public function getRandomicBetween()
+    {
         $this->lastOutputValue = rand($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertHexToDecimal($hex) {
+    public function convertHexToDecimal($hex)
+    {
         $this->lastOutputValue = hexdec($this->stringVal);
         return $this->lastOutputValue;
     }
@@ -139,9 +160,10 @@ class TMath extends TObject {
      * @return boolean
      * Retorna boolean true se o numero for finito
      */
-    public function isFinit() {
+    public function isFinit()
+    {
         $this->lastOutputValue = is_finite($this->calcLeftNumber);
-        return (boolean)$this->lastOutputValue;
+        return (boolean) $this->lastOutputValue;
     }
 
     /*     * ***
@@ -149,50 +171,60 @@ class TMath extends TObject {
      *
      */
 
-    public function isInifinit() {
+    public function isInifinit()
+    {
         return is_infinite($this->calcLeftNumber);
     }
 
-    public function isNAN() {
+    public function isNAN()
+    {
         return is_nan($number->__toString());
     }
 
-    public function convertRadianToDegree() {
+    public function convertRadianToDegree()
+    {
         $this->lastOutputValue = rad2deg($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function convertOctalToDecimal() {
+    public function convertOctalToDecimal()
+    {
         $this->lastOutputValue = octdec($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function PI() {
+    public function PI()
+    {
         $this->lastOutputValue = pi();
         return $this->lastOutputValue;
     }
 
-    public function getSinOf() {
+    public function getSinOf()
+    {
         $this->lastOutputValue = sin($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getSquareRootOf() {
+    public function getSquareRootOf()
+    {
         $this->lastOutputValue = sqrt($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getSinHiperbolicOf() {
+    public function getSinHiperbolicOf()
+    {
         $this->lastOutputValue = sinh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getTangentOf() {
+    public function getTangentOf()
+    {
         $this->lastOutputValue = tan($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
 
-    public function getTangentHiperbolicOf() {
+    public function getTangentHiperbolicOf()
+    {
         $this->lastOutputValue = tanh($this->calcLeftNumber);
         return $this->lastOutputValue;
     }
@@ -200,7 +232,8 @@ class TMath extends TObject {
     /**
      *
      */
-    public function getHipotenuseValue($left, $right) {
+    public function getHipotenuseValue($left, $right)
+    {
         try {
             self :: numberLeftVerify($left);
             self :: numberRightVerify($right);
@@ -211,27 +244,32 @@ class TMath extends TObject {
         }
     }
 
-    public function getMaxBetween() {
+    public function getMaxBetween()
+    {
         $this->lastOutputValue = max($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function getMinBetween() {
+    public function getMinBetween()
+    {
         $this->lastOutputValue = min($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function getPowerOf() {
+    public function getPowerOf()
+    {
         $this->lastOutputValue = pow($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function getRandomValueOf() {
+    public function getRandomValueOf()
+    {
         $this->lastOutputValue = rand($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
 
-    public function getRoundedValueOf() {
+    public function getRoundedValueOf()
+    {
         $this->lastOutputValue = round($this->calcLeftNumber, $this->calcRightNumber);
         return $this->lastOutputValue;
     }
@@ -239,7 +277,8 @@ class TMath extends TObject {
     /**
      *
      */
-    public function doBaseConvertionOf($frombase, $tobase) {
+    public function doBaseConvertionOf($frombase, $tobase)
+    {
         if (!is_numeric($tobase) || !is_numeric($frombase)) {
             throw new Exception("Chamada de m�todo inv�lido");
         }
@@ -247,15 +286,18 @@ class TMath extends TObject {
         return $this->lastOutputValue;
     }
 
-    public function getInitialValue() {
+    public function getInitialValue()
+    {
         return $this->initialValue;
     }
 
-    public function getLastOutputValue() {
+    public function getLastOutputValue()
+    {
         return $this->lastOutputValue;
     }
 
-    private function numberLeftVerify(TObject $number) {
+    private function numberLeftVerify(TObject $number)
+    {
         if (!is_numeric($number)) {
             throw new Exception("Tipo ilegal, deveria ser num�rico... ");
         }
@@ -263,7 +305,8 @@ class TMath extends TObject {
         return true;
     }
 
-    private function numberRightVerify($number) {
+    private function numberRightVerify($number)
+    {
         if (!is_numeric($number)) {
             throw new Exception("Tipo ilegal, deveria ser num�rico... ");
         }
@@ -271,7 +314,8 @@ class TMath extends TObject {
         return true;
     }
 
-    private function stringVerify($str) {
+    private function stringVerify($str)
+    {
         if (is_string($str)) {
             $this->stringVal = $str;
         } else {

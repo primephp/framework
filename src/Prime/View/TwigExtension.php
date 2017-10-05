@@ -38,19 +38,24 @@ use Twig_SimpleFunction;
  * @author Tom Sailor
  * @createAt 24/10/2016
  */
-class TwigExtension extends Twig_Extension {
+class TwigExtension extends Twig_Extension
+{
 
-    public function getName() {
+    public function getName()
+    {
         return 'PrimeExtension';
     }
 
-    public function getFunctions() {
+    public function getFunctions()
+    {
         return array(
             new Twig_SimpleFunction('tokenId', array($this, 'tokenId')),
         );
     }
 
-    public function tokenId() {
+    public function tokenId()
+    {
         return Application::getInstance()->getKernel()->getRequest()->getSession()->get('token.id');
     }
+
 }

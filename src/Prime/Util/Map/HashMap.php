@@ -32,8 +32,9 @@ namespace Prime\Util\Map;
  * constante (muito bom) se a função de hash for bem distribuída, isto é, a 
  * chance de dois objetos diferentes retornarem o mesmo valor pelo método 
  * hashCode() é pequena.
- * @author TomSailor
+ * @author Elton Luiz
  */
-class HashMap {
+class HashMap
+{
     
 }

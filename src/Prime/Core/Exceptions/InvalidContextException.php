@@ -33,6 +33,7 @@ use ErrorException;
  *
  * @author Tom Sailor
  */
-class InvalidContextException extends ErrorException{
+class InvalidContextException extends ErrorException
+{
     
 }

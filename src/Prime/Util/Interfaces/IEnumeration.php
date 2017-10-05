@@ -7,7 +7,8 @@ namespace Prime\Util\Interfaces;
  * @author Elton Luiz
  * @date 28/05/2014
  */
-interface IEnumeration {
+interface IEnumeration
+{
 
     /**
      * Testa se esta enumeração contaim mais elementos

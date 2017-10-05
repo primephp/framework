@@ -34,8 +34,9 @@ namespace Prime\Core\Interfaces;
  * @package Prime\Core\Interfaces
  * @createAt 25/08/2016
  */
-interface IAppendable {
-    
+interface IAppendable
+{
+
     /**
      * Adiciona uma sequência de caracteres a este appendable ou uma subsequencia
      * se forem informados os parâmetros $start e $end

@@ -36,6 +36,7 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-class Dispatcher extends EventDispatcher {
+class Dispatcher extends EventDispatcher
+{
     
 }

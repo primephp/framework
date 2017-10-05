@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 TomSailor.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,9 +33,10 @@ use \Prime\Model\DataSource\Model;
  * @name CreateDataSource
  * @package Prime\Model\DataSource\Metadata
  * @since 22/07/2015
- * @author TomSailor
+ * @author Elton Luiz
  */
-class CreateDataSource {
+class CreateDataSource
+{
 
     private $entity;
     private $metadata;
@@ -43,7 +44,8 @@ class CreateDataSource {
     private $className = NULL;
     private $parentClass = NULL;
 
-    public function __construct($tableName) {
+    public function __construct($tableName)
+    {
         $this->entity = $tableName;
         $meta = new EntityMetadata($tableName);
         $this->metadata = $meta->get();
@@ -51,15 +53,18 @@ class CreateDataSource {
         $this->parentClass = Model::class;
     }
 
-    public function getClassName() {
+    public function getClassName()
+    {
         return $this->className;
     }
 
-    public function setNamespace($namespace) {
+    public function setNamespace($namespace)
+    {
         $this->modelNamespace = $namespace;
     }
 
-    private function className($tableName) {
+    private function className($tableName)
+    {
         $string = ucfirst(strtolower($tableName));
         $num = strlen($string);
         $uCase = $string;
@@ -89,7 +94,8 @@ class CreateDataSource {
         return $uCase . 'DataSource';
     }
 
-    private function getHeader() {
+    private function getHeader()
+    {
         $classeName = $this->getClassName();
         return
                 "
@@ -100,7 +106,7 @@ class CreateDataSource {
                 /**
                 *@name $classeName '
                 *@package {$this->modelNamespace}
-		*@author TomSailor
+		*@author Elton Luiz
 		*@create " . date('d/m/Y') . "
                 *Objetiva facilitar o desenvolvimento com as IDE padroes de mercado.
 		*/\n
@@ -110,7 +116,8 @@ class CreateDataSource {
                     ";
     }
 
-    public function getConstants() {
+    public function getConstants()
+    {
         $constFields = "const TABLENAME = \"{$this->entity}\";\n";
 
         $pk = NULL;
@@ -138,12 +145,14 @@ class CreateDataSource {
         return $constFields;
     }
 
-    public function getSetterGetter(array $field) {
+    public function getSetterGetter(array $field)
+    {
         $methods = new CreateSetterGetter($field);
         return $methods->getOutput();
     }
 
-    public function getOutput() {
+    public function getOutput()
+    {
         $out = "<?php";
         $out .= $this->getHeader();
         $out .= $this->getConstants();
@@ -156,7 +165,8 @@ class CreateDataSource {
         return $out;
     }
 
-    public function printOut() {
+    public function printOut()
+    {
         echo $this->getOutput();
     }
 

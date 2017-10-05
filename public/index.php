@@ -9,8 +9,13 @@ function generate_uuid() {
     );
 }
 
-$a = new ArrayObject();
+$string = 'elton';
 
-$a->push('PRIMEIRO', 'Primeiro', 'primeiro', 'priMeiro', 'priMEiro');
+$s = new \Prime\Security\Secret('teste');
+$t = $s->encrypt($string);
+$t2 = $s->doubleEncrypt($string);
 
-var_dump($a->contains('PRIMEIRo'));
+var_dump($t);
+var_dump($t2);
+
+var_dump(openssl_get_cipher_methods(TRUE));

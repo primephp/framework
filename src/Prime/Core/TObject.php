@@ -10,10 +10,11 @@ use UnexpectedValueException;
  * PrimePHP Framework.
  * @name TObject
  * @package Prime\core
- * @author TomSailor
+ * @author Elton Luiz
  * @since 03/08/2011
  */
-class TObject extends stdClass {
+class TObject extends stdClass
+{
 
     /**
      * Armazena todos os dados do Objeto
@@ -27,7 +28,8 @@ class TObject extends stdClass {
      * quando for convertida para uma string. 
      * @return string 
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->toString();
     }
 
@@ -37,7 +39,8 @@ class TObject extends stdClass {
      * @param string $name
      * @param mixed $value 
      */
-    public function __set($name, $value) {
+    public function __set($name, $value)
+    {
         $this->data[$name] = $value;
     }
 
@@ -45,7 +48,8 @@ class TObject extends stdClass {
      * Método mágico __unset é executado ao 
      * @param type $name 
      */
-    public function __unset($name) {
+    public function __unset($name)
+    {
         unset($this->data[$name]);
     }
 
@@ -55,7 +59,8 @@ class TObject extends stdClass {
      * @param string $name
      * @return mixed 
      */
-    public function __get($name) {
+    public function __get($name)
+    {
         if (isset($this->data[$name])) {
             return $this->data[$name];
         } else {
@@ -67,7 +72,8 @@ class TObject extends stdClass {
      * O método __destruct remove todo conteúdo do atributo $data do objeto, para remover
      * o uso da memória
      */
-    public function __destruct() {
+    public function __destruct()
+    {
         unset($this->data);
     }
 
@@ -75,7 +81,8 @@ class TObject extends stdClass {
      * O método __invoke é chamado quando um script
      * tenta chamar um objeto como uma função. 
      */
-    public function __invoke() {
+    public function __invoke()
+    {
         return $this->toString();
     }
 
@@ -83,7 +90,8 @@ class TObject extends stdClass {
      * Retorna o tipo do objeto atual
      * @return string O nome da classe do objeto instanciado
      */
-    public function getType() {
+    public function getType()
+    {
         return get_class($this);
     }
 
@@ -91,7 +99,8 @@ class TObject extends stdClass {
      * Retorna o nome da classe do objeto
      * @return string O nome da classe do objeto instanciado
      */
-    public function getClass() {
+    public function getClass()
+    {
         return $this->getType();
     }
 
@@ -100,7 +109,8 @@ class TObject extends stdClass {
      * objeto
      * @return str Código Hash do presente objeto
      */
-    public function hashCode() {
+    public function hashCode()
+    {
         return hash('SHA256', serialize($this));
     }
 
@@ -108,7 +118,8 @@ class TObject extends stdClass {
      * Retorna um clone do objeto atual
      * @return $this
      */
-    public function getClone() {
+    public function getClone()
+    {
         return clone $this;
     }
 
@@ -119,7 +130,8 @@ class TObject extends stdClass {
      * @return TBoolean|TInteger|TString|TFloat
      * @throws UnexpectedValueException
      */
-    public static function create($value) {
+    public static function create($value)
+    {
         if (is_float($value)) {
             return new TFloat($value);
         } else
@@ -140,7 +152,8 @@ class TObject extends stdClass {
      * Retorna o nome da classe do objeto
      * @return string O nome da classe do objeto instanciado
      */
-    public function toString() {
+    public function toString()
+    {
         return $this->getType();
     }
 
@@ -149,7 +162,8 @@ class TObject extends stdClass {
      * @param TObject $o
      * @return boolean
      */
-    public function equals(TObject $o) {
+    public function equals(TObject $o)
+    {
         if ($this->hashCode() == $o->hashCode()) {
             return TRUE;
         }
@@ -160,7 +174,8 @@ class TObject extends stdClass {
      * Verifica se o objeto está vazio
      * @return boolean
      */
-    public function isEmpty() {
+    public function isEmpty()
+    {
         if (count($this->data)) {
             return FALSE;
         } else {

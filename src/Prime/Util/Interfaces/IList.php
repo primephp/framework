@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014 tom
+ * Copyright (C) 2014 Elton Luiz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,9 +25,10 @@ namespace Prime\Util\Interfaces;
  * identificado por um índice numérico. Na maioria dos casos, pode ser encarado 
  * como um "array de tamanho variável" pois, como os arrays primitivos, é 
  * acessível por índices, mas além disso possui métodos de inserção e remoção.
- * @author tom
+ * @author Elton Luiz
  */
-interface IList extends ICollection {
+interface IList extends ICollection
+{
 
     /**
      * Insere o elemento especificado na posição especificada nesta lista.

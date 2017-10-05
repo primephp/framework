@@ -37,9 +37,10 @@ namespace Prime\Util\Map;
  * mais rápida que uma TreeMap, que utiliza comparações para determinar a ordem 
  * dos elementos.
  *
- * @author TomSailor
+ * @author Elton Luiz
  * @createAt 24/08/2016
  */
-class LinkedHashMap extends HashMap {
+class LinkedHashMap extends HashMap
+{
     //put your code here
 }

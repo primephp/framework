@@ -9,16 +9,18 @@ namespace Prime\Util\Collection;
  * um "acesso sequencial" armazenamento de dados (como uma lista lincada). 
  * Para os dados de acesso aleatório (tais como uma matriz), AbstractList deve 
  * ser usado de preferência a esta classe.
- * @author tom
+ * @author Elton Luiz
  * @createAt 16/08/2016
  */
-abstract class AbstractSequentialList extends AbstractList {
+abstract class AbstractSequentialList extends AbstractList
+{
 
     /**
      * Retorna um ListIterator sobre os elementos desta lista (na sequência adequada).
      * @return ListIterator
      */
-    public function listIterator() {
+    public function listIterator()
+    {
         return new ListIterator($this);
     }
 

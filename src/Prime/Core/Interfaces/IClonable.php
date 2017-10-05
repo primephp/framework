@@ -7,7 +7,8 @@ namespace Prime\Core\Interfaces;
  * @dateCreate 06/06/2014
  * @author comforsup-0215
  */
-interface IClonable {
+interface IClonable
+{
 
     /**
      * Retorna o clone do objeto instanciado

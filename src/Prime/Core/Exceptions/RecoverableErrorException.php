@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class RecoverableErrorException  extends \ErrorException{
+class RecoverableErrorException extends \ErrorException
+{
     //put your code here
 }

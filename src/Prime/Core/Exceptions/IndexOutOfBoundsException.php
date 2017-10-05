@@ -10,13 +10,15 @@ use RuntimeException;
  * @author Elton Luiz
  * @createAt 15/08/2016
  */
-class IndexOutOfBoundsException extends RuntimeException {
+class IndexOutOfBoundsException extends RuntimeException
+{
 
     /**
      * Contrutor de IndexOutOfBoundsException
      * @param string $message Mensagem que deve ser exibida na exceção
      */
-    public function __construct($message) {
+    public function __construct($message)
+    {
         parent::__construct($message);
     }
 

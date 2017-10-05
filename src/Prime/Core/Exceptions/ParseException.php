@@ -33,6 +33,7 @@ use ErrorException;
  *
  * @author Tom Sailor
  */
-class ParseException extends ErrorException{
+class ParseException extends ErrorException
+{
     //put your code here
 }

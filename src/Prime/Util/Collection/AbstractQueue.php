@@ -18,13 +18,15 @@ use Prime\Util\Interfaces\IQueue;
  * @author Tom Sailor
  * @create 13/08/2016
  */
-abstract class AbstractQueue extends AbstractCollection implements IQueue {
+abstract class AbstractQueue extends AbstractCollection implements IQueue
+{
 
     /**
      * Adiciona o elemento na fila
      * @param mixed $e
      */
-    public function add($e) {
+    public function add($e)
+    {
         parent::add($e);
     }
 
@@ -32,7 +34,8 @@ abstract class AbstractQueue extends AbstractCollection implements IQueue {
      * Insere o elemento especificado na fila
      * @param mixed $e
      */
-    public function offer($e) {
+    public function offer($e)
+    {
         $this->add($e);
     }
 
@@ -42,7 +45,8 @@ abstract class AbstractQueue extends AbstractCollection implements IQueue {
      * @return type
      * @throws NoSuchElementException
      */
-    public function remove() {
+    public function remove()
+    {
         if (!$this->size()) {
             throw new NoSuchElementException('A fila está vazia');
         }
@@ -54,7 +58,8 @@ abstract class AbstractQueue extends AbstractCollection implements IQueue {
      * retorn NULL
      * @return mixed|NULL
      */
-    public function poll() {
+    public function poll()
+    {
         return array_shift($this->collection);
     }
 
@@ -63,7 +68,8 @@ abstract class AbstractQueue extends AbstractCollection implements IQueue {
      * @return mixed
      * @throws NoSuchElementException
      */
-    public function element() {
+    public function element()
+    {
         if (!$this->size()) {
             throw new NoSuchElementException('A fila está vazia');
         }
@@ -75,7 +81,8 @@ abstract class AbstractQueue extends AbstractCollection implements IQueue {
      * Retorna, porém não remove o primeiro elemento da fila
      * @return mixed
      */
-    public function peek() {
+    public function peek()
+    {
         if (!$this->size()) {
             return NULL;
         }

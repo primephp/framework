@@ -34,9 +34,10 @@ use \PDO,
  * @name Metadata
  * @package Prime\Model\DataSource
  * @since 22/07/2015
- * @author TomSailor
+ * @author Elton Luiz
  */
-class EntityMetadata {
+class EntityMetadata
+{
 
     /**
      *
@@ -48,14 +49,16 @@ class EntityMetadata {
     private $metadata = NULL;
     private $types = [];
 
-    public function __construct($entity = NULL) {
+    public function __construct($entity = NULL)
+    {
         $this->entity = $entity;
         $this->conn = Connection::get();
         $this->setTypes();
         $this->prepare();
     }
 
-    private function setTypes() {
+    private function setTypes()
+    {
         $this->types = [
             //text
             'VARCHAR' => 'string',
@@ -85,7 +88,8 @@ class EntityMetadata {
         ];
     }
 
-    private function prepare() {
+    private function prepare()
+    {
         $table = $this->entity;
         $query = "SELECT * FROM $table LIMIT 1";
 
@@ -104,8 +108,8 @@ class EntityMetadata {
             $column['name'] = $meta['name'];
             $column['type'] = $this->types[$meta['native_type']];
 
-            $len = (int)filter_var($meta['len'], FILTER_SANITIZE_NUMBER_INT);
-            $precision = (int)filter_var($meta['precision'], FILTER_SANITIZE_NUMBER_INT);
+            $len = (int) filter_var($meta['len'], FILTER_SANITIZE_NUMBER_INT);
+            $precision = (int) filter_var($meta['precision'], FILTER_SANITIZE_NUMBER_INT);
 
             if ($len == '-1') {
                 $column['size'] = $precision;
@@ -135,15 +139,19 @@ class EntityMetadata {
         $this->metadata = $columns;
     }
 
-    public function getEntityName() {
+    public function getEntityName()
+    {
         return $this->entity;
     }
 
-    public function getTotalColumns() {
+    public function getTotalColumns()
+    {
         return $this->totalColumns;
     }
 
-    public function get() {
+    public function get()
+    {
         return $this->metadata;
     }
+
 }

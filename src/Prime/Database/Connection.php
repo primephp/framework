@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 TomSailor.
+ * Copyright 2017 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,10 @@ namespace Prime\Database;
 /**
  * Abre uma conexão com o banco de dados
  *
- * @author quantum
+ * @author Elton Luiz
  */
-final class Connection {
+final class Connection
+{
 
     /**
      * Array contendo as conexões ativas
@@ -45,11 +46,13 @@ final class Connection {
      */
     private static $config;
 
-    private function __construct() {
+    private function __construct()
+    {
         throw new \Prime\Core\Exceptions\InvalidContextException();
     }
 
-    public static function config($params, $dbName = NULL) {
+    public static function config($params, $dbName = NULL)
+    {
         if (!is_array($params) && !strpos(':', $params)) {
             throw new \Prime\Core\Exceptions\InvalidParamException('Parêmetro inválido. Esperado um array ou uma string no formato "type:host:user:passwd:name:port:charset"');
         }
@@ -57,7 +60,7 @@ final class Connection {
         if (is_string($params)) {
             $params = self::paramsToArray($params);
         }
-        if(is_null($dbName)){
+        if (is_null($dbName)) {
             $db = md5($str);
         }
     }
@@ -67,7 +70,8 @@ final class Connection {
      * @param string $params
      * @return array
      */
-    private static function paramsToArray($params) {
+    private static function paramsToArray($params)
+    {
         $var = explode(':', $params);
 
         $conn_var = [];

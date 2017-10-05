@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class DeprecatedException  extends \ErrorException{
+class DeprecatedException extends \ErrorException
+{
     //put your code here
 }

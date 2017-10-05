@@ -11,7 +11,8 @@ use Serializable;
  * @dateCreate 28/05/2014
  * @author Elton Luiz
  */
-interface SerializableInterface {
+interface SerializableInterface
+{
 
     public function serialize();
 }

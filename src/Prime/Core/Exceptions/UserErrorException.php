@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class UserErrorException  extends \ErrorException{
+class UserErrorException extends \ErrorException
+{
     //put your code here
 }

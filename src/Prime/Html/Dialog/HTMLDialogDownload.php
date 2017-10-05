@@ -5,11 +5,12 @@ namespace Prime\Html\Dialog;
 use App\Config\AppConfig,
     Prime\Html\Base\HTMLImage;
 
-class HTMLDialogDownload extends HTMLDialog {
+class HTMLDialogDownload extends HTMLDialog
+{
 
 //instancia uma nova linha
-    public function __construct($message, $title = "INFORMATIVO.", $width = 360,
-            $height = 180) {
+    public function __construct($message, $title = "INFORMATIVO.", $width = 360, $height = 180)
+    {
         parent::__construct($message, $title, $width, $height);
         $info = new HTMLImage(AppConfig::baseIcons() . "dialog-download-48.png");
         $this->dialog->setPosition(0, 50);

@@ -12,16 +12,19 @@ use Symfony\Component\HttpFoundation\Response as BaseResponse;
  * @author Elton Luiz
  *        
  */
-class Response extends BaseResponse {
+class Response extends BaseResponse
+{
 
-    public function __construct($content = '', $status = 200, $headers = array()) {
+    public function __construct($content = '', $status = 200, $headers = array())
+    {
         if ($content instanceof ViewInterface) {
             $content = $content->getOutput();
         }
         parent::__construct($content, $status, $headers);
     }
 
-    public static function redirect($url) {
+    public static function redirect($url)
+    {
         return new RedirectResponse($url);
     }
 

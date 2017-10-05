@@ -14,9 +14,11 @@ use Prime\Util\Interfaces\IListIterator;
  * @dateCreate 16/06/2014
  * @author Elton Luiz
  */
-class ListIterator extends AbstractIterator implements IListIterator {
+class ListIterator extends AbstractIterator implements IListIterator
+{
 
-    public function __construct(AbstractList $list) {
+    public function __construct(AbstractList $list)
+    {
         parent::__construct($list);
     }
 
@@ -25,7 +27,8 @@ class ListIterator extends AbstractIterator implements IListIterator {
      * ao previous()
      * @return int O índice anterior a posição atual do ponteiro. 
      */
-    public function previousIndex() {
+    public function previousIndex()
+    {
         return $this->key() - 1;
     }
 
@@ -35,7 +38,8 @@ class ListIterator extends AbstractIterator implements IListIterator {
      * 
      * @return boolean
      */
-    public function hasPrevious() {
+    public function hasPrevious()
+    {
         if ($this->previousIndex() < 0) {
             return FALSE;
         }
@@ -48,11 +52,13 @@ class ListIterator extends AbstractIterator implements IListIterator {
     /**
      * Move para o elemento anterior
      */
-    public function previous() {
+    public function previous()
+    {
         $this->seek($this->previousIndex());
     }
 
-    public function getPrevious() {
+    public function getPrevious()
+    {
         if ($this->hasPrevious()) {
             $this->previous();
             return $this->current();

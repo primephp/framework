@@ -27,7 +27,8 @@ use Prime\Core\TBoolean;
  * @dateCreate 10/06/2014
  * @author Elton Luiz
  */
-interface IQueue extends ICollection {
+interface IQueue extends ICollection
+{
 
     /**
      * Insere o elemento especificado para esta fila se for possível fazê-lo imediatamente, 

@@ -22,7 +22,8 @@ use Prime\Model\SQL\SQLOrderBy;
  * @create 09/06/2016
  * 
  */
-class Paginator {
+class Paginator
+{
 
     const PARAM_PAGINA = "page";
 
@@ -46,7 +47,8 @@ class Paginator {
      * Cria uma instância de Paginator
      * @param int $page
      */
-    public function __construct($page = 1) {
+    public function __construct($page = 1)
+    {
         $this->page = $page;
 
         if (is_null($page)) {
@@ -63,7 +65,8 @@ class Paginator {
      * Define o Critéria para definir os filtros da respectiva consulta
      * @param SQLCriteria $criteria
      */
-    public function setCriteria(SQLCriteria $criteria) {
+    public function setCriteria(SQLCriteria $criteria)
+    {
         $this->criteria = $criteria;
     }
 
@@ -73,7 +76,8 @@ class Paginator {
      * @param string $model_name o Nome da classe Model responsável para a 
      * manipulação de cada recordset
      */
-    public function setModel($model_name) {
+    public function setModel($model_name)
+    {
         $this->model = $model_name;
     }
 
@@ -82,7 +86,8 @@ class Paginator {
      * @param string|SQLOrderBy $field
      * @param string $order ASC ou DESC
      */
-    public function setOrder($field, $order = "DESC") {
+    public function setOrder($field, $order = "DESC")
+    {
         if ($field instanceof SQLOrderBy) {
             $this->order = $field->dump();
         } else {
@@ -94,7 +99,8 @@ class Paginator {
      * Define os campos para o agrupamento dos registros retornados
      * @param string|SQLGroupBy $fields
      */
-    public function setGroupBy($fields) {
+    public function setGroupBy($fields)
+    {
         if ($fields instanceof SQLGroupBy) {
             $this->group = $fields->dump();
         } else {
@@ -110,7 +116,8 @@ class Paginator {
      * ou false caso a criteria não retorne nenhum conteúdo
      * @throws Exception Caso o Model não seja definido
      */
-    public function load() {
+    public function load()
+    {
         if ($this->model) {
             $repository = new Repository($this->model);
         } else {
@@ -142,7 +149,8 @@ class Paginator {
      * para cada recordset retornado
      * @return Model[]
      */
-    public function getRecords() {
+    public function getRecords()
+    {
         if (!is_null($this->records)) {
             return $this->records;
         } else {
@@ -157,10 +165,11 @@ class Paginator {
      * @param int $numberRecords número de registros por página
      * @param int $totalRecords total de registros existentes
      */
-    private function setTotalRecords($numberRecords, $totalRecords) {
+    private function setTotalRecords($numberRecords, $totalRecords)
+    {
         // quantidade de páginas
         $this->pages = ceil($totalRecords / $numberRecords);
-        
+
         if ($this->pages == 1) {
             $this->pages = 1;
             $this->first = 1;
@@ -185,7 +194,8 @@ class Paginator {
      * Define a página atual que se encontra
      * @param int $value número da página atual
      */
-    public function setPage($value = 1) {
+    public function setPage($value = 1)
+    {
         $this->page = $value;
     }
 
@@ -194,15 +204,17 @@ class Paginator {
      * Define o limite de registro por página
      * @param int $limit 
      */
-    public function setLimit($limit = 10) {
+    public function setLimit($limit = 10)
+    {
         $this->limit = $limit;
     }
-    
+
     /**
      * Retorna o limite de registro por página
      * @return int
      */
-    public function getLimit(){
+    public function getLimit()
+    {
         return $this->limit;
     }
 
@@ -211,7 +223,8 @@ class Paginator {
      * parâmetros da consulta SQL
      * @return int
      */
-    public function getTotal() {
+    public function getTotal()
+    {
         return $this->total;
     }
 
@@ -219,7 +232,8 @@ class Paginator {
      * Retorna o total de páginas
      * @return int 
      */
-    public function getTotalPages() {
+    public function getTotalPages()
+    {
         return $this->pages;
     }
 
@@ -227,7 +241,8 @@ class Paginator {
      * Retorna o valor da primeira página
      * @return int
      */
-    public function getFirstPage() {
+    public function getFirstPage()
+    {
         return $this->first;
     }
 
@@ -235,7 +250,8 @@ class Paginator {
      * Retorna o valor da página atual
      * @return int
      */
-    public function getCurrentPage() {
+    public function getCurrentPage()
+    {
         return $this->page;
     }
 
@@ -243,8 +259,9 @@ class Paginator {
      * Retorna o valor da página anterior
      * @return int
      */
-    public function getPreviousPage() {
-        if($this->previous < 1){
+    public function getPreviousPage()
+    {
+        if ($this->previous < 1) {
             return 1;
         }
         return $this->previous;
@@ -254,7 +271,8 @@ class Paginator {
      * Retorna o valor da última página
      * @return int
      */
-    public function getLastPage() {
+    public function getLastPage()
+    {
         return $this->last;
     }
 
@@ -262,7 +280,8 @@ class Paginator {
      * Retorna o valor da próxima página
      * @return int
      */
-    public function getNextPage() {
+    public function getNextPage()
+    {
         if ($this->next > $this->last) {
             return $this->last;
         }
@@ -273,7 +292,8 @@ class Paginator {
      * Retorna a posição do último registro da página
      * @return int
      */
-    public function getlastRegistryOfPage() {
+    public function getlastRegistryOfPage()
+    {
         $value = ($this->page * $this->limit);
         if ($this->total < $value) {
             $value = $this->total;
@@ -285,7 +305,8 @@ class Paginator {
      * Retorna a posição do primeiro registro da página
      * @return int
      */
-    public function getFirstRegistryOfPage() {
+    public function getFirstRegistryOfPage()
+    {
         $value = (($this->page - 1) * $this->limit) + 1;
 
         return $value;

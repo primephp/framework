@@ -18,11 +18,12 @@ use Symfony\Component\HttpFoundation\Response as SCHR;
  * apenas uma ação
  * @name AbstractPageController
  * @package Prime\Controller
- * @author tom
+ * @author Elton Luiz
  * 
  * @createAt 02/08/2015
  */
-abstract class AbstractPageController extends AbstractController {
+abstract class AbstractPageController extends AbstractController
+{
 
     /**
      * Processa a requisição para a página chamada e retorna uma Response
@@ -36,7 +37,8 @@ abstract class AbstractPageController extends AbstractController {
      * @call AbstractPageController::handler()
      * @return Response
      */
-    public function __invoke() {
+    public function __invoke()
+    {
         $handle = $this->handler();
         if (!$handle instanceof SCHR) {
             return new Response($handle);

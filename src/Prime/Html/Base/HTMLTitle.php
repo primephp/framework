@@ -2,7 +2,8 @@
 
 namespace Prime\Html\Base;
 
-class HTMLTitle extends HTMLElement {
+class HTMLTitle extends HTMLElement
+{
 
 //configuracao interna de dados
     /**
@@ -10,7 +11,8 @@ class HTMLTitle extends HTMLElement {
      *
      * @param string $title
      */
-    public function __construct($title = "") {
+    public function __construct($title = "")
+    {
         parent::__construct("title");
         $this->appendChild($title);
     }
@@ -20,7 +22,8 @@ class HTMLTitle extends HTMLElement {
      *
      * @param string $title
      */
-    public function setTitle($title) {
+    public function setTitle($title)
+    {
         $this->appendChild($title);
     }
 

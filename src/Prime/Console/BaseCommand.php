@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 TomSailor.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -36,16 +36,18 @@ use Symfony\Component\Console\Output\OutputInterface;
  * @name Command
  * @package Prime\Console
  * @since 23/07/2015
- * @author TomSailor
+ * @author Elton Luiz
  */
-class BaseCommand extends SymfonyCommand {
+class BaseCommand extends SymfonyCommand
+{
 
     /**
      * Define uma ajuda par ao comando
      * @param string $help
      * @return BaseCommand
      */
-    public function setHelp($help) {
+    public function setHelp($help)
+    {
         parent::setHelp($help);
         return $this;
     }
@@ -56,7 +58,8 @@ class BaseCommand extends SymfonyCommand {
      * @param OutputInterface $output
      * @throws LogicException
      */
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         throw new LogicException('Esse método deve ser substituído na classe command concreta.');
     }
 

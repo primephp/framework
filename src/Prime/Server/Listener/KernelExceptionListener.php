@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 tom.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -42,20 +42,23 @@ use Symfony\Component\HttpKernel\KernelEvents;
  * 
  * @name KernelExceptionListener
  * @package Prime\Server\Listener
- * @author tom
+ * @author Elton Luiz
  * @createAt 25/07/2015
  */
-class KernelExceptionListener implements EventSubscriberInterface {
+class KernelExceptionListener implements EventSubscriberInterface
+{
 
-    public static function getSubscribedEvents() {
+    public static function getSubscribedEvents()
+    {
         return [
             KernelEvents::EXCEPTION => [
-                    ['onKernelException', 20]
+                ['onKernelException', 20]
             ]
         ];
     }
 
-    public function onKernelException(GetResponseForExceptionEvent $event) {
+    public function onKernelException(GetResponseForExceptionEvent $event)
+    {
         $exception = $event->getException();
 
         if ($exception instanceof UnauthorizedHttpException) {

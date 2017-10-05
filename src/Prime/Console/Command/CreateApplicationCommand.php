@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 TomSailor.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,14 +37,16 @@ use Symfony\Component\Console\Output\OutputInterface;
  * 
  * @name CreateApplicationCommand
  * @package Prime\Console\Command
- * @author TomSailor
+ * @author Elton Luiz
  * @createAt 30/07/2015
  */
-class CreateApplicationCommand extends BaseCommand {
+class CreateApplicationCommand extends BaseCommand
+{
 
     private $dirBase;
 
-    protected function configure() {
+    protected function configure()
+    {
         $this->setName('create:app')
                 ->setProcessTitle('Criar Skeleton da Aplicação')
                 ->setDescription('Cria a estrutura de diretórios para a aplicação')
@@ -53,7 +55,8 @@ class CreateApplicationCommand extends BaseCommand {
                 ->setHelp('console create:app {diretório} para criar o skeleton da aplicação');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output) {
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
         $dir = $input->getArgument('directory');
         if ($dir) {
             $this->dirBase = $dir;
@@ -67,7 +70,8 @@ class CreateApplicationCommand extends BaseCommand {
     /**
      * Cria a estrutura de diretórios utilizados na aplicação
      */
-    private function createSkeleton() {
+    private function createSkeleton()
+    {
         $fileSystem = Filesystem::getInstance();
 
         $fileSystem->mkdir([

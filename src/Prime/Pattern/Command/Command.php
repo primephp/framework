@@ -5,12 +5,14 @@ namespace Prime\Pattern\Command;
 /**
  * TODO Auto-generated comment.
  */
-abstract class Command {
+abstract class Command
+{
 
     /**
      * TODO Auto-generated comment.
      */
-    public function execute() {
+    public function execute()
+    {
         
     }
 

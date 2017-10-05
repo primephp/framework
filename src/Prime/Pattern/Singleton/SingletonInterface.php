@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 TomSailor.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -31,9 +31,10 @@ namespace Prime\Pattern\Singleton;
  * @name SingletonInterface
  * @package Prime\Pattern\Singleton
  * @createAt 13/08/2015
- * @author TomSailor
+ * @author Elton Luiz
  */
-interface SingletonInterface {
+interface SingletonInterface
+{
 
     /**
      * Retorna uma instância única do objeto em questão

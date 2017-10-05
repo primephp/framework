@@ -40,6 +40,7 @@ namespace Prime\Util\Interfaces;
  * @package Prime\Util\Interfaces
  * @createAt 24/08/2016
  */
-interface ISortedMap extends IMap {
+interface ISortedMap extends IMap
+{
     //put your code here
 }

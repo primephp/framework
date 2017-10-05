@@ -24,11 +24,12 @@ use Prime\Model\SQL\SQLUpdate;
  * @name Record
  * @package Prime\Model\DataSource
  * @version 2.0
- * @author Pablo Daglio / TomSailor
+ * @author Pablo Daglio / Elton Luiz
  * @since 18/08/2011
  * @access public
  */
-abstract class Model extends TObject implements IModel {
+abstract class Model extends TObject implements IModel
+{
 
     /**
      * Armazena os dados do Objeto Row DataGateway
@@ -57,7 +58,8 @@ abstract class Model extends TObject implements IModel {
      */
     protected $isLoad = FALSE;
 
-    public function __construct($id = null) {
+    public function __construct($id = null)
+    {
         if (!is_null($id)) {
             $this->load($id);
             $this->data[$this->getPrimaryKey()] = $id;
@@ -70,7 +72,8 @@ abstract class Model extends TObject implements IModel {
      * executado quando o objeto for clonado.
      * limpa o ID para que seja gerado um novo ID para o clone.
      */
-    public function __clone() {
+    public function __clone()
+    {
         unset($this->{$this->getPrimaryKey()});
     }
 
@@ -78,7 +81,8 @@ abstract class Model extends TObject implements IModel {
      * método __set()
      * executado sempre que uma propriedade for atribuída.
      */
-    public function __set($prop, $value) {
+    public function __set($prop, $value)
+    {
         // verifica se existe método set_<propriedade>
         if ($value === NULL) {
             unset($this->data[$prop]);
@@ -92,7 +96,8 @@ abstract class Model extends TObject implements IModel {
      * método __get()
      * executado sempre que uma propriedade for requerida
      */
-    public function __get($prop) {
+    public function __get($prop)
+    {
         if (isset($this->data[$prop])) {
             return $this->data[$prop];
         } else {
@@ -103,7 +108,8 @@ abstract class Model extends TObject implements IModel {
     /**
      * Inicializa internamente o objeto model
      */
-    protected function init() {
+    protected function init()
+    {
         $this->data = [];
         $this->oldData = [];
     }
@@ -112,11 +118,13 @@ abstract class Model extends TObject implements IModel {
      * Adiciona os nomes das colunas a serem utilizadas especificadamente na consulta SQL
      * @param type $columnsName
      */
-    public function addColumns($columnsName) {
+    public function addColumns($columnsName)
+    {
         $this->columns[] = $columnsName;
     }
 
-    private function getColumns() {
+    private function getColumns()
+    {
         if (is_array($this->columns)) {
             $total = count($this->columns);
             for ($index = 0; $index < $total; $index++) {
@@ -131,7 +139,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna o nome do campo que é a chave primária da entidade relacional
      * @return string
      */
-    public function getPrimaryKey() {
+    public function getPrimaryKey()
+    {
         return constant($this->getClass() . '::PRIMARY_KEY');
     }
 
@@ -140,7 +149,8 @@ abstract class Model extends TObject implements IModel {
      * @param mixed $id O valor da chave primária
      * @return array Os dados carregados
      */
-    public function load($id) {
+    public function load($id)
+    {
         return $this->loadByField($this->getPrimaryKey(), $id);
     }
 
@@ -150,7 +160,8 @@ abstract class Model extends TObject implements IModel {
      * @param mixed $value
      * @return array
      */
-    public function loadByField($field, $value) {
+    public function loadByField($field, $value)
+    {
         return $this->loadByCriteria(new SQLFilter($field, SQLFilter::IS_EQUAL, $value));
     }
 
@@ -159,7 +170,8 @@ abstract class Model extends TObject implements IModel {
      * @param SQLExpression $criteria
      * @return array
      */
-    public function loadByCriteria(SQLExpression $criteria) {
+    public function loadByCriteria(SQLExpression $criteria)
+    {
         return $this->fetch($this->preLoad($criteria));
     }
 
@@ -169,7 +181,8 @@ abstract class Model extends TObject implements IModel {
      * @param mixed $id
      * @return int O número de linhas com o ID passado
      */
-    private function exist($id) {
+    private function exist($id)
+    {
         $repo = new Repository($this->getClass());
         return $repo->count(new SQLFilter($this->getPrimaryKey(), SQLFilter::IS_EQUAL, $id));
     }
@@ -179,7 +192,8 @@ abstract class Model extends TObject implements IModel {
      * @param SQLExpression $criteria
      * @return \PDOStatement
      */
-    private function preLoad(SQLExpression $criteria) {
+    private function preLoad(SQLExpression $criteria)
+    {
         $sql = new SQLSelect();
         $sql->addColumn($this->getColumns());
         $sql->setEntity($this->getEntity());
@@ -198,7 +212,8 @@ abstract class Model extends TObject implements IModel {
      * @param PDOStatement $statement
      * @return array
      */
-    private function fetch(PDOStatement $statement) {
+    private function fetch(PDOStatement $statement)
+    {
         return $this->fromArray($statement->fetch(PDO::FETCH_ASSOC));
     }
 
@@ -207,7 +222,8 @@ abstract class Model extends TObject implements IModel {
      * @param SQLCriteria $criteria
      * @return array
      */
-    public function fetchAll(SQLCriteria $criteria) {
+    public function fetchAll(SQLCriteria $criteria)
+    {
         $repo = new Repository($this->getClass());
         return $repo->load($criteria);
     }
@@ -217,7 +233,8 @@ abstract class Model extends TObject implements IModel {
      * @param array $data
      * @return boolean
      */
-    public function fromArray($data) {
+    public function fromArray($data)
+    {
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $this->data[$key] = $value;
@@ -235,7 +252,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna TRUE caso o model carregou algum dado do Banco de Dados
      * @return boolean
      */
-    public function isLoaded() {
+    public function isLoaded()
+    {
         return $this->isLoad;
     }
 
@@ -243,7 +261,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna TRUE caso o model contenha algum dado
      * @return boolean
      */
-    public function isEmpty() {
+    public function isEmpty()
+    {
         if (count($this->data)) {
             return FALSE;
         }
@@ -254,7 +273,8 @@ abstract class Model extends TObject implements IModel {
      * Armazena os dados alterados ou inseridos no objeto
      * @return int O número de linhas afetadas pela instrução SQL
      */
-    public function store() {
+    public function store()
+    {
         if (empty($this->data[$this->getPrimaryKey()]) or ( !$this->exist($this->data[$this->getPrimaryKey()])
                 )) {
             $sql = $this->insert();
@@ -272,7 +292,8 @@ abstract class Model extends TObject implements IModel {
      * Atualiza um Row Datagateway
      * @return SQLInsert SQLInsert Statement
      */
-    private function insert() {
+    private function insert()
+    {
         $sql = new SQLInsert();
         $sql->setEntity($this->getEntity());
 
@@ -290,7 +311,8 @@ abstract class Model extends TObject implements IModel {
      * Atualiza um Row DataGateway
      * @return SQLUpdate SQLUpdate Statement
      */
-    private function update() {
+    private function update()
+    {
         $sql = new SQLUpdate();
         $sql->setEntity($this->getEntity());
         $sql->setCriteria(new SQLFilter($this->getPrimaryKey(), SQLFilter::IS_EQUAL, $this->{$this->getPrimaryKey()}));
@@ -302,7 +324,8 @@ abstract class Model extends TObject implements IModel {
         return $sql;
     }
 
-    private function fieldNewValue($key) {
+    private function fieldNewValue($key)
+    {
         if (isset($this->oldData[$key])) {
             if ($this->data[$key] != $this->oldData[$key]) {
                 return TRUE;
@@ -317,7 +340,8 @@ abstract class Model extends TObject implements IModel {
      * 
      * @return array
      */
-    public function toArray() {
+    public function toArray()
+    {
         return $this->data;
     }
 
@@ -327,7 +351,8 @@ abstract class Model extends TObject implements IModel {
      * @param mixed $id
      * @return int Retorna o número de linhas afetadas pela instrução SQL
      */
-    public function delete($id = NULL) {
+    public function delete($id = NULL)
+    {
         if (is_null($id)) {
             $id = $this->data[$this->getPrimaryKey()];
         }
@@ -345,7 +370,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna o nome da Tabela
      * @return str
      */
-    public function getEntity() {
+    public function getEntity()
+    {
         $class = $this->getClass();
         return constant("{$class}::TABLENAME");
     }
@@ -355,7 +381,8 @@ abstract class Model extends TObject implements IModel {
      * @return PDO
      * @throws Exception
      */
-    protected function getConnection() {
+    protected function getConnection()
+    {
         if ($conn = Connection::get()) {
             return $conn;
         } else {
@@ -367,7 +394,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna o nome da classe de dados
      * @return string O nome da Classe Model do Objeto
      */
-    public function getClass() {
+    public function getClass()
+    {
         return get_class($this);
     }
 
@@ -375,7 +403,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna o nome da classe de dados
      * @return string O nome da Classe Model do Objeto
      */
-    public static function getClassName() {
+    public static function getClassName()
+    {
         return get_called_class();
     }
 
@@ -385,7 +414,8 @@ abstract class Model extends TObject implements IModel {
      * T{Entidade}
      * @return int | str
      */
-    private function createPK() {
+    private function createPK()
+    {
         if (isset($this->data[$this->getPrimaryKey()])) {
             return $this->data[$this->getPrimaryKey()];
         }
@@ -409,7 +439,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna o tipo da PK 
      * @return string se do tipo inteiros ou string
      */
-    private function typePK() {
+    private function typePK()
+    {
         return constant($this->getClass() . '::KEY_TYPE');
     }
 
@@ -417,7 +448,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna a última string sql executada
      * @return string
      */
-    public function getStatement() {
+    public function getStatement()
+    {
         return $this->statement;
     }
 
@@ -425,7 +457,8 @@ abstract class Model extends TObject implements IModel {
      * Adiciona um error ao model
      * @param string $text
      */
-    public function addError($text) {
+    public function addError($text)
+    {
         $this->error->add($text);
     }
 
@@ -433,7 +466,8 @@ abstract class Model extends TObject implements IModel {
      * Verifica se o objeto model possui erro
      * @return boolean Caso TRUE o objeto possui erro
      */
-    public function hasError() {
+    public function hasError()
+    {
         return $this->error->hasError();
     }
 
@@ -441,7 +475,8 @@ abstract class Model extends TObject implements IModel {
      * Retorna um array contendo todos os textos de definição de Erros
      * @return array
      */
-    public function getErrors() {
+    public function getErrors()
+    {
         return $this->error->getErrors();
     }
 

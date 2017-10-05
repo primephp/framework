@@ -13,14 +13,16 @@ namespace Prime\Controller;
  * 
  * @name ControllerAction
  * @package Prime\Controller
- * @author tom
+ * @author Elton Luiz
  * @createAt 02/08/2015
  */
-abstract class AbstractControllerAction extends AbstractController {
+abstract class AbstractControllerAction extends AbstractController
+{
 
     abstract public function index();
 
-    public function __invoke() {
+    public function __invoke()
+    {
         $this->index();
     }
 

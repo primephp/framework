@@ -32,6 +32,7 @@ namespace Prime\Util\Set;
  * @author Tom Sailor
  * @createAt 24/08/2016
  */
-class HashSet implements \Prime\Util\Interfaces\ISet {
+class HashSet implements \Prime\Util\Interfaces\ISet
+{
     //put your code here
 }

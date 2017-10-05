@@ -32,9 +32,10 @@ namespace Prime\Util\Interfaces;
  * podem se repetir (seguindo o mesmo princípio da interface Set), mas os 
  * valores podem ser repetidos para chaves diferentes. Um Map também não possui 
  * necessariamente uma ordem definida para o percorrimento.
- * @author TomSailor
+ * @author Elton Luiz
  * @createAt 24/08/2016
  */
-interface IMap {
+interface IMap
+{
     //put your code here
 }

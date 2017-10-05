@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2015 quantum.
+ * Copyright 2015 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -37,12 +37,13 @@ use Symfony\Component\Debug\Debug;
 /**
  * Descrição da Classe Application
  *
- * @author TomSailor
+ * @author Elton Luiz
  * @name Application
  * @package Prime\Server\Http
  * @createAt 06/08/2015
  */
-class Application {
+class Application
+{
 
     /**
      * Armazena a instância única de instância do objeto Application
@@ -73,7 +74,8 @@ class Application {
      * @param RouteCollection $routes Coleção de rotas para o mapeamento da aplicação
      * @param array $config Array de configurações da aplicação
      */
-    private function __construct($routes = NULL) {
+    private function __construct($routes = NULL)
+    {
         if (is_null(static::$instance)) {
             static::$routes = new RouteCollection();
             $this->kernel = Kernel::getInstance(static::$routes);
@@ -84,7 +86,8 @@ class Application {
      * Retorna a instância do Kernel do Framework
      * @return Kernel
      */
-    public function getKernel() {
+    public function getKernel()
+    {
         return $this->kernel;
     }
 
@@ -92,7 +95,8 @@ class Application {
      * Implementação na aplicação para registrar os Listeners utilizados na aplicação
      * através do arquivo de configuração de Listeners
      */
-    private function registerListeners() {
+    private function registerListeners()
+    {
         $listeners = require Filesystem::getInstance()->getPath('root') . '/config/listeners.php';
         $dispatcher = $this->getKernel()->getDispatcher();
         foreach ($listeners as $listener) {
@@ -104,7 +108,8 @@ class Application {
      * Recupera o arquivo de configuração dos módulos e adiciona as suas respectivas 
      * rotas
      */
-    private function getModulesConfig() {
+    private function getModulesConfig()
+    {
         $dirModules = Filesystem::getInstance()->getPath('modules');
         $file = new FilesystemIterator($dirModules);
         foreach ($file as $fileinfo) {
@@ -122,7 +127,8 @@ class Application {
      * @param string $module
      * @return RouteCollection
      */
-    private function getConfigFile($module) {
+    private function getConfigFile($module)
+    {
         $file = $module . DS . 'config.php';
         if (file_exists($file)) {
             return require $file;
@@ -133,7 +139,8 @@ class Application {
      * Returns a single instance of the application Kernel
      * @return Application
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (is_null(static::$instance)) {
             static::$instance = new static();
         }
@@ -145,7 +152,8 @@ class Application {
      * @param boolean $debug Caso TRUE define o debug da aplicação
      * @return Application
      */
-    public function init($debug = FALSE) {
+    public function init($debug = FALSE)
+    {
         $this->getModulesConfig();
         $this->debug($debug);
         $this->database();
@@ -158,7 +166,8 @@ class Application {
      * Configura o debug da aplicação
      * @param boolean $debug
      */
-    private function debug($debug) {
+    private function debug($debug)
+    {
         if ($debug === TRUE) {
             $debug = Debug::enable();
         } else {
@@ -174,7 +183,8 @@ class Application {
      * requisição
      * @return Application
      */
-    public function finalyze() {
+    public function finalyze()
+    {
         $this->kernel->handle();
         return $this;
     }
@@ -182,7 +192,8 @@ class Application {
     /**
      * Carrega a configuração do banco de dados
      */
-    protected function database() {
+    protected function database()
+    {
         $array = require Filesystem::getInstance()->getPath('root') . '/config/database.php';
         Connection::config($array);
     }
@@ -191,7 +202,8 @@ class Application {
      * Carrega as configurações e faz a configuração inicial do uso do Twig
      * para a manipulação dos templates na aplicação
      */
-    protected function template() {
+    protected function template()
+    {
         $config = require Filesystem::getInstance()->getPath('root') . '/config/view.php';
         $twig = Template::setEnviroment($config);
         $twig->addExtension(new TwigExtension());

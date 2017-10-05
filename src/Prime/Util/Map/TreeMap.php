@@ -43,6 +43,7 @@ namespace Prime\Util\Map;
  * @package Prime\Util\Map
  * @createAt 24/08/2016
  */
-class TreeMap implements \Prime\Util\Interfaces\ISortedMap {
+class TreeMap implements \Prime\Util\Interfaces\ISortedMap
+{
     //put your code here
 }

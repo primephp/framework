@@ -7,9 +7,11 @@ namespace Prime\Html\Input;
  *
  * @author Elton Luiz
  */
-class HTMLInputEmail extends HTMLInput {
+class HTMLInputEmail extends HTMLInput
+{
 
-    public function __construct($name) {
+    public function __construct($name)
+    {
         parent::__construct();
         $this->element->name = $name;
         $this->element->id = $name;

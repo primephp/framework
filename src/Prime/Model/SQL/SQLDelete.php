@@ -7,13 +7,15 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê meios para manipulação de uma instrução de DELETE no banco de dados
  */
-final class SQLDelete extends SQLStatement {
+final class SQLDelete extends SQLStatement
+{
 
     /**
      * método getSQL()
      * retorna a instrução de DELETE em forma de string.
      */
-    public function getStatement() {
+    public function getStatement()
+    {
         // monta a string de DELETE
         $this->sql = "DELETE FROM {$this->entity}";
 

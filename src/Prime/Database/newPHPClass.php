@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 quantum.
+ * Copyright 2017 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -29,8 +29,9 @@ namespace Prime\Database;
 /**
  * Description of newPHPClass
  *
- * @author quantum
+ * @author Elton Luiz
  */
-class newPHPClass {
+class newPHPClass
+{
     //put your code here
 }

@@ -12,10 +12,11 @@ use Prime\Util\Interfaces\IList;
  * elementos. Porém os mesmos podem ser acessados além de seus índices de string 
  * por índices inteiros ordenados por ordem de adição a partir do 0 até o seu 
  * limite
- * @author tom
+ * @author Elton Luiz
  * @createAt 19/08/2016
  */
-class Vector extends AbstractList implements IList, IClonable, SerializableInterface {
+class Vector extends AbstractList implements IList, IClonable, SerializableInterface
+{
 
     /**
      * Armazena a associação do índices inteiros com os índices definidos pelo 
@@ -36,7 +37,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param int $int
      * @param string $index
      */
-    protected function associateIndex($int, $index) {
+    protected function associateIndex($int, $index)
+    {
         $this->indexes[$int] = $index;
         $this->lastIndex++;
     }
@@ -48,9 +50,10 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * internamete
      * @return string|NULL A chave do elemento dentro da coleção
      */
-    protected function getAssociateIndex($index) {
+    protected function getAssociateIndex($index)
+    {
         if (isset($this->indexes[$index])) {
-            return (int)$this->indexes[$index];
+            return (int) $this->indexes[$index];
         }
         return NULL;
     }
@@ -58,15 +61,17 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
     /**
      * @inherit
      */
-    public function add($e) {
+    public function add($e)
+    {
         parent::add($e);
-        $this->associateIndex($this->lastIndex, (string)$this->lastIndex);
+        $this->associateIndex($this->lastIndex, (string) $this->lastIndex);
     }
 
     /**
      * @inherit
      */
-    public function addIn($index, $element) {
+    public function addIn($index, $element)
+    {
         parent::addIn($index, $element);
         $this->associateIndex($this->lastIndex, $index);
     }
@@ -74,7 +79,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
     /**
      * @inherit
      */
-    public function addAll(ICollection $collection) {
+    public function addAll(ICollection $collection)
+    {
         foreach ($collection as $value) {
             $this->add($value);
         }
@@ -85,7 +91,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param $index
      * @return mixed|NULL
      */
-    public function elementAt($index) {
+    public function elementAt($index)
+    {
         if (isset($this->collection[$index])) {
             return $this->collection[$index];
         }
@@ -96,7 +103,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * Retorna o conteúdo da coleção serializado
      * @return string
      */
-    public function serialize() {
+    public function serialize()
+    {
         return serialize($this->toArray());
     }
 
@@ -105,7 +113,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * casos o índice existe o elementos o mesmo é substituído
      * @param array $anArray
      */
-    public function copyInto(array $anArray) {
+    public function copyInto(array $anArray)
+    {
         foreach ($anArray as $key => $value) {
             $this->set($key, $value);
         }
@@ -116,7 +125,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * inteiros
      * @return array
      */
-    public function elements() {
+    public function elements()
+    {
         $array = [];
         foreach ($this->toArray() as $element) {
             $array[] = $element;
@@ -128,7 +138,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * Retorna o primeiro elemento de Vector
      * @return mixed
      */
-    public function firstElement() {
+    public function firstElement()
+    {
         reset($this->collection);
         return current($this->collection);
     }
@@ -137,7 +148,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * Retorna o último elemento de Vector
      * @return mixed
      */
-    public function lastElement() {
+    public function lastElement()
+    {
         end($this->collection);
         return current($this->collection);
     }
@@ -148,7 +160,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param $e
      * @param $index
      */
-    public function setElementAt($e, $index) {
+    public function setElementAt($e, $index)
+    {
         $this->set($index, $e);
         $this->associateIndex($this->lastIndex, $index);
     }
@@ -161,7 +174,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param int $index
      * @return boolean
      */
-    public function removeElementAt($index) {
+    public function removeElementAt($index)
+    {
         return $this->removeIn($index);
     }
 
@@ -173,7 +187,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param mixed $e
      * @param int $index
      */
-    public function intertElementAt($e, $index) {
+    public function intertElementAt($e, $index)
+    {
         return $this->addIn($index, $e);
     }
 
@@ -184,7 +199,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * @param boolean $e Returna FALSE caso o elemento já esteja adicionado e não 
      * aceite duplicatas e TRUE caso tenha sido adicionado com sucesso.
      */
-    public function addElement($e) {
+    public function addElement($e)
+    {
         return $this->add($e);
     }
 
@@ -195,7 +211,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * ter um índice de um menor do que o valor que tinha antes. 
      * @param boolean $e
      */
-    public function removeElement($e) {
+    public function removeElement($e)
+    {
         return $this->remove($e);
     }
 
@@ -203,7 +220,8 @@ class Vector extends AbstractList implements IList, IClonable, SerializableInter
      * Remove todos os componentes deste vetor e define o seu tamanho para zero. 
      * @return type
      */
-    public function removeAllElements() {
+    public function removeAllElements()
+    {
         return $this->clear();
     }
 

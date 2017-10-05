@@ -11,11 +11,12 @@ use Prime\Model\SQL\SQLExpression;
  * @name IModel
  * @package Prime\Model\Interfaces
  * @version 1.0
- * @author TomSailor
+ * @author Elton Luiz
  * @since 08/10/2011
  * @access public
  */
-interface IModel {
+interface IModel
+{
 
     public function __construct($id = null);
 

@@ -10,29 +10,30 @@ use PDOException;
  * @package Prime\Model\DataSource
  * gerencia conexões com bancos de dados através de arquivos de configuração.
  */
-final class Connection {
+final class Connection
+{
 
     /**
      * Armazena a Transação ativa
      * @var PDO
      */
     private static $conn;
-    
-            
 
     /**
      * método __construct()
      * não existirão instâncias de Connection, por isto estamos marcando-o como private
      */
-    private function __construct() {
+    private function __construct()
+    {
         
     }
-    
+
     /**
      * Configura os dados para conexão com a base de dados da aplicação
      * @param array|string $conn_var
      */
-    public static function config($conn_var){
+    public static function config($conn_var)
+    {
         if (is_string($conn_var)) {
             $var = explode(':', $conn_var);
 
@@ -58,7 +59,8 @@ final class Connection {
      * ou um array associativo com as supracitadas chaves
      * @return PDO
      */
-    public static function open() {
+    public static function open()
+    {
         // lê as informações contidas no arquivo
         $user = isset(self::$config['user']) ? self::$config['user'] : NULL;
         $pass = isset(self::$config['pass']) ? self::$config['pass'] : NULL;
@@ -122,7 +124,8 @@ final class Connection {
      * Retorna a conexão ativa
      * @return PDO
      */
-    public static function get() {
+    public static function get()
+    {
         // retorna a conexão ativa
         if (!empty(self::$conn)) {
             return self::$conn;

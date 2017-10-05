@@ -31,6 +31,7 @@ namespace Prime\Core\Exceptions;
  *
  * @author Tom Sailor
  */
-class CompileWarningException  extends \ErrorException{
+class CompileWarningException extends \ErrorException
+{
     //put your code here
 }

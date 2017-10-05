@@ -15,10 +15,11 @@ namespace Prime\Core\Exceptions;
  * @author Elton Luiz
  * @createAt 15/08/2016
  */
-class IllegalArgumentException extends \RuntimeException {
+class IllegalArgumentException extends \RuntimeException
+{
 
-    public function __construct($message = "", $code = 0,
-            \Exception $previous = null) {
+    public function __construct($message = "", $code = 0, \Exception $previous = null)
+    {
         parent::__construct($message, $code, $previous);
     }
 

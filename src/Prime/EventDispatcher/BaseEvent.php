@@ -36,6 +36,7 @@ use Symfony\Component\EventDispatcher\GenericEvent;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-class BaseEvent extends GenericEvent {
+class BaseEvent extends GenericEvent
+{
     
 }

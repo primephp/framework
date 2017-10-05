@@ -34,6 +34,7 @@ namespace Prime\Controller;
  * @createAt 03/08/2015
  * @author Elton Luiz
  */
-class ControllerEvent extends Event {
+class ControllerEvent extends Event
+{
     //put your code here
 }

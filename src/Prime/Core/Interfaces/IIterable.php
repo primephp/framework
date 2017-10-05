@@ -1,7 +1,7 @@
 <?php
 
 /*
- * Copyright (C) 2014 tom
+ * Copyright (C) 2014 Elton Luiz
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,9 +24,10 @@ use Prime\Util\Interfaces\IIterator;
 
 /**
  * Define uma interface para objetos que possam ser iteráveis
- * @author tom
+ * @author Elton Luiz
  */
-interface IIterable extends IteratorAggregate {
+interface IIterable extends IteratorAggregate
+{
 
     /**
      * Retorna um iterador sobre um conjunto de elementos do Tipo X

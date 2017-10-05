@@ -19,7 +19,8 @@ namespace Prime\Util\Interfaces;
  * @author Tom Sailor
  * @create 14/08/2016
  */
-interface ISet extends ICollection {
+interface ISet extends ICollection
+{
 
     /**
      * Retorna o número de elementos do conjunto

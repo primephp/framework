@@ -5,8 +5,9 @@ namespace Prime\Html\Input;
 /**
  * Interface que define que o Lábel do Input deverá ser disposto antes do
  * input
- * @author tom
+ * @author Elton Luiz
  */
-interface IHtmlInputPreLabeled {
+interface IHtmlInputPreLabeled
+{
     //put your code here
 }

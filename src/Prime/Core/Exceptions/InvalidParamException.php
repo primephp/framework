@@ -33,6 +33,7 @@ use ErrorException;
  *
  * @author Tom Sailor
  */
-class InvalidParamException extends ErrorException{
+class InvalidParamException extends ErrorException
+{
     
 }
