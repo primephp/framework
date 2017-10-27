@@ -24,15 +24,17 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
+
+use Prime\Core\Exceptions\InvalidParamException;
+use Prime\Model\SQL\SQLSelect;
 
 /**
  * Description of Filter
  *
- * @author quantum
+ * @author Tom Sailor
  */
-class Filter implements ExpressionInterface
-{
+class SqlFilter extends AbstractExpression {
 
     /**
      * Nome do campo a ser utilizado no filtro
@@ -52,24 +54,24 @@ class Filter implements ExpressionInterface
      */
     private $value;
 
-    public function __construct($field, $operator, $value)
-    {
+    public function __construct($field, $operator, $value) {
         $this->setField($field);
         $this->setOperator($operator);
         $this->setValue($value);
     }
 
-    private function setField($field)
-    {
-        if(is_string($field)){
+    private function setField($field) {
+        if ($field instanceof SqlColumn) {
+            $field = $field->getName();
+        }
+        if (is_string($field)) {
             $this->variable = $field;
         } else {
-            throw new \Prime\Core\Exceptions\InvalidParamException("$field não é nome de campo válido");
+            throw new InvalidParamException("$field não é nome de campo válido");
         }
     }
 
-    private function setOperator($operator)
-    {
+    private function setOperator($operator) {
         if (in_array($operator, [
                     self::EQUALS,
                     self::GREATER_THAN,
@@ -85,15 +87,14 @@ class Filter implements ExpressionInterface
                 ])) {
             $this->operator = $operator;
         } else {
-            throw new \Prime\Core\Exceptions\InvalidParamException("$operator não é um tipo de operador de comparação SQL válido");
+            throw new InvalidParamException("$operator não é um tipo de operador de comparação SQL válido");
         }
     }
 
-    private function setValue($value)
-    {
+    private function setValue($value) {
         $this->value = $this->sanitizeValue($value);
     }
-    
+
     /**
      * 
      * Recebe um valor e faz as modificações necessárias
@@ -101,9 +102,8 @@ class Filter implements ExpressionInterface
      * podendo ser um integer/string/boolean ou array.
      * @param $value = valor a ser transformado
      */
-    private function sanitizeValue($value)
-    {
-        if(is_object($value)){
+    private function sanitizeValue($value) {
+        if (is_object($value)) {
             $value = $value->toString();
         }
         // caso seja um array
@@ -136,7 +136,7 @@ class Filter implements ExpressionInterface
         else if (is_bool($value)) {
             // armazena TRUE ou FALSE
             $result = $value ? 'TRUE' : 'FALSE';
-        } else if ($value instanceof SQLSelect) {
+        } else if ($value instanceof SqlSelect) {
             // caso seja uma instrução SQL SQLStatement
             $result = "(" . $value->getStatement() . ")";
         } else {
@@ -151,8 +151,7 @@ class Filter implements ExpressionInterface
     /**
      * {$inheritDoc}
      */
-    public function dump()
-    {
+    public function dump(): string {
         return "{$this->variable} {$this->operator} {$this->value}";
     }
 

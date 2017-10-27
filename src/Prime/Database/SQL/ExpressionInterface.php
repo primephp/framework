@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 Elton Luiz.
+ * Copyright 2017 quantum.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,15 +24,17 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
 
 /**
- * Operadores lógicos para consulta
- * @author Elton Luiz
+ *
+ * @author Tom Sailor
  */
-interface LogicalOperatorInterface
-{
-   const AND_OPERATOR = ' AND ';
-   const OR_OPERATOR = ' OR ';
-   const NOT = ' NOT ';
+interface ExpressionInterface extends RelationalOperatorInterface {
+
+    /**
+     * Retorna o conteúdo final da expressão
+     * @return string Uma string contendo a expressão SQL
+     */
+    public function dump(): string;
 }

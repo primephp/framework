@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 quantum.
+ * Copyright 2017 Elton Luiz.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,18 +24,24 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
 
 /**
- *
- * @author quantum
+ * Operadores relacionais usados para realização comparações entre valores, 
+ * em estrutula de controle
+ * @author Elton Luiz
  */
-interface ExpressionInterface extends RelationalOperatorInterface
+interface RelationalOperatorInterface extends LogicalOperatorInterface
 {
-    
-    /**
-     * Retorna o conteúdo final da expressão
-     * @return string Uma string contendo a expressão SQL
-     */
-    public function dump();
+    const EQUALS = ' = ';
+    const GREATER_THAN = ' > ';
+    const LESS_THAN = ' < ';
+    const GREATER_THAN_OR_EQUAL_TO = ' >= ';
+    const LESS_THAN_OR_EQUAL_TO = ' <= ';
+    const NOT_EQUAL_TO = ' <> ';
+    const BETWEEN = ' BETWEEN ';
+    const LIKE = ' LIKE ';
+    const IN = ' IN ';
+    const NOT_IN = ' NOT IN ';
+    const IS = ' IS ';
 }

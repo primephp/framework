@@ -24,24 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
 
 /**
- * Operadores relacionais usados para realização comparações entre valores, 
- * em estrutula de controle
+ * Operadores lógicos para consulta
  * @author Elton Luiz
  */
-interface RelationalOperatorInterface extends LogicalOperatorInterface
+interface LogicalOperatorInterface
 {
-    const EQUALS = ' = ';
-    const GREATER_THAN = ' > ';
-    const LESS_THAN = ' < ';
-    const GREATER_THAN_OR_EQUAL_TO = ' >= ';
-    const LESS_THAN_OR_EQUAL_TO = ' <= ';
-    const NOT_EQUAL_TO = ' <> ';
-    const BETWEEN = ' BETWEEN ';
-    const LIKE = ' LIKE ';
-    const IN = ' IN ';
-    const NOT_IN = ' NOT IN ';
-    const IS = ' IS ';
+   const AND_OPERATOR = ' AND ';
+   const OR_OPERATOR = ' OR ';
+   const NOT = ' NOT ';
 }

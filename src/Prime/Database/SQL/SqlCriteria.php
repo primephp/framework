@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
 
 use Prime\Core\TString;
 use Prime\Util\Collection\ArrayObject;
@@ -35,8 +35,7 @@ use Prime\Util\Collection\ArrayObject;
  *
  * @author Elton Luiz
  */
-class Criteria implements ExpressionInterface
-{
+class SqlCriteria extends AbstractExpression {
 
     /**
      * Armazena todos os filtros adicionados
@@ -50,8 +49,7 @@ class Criteria implements ExpressionInterface
      */
     private $operator;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->expression = new ArrayObject();
         $this->operator = new ArrayObject();
     }
@@ -59,8 +57,7 @@ class Criteria implements ExpressionInterface
     /**
      * Reseta todos os critérios da instrução SQL
      */
-    public function reset()
-    {
+    public function reset() {
         $this->expression->clear();
         $this->operator->clear();
     }
@@ -70,8 +67,7 @@ class Criteria implements ExpressionInterface
      * @param ExpressionInterface $criteria
      * @param string $operator
      */
-    public function add(ExpressionInterface $criteria, $operator = self::AND_OPERATOR)
-    {
+    public function add(ExpressionInterface $criteria, string $operator = self::AND_OPERATOR) {
         if ($this->expression->size() == 0) {
             $operator = NULL;
         }
@@ -83,8 +79,7 @@ class Criteria implements ExpressionInterface
      * Adiciona o filtro de critério
      * @param ExpressionInterface $filter
      */
-    private function addFilter(ExpressionInterface $filter)
-    {
+    private function addFilter(ExpressionInterface $filter) {
         $this->expression->add($filter);
     }
 
@@ -92,24 +87,23 @@ class Criteria implements ExpressionInterface
      * Adiciona o operador lógico para o filtro de critério
      * @param string $operator
      */
-    private function addFilterOperator($operator = NULL)
-    {
+    private function addFilterOperator($operator = NULL) {
         $this->operator->add($operator);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function dump()
-    {
-        $string = new TString();
+    public function dump(): string {
+        $string = new TString('(');
 
         foreach ($this->expression as $key => $value) {
             $string->concat($this->operator->offsetGet($key));
             $string->concat($value->dump());
         }
-        $result = trim($string->toString());
-        return "({$result})";
+        $string->trim();
+        $string->concat(')');
+        return $string->getValue();
     }
 
 }

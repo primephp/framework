@@ -24,7 +24,7 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\Sql;
+namespace Prime\Database\SQL;
 
 use Prime\Core\Exceptions\InvalidParamException;
 
@@ -34,8 +34,7 @@ use Prime\Core\Exceptions\InvalidParamException;
  * (SELECT, INSERT, DELETE e UPDATE)
  * @author Elton Luiz
  */
-abstract class AbstractStatement
-{
+abstract class AbstractStatement extends AbstractExpression {
 
     /**
      * Armazena a instrução sql utilizada pelo objeto SQL
@@ -55,22 +54,24 @@ abstract class AbstractStatement
      * @param string $entity O nome da entidade (tabela) que será manipulada
      * @throws InvalidParamException Caso o valor de $entity não seja uma string válida
      */
-    public function setEntity($entity)
-    {
+    public function setEntity(string $entity, string $alias = NULL) {
         if (is_string($entity)) {
-            $this->entity = $entity;
+            $this->entity = new EntityName($entity, $alias);
         } else {
             throw new InvalidParamException('O valor para $entity deve ser uma string válida');
         }
     }
 
     /**
-     * Retorna o nome da entidade (tabela) que será manipulada pela instrução SQL, 
-     * ou NULL caso não tenha sido definida
-     * @return string|NULL O nome da entidade ou null caso não tenha sido definida
+     * Retorna o nome da entidade (tabela) do SQL que será manipulada pela 
+     * instrução SQL.
+     * @return string
+     * @throws InvalidParamException Caso não tenha sido definido o nome da tabela
      */
-    public function getEntity()
-    {
+    public function getEntity(): string {
+        if (is_null($this->entity)) {
+            throw new InvalidParamException('Nome da Entidade não definida');
+        }
         return $this->entity;
     }
 
@@ -78,5 +79,13 @@ abstract class AbstractStatement
      * Retorna a instrução SQL
      * @return string A instrução SQL
      */
-    abstract public function getStatement();
+    abstract public function getStatement(): string;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function dump(): string {
+        return $this->getStatement();
+    }
+
 }
