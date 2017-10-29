@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLExpression
  * @package Prime\Model\SQL
  * classe abstrata para gerenciar expressões
+ * @deprecated
  */
 abstract class SQLExpression
 {

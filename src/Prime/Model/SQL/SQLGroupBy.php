@@ -7,6 +7,7 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * @since 21/01/2012
  * @author Elton Luiz
+ * @deprecated
  */
 final class SQLGroupBy extends SQLExpression
 {

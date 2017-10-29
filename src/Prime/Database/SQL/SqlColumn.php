@@ -4,7 +4,9 @@ namespace Prime\Database\SQL;
 
 /**
  * Classe representa uma única coluna numa instrução SQL
- *
+ * @name SqlColumn
+ * @package \Prime\Model\SQL
+ * @since 27/10/2017
  * @author Tom Sailor
  */
 class SqlColumn extends AbstractExpression {
@@ -21,7 +23,7 @@ class SqlColumn extends AbstractExpression {
     private $alias = NULL;
 
     /**
-     * Cria uma objeto do tipo COlumn responsábel por representar o nome de
+     * Cria uma objeto do tipo SqlColumn responsábel por representar o nome de
      * uma coluna de uma entidade de um SGBD
      * @param string $name Nome da coluna na tabela do SGBD
      * @param string $alias O álias a ser utilizado na coluna
@@ -42,7 +44,7 @@ class SqlColumn extends AbstractExpression {
     }
 
     /**
-     * 
+     * {@inheritDoc}
      */
     public function dump(): string {
         $string = new \Prime\Core\TString($this->name);

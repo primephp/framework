@@ -81,15 +81,17 @@ trait sqlPrepareValue {
      * retornando-o como uma string válida
      * @param mixed $value O valor a ser preparado
      * @return string Uma string válida para inserção no SGBD
+     * @throws InvalidParamException Lança uma exceção caso seja passado um 
+     * valor inválido
      */
     protected function prepareValue($value) {
-        if (is_object($value)) {
-            $value = $this->isObject($value);
-        }
         if (is_scalar($value)) {
-            $value = $this->isScalar($value);
+            return $this->isScalar($value);
         }
-        return $value;
+        if (is_object($value)) {
+            return $this->isObject($value);
+        }
+        throw new InvalidParamException("Parâmetro $value é inválido");
     }
 
 }

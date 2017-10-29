@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLInsert
  * @package Prime\Model\SQL
  * Esta classe provê meios para manipulação de uma instrução de INSERT no banco de dados
+ * @deprecated
  */
 
 final class SQLInsert extends SQLStatement

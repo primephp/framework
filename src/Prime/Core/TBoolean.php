@@ -11,14 +11,12 @@ use Prime\Core\Interfaces\StringInterface;
  * @author comforsup-0212
  * @dateCreate $(date)
  */
-class TBoolean extends TObject implements StringInterface
-{
+class TBoolean extends TObject implements StringInterface {
 
     const B_TRUE = TRUE;
     const B_FALSE = FALSE;
 
-    public function __construct($bool)
-    {
+    public function __construct($bool) {
         $this->data = NULL;
         $this->setValue($bool);
     }
@@ -28,22 +26,20 @@ class TBoolean extends TObject implements StringInterface
      * como uma string
      * @return string
      */
-    public function __toString()
-    {
-        return (string) $this->getValue();
+    public function __toString() {
+        $v = $this->getValue() ? 'TRUE' : 'FALSE';
+        return $v;
     }
 
     /**
      * Retorna o valor booleano do objeto Boolean
      * @return boolean
      */
-    public function getValue()
-    {
+    public function getValue() {
         return $this->data;
     }
 
-    public function setValue($value)
-    {
+    public function setValue($value) {
         $false = ['false', 'False', 'FALSE', 'no', 'No', 'n', 'N', '0', 'off',
             'Off', 'OFF', false, 0, null];
         $true = ['true', 'True', 'TRUE', 'yes', 'Yes', 'y', 'Y', '1',
@@ -65,8 +61,7 @@ class TBoolean extends TObject implements StringInterface
      * @param TBoolean $y
      * @return boolean
      */
-    public static function compare($x, $y)
-    {
+    public static function compare($x, $y) {
         if ($x === $y) {
             return TRUE;
         } else {
@@ -79,8 +74,7 @@ class TBoolean extends TObject implements StringInterface
      * @param TBoolean $b
      * @return TBoolean
      */
-    public function compareTo(TBoolean $b)
-    {
+    public function compareTo(TBoolean $b) {
         if ($this->getValue() === $b->getValue()) {
             return TRUE;
         } else {
@@ -94,8 +88,7 @@ class TBoolean extends TObject implements StringInterface
      * não é nulo e é igual, ignorando caso, para a string "true". 
      * @param string $s
      */
-    public static function parseBoolean($s)
-    {
+    public static function parseBoolean($s) {
         return new TBoolean($s);
     }
 
@@ -107,8 +100,7 @@ class TBoolean extends TObject implements StringInterface
      * @param mixed $b
      * @return TBoolean uma instância de Boolean $b
      */
-    public static function valueOf($b)
-    {
+    public static function valueOf($b) {
         return new TBoolean($b);
     }
 
@@ -116,8 +108,7 @@ class TBoolean extends TObject implements StringInterface
      * Retorna um objeto String representando o boolean especificado.
      * @return TString
      */
-    public function toTString()
-    {
+    public function toTString() {
         return self::getString($this->getValue());
     }
 
@@ -125,8 +116,7 @@ class TBoolean extends TObject implements StringInterface
      * Retorna o valor como uma string;
      * @return string
      */
-    public function toString()
-    {
+    public function toString() {
         return (string) $this;
     }
 
@@ -135,8 +125,7 @@ class TBoolean extends TObject implements StringInterface
      * @param TBoolean $b
      * @return TString
      */
-    public static function getString($b)
-    {
+    public static function getString($b) {
         if ($b == TRUE) {
             return new TString('TRUE');
         } else
@@ -150,8 +139,7 @@ class TBoolean extends TObject implements StringInterface
     /**
      * @inheritDoc
      */
-    public function isEmpty()
-    {
+    public function isEmpty() {
         if (empty($this->data['value'])) {
             return TRUE;
         } else {

@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLDelete
  * @package Prime\Model\SQL
  * Esta classe provê meios para manipulação de uma instrução de DELETE no banco de dados
+ * @deprecated
  */
 final class SQLDelete extends SQLStatement
 {

@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLSelect
  * @package Prime\Model\SQL
  * Esta classe provê meios para manipulação de uma instrução de SELECT no banco de dados
+ * @deprecated
  */
 
 final class SQLSelect extends SQLStatement

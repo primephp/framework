@@ -34,6 +34,8 @@ namespace Prime\Database\SQL;
  */
 class SqlBetween extends AbstractExpression {
 
+    use sqlPrepareValue;
+
     /**
      * @var string
      */
@@ -49,29 +51,49 @@ class SqlBetween extends AbstractExpression {
      */
     private $final;
 
+    /**
+     * Seleciona valores dentro de um determinado intervalo. Os valors podem ser
+     * números, texto ou datas
+     * O operador BETWEEN é inclusivo: os valores iniciais e finais estão incluídos
+     * @param string $field
+     * @param mixed $initial
+     * @param mixed $final
+     */
     public function __construct($field, $initial, $final) {
         $this->setField($field);
         $this->setInitialValue($initial);
         $this->setFinalValue($final);
     }
 
+    /**
+     * Define o nome do campo para seleção de valores dentro de um intervalo
+     * @param string $field
+     */
     public function setField(string $field) {
         $this->field = $field;
     }
 
-    public function setInitialValue(string $initial) {
-        $this->initial = $initial;
+    /**
+     * Define o valor inicial para comparação
+     * @param mixed $initial
+     */
+    public function setInitialValue($initial) {
+        $this->initial = $this->prepareValue($initial);
     }
 
-    public function setFinalValue(string $final) {
-        $this->final = $final;
+    /**
+     * Define o valor final para comparação
+     * @param mixed $final
+     */
+    public function setFinalValue($final) {
+        $this->final = $this->prepareValue($final);
     }
 
     /**
      * {@inheritDoc}
      */
     public function dump(): string {
-        return "{$this->field} BETWEEN '{$this->initial}' AND '{$this->final}'";
+        return "{$this->field} BETWEEN {$this->initial} AND {$this->final}";
     }
 
 }

@@ -49,6 +49,12 @@ abstract class AbstractStatement extends AbstractExpression {
      */
     protected $entity;
 
+    public function __construct($entityName = NULL) {
+        if (!is_null($entityName)) {
+            $this->setEntity($entity);
+        }
+    }
+
     /**
      * Define o nome da entidade (tabela) que será manipulada
      * @param string $entity O nome da entidade (tabela) que será manipulada

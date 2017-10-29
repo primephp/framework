@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLFilter
  * @package Prime\Model\SQL
  * Esta classe provê uma interface para definição de filtros de seleção
+ * @deprecated
  */
 class SQLFilter extends SQLExpression
 {

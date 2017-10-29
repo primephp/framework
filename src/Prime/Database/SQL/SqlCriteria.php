@@ -30,7 +30,7 @@ use Prime\Core\TString;
 use Prime\Util\Collection\ArrayObject;
 
 /**
- * A classe Where é usada para implementar filtros, definindo condições específicas
+ * A classe SqlCriteria é usada para implementar filtros, definindo condições específicas
  * para atingir apenas determinados registros em uma instrução SQL
  *
  * @author Elton Luiz
@@ -49,6 +49,9 @@ class SqlCriteria extends AbstractExpression {
      */
     private $operator;
 
+    /**
+     * SqlCritéria implementa filtros para uma instrução SQL
+     */
     public function __construct() {
         $this->expression = new ArrayObject();
         $this->operator = new ArrayObject();

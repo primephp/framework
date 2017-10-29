@@ -6,6 +6,7 @@ namespace Prime\Model\SQL;
  * classe SQLCriteria
  * @package Prime\Model\SQL
  * Esta classe provê uma interface utilizada para definição de critérios
+ * @deprecated
  */
 class SQLCriteria extends SQLExpression
 {

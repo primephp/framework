@@ -7,6 +7,7 @@ namespace Prime\Model\SQL;
  * @package Prime\Model\SQL
  * Esta classe provê os métodos em comum entre todas
  * instruções SQL (SELECT, INSERT, DELETE e UPDATE)
+ * @deprecated
  */
 abstract class SQLStatement
 {

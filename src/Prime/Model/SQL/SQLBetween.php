@@ -12,6 +12,7 @@ use Prime\Model\SQL\SQLExpression;
  * @since 10/06/2012
  * @access public
  * @author Elton Luiz
+ * @deprecated
  */
 class SQLBetween extends SQLExpression
 {
