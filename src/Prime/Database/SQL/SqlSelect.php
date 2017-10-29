@@ -17,7 +17,7 @@ class SqlSelect extends AbstractStatement {
      * @var string[]
      */
     private $columns = [];
-    
+
     /**
      *
      * @var sql
@@ -69,6 +69,22 @@ class SqlSelect extends AbstractStatement {
         $this->statement = $string->getValue();
 
         return $this->statement;
+    }
+
+    /**
+     * Define os critérios de busca
+     * @param \Prime\Database\SQL\ExpressionInterface $criteria
+     */
+    public function setCriteria(ExpressionInterface $criteria) {
+        $this->criteria = $criteria;
+    }
+
+    /**
+     * Retorna um objeto contendo os critérios de busca
+     * @return \Prime\Database\SQL\ExpressionInterface
+     */
+    public function getCriteria(): ExpressionInterface {
+        return $this->criteria;
     }
 
 }

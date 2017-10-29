@@ -22,8 +22,8 @@ use UnexpectedValueException;
  * @author Elton Luiz
  * @dateCreate 05JUN2014
  */
-abstract class AbstractCollection extends TObject implements ICollection
-{
+abstract class AbstractCollection extends TObject implements ICollection {
+
     /**
      * Array que armazena os objetos da coleção
      * @var array
@@ -43,8 +43,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @param string $typeCast Define o tipo de objeto que deve ser aceito
      * na coleção
      */
-    public function __construct($typeCast = 'mixed')
-    {
+    public function __construct($typeCast = 'mixed') {
         $this->setTypeCast($typeCast);
     }
 
@@ -54,8 +53,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      *
      * @param ICollection $collection        	
      */
-    public static function ofCollection(ICollection $collection)
-    {
+    public static function ofCollection(ICollection $collection) {
         $class = get_called_class();
         return new $class($collection->toArray());
     }
@@ -70,8 +68,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @throws UnexpectedValueException
      * @return int O total de elementos da coleção
      */
-    public function add($e)
-    {
+    public function add($e) {
         if (
                 $this->getTypeCast() == TInteger::class && is_int($e) ||
                 $this->getTypeCast() == TFloat::class && is_float($e) ||
@@ -90,8 +87,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @param mixed $e
      * @return boolean Retorna TRUE caso seja um tipo aceito
      */
-    protected function checkType($e)
-    {
+    protected function checkType($e) {
         if ($this->getTypeCast() == 'mixed') {
             return true;
         }
@@ -125,8 +121,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * na coleção atual.      	
      * @return boolean Retorna TRUE se os objetos foram adicionados
      */
-    public function addAll(ICollection $collection)
-    {
+    public function addAll(ICollection $collection) {
         $r = false;
         foreach ($collection as $value) {
             $this->add($value);
@@ -138,8 +133,7 @@ abstract class AbstractCollection extends TObject implements ICollection
     /**
      * Remove todos os elemenos desta coleção
      */
-    public function clear()
-    {
+    public function clear() {
         $this->collection = [];
     }
 
@@ -148,8 +142,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @param mixed $o
      * @return boolean
      */
-    public function contains($o)
-    {
+    public function contains($o) {
         if (array_search($o, $this->collection) === false) {
             return FALSE;
         }
@@ -163,8 +156,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @return boolean Retorna TRUE caso todos os elementos estejam contidos
      * na coleção
      */
-    public function containAll(ICollection $collection)
-    {
+    public function containAll(ICollection $collection) {
         foreach ($collection as $value) {
             if (!$this->contains($value)) {
                 return false;
@@ -179,17 +171,18 @@ abstract class AbstractCollection extends TObject implements ICollection
      *
      * @return boolean
      */
-    public function isEmpty()
-    {
-        return (bool) $this->size();
+    public function isEmpty() {
+        if ($this->size()) {
+            return false;
+        }
+        return true;
     }
 
     /**
      * Retorna um iterados para os elementos contidos na coleção
      * @return CollectionIterator
      */
-    public function iterator()
-    {
+    public function iterator() {
         return $this->getIterator();
     }
 
@@ -201,8 +194,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @return boolean Caso o elemeto passado como parâmetro exista na
      *         Collection, o remove e retorna TRUE, do contrário e retorna FALSE
      */
-    public function remove($o)
-    {
+    public function remove($o) {
         $index = array_search($o, $this->collection);
         if ($index !== FALSE) {
             unset($this->collection [$index]);
@@ -218,8 +210,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @param ICollection $collection
      * @return boolean Retorna TRUE se a coleção foi alterada
      */
-    public function removeAll(ICollection $collection)
-    {
+    public function removeAll(ICollection $collection) {
         $r = false;
         foreach ($collection as $element) {
             if ($this->remove($element)) {
@@ -235,8 +226,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * @param ICollection $collection
      * @return boolean Retorna TRUE se a coleção foi alterada
      */
-    public function retainAll(ICollection $collection)
-    {
+    public function retainAll(ICollection $collection) {
         $array = array();
         $r = false;
         foreach ($collection as $key => $value) {
@@ -257,8 +247,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      *
      * @return int
      */
-    public function size()
-    {
+    public function size() {
         return count($this->collection);
     }
 
@@ -266,8 +255,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * Retorna o tamanho da collection
      * @return int
      */
-    public function sizeOf()
-    {
+    public function sizeOf() {
         return $this->size();
     }
 
@@ -276,13 +264,11 @@ abstract class AbstractCollection extends TObject implements ICollection
      *
      * @return array
      */
-    public function toArray()
-    {
+    public function toArray() {
         return $this->collection;
     }
 
-    public function toJson()
-    {
+    public function toJson() {
         $r = array();
         foreach ($this as $key => $value) {
             $r[(string) $key] = (string) $value;
@@ -296,8 +282,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      *
      * @return \ArrayObject
      */
-    public function toArrayObject()
-    {
+    public function toArrayObject() {
         return new ArrayObject($this->collection);
     }
 
@@ -305,8 +290,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * Define o estereotipo dos objetos suportados
      * @param string $typeCast
      */
-    protected function setTypeCast($typeCast)
-    {
+    protected function setTypeCast($typeCast) {
         if (in_array($typeCast, array('string', 'String', 'STRING'))) {
             $this->typeCast = 'string';
         } else
@@ -327,8 +311,7 @@ abstract class AbstractCollection extends TObject implements ICollection
      * Retorna um CollectionIterator para iteração dos elementos da coleção
      * @return CollectionIterator
      */
-    public function getIterator()
-    {
+    public function getIterator() {
         return new CollectionIterator($this);
     }
 
@@ -336,18 +319,15 @@ abstract class AbstractCollection extends TObject implements ICollection
      * Retorna o tipo de objetos que a coleção aceita
      * @return string
      */
-    protected function getTypeCast()
-    {
+    protected function getTypeCast() {
         return $this->typeCast;
     }
 
-    public function __toString()
-    {
+    public function __toString() {
         return $this->hashCode();
     }
 
-    public function __debugInfo()
-    {
+    public function __debugInfo() {
         return $this->toArray();
     }
 
