@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 85101346.
+ * Copyright 2017 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,31 +26,35 @@
 
 namespace Prime\Database\SQL;
 
-use Prime\Core\TString;
-
 /**
- * @name SqlDelete
+ * @name sqlCriteriaExpression
  * @package Prime\Database\SQL
- * @since 29/10/2017
+ * @since29/10/2017
  * @author TomSailor
  */
-class SqlDelete extends AbstractStatement {
-
-    use sqlCriteriaExpression;
+trait sqlCriteriaExpression {
 
     /**
-     * {@inheritDoc}
+     * @var ExpressionInterface
      */
-    public function getStatement(): string {
-        $string = new TString('DELETE FROM ');
-        $string->concat($this->getEntity());
+    private $criteria;
 
-        if (!is_null($this->criteria)) {
-            $string->concat(' WHERE ' . $this->criteria->dump());
-        }
-        $this->statement = $string->getValue();
+    /**
+     * Define os critérios para a consulta
+     * @param ExpressionInterface $criteria
+     * @return $this
+     */
+    public function setCriteria(ExpressionInterface $criteria) {
+        $this->criteria = $criteria;
+        return $this;
+    }
 
-        return $this->statement;
+    /**
+     * Retorna o objeto de critério
+     * @return ExpressionInterface
+     */
+    public function getCriteria(): ExpressionInterface {
+        return $this->criteria;
     }
 
 }

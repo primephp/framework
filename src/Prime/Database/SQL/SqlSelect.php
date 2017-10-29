@@ -11,6 +11,8 @@ use Prime\Core\TString;
  */
 class SqlSelect extends AbstractStatement {
 
+    use sqlCriteriaExpression;
+
     /**
      * Armazena as colunas que deverão ser retornadas na execução da Instrução 
      * Select
@@ -19,12 +21,14 @@ class SqlSelect extends AbstractStatement {
     private $columns = [];
 
     /**
-     *
-     * @var sql
+     * @var SqlGroupBy
      */
-    private $criteria;
     private $groupBy;
     private $having;
+
+    /**
+     * @var SqlOrderBy
+     */
     private $orderBy;
     private $limit;
     private $offset;
@@ -56,15 +60,34 @@ class SqlSelect extends AbstractStatement {
     }
 
     /**
-     * 
-     * @return string
+     * {@inheritDoc}
      */
     public function getStatement(): string {
         $string = new TString('SELECT ');
 
-        $string->concat(implode(', ', $this->getColumns()));
+        $string->concat($this->_getColumns());
 
         $string->concat(' FROM ' . $this->getEntity());
+
+        if (!is_null($this->criteria)) {
+            $string->concat(' WHERE ' . $this->criteria->dump());
+        }
+
+        if (!is_null($this->groupBy)) {
+            $string->concat(' GROUP BY ' . $this->groupBy->dump());
+        }
+
+        if (!is_null($this->orderBy)) {
+            $string->concat(' ORDER BY ' . $this->orderBy->dump());
+        }
+
+        if (!is_null($this->limit)) {
+            $string->concat(' LIMIT ' . $this->getLimit());
+        }
+
+        if (!is_null($this->offset)) {
+            $string->concat(' OFFSET ' . $this->getOffset());
+        }
 
         $this->statement = $string->getValue();
 
@@ -72,19 +95,110 @@ class SqlSelect extends AbstractStatement {
     }
 
     /**
-     * Define os critérios de busca
-     * @param \Prime\Database\SQL\ExpressionInterface $criteria
+     * Retorna as colunas (campos) da tabelas que serão utilizadas no instrução
+     * Select, caso não tenha sido definido retorna '*', indicando que deverão
+     * retornar todas as colunas
+     * @return string
      */
-    public function setCriteria(ExpressionInterface $criteria) {
-        $this->criteria = $criteria;
+    private function _getColumns(): string {
+        if (count($this->columns)) {
+            return implode(', ', $this->getColumns());
+        }
+        return ' * ';
+    }
+
+
+
+    /**
+     * Retorna o objeto que define o agrupamento dos resultados da consulta
+     * @return \Prime\Database\SQL\SqlGroupBy
+     */
+    public function getGroupBy(): SqlGroupBy {
+        return $this->groupBy;
     }
 
     /**
-     * Retorna um objeto contendo os critérios de busca
-     * @return \Prime\Database\SQL\ExpressionInterface
+     * @todo Implementa o HAVING no select
+     * @return type
      */
-    public function getCriteria(): ExpressionInterface {
-        return $this->criteria;
+    public function getHaving() {
+        return $this->having;
+    }
+
+    /**
+     * Retorna o objeto que define o ordenamento dos objetos da consulta
+     * @return \Prime\Database\SQL\SqlOrderBy
+     */
+    public function getOrderBy(): SqlOrderBy {
+        return $this->orderBy;
+    }
+
+    /**
+     * Retorna o valor do limite de linhas que devem ser retornadas
+     * @return int
+     */
+    public function getLimit(): int {
+        return $this->limit;
+    }
+
+    /**
+     * Retorna o valor de linhas que devem ser puladas antes de começar a retornas
+     * os registros
+     * @return int
+     */
+    public function getOffset(): int {
+        return $this->offset;
+    }
+
+    /**
+     * Define o agrupamento da consulta
+     * @param \Prime\Database\SQL\SqlGroupBy $groupBy
+     * @return $this
+     */
+    public function setGroupBy(SqlGroupBy $groupBy) {
+        $this->groupBy = $groupBy;
+        return $this;
+    }
+
+    /**
+     * @todo Implementa o HAVING no select
+     * @param type $having
+     * @return $this
+     */
+    public function setHaving($having) {
+        $this->having = $having;
+        return $this;
+    }
+
+    /**
+     * Define o ordenamento do resultado da consulta
+     * @param \Prime\Database\SQL\SqlOrderBy $orderBy
+     * @return $this
+     */
+    public function setOrderBy(SqlOrderBy $orderBy) {
+        $this->orderBy = $orderBy;
+        return $this;
+    }
+
+    /**
+     * Define o limite de linhas que devem ser retornadas
+     * @param int $limit
+     * @return $this
+     */
+    public function setLimit(int $limit) {
+        $this->limit = $limit;
+        return $this;
+    }
+
+    /**
+     * Define a quantidade de linhas que devem ser puladas antes
+     * de começar a retornar os registros
+     * @param int $offset
+     * @return $this
+     */
+    public function setOffset(int $offset) {
+        $this->offset = $offset;
+        return $this;
     }
 
 }

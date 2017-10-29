@@ -61,8 +61,8 @@ class SqlOrderBy extends AbstractExpression {
      */
     public function add(string $column, string $order = self::ASC_OPERATOR): bool {
         if (is_string($column) && !is_numeric($column)) {
-            $this->struct = $column;
-            $this->order = $order;
+            $this->struct[] = $column;
+            $this->order[] = $order;
             return true;
         }
         return false;
