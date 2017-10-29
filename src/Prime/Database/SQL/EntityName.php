@@ -3,9 +3,10 @@
 namespace Prime\Database\SQL;
 
 /**
- * Description of EntityName
- *
- * @author 85101346
+ * @name EntityName
+ * @package Prime\Database\SQL
+ * @since 27/10/2017
+ * @author TomSailor
  */
 class EntityName extends \Prime\Database\SQL\AbstractExpression {
 

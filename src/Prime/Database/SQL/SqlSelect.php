@@ -17,6 +17,17 @@ class SqlSelect extends AbstractStatement {
      * @var string[]
      */
     private $columns = [];
+    
+    /**
+     *
+     * @var sql
+     */
+    private $criteria;
+    private $groupBy;
+    private $having;
+    private $orderBy;
+    private $limit;
+    private $offset;
 
     /**
      * Cria um objeto do tipo SqlSelect para criação de uma declaração SQL que

@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 Elton Luiz.
+ * Copyright 2017 wwwel.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,48 +26,20 @@
 
 namespace Prime\Database\SQL;
 
-use Prime\Core\Exceptions\InvalidParamException;
-
 /**
- * Descrição de AbstractStatement
- * Classe Abstrata que provê os métodos comuns entre todas as intruções SQL
- * (SELECT, INSERT, DELETE e UPDATE)
- * @author Elton Luiz
+ * @name StatementInterface
+ * @package Prime\Database\SQL
+ * @since29/10/2017
+ * @author Tom Sailor
  */
-abstract class AbstractStatement implements StatementInterface {
-
-    /**
-     * Armazena a instrução sql utilizada pelo objeto SQL
-     * @var string Instrução SQL
-     */
-    protected $statement;
-
-    /**
-     * Armazena o nome da entidade (tabela) que será manipulada pela instrução
-     * SQL
-     * @var string Nome da Tabela 
-     */
-    protected $entity;
-
-    public function __construct($entityName = NULL) {
-        if (!is_null($entityName)) {
-            $this->setEntity($entityName);
-        }
-    }
+interface StatementInterface {
 
     /**
      * Define o nome da entidade (tabela) que será manipulada
      * @param string $entity O nome da entidade (tabela) que será manipulada
-     * @param string $alias O alias para o nome da tabela a ser utilizado na instrução SQL
      * @throws InvalidParamException Caso o valor de $entity não seja uma string válida
      */
-    public function setEntity(string $entity, string $alias = NULL) {
-        if (is_string($entity)) {
-            $this->entity = new EntityName($entity, $alias);
-        } else {
-            throw new InvalidParamException('O valor para $entity deve ser uma string válida');
-        }
-    }
+    public function setEntity(string $entity);
 
     /**
      * Retorna o nome da entidade (tabela) do SQL que será manipulada pela 
@@ -75,16 +47,11 @@ abstract class AbstractStatement implements StatementInterface {
      * @return string
      * @throws InvalidParamException Caso não tenha sido definido o nome da tabela
      */
-    public function getEntity(): string {
-        if (is_null($this->entity)) {
-            throw new InvalidParamException('Nome da Entidade não definida');
-        }
-        return $this->entity;
-    }
+    public function getEntity(): string;
 
     /**
      * Retorna a instrução SQL
      * @return string A instrução SQL
      */
-    abstract public function getStatement(): string;
+    public function getStatement(): string;
 }

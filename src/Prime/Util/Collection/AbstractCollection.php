@@ -6,7 +6,6 @@
 
 namespace Prime\Util\Collection;
 
-use ArrayIterator;
 use ArrayObject;
 use Prime\Core\TFloat;
 use Prime\Core\TInteger;
@@ -25,7 +24,6 @@ use UnexpectedValueException;
  */
 abstract class AbstractCollection extends TObject implements ICollection
 {
-
     /**
      * Array que armazena os objetos da coleção
      * @var array
