@@ -29,9 +29,11 @@ namespace Prime\Database\SQL;
 use Prime\Core\Exceptions\InvalidParamException;
 
 /**
- * Descrição de AbstractStatement
  * Classe Abstrata que provê os métodos comuns entre todas as intruções SQL
  * (SELECT, INSERT, DELETE e UPDATE)
+ * @name AbstractStatement
+ * @package Prime\Database\SQL
+ * @since 27/10/2017
  * @author Elton Luiz
  */
 abstract class AbstractStatement implements StatementInterface {

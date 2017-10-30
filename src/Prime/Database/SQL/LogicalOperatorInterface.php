@@ -28,6 +28,9 @@ namespace Prime\Database\SQL;
 
 /**
  * Operadores lógicos para consulta
+ * @name LogicalOperatorInterface
+ * @package Prime\Database\SQL
+ * @since 27/10/2017
  * @author Elton Luiz
  */
 interface LogicalOperatorInterface

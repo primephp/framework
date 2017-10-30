@@ -29,10 +29,13 @@ namespace Prime\Database\SQL;
 /**
  * Operadores relacionais usados para realização comparações entre valores, 
  * em estrutula de controle
+ * @name RelationalOperatorInterface
+ * @package Prime\Database\SQL
+ * @since 27/10/2017
  * @author Elton Luiz
  */
-interface RelationalOperatorInterface extends LogicalOperatorInterface
-{
+interface RelationalOperatorInterface extends LogicalOperatorInterface {
+
     const EQUALS = ' = ';
     const GREATER_THAN = ' > ';
     const LESS_THAN = ' < ';
@@ -44,4 +47,5 @@ interface RelationalOperatorInterface extends LogicalOperatorInterface
     const IN = ' IN ';
     const NOT_IN = ' NOT IN ';
     const IS = ' IS ';
+
 }

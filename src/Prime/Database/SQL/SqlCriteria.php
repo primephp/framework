@@ -99,7 +99,10 @@ class SqlCriteria extends AbstractExpression {
      */
     public function dump(): string {
         $string = new TString('(');
-
+        
+        if(!count($this->expression)){
+            throw new \RuntimeException(__CLASS__.' sem filtros definidos');
+        }
         foreach ($this->expression as $key => $value) {
             $string->concat($this->operator->offsetGet($key));
             $string->concat($value->dump());

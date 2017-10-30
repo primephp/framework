@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 quantum.
+ * Copyright 2017 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -26,17 +26,47 @@
 
 namespace Prime\Database\SQL;
 
+use Prime\Core\TString;
+
 /**
- * @name ExpressionInterface
+ * @name SqlUpdate
  * @package Prime\Database\SQL
- * @since 27/10/2017
- * @author Tom Sailor
+ * @since 29/10/2017
+ * @author TomSailor
  */
-interface ExpressionInterface extends RelationalOperatorInterface {
+class SqlUpdate extends AbstractStatement {
+
+    use sqlCriteriaExpression;
+    use sqlColumnData;
 
     /**
-     * Retorna o conteúdo final da expressão
-     * @return string Uma string contendo a expressão SQL
+     * {@inheritDoc} 
      */
-    public function dump():string;
+    public function getStatement(): string {
+        $string = new TString('UPDATE ' . $this->getEntity());
+
+        $string->concat(' SET ' . $this->getColumnsSets());
+
+        if ($this->criteria) {
+            $string->concat(' WHERE ' . $this->criteria->dump());
+        }
+        $this->statement = $string->getValue();
+        return $this->statement;
+    }
+
+    /**
+     * Retorna as colunas e seus respectivos valores já preparados
+     * @return string
+     */
+    private function getColumnsSets(): string {
+        $set = [];
+        if ($this->columnsValues) {
+            foreach ($this->columnsValues as $key => $value) {
+                $set[] = "{$key} = {$value}";
+            }
+        }
+
+        return implode(', ', $set);
+    }
+
 }
