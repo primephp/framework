@@ -9,7 +9,8 @@ namespace Prime\Database\SQL;
  * @since 27/10/2017
  * @author Tom Sailor
  */
-class SqlColumn extends AbstractExpression {
+class SqlColumn extends AbstractExpression
+{
 
     /**
      *
@@ -28,7 +29,8 @@ class SqlColumn extends AbstractExpression {
      * @param string $name Nome da coluna na tabela do SGBD
      * @param string $alias O álias a ser utilizado na coluna
      */
-    public function __construct(string $name, $alias = NULL) {
+    public function __construct(string $name, $alias = NULL)
+    {
         $this->name = $name;
         if (!is_null($alias)) {
             $this->alias = $alias;
@@ -39,14 +41,16 @@ class SqlColumn extends AbstractExpression {
      * Retorna o nome da coluna
      * @return string
      */
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         $string = new \Prime\Core\TString($this->name);
         if (!is_null($this->alias)) {
             $string->concat(' AS ' . $this->alias);

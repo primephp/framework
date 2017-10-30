@@ -32,6 +32,7 @@ namespace Prime\Core\Interfaces;
  */
 interface StringInterface
 {
+
     /**
      * Retorna o conteúdo do objeto como uma string
      * @return string O Conteúdo do objeto

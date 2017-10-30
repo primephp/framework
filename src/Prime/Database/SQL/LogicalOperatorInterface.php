@@ -35,7 +35,9 @@ namespace Prime\Database\SQL;
  */
 interface LogicalOperatorInterface
 {
-   const AND_OPERATOR = ' AND ';
-   const OR_OPERATOR = ' OR ';
-   const NOT = ' NOT ';
+
+    const AND_OPERATOR = ' AND ';
+    const OR_OPERATOR = ' OR ';
+    const NOT = ' NOT ';
+
 }

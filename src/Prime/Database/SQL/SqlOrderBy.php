@@ -14,7 +14,8 @@ namespace Prime\Database\SQL;
  *
  * @author Tom Sailor
  */
-class SqlOrderBy extends AbstractExpression {
+class SqlOrderBy extends AbstractExpression
+{
 
     const DESC_OPERATOR = " desc ";
     const ASC_OPERATOR = " asc ";
@@ -34,7 +35,8 @@ class SqlOrderBy extends AbstractExpression {
      * @param array $column
      * @param string $order 
      */
-    public function __construct($column = NULL, $order = '') {
+    public function __construct($column = NULL, $order = '')
+    {
         if (is_array($column) || is_string($column)) {
             $this->add($column, $order);
         }
@@ -46,7 +48,8 @@ class SqlOrderBy extends AbstractExpression {
      * @param string $order Tipo de ordenamento utilizado para todos os campos
      * adicionados
      */
-    public function addArray(array $columns, string $order = self::ASC_OPERATOR) {
+    public function addArray(array $columns, string $order = self::ASC_OPERATOR)
+    {
         foreach ($columns as $value) {
             $this->add($value, $order);
         }
@@ -59,7 +62,8 @@ class SqlOrderBy extends AbstractExpression {
      * @return bool Retorna true caso seja um valor válido e false caso não seja
      * um valor válido
      */
-    public function add(string $column, string $order = self::ASC_OPERATOR): bool {
+    public function add(string $column, string $order = self::ASC_OPERATOR): bool
+    {
         if (is_string($column) && !is_numeric($column)) {
             $this->struct[] = $column;
             $this->order[] = $order;
@@ -71,7 +75,8 @@ class SqlOrderBy extends AbstractExpression {
     /**
      * {@inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         $dump = '';
         $total = count($this->struct);
         for ($index = 0; $index < $total; $index++) {

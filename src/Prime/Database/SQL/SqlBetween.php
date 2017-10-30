@@ -32,9 +32,10 @@ namespace Prime\Database\SQL;
  * O operador BETWEEN é inclusivo: os valores iniciais e finais estão incluídos
  * @author Tom Sailor
  */
-class SqlBetween extends AbstractExpression {
+class SqlBetween extends AbstractExpression
+{
 
-    use sqlPrepareValue;
+    use SqlPrepareValueTrait;
 
     /**
      * @var string
@@ -59,7 +60,8 @@ class SqlBetween extends AbstractExpression {
      * @param mixed $initial
      * @param mixed $final
      */
-    public function __construct($field, $initial, $final) {
+    public function __construct($field, $initial, $final)
+    {
         $this->setField($field);
         $this->setInitialValue($initial);
         $this->setFinalValue($final);
@@ -69,7 +71,8 @@ class SqlBetween extends AbstractExpression {
      * Define o nome do campo para seleção de valores dentro de um intervalo
      * @param string $field
      */
-    public function setField(string $field) {
+    public function setField(string $field)
+    {
         $this->field = $field;
     }
 
@@ -77,7 +80,8 @@ class SqlBetween extends AbstractExpression {
      * Define o valor inicial para comparação
      * @param mixed $initial
      */
-    public function setInitialValue($initial) {
+    public function setInitialValue($initial)
+    {
         $this->initial = $this->prepareValue($initial);
     }
 
@@ -85,14 +89,16 @@ class SqlBetween extends AbstractExpression {
      * Define o valor final para comparação
      * @param mixed $final
      */
-    public function setFinalValue($final) {
+    public function setFinalValue($final)
+    {
         $this->final = $this->prepareValue($final);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         return "{$this->field} BETWEEN {$this->initial} AND {$this->final}";
     }
 

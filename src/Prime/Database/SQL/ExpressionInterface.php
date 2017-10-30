@@ -32,11 +32,12 @@ namespace Prime\Database\SQL;
  * @since 27/10/2017
  * @author Tom Sailor
  */
-interface ExpressionInterface extends RelationalOperatorInterface {
+interface ExpressionInterface extends RelationalOperatorInterface
+{
 
     /**
      * Retorna o conteúdo final da expressão
      * @return string Uma string contendo a expressão SQL
      */
-    public function dump():string;
+    public function dump(): string;
 }

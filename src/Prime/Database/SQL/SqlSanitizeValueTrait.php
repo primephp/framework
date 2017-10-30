@@ -27,12 +27,13 @@
 namespace Prime\Database\SQL;
 
 /**
- * @name sqlSanitizeValue
+ * @name SqlSanitizeValueTrait
  * @package Prime\Database\SQL
  * @since29/10/2017
  * @author TomSailor
  */
-trait sqlSanitizeValue {
+trait SqlSanitizeValueTrait
+{
 
     /**
      * 
@@ -41,7 +42,8 @@ trait sqlSanitizeValue {
      * podendo ser um integer/string/boolean ou array.
      * @param $value = valor a ser transformado
      */
-    private function sanitizeValue($value) {
+    private function sanitizeValue($value)
+    {
         if (is_object($value)) {
             $value = $value->toString();
         }

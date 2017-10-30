@@ -9,9 +9,10 @@ use Prime\Core\TString;
  *
  * @author Tom Sailor
  */
-class SqlSelect extends AbstractStatement {
+class SqlSelect extends AbstractStatement
+{
 
-    use sqlCriteriaExpression;
+    use SqlCriteriaExpression;
 
     /**
      * Armazena as colunas que deverão ser retornadas na execução da Instrução 
@@ -38,7 +39,8 @@ class SqlSelect extends AbstractStatement {
      * retorna um conjunto de resultados de registros de uma ou mais tabelas
      * @param string $entityName
      */
-    public function __construct(string $entityName, string $alias = NULL) {
+    public function __construct(string $entityName, string $alias = NULL)
+    {
         $this->setEntity($entityName, $alias);
     }
 
@@ -47,7 +49,8 @@ class SqlSelect extends AbstractStatement {
      * sido predefinidos colunas para serem retornadas na instrução SQL
      * @return array
      */
-    public function getColumns(): array {
+    public function getColumns(): array
+    {
         return $this->columns;
     }
 
@@ -55,14 +58,16 @@ class SqlSelect extends AbstractStatement {
      * Adiciona uma coluna a ser retornada pelo SELECT
      * @param string $column O nome da tabela 
      */
-    public function addColumn(SqlColumn $column) {
+    public function addColumn(SqlColumn $column)
+    {
         $this->columns[] = $column;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function getStatement(): string {
+    public function getStatement(): string
+    {
         $string = new TString('SELECT ');
 
         $string->concat($this->_getColumns());
@@ -100,20 +105,20 @@ class SqlSelect extends AbstractStatement {
      * retornar todas as colunas
      * @return string
      */
-    private function _getColumns(): string {
+    private function _getColumns(): string
+    {
         if (count($this->columns)) {
             return implode(', ', $this->getColumns());
         }
         return ' * ';
     }
 
-
-
     /**
      * Retorna o objeto que define o agrupamento dos resultados da consulta
      * @return \Prime\Database\SQL\SqlGroupBy
      */
-    public function getGroupBy(): SqlGroupBy {
+    public function getGroupBy(): SqlGroupBy
+    {
         return $this->groupBy;
     }
 
@@ -121,7 +126,8 @@ class SqlSelect extends AbstractStatement {
      * @todo Implementa o HAVING no select
      * @return type
      */
-    public function getHaving() {
+    public function getHaving()
+    {
         return $this->having;
     }
 
@@ -129,7 +135,8 @@ class SqlSelect extends AbstractStatement {
      * Retorna o objeto que define o ordenamento dos objetos da consulta
      * @return \Prime\Database\SQL\SqlOrderBy
      */
-    public function getOrderBy(): SqlOrderBy {
+    public function getOrderBy(): SqlOrderBy
+    {
         return $this->orderBy;
     }
 
@@ -137,7 +144,8 @@ class SqlSelect extends AbstractStatement {
      * Retorna o valor do limite de linhas que devem ser retornadas
      * @return int
      */
-    public function getLimit(): int {
+    public function getLimit(): int
+    {
         return $this->limit;
     }
 
@@ -146,7 +154,8 @@ class SqlSelect extends AbstractStatement {
      * os registros
      * @return int
      */
-    public function getOffset(): int {
+    public function getOffset(): int
+    {
         return $this->offset;
     }
 
@@ -155,7 +164,8 @@ class SqlSelect extends AbstractStatement {
      * @param \Prime\Database\SQL\SqlGroupBy $groupBy
      * @return $this
      */
-    public function setGroupBy(SqlGroupBy $groupBy) {
+    public function setGroupBy(SqlGroupBy $groupBy)
+    {
         $this->groupBy = $groupBy;
         return $this;
     }
@@ -165,7 +175,8 @@ class SqlSelect extends AbstractStatement {
      * @param type $having
      * @return $this
      */
-    public function setHaving($having) {
+    public function setHaving($having)
+    {
         $this->having = $having;
         return $this;
     }
@@ -175,7 +186,8 @@ class SqlSelect extends AbstractStatement {
      * @param \Prime\Database\SQL\SqlOrderBy $orderBy
      * @return $this
      */
-    public function setOrderBy(SqlOrderBy $orderBy) {
+    public function setOrderBy(SqlOrderBy $orderBy)
+    {
         $this->orderBy = $orderBy;
         return $this;
     }
@@ -185,7 +197,8 @@ class SqlSelect extends AbstractStatement {
      * @param int $limit
      * @return $this
      */
-    public function setLimit(int $limit) {
+    public function setLimit(int $limit)
+    {
         $this->limit = $limit;
         return $this;
     }
@@ -196,7 +209,8 @@ class SqlSelect extends AbstractStatement {
      * @param int $offset
      * @return $this
      */
-    public function setOffset(int $offset) {
+    public function setOffset(int $offset)
+    {
         $this->offset = $offset;
         return $this;
     }

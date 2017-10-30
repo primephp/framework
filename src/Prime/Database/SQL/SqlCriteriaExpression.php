@@ -26,56 +26,40 @@
 
 namespace Prime\Database\SQL;
 
+use Prime\Database\SQL\ExpressionInterface as ExpressionInterface;
+
 /**
- * @name sqlColumnData
+ * @name SqlCriteriaExpression
  * @package Prime\Database\SQL
- * @since29/10/2017
+ * @since 29/10/2017
  * @author TomSailor
  */
-trait sqlColumnData {
-
-    use sqlPrepareValue;
-
-    /**
-     * @var array
-     */
-    private $columnsValues;
+trait SqlCriteriaExpression
+{
 
     /**
-     * Define o valor para a coluna
-     * @param string $column
-     * @param mixed $value
+     * @var ExpressionInterface
      */
-    public function setColumnData(string $column, $value) {
-        $this->columnsValues[$column] = $this->prepareValue($value);
+    private $criteria;
+
+    /**
+     * Define os critérios para a consulta
+     * @param ExpressionInterface $criteria
+     * @return $this
+     */
+    public function setCriteria(ExpressionInterface $criteria)
+    {
+        $this->criteria = $criteria;
+        return $this;
     }
 
     /**
-     * Retorna o valor definido para a respectiva coluna
-     * @param string $name O nome da coluna 
-     * @return string O valor da coluna
+     * Retorna o objeto de critério
+     * @return ExpressionInterface
      */
-    public function getColumnValue($name) {
-        return $this->columnsValues[$name];
-    }
-
-    /**
-     * Retorna returna uma string referente a coluna no padrão "column = value"
-     * @param string $name O nome da coluna
-     * @return string Uma string contendo column = value
-     */
-    public function getColumnSet(string $name): string {
-        if (isset($this->columnsValues[$name])) {
-            return "{$name} = {$this->columnsValues[$name]}";
-        }
-    }
-
-    /**
-     * Retorna um objeto array contendo todas colunas e seus respectivos valores
-     * @return array
-     */
-    private function getColumns(): array {
-        return $this->columnsValues;
+    public function getCriteria(): ExpressionInterface
+    {
+        return $this->criteria;
     }
 
 }

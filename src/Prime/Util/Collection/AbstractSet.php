@@ -22,5 +22,5 @@ use Prime\Util\Interfaces\ISet;
  */
 class AbstractSet extends AbstractCollection implements ISet
 {
-
+    
 }

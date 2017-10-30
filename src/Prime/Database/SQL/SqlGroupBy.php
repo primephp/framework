@@ -34,7 +34,8 @@ use Prime\Util\Collection\ArrayObject;
  * @since 29/10/2017
  * @author TomSailor
  */
-class SqlGroupBy extends AbstractExpression {
+class SqlGroupBy extends AbstractExpression
+{
 
     /**
      * Um array que armazena todas os nomes de campos que formaram a cláusula
@@ -49,10 +50,11 @@ class SqlGroupBy extends AbstractExpression {
      * @param string $column Coluna a ser adicionada
      * @param string $columns
      */
-    public function __construct($column, ...$columns) {
+    public function __construct($column, ...$columns)
+    {
         $this->struct = new ArrayObject();
         $this->add($column);
-        if(is_array($columns)){
+        if (is_array($columns)) {
             foreach ($columns as $field) {
                 $this->add($field);
             }
@@ -63,15 +65,17 @@ class SqlGroupBy extends AbstractExpression {
      * Adiciona uma coluna para agrupamento
      * @param string $column nome do campo(coluna) a ser adicionado
      */
-    public function add($column) {
+    public function add($column)
+    {
         $this->struct->add($column);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function dump():string {
-        if(!$this->struct->isEmpty()){
+    public function dump(): string
+    {
+        if (!$this->struct->isEmpty()) {
             return implode(', ', $this->struct->toArray());
         }
     }

@@ -8,7 +8,8 @@ namespace Prime\Database\SQL;
  * @since 27/10/2017
  * @author TomSailor
  */
-class EntityName extends \Prime\Database\SQL\AbstractExpression {
+class EntityName extends \Prime\Database\SQL\AbstractExpression
+{
 
     /**
      * Nome da Entidade 
@@ -22,7 +23,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
      */
     private $alias;
 
-    public function __construct(string $name, string $alias = null) {
+    public function __construct(string $name, string $alias = null)
+    {
         $this->setName($name);
         if (!is_null($alias)) {
             $this->setAlias($alias);
@@ -33,7 +35,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
      * Define o nome da entidade(tabela)
      * @param string $name
      */
-    private function setName(string $name) {
+    private function setName(string $name)
+    {
         $this->name = $name;
     }
 
@@ -41,7 +44,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
      * Define um alias para a entidade(tabela)
      * @param string $alias
      */
-    private function setAlias(string $alias) {
+    private function setAlias(string $alias)
+    {
         $this->alias = $alias;
     }
 
@@ -49,7 +53,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
      * Retorna o nome da entidade(tabela)
      * @return string
      */
-    public function getName(): string {
+    public function getName(): string
+    {
         return $this->name;
     }
 
@@ -57,7 +62,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
      * Retona o nome-alias definido para a entidade(tabela)
      * @return string
      */
-    public function getAlias(): string {
+    public function getAlias(): string
+    {
         if (is_null($this->alias)) {
             return $this->name;
         }
@@ -67,7 +73,8 @@ class EntityName extends \Prime\Database\SQL\AbstractExpression {
     /**
      * {@inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         $value = $this->getName();
         if (!is_null($this->alias)) {
             $value .= " AS $this->alias";

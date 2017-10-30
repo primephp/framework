@@ -34,7 +34,7 @@ use Prime\Core\Exceptions\InvalidParamException;
  * @since 28/10/2017
  * @author TomSailor
  */
-trait sqlPrepareValue {
+trait SqlPrepareValueTrait {
 
     /**
      * Retorna uma string caso o objeto tenha método conhecido para retornar

@@ -12,6 +12,7 @@ use \Prime\Core\TObject;
  */
 abstract class AbstractView extends TObject implements ViewInterface
 {
+
     use \Prime\Io\PrintableTrait;
 
     /**
@@ -64,4 +65,5 @@ abstract class AbstractView extends TObject implements ViewInterface
     {
         return $this->getContents();
     }
+
 }

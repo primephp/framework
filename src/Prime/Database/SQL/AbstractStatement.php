@@ -36,7 +36,8 @@ use Prime\Core\Exceptions\InvalidParamException;
  * @since 27/10/2017
  * @author Elton Luiz
  */
-abstract class AbstractStatement implements StatementInterface {
+abstract class AbstractStatement implements StatementInterface
+{
 
     /**
      * Armazena a instrução sql utilizada pelo objeto SQL
@@ -51,7 +52,8 @@ abstract class AbstractStatement implements StatementInterface {
      */
     protected $entity;
 
-    public function __construct($entityName = NULL) {
+    public function __construct($entityName = NULL)
+    {
         if (!is_null($entityName)) {
             $this->setEntity($entityName);
         }
@@ -63,7 +65,8 @@ abstract class AbstractStatement implements StatementInterface {
      * @param string $alias O alias para o nome da tabela a ser utilizado na instrução SQL
      * @throws InvalidParamException Caso o valor de $entity não seja uma string válida
      */
-    public function setEntity(string $entity, string $alias = NULL) {
+    public function setEntity(string $entity, string $alias = NULL)
+    {
         if (is_string($entity)) {
             $this->entity = new EntityName($entity, $alias);
         } else {
@@ -77,7 +80,8 @@ abstract class AbstractStatement implements StatementInterface {
      * @return string
      * @throws InvalidParamException Caso não tenha sido definido o nome da tabela
      */
-    public function getEntity(): string {
+    public function getEntity(): string
+    {
         if (is_null($this->entity)) {
             throw new InvalidParamException('Nome da Entidade não definida');
         }

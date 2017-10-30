@@ -33,9 +33,10 @@ use Prime\Core\Exceptions\InvalidParamException;
  *
  * @author Tom Sailor
  */
-class SqlFilter extends AbstractExpression {
+class SqlFilter extends AbstractExpression
+{
 
-    use sqlSanitizeValue;
+    use SqlSanitizeValueTrait;
 
     /**
      * Nome do campo a ser utilizado no filtro
@@ -55,13 +56,15 @@ class SqlFilter extends AbstractExpression {
      */
     private $value;
 
-    public function __construct($field, $operator, $value) {
+    public function __construct($field, $operator, $value)
+    {
         $this->setField($field);
         $this->setOperator($operator);
         $this->setValue($value);
     }
 
-    private function setField($field) {
+    private function setField($field)
+    {
         if ($field instanceof SqlColumn) {
             $field = $field->getName();
         }
@@ -72,7 +75,8 @@ class SqlFilter extends AbstractExpression {
         }
     }
 
-    private function setOperator($operator) {
+    private function setOperator($operator)
+    {
         if (in_array($operator, [
                     self::EQUALS,
                     self::GREATER_THAN,
@@ -92,14 +96,16 @@ class SqlFilter extends AbstractExpression {
         }
     }
 
-    private function setValue($value) {
+    private function setValue($value)
+    {
         $this->value = $this->sanitizeValue($value);
     }
 
     /**
      * {$inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         return "{$this->variable} {$this->operator} {$this->value}";
     }
 

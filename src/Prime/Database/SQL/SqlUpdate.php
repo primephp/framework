@@ -34,15 +34,17 @@ use Prime\Core\TString;
  * @since 29/10/2017
  * @author TomSailor
  */
-class SqlUpdate extends AbstractStatement {
+class SqlUpdate extends AbstractStatement
+{
 
-    use sqlCriteriaExpression;
-    use sqlColumnData;
+    use SqlCriteriaExpression;
+    use SqlColumnDataTrait;
 
     /**
      * {@inheritDoc} 
      */
-    public function getStatement(): string {
+    public function getStatement(): string
+    {
         $string = new TString('UPDATE ' . $this->getEntity());
 
         $string->concat(' SET ' . $this->getColumnsSets());
@@ -58,12 +60,15 @@ class SqlUpdate extends AbstractStatement {
      * Retorna as colunas e seus respectivos valores já preparados
      * @return string
      */
-    private function getColumnsSets(): string {
+    private function getColumnsSets(): string
+    {
         $set = [];
         if ($this->columnsValues) {
             foreach ($this->columnsValues as $key => $value) {
                 $set[] = "{$key} = {$value}";
             }
+        } else {
+            throw new \RuntimeException('Valores para atualização na definidos em ' . __CLASS__);
         }
 
         return implode(', ', $set);

@@ -78,43 +78,54 @@ class ArrayDeque extends AbstractCollection implements IDeque, IClonable, Serial
     {
         
     }
-    public function descendingIterator() {
+
+    public function descendingIterator()
+    {
         ;
     }
-    
-    public function getLast() {
+
+    public function getLast()
+    {
         ;
     }
-    
-    public function offerFirst($e) {
+
+    public function offerFirst($e)
+    {
         ;
     }
-    
-    public function peekLast() {
+
+    public function peekLast()
+    {
         ;
     }
-    
-    public function pollLast() {
+
+    public function pollLast()
+    {
         ;
     }
-    
-    public function pop() {
+
+    public function pop()
+    {
         
     }
 
-    public function push($e) {
+    public function push($e)
+    {
         
     }
 
-    public function removeFirstOccurrence($o) {
+    public function removeFirstOccurrence($o)
+    {
         
     }
 
-    public function removeLast() {
+    public function removeLast()
+    {
         
     }
 
-    public function removeLasttOccurrence($o) {
+    public function removeLasttOccurrence($o)
+    {
         
     }
 

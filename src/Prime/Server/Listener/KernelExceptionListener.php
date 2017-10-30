@@ -52,7 +52,7 @@ class KernelExceptionListener implements EventSubscriberInterface
     {
         return [
             KernelEvents::EXCEPTION => [
-                ['onKernelException', 20]
+                    ['onKernelException', 20]
             ]
         ];
     }

@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 TomSailor.
+ * Copyright 2017 85101346.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -24,38 +24,15 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Database\SQL;
+namespace Prime\Util\Map;
 
-use Prime\Database\SQL\ExpressionInterface as ExpressionInterface;
 /**
- * @name sqlCriteriaExpression
- * @package Prime\Database\SQL
- * @since 29/10/2017
- * @author TomSailor
+ * @name AbstractMap
+ * @package Prime\Util\Map
+ * @since 30/10/2017
+ * @author 85101346
  */
-trait sqlCriteriaExpression {
-
-    /**
-     * @var ExpressionInterface
-     */
-    private $criteria;
-
-    /**
-     * Define os critérios para a consulta
-     * @param ExpressionInterface $criteria
-     * @return $this
-     */
-    public function setCriteria(ExpressionInterface $criteria) {
-        $this->criteria = $criteria;
-        return $this;
-    }
-
-    /**
-     * Retorna o objeto de critério
-     * @return ExpressionInterface
-     */
-    public function getCriteria(): ExpressionInterface {
-        return $this->criteria;
-    }
-
+abstract class AbstractMap
+{
+    //digite aqui seu código
 }

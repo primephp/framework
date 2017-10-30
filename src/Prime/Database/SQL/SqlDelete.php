@@ -34,14 +34,16 @@ use Prime\Core\TString;
  * @since 29/10/2017
  * @author TomSailor
  */
-class SqlDelete extends AbstractStatement {
+class SqlDelete extends AbstractStatement
+{
 
-    use sqlCriteriaExpression;
+    use SqlCriteriaExpression;
 
     /**
      * {@inheritDoc}
      */
-    public function getStatement(): string {
+    public function getStatement(): string
+    {
         $string = new TString('DELETE FROM ');
         $string->concat($this->getEntity());
 

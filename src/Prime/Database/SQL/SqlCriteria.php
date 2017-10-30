@@ -35,7 +35,8 @@ use Prime\Util\Collection\ArrayObject;
  *
  * @author Elton Luiz
  */
-class SqlCriteria extends AbstractExpression {
+class SqlCriteria extends AbstractExpression
+{
 
     /**
      * Armazena todos os filtros adicionados
@@ -52,7 +53,8 @@ class SqlCriteria extends AbstractExpression {
     /**
      * SqlCritéria implementa filtros para uma instrução SQL
      */
-    public function __construct() {
+    public function __construct()
+    {
         $this->expression = new ArrayObject();
         $this->operator = new ArrayObject();
     }
@@ -60,7 +62,8 @@ class SqlCriteria extends AbstractExpression {
     /**
      * Reseta todos os critérios da instrução SQL
      */
-    public function reset() {
+    public function reset()
+    {
         $this->expression->clear();
         $this->operator->clear();
     }
@@ -70,7 +73,8 @@ class SqlCriteria extends AbstractExpression {
      * @param ExpressionInterface $criteria
      * @param string $operator
      */
-    public function add(ExpressionInterface $criteria, string $operator = self::AND_OPERATOR) {
+    public function add(ExpressionInterface $criteria, string $operator = self::AND_OPERATOR)
+    {
         if ($this->expression->size() == 0) {
             $operator = NULL;
         }
@@ -82,7 +86,8 @@ class SqlCriteria extends AbstractExpression {
      * Adiciona o filtro de critério
      * @param ExpressionInterface $filter
      */
-    private function addFilter(ExpressionInterface $filter) {
+    private function addFilter(ExpressionInterface $filter)
+    {
         $this->expression->add($filter);
     }
 
@@ -90,18 +95,20 @@ class SqlCriteria extends AbstractExpression {
      * Adiciona o operador lógico para o filtro de critério
      * @param string $operator
      */
-    private function addFilterOperator($operator = NULL) {
+    private function addFilterOperator($operator = NULL)
+    {
         $this->operator->add($operator);
     }
 
     /**
      * {@inheritDoc}
      */
-    public function dump(): string {
+    public function dump(): string
+    {
         $string = new TString('(');
-        
-        if(!count($this->expression)){
-            throw new \RuntimeException(__CLASS__.' sem filtros definidos');
+
+        if (!count($this->expression)) {
+            throw new \RuntimeException(__CLASS__ . ' sem filtros definidos');
         }
         foreach ($this->expression as $key => $value) {
             $string->concat($this->operator->offsetGet($key));

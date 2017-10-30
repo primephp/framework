@@ -34,7 +34,8 @@ namespace Prime\Database\SQL;
  * @since 27/10/2017
  * @author Elton Luiz
  */
-interface RelationalOperatorInterface extends LogicalOperatorInterface {
+interface RelationalOperatorInterface extends LogicalOperatorInterface
+{
 
     const EQUALS = ' = ';
     const GREATER_THAN = ' > ';

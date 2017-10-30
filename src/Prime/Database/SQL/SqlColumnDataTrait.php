@@ -3,7 +3,7 @@
 /*
  * The MIT License
  *
- * Copyright 2017 wwwel.
+ * Copyright 2017 TomSailor.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -27,32 +27,60 @@
 namespace Prime\Database\SQL;
 
 /**
- * @name StatementInterface
+ * @name SqlColumnDataTrait
  * @package Prime\Database\SQL
  * @since29/10/2017
- * @author Tom Sailor
+ * @author TomSailor
  */
-interface StatementInterface
+trait SqlColumnDataTrait
 {
 
-    /**
-     * Define o nome da entidade (tabela) que será manipulada
-     * @param string $entity O nome da entidade (tabela) que será manipulada
-     * @throws InvalidParamException Caso o valor de $entity não seja uma string válida
-     */
-    public function setEntity(string $entity);
+    use SqlPrepareValueTrait;
 
     /**
-     * Retorna o nome da entidade (tabela) do SQL que será manipulada pela 
-     * instrução SQL.
-     * @return string
-     * @throws InvalidParamException Caso não tenha sido definido o nome da tabela
+     * @var array
      */
-    public function getEntity(): string;
+    private $columnsValues;
 
     /**
-     * Retorna a instrução SQL
-     * @return string A instrução SQL
+     * Define o valor para a coluna
+     * @param string $column
+     * @param mixed $value
      */
-    public function getStatement(): string;
+    public function setColumnData(string $column, $value)
+    {
+        $this->columnsValues[$column] = $this->prepareValue($value);
+    }
+
+    /**
+     * Retorna o valor definido para a respectiva coluna
+     * @param string $name O nome da coluna 
+     * @return string O valor da coluna
+     */
+    public function getColumnValue($name)
+    {
+        return $this->columnsValues[$name];
+    }
+
+    /**
+     * Retorna returna uma string referente a coluna no padrão "column = value"
+     * @param string $name O nome da coluna
+     * @return string Uma string contendo column = value
+     */
+    public function getColumnSet(string $name): string
+    {
+        if (isset($this->columnsValues[$name])) {
+            return "{$name} = {$this->columnsValues[$name]}";
+        }
+    }
+
+    /**
+     * Retorna um objeto array contendo todas colunas e seus respectivos valores
+     * @return array
+     */
+    private function getColumns(): array
+    {
+        return $this->columnsValues;
+    }
+
 }
