@@ -40,38 +40,113 @@ namespace Prime\DataStructure;
 interface Sequence
 {
 
+    /**
+     * Aloca memória suficiente para uma capacidade requerida.
+     * @param int $capacity
+     */
     public function allocate(int $capacity);
 
+    /**
+     * Atualiza todos os valores aplicando uma função de retorno de chamada para cada valor.
+     * @param callable $callback
+     */
     public function apply(callable $callback);
 
+    /**
+     * Retorna a capacidade atual
+     */
     public function capacity(): int;
 
+    /**
+     * Verifica se o objeto contem os valores passados
+     * @param mixed $values Valores passados
+     */
     public function contains(...$values): bool;
 
+    /**
+     * Cria uma nova sequência usando um callable para determinar quais valores
+     * incluir
+     * @param callable $callback
+     */
     public function filter(callable $callback): Sequence;
 
+    /**
+     * Atualiza todos os valores aplicando uma função de retorno de chamada 
+     * para cada valor.
+     * @param mixed $value
+     */
     public function find($value);
 
+    /**
+     * Retorna o primeiro valor da sequência
+     * @return mixed O primeiro valor da sequência
+     */
     public function first();
 
+    /**
+     * Retorna o valor de um determinado índice
+     * @param int $index O índice para acessar, começando de 0
+     */
     public function get(int $index);
 
+    /**
+     * Insere valores na sequência em um determinado índice.
+     * @param int $index O índice para inserir. 0 <= index <= count
+     * @param mixed $values
+     */
     public function insert(int $index, ...$values);
 
-    public function join(string $glue): string;
+    /**
+     * Junta todos os valores como uma string usando um separador opcional entre 
+     * cada valor
+     * 
+     * @param string $glue Uma string opcional para separar cada valor
+     */
+    public function join(string $glue = ''): string;
 
+    /**
+     * Retorna o último valor da sequência
+     * @return mixed O último valor da sequência
+     */
     public function last();
 
+    /**
+     * Retorna o resultado a aplicação da função $callback para cada valor da
+     * sequência
+     * @param callable $callback
+     */
     public function map(callable $callback): Sequence;
 
+    /**
+     * Retorna o resultado da adição de todos os valores dados 
+     * @param type $values Um objeto traversable ou um array
+     */
     public function merge($values): Sequence;
 
+    /**
+     * Remove e retorna o último valor
+     * @return mixed O último valor removido
+     */
     public function pop();
 
+    /**
+     * Adiciona valores no final do objeto
+     * @param mixed $values Os valores a serem adicionados
+     */
     public function push(...$values);
 
-    public function reduce(callable $callback, $initial = 0);
+    /**
+     * Reduz a sequência para um único valor usando uma função $callback.
+     * @param callable $callback
+     * @param int $initial
+     */
+    public function reduce(callable $callback, int $initial = 0);
 
+    /**
+     * Remove e retorna o valor do índice informado
+     * @param int $index O índice do valor a ser removeido
+     * @throws \OutOfRangeException Se o índice não é válido
+     */
     public function remove(int $index);
 
     public function reverse();
@@ -82,6 +157,10 @@ interface Sequence
 
     public function set(int $index, $value);
 
+    /**
+     * Remove e retorna o primeiro valor da sequência
+     * @return mixed O primeiro valor, que foi removido
+     */
     public function shift();
 
     public function slice(int $index, int $length = 0): Sequence;
