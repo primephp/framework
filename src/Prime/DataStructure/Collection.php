@@ -35,7 +35,7 @@ namespace Prime\DataStructure;
  * @since 30/10/2017
  * @author TomSailor
  */
-interface Collection extends \Traversable, \Countable, \JsonSerializable
+interface Collection extends \Iterator, \ArrayAccess, \Countable, \JsonSerializable
 {
 
     /**

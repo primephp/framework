@@ -37,7 +37,7 @@ namespace Prime\DataStructure;
  * @since 30/10/2017
  * @author TomSailor
  */
-interface Sequence
+interface Sequence extends Collection
 {
 
     /**
@@ -149,12 +149,31 @@ interface Sequence
      */
     public function remove(int $index);
 
+    /**
+     * Inverte a sequenca do conteúdo do objeto
+     */
     public function reverse();
 
+    /**
+     * Retorna uma cópia com conteúdo em ordem inversa
+     * @return Sequence Uma cópia inversa do objeto
+     */
     public function reversed(): Sequence;
 
+    /**
+     * Rotociona a sequência um determinado número de vezes, removendo o primeiro
+     * elemento e colocando-o no final da sequência
+     * @param int $rotations Número de vezes que a sequência deverá ser 
+     * rotacionada
+     */
     public function rotate(int $rotations);
 
+    /**
+     * Atualiza o valor de um determinado índice
+     * @param int $index O índice do valor a ser atualizado
+     * @param mixed $value O novo valor
+     * @throws \OutOfRangeException Se o índice não for válido
+     */
     public function set(int $index, $value);
 
     /**
@@ -163,13 +182,43 @@ interface Sequence
      */
     public function shift();
 
+    /**
+     * Retorna uma sub-sequência de um determinado intervalo
+     * @param int $index O índice no qual a sub-sequência começa
+     * @param int $length Se um comprimento é dado e é positivo, a sequência 
+     * resultante terá muitos valores nela. Se o comprimento resultar em um 
+     * transbordamento, somente os valores até o final da seqüência serão 
+     * incluídos. Se um comprimento é dado e é negativo, a seqüência irá parar 
+     * que muitos valores do final. Se um comprimento não for fornecido, a 
+     * seqüência resultante conterá todos os valores entre o índice e o fim 
+     * da seqüência.
+     * @return Sequence Uma sub-sequência do intervalo dado
+     */
     public function slice(int $index, int $length = 0): Sequence;
 
+    /**
+     * Ordena o conteúdo do objeto
+     * @param callable $comparator
+     */
     public function sort(callable $comparator);
 
+    /**
+     * Retorna uma cópia do objeto com os elementos ordenados
+     * @param callable $comparator
+     * @return Sequence Retorna uma cópia ordenada do conteúdo da Sequência
+     */
     public function sorted(callable $comparator): Sequence;
 
+    /**
+     * Retorna uma soma de todos os elementos da sequência. Arrays e objetos são 
+     * considerados iguais a zero ao calcular a soma.
+     * @return number A soma de todos os elementos da sequência 
+     */
     public function sum();
 
-    public function unshift($values);
+    /**
+     * Adiciona valores no início da sequência
+     * @param mixed $values
+     */
+    public function unshift(...$values);
 }
