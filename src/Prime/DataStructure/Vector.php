@@ -26,6 +26,7 @@
 
 namespace Prime\DataStructure;
 
+use OutOfRangeException;
 use Traversable;
 use UnexpectedValueException;
 
@@ -73,7 +74,7 @@ class Vector implements Sequence
     {
         $this->position = 0;
         if (!is_array($values) && !$values instanceof Traversable) {
-            throw new UnexpectedValueException(__CLASS__ . ' aceita apenas array ou objetos Traversable para sua inicializacao');
+            throw new UnexpectedValueException(get_called_class() . ' aceita apenas array ou objetos Traversable para sua inicializacao');
         }
         foreach ($values as $value) {
             $this->add($value);
@@ -179,7 +180,7 @@ class Vector implements Sequence
         
     }
 
-    public function copy(): \Prime\DataStructure\Collection
+    public function copy(): Collection
     {
         
     }
@@ -199,14 +200,25 @@ class Vector implements Sequence
         return json_encode($this->array);
     }
 
+    /**
+     * {@inheritDoc}
+     * @param callable $callback
+     * @return Sequence
+     */
     public function map(callable $callback): Sequence
     {
-        
+        return new Vector(array_map($callback, $this->array));
     }
 
+    /**
+     * 
+     * @param Traversable|array $values
+     * @return Sequence
+     */
     public function merge($values): Sequence
     {
-        
+        $array = array_merge($this->toArray(), $values);
+        return new Vector($array);
     }
 
     public function pop()
@@ -234,7 +246,7 @@ class Vector implements Sequence
         
     }
 
-    public function reversed(): \Prime\DataStructure\Sequence
+    public function reversed(): Sequence
     {
         
     }
@@ -314,7 +326,7 @@ class Vector implements Sequence
         if (isset($this->array[$index])) {
             return $this->array[$index];
         } else {
-            throw new \OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
+            throw new OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
         }
     }
 
@@ -324,7 +336,7 @@ class Vector implements Sequence
             $index = $this->capacity();
         }
         if ($index > $this->capacity()) {
-            throw new \OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
+            throw new OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
         }
         $this->array[$index] = $value;
         $this->updateCapacity();

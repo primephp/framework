@@ -26,6 +26,11 @@
 
 namespace Prime\DataStructure;
 
+use ArrayAccess;
+use Countable;
+use Iterator;
+use JsonSerializable;
+
 /**
  * Collection é a interface base que abrange a funcionalidade comum a todas as 
  * estruturas de dados nesta biblioteca. Garante que todas as estruturas são 
@@ -35,7 +40,7 @@ namespace Prime\DataStructure;
  * @since 30/10/2017
  * @author TomSailor
  */
-interface Collection extends \Iterator, \ArrayAccess, \Countable, \JsonSerializable
+interface Collection extends Iterator, ArrayAccess, Countable, JsonSerializable
 {
 
     /**

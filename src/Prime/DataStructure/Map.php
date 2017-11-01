@@ -34,5 +34,80 @@ namespace Prime\DataStructure;
  */
 class Map implements Collection
 {
-    //put your code here
+
+    public function offsetExists($offset): bool
+    {
+        
+    }
+
+    public function offsetGet($offset)
+    {
+        
+    }
+
+    public function offsetSet($offset, $value): void
+    {
+        
+    }
+
+    public function offsetUnset($offset): void
+    {
+        
+    }
+
+    public function clear()
+    {
+        
+    }
+
+    public function copy(): \Prime\DataStructure\Collection
+    {
+        
+    }
+
+    public function isEmpty(): bool
+    {
+        
+    }
+
+    public function toArray(): array
+    {
+        
+    }
+
+    public function count(): int
+    {
+        
+    }
+
+    public function current()
+    {
+        
+    }
+
+    public function key(): \scalar
+    {
+        
+    }
+
+    public function next(): void
+    {
+        
+    }
+
+    public function rewind(): void
+    {
+        
+    }
+
+    public function valid(): bool
+    {
+        
+    }
+
+    public function jsonSerialize()
+    {
+        
+    }
+
 }
