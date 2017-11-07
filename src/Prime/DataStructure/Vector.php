@@ -42,17 +42,6 @@ class Vector implements Sequence
 {
 
     /**
-     * A capacidade mínima do vetor
-     */
-    const MIN_CAPACITY = 10;
-
-    /**
-     * Armazena a capacidade do Vetor
-     * @var int
-     */
-    private $capacity = self::MIN_CAPACITY;
-
-    /**
      * O conteúdo do vetor
      * @var array
      */
@@ -62,7 +51,7 @@ class Vector implements Sequence
      * A posição do ponteiro no objeto
      * @var int
      */
-    private $position = 0;
+    private $cursor = 0;
 
     /**
      * Cria uma nova instância de Vector, usando um objeto traversable ou um 
@@ -72,14 +61,13 @@ class Vector implements Sequence
      */
     public function __construct($values)
     {
-        $this->position = 0;
+        $this->cursor = 0;
         if (!is_array($values) && !$values instanceof Traversable) {
             throw new UnexpectedValueException(get_called_class() . ' aceita apenas array ou objetos Traversable para sua inicializacao');
         }
         foreach ($values as $value) {
             $this->add($value);
         }
-        $this->allocate(self::MIN_CAPACITY);
     }
 
     /**
@@ -89,31 +77,39 @@ class Vector implements Sequence
     private function add($value)
     {
         array_push($this->array, $value);
-        $this->updateCapacity();
     }
 
     /**
-     * Atualiza a capicidade do Vetor
+     * Reindexa o array, necessário quando se é removido um valor no meio ou no
+     * início do índice
      */
-    private function updateCapacity()
+    private function reIndex()
     {
-        $this->capacity = $this->count();
+        $this->array = array_values($this->array);
     }
 
+    /**
+     * Retorna um array com o conteúdo em ordem reversa
+     * @return array
+     */
+    private function reverted()
+    {
+        return array_reverse($this->array);
+    }
+
+    /**
+     * Define o valor para a capacidade do Vetor, adicionado elementos vazios
+     * em todas as posições
+     * @param int $capacity
+     */
     public function allocate(int $capacity)
     {
         $this->array = array_pad($this->array, $capacity, '');
-        $this->updateCapacity();
     }
 
     public function apply(callable $callback)
     {
         array_walk($this->array, $callback);
-    }
-
-    public function capacity(): int
-    {
-        return $this->capacity;
     }
 
     public function contains(...$values): bool
@@ -177,12 +173,13 @@ class Vector implements Sequence
 
     public function clear()
     {
-        
+        $this->rewind();
+        $this->array = [];
     }
 
     public function copy(): Collection
     {
-        
+        return new Vector($this->array);
     }
 
     public function toArray(): array
@@ -221,54 +218,117 @@ class Vector implements Sequence
         return new Vector($array);
     }
 
+    /**
+     * Remove e retorna o último valor
+     * @return mixed O último valor removido
+     */
     public function pop()
     {
-        
+        return array_pop($this->array);
     }
 
+    /**
+     * Adiciona valores no final do objeto
+     * @param mixed $values Os valores a serem adicionados
+     */
     public function push(...$values)
     {
-        
+        foreach ($values as $value) {
+            $this->add($value);
+        }
     }
 
+    /**
+     * Reduz a sequência para um único valor usando uma função $callback.
+     * @param callable $callback
+     * @param int $initial
+     */
     public function reduce(callable $callback, int $initial = 0)
     {
-        
+        $this->array = array_reduce($this->array, $callback, $initial);
     }
 
+    /**
+     * Remove e retorna o valor do índice informado
+     * @param int $index O índice do valor a ser removeido
+     * @throws \OutOfRangeException Se o índice não é válido
+     */
     public function remove(int $index)
     {
-        
+        if ($this->offsetExists($index)) {
+            $this->offsetUnset($index);
+            $this->reIndex();
+        } else {
+            throw new OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
+        }
     }
 
+    /**
+     * Inverte a sequenca do conteúdo do objeto
+     */
     public function reverse()
     {
-        
+        $this->array = $this->reverted();
     }
 
+    /**
+     * Retorna uma cópia (um objeto Vector) com o conteúdo em ordem inversa
+     * @return Sequence Uma cópia inversa do objeto
+     */
     public function reversed(): Sequence
     {
-        
+        return new Vector($this->reverted());
     }
 
+    /**
+     * Rotociona a sequência um determinado número de vezes, removendo o primeiro
+     * elemento e colocando-o no final da sequência
+     * @param int $rotations Número de vezes que a sequência deverá ser 
+     * rotacionada
+     */
     public function rotate(int $rotations)
     {
-        
+        for ($index = 0; $index < $rotations; $index++) {
+            $value = $this->shift();
+            $this->push($value);
+        }
     }
 
+    /**
+     * Atualiza o valor de um determinado índice
+     * @param int $index O índice do valor a ser atualizado
+     * @param mixed $value O novo valor
+     * @throws \OutOfRangeException Se o índice não for válido
+     */
     public function set(int $index, $value)
     {
-        
+        $this->offsetSet($index, $value);
     }
 
+    /**
+     * Remove e retorna o primeiro valor da sequência
+     * @return mixed O primeiro valor, que foi removido
+     */
     public function shift()
     {
-        
+        return array_shift($this->array);
     }
 
+    /**
+     * Retorna uma sub-sequência de um determinado intervalo
+     * @param int $index O índice no qual a sub-sequência começa
+     * @param int $length Se um comprimento é dado e é positivo, a sequência 
+     * resultante terá muitos valores nela. Se o comprimento resultar em um 
+     * transbordamento, somente os valores até o final da seqüência serão 
+     * incluídos. Se um comprimento é dado e é negativo, a seqüência irá parar 
+     * que muitos valores do final. Se um comprimento não for fornecido, a 
+     * seqüência resultante conterá todos os valores entre o índice e o fim 
+     * da seqüência.
+     * @return Sequence Uma sub-sequência do intervalo dado
+     */
     public function slice(int $index, int $length = 0): Sequence
     {
-        
+        return new Vector(array_slice($this->array, $length, $index));
     }
 
     public function sort(callable $comparator)
@@ -286,34 +346,48 @@ class Vector implements Sequence
         
     }
 
+    /**
+     * Adiciona valores no início da sequência
+     * @param mixed $values
+     */
     public function unshift(...$values)
     {
-        
+        foreach ($values as $value) {
+            array_unshift($this->array, $value);
+        }
     }
 
-    function rewind()
+    /**
+     * Retorna o elemento corrente
+     * @return mixed O elemento corrente
+     */
+    public function current()
     {
-        $this->position = 0;
+        if ($this->valid()) {
+            return $this->array[$this->cursor];
+        } else {
+            throw new OutOfRangeException('Indice ' . $this->cursor . ' para ' . __METHOD__ . ' invalido');
+        }
     }
 
-    function current()
+    public function rewind()
     {
-        return $this->array[$this->position];
+        $this->cursor = 0;
     }
 
-    function key()
+    public function key()
     {
-        return $this->position;
+        return $this->cursor;
     }
 
-    function next()
+    public function next()
     {
-        ++$this->position;
+        ++$this->cursor;
     }
 
-    function valid()
+    public function valid()
     {
-        return isset($this->array[$this->position]);
+        return isset($this->array[$this->cursor]);
     }
 
     public function offsetExists($index)
@@ -332,14 +406,13 @@ class Vector implements Sequence
 
     public function offsetSet($index, $value)
     {
-        if(empty($index)){
-            $index = $this->capacity();
+        if (empty($index)) {
+            $index = $this->count() + 1;
         }
-        if ($index > $this->capacity()) {
+        if (!$this->offsetExists($index) && ($index <> $this->count() + 1)) {
             throw new OutOfRangeException('Indice para ' . __METHOD__ . ' invalido');
         }
         $this->array[$index] = $value;
-        $this->updateCapacity();
     }
 
     public function offsetUnset($index)

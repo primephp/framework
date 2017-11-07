@@ -53,11 +53,6 @@ interface Sequence extends Collection
     public function apply(callable $callback);
 
     /**
-     * Retorna a capacidade atual
-     */
-    public function capacity(): int;
-
-    /**
      * Verifica se o objeto contem os valores passados
      * @param mixed $values Valores passados
      */
