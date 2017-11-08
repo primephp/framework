@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response as BaseResponse;
 class Response extends BaseResponse
 {
 
-    public function __construct($content = '', $status = 200, $headers = array())
+    public function __construct($content = '', $status = 200, $headers = [])
     {
         if ($content instanceof ViewInterface) {
             $content = $content->getOutput();

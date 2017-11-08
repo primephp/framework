@@ -168,7 +168,7 @@ final class Repository
 
         $this->sql = $sql->getStatement();
         if ($conn = Connection::get()) {
-            $row = array();
+            $row = [];
             $result = $conn->query($sql->getStatement());
             if ($result) {
                 $row = $result->fetch();

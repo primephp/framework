@@ -47,7 +47,7 @@ class TInteger extends TNumber
     /**
      * Define o valor máximo a ser aceito pelo objeto Integer, podendo ser definido
      * como valor maximo o valor inferior ou igual ao máximo aceito pelo PHP
-     * (9223372036854775807) ou caso o objeto Integer já tenha valor atribuído 
+     * (9223372036854775807) ou caso o objeto Integer já tenha valor atribuído
      * o valor atribuído como máximo não pode ser superior ao do objeto
      * @param int $max O valor máximo que pode ser aceito pelo objeto Integer
      * @return Boolean Retorna TRUE caso o valor pode ser atribuído como máximo
@@ -64,7 +64,7 @@ class TInteger extends TNumber
     }
 
     /**
-     * Retorna 
+     * Retorna
      * @return int
      */
     public function getMaxValue()
@@ -74,8 +74,8 @@ class TInteger extends TNumber
 
     /**
      * Define o valor mínimo a ser aceito pelo objeto Integer, podendo ser definido
-     * como valor mínimo o valor superior ou igual ao mínimo aceito pelo PHP  
-     * (-9223372036854775807) ou caso o objeto Integer já tenha valor atribuído 
+     * como valor mínimo o valor superior ou igual ao mínimo aceito pelo PHP
+     * (-9223372036854775807) ou caso o objeto Integer já tenha valor atribuído
      * o valor atribuído como mínimo não pode ser inferior ao do objeto
      * @param int $min O valor mínimo que pode ser aceito pelo objeto Integer
      * @return Boolean Retorna TRUE caso o valor pode ser atribuído como mínimo
@@ -117,33 +117,34 @@ class TInteger extends TNumber
      */
     public function getValue()
     {
-        return (string) $this->data['value'];
+        return (string)$this->data['value'];
     }
 
     /**
      * Atribui um valor ou um novo valor ao objeto Inteiro
-     * @param type $int
-     * @return Boolean Retorna TRUE se o valor pode ser atribuido com sucesso, 
+     * @param int $int
+     * @return Boolean Retorna TRUE se o valor pode ser atribuido com sucesso,
      * do contrário retorna FALSE;
      */
-    public function setValue($int)
+    public function setValue($int): bool
     {
         $this->verifyValue($int);
         if (is_int($int)) {
             $value = $int;
         } else
-        if (is_string($int)) {
-            $value = (int) $int;
-        } else
-        if ($int instanceof TString) {
-            $value = (int) $int->getValue();
-        } else if ($int instanceof TInteger) {
-            $value = $int->getValue();
-        } else {
-            $value = NULL;
-        }
+            if (is_string($int)) {
+                $value = (int)$int;
+            } else
+                if ($int instanceof TString) {
+                    $value = (int)$int->getValue();
+                } else if ($int instanceof TInteger) {
+                    $value = $int->getValue();
+                } else {
+                    return false;
+                }
 
         $this->data['value'] = $value;
+        return true;
     }
 
     /**
@@ -152,7 +153,7 @@ class TInteger extends TNumber
      */
     public function intValue()
     {
-        return (int) $this->getValue();
+        return (int)$this->getValue();
     }
 
     /**
@@ -170,7 +171,7 @@ class TInteger extends TNumber
      */
     public function toBool()
     {
-        return (bool) $this->getValue();
+        return (bool)$this->getValue();
     }
 
     /**
@@ -182,7 +183,7 @@ class TInteger extends TNumber
      */
     public static function parseInt($str)
     {
-        return (int) $str;
+        return (int)$str;
     }
 
     /**
@@ -194,7 +195,7 @@ class TInteger extends TNumber
      */
     public static function parseInteger($str)
     {
-        return new TInteger((int) $str);
+        return new TInteger((int)$str);
     }
 
     /**
@@ -214,7 +215,7 @@ class TInteger extends TNumber
     }
 
     /**
-     * Supondo que o especificado String representa um número inteiro, 
+     * Supondo que o especificado String representa um número inteiro,
      * retorna um novo objeto Integer inicializado para que o Integer
      * @param str $str
      * @return TInteger

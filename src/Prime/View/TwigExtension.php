@@ -48,9 +48,9 @@ class TwigExtension extends Twig_Extension
 
     public function getFunctions()
     {
-        return array(
-            new Twig_SimpleFunction('tokenId', array($this, 'tokenId')),
-        );
+        return [
+            new Twig_SimpleFunction('tokenId', [$this, 'tokenId']),
+        ];
     }
 
     public function tokenId()

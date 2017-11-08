@@ -186,7 +186,7 @@ class CreateSetterGetter
     {
         $value = strtolower($this->type);
         $body = "";
-        if (in_array($this->type, array('int', 'float', 'string'))) {
+        if (in_array($this->type, ['int', 'float', 'string'])) {
             $body .= "\n\$this->data[$this->const] = ({$this->type})\$$value;";
         } else {
             $body .= "\n\$this->data[$this->const] = \$$value;";
