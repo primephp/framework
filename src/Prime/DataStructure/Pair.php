@@ -34,5 +34,42 @@ namespace Prime\DataStructure;
  */
 class Pair implements \JsonSerializable
 {
-    
+
+    private $key;
+    private $value;
+
+    public function __construct($key, $value)
+    {
+        $this->setKey($key);
+        $this->setValue($value);
+    }
+
+    private function setKey($key)
+    {
+        $this->key = $key;
+    }
+
+    private function setValue($value)
+    {
+        $this->value = $value;
+    }
+
+    /**
+     * Remove todos os valores
+     */
+    public function clear()
+    {
+        
+    }
+
+    public function toArray(): array
+    {
+        return ['key' => $this->key, 'value' => $this->value];
+    }
+
+    public function jsonSerialize()
+    {
+        return $this->toArray();
+    }
+
 }

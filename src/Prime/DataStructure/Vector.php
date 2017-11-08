@@ -59,14 +59,16 @@ class Vector implements Sequence
      * @param Traversable|array $values Um objeto Traversable ou um array usado para
      * os valores iniciais do objeto
      */
-    public function __construct($values)
+    public function __construct($values = null)
     {
         $this->cursor = 0;
-        if (!is_array($values) && !$values instanceof Traversable) {
-            throw new UnexpectedValueException(get_called_class() . ' aceita apenas array ou objetos Traversable para sua inicializacao');
-        }
-        foreach ($values as $value) {
-            $this->add($value);
+        if (!is_null($values)) {
+            if (!is_array($values) && !$values instanceof Traversable) {
+                throw new UnexpectedValueException(get_called_class() . ' aceita apenas array ou objetos Traversable para sua inicializacao');
+            }
+            foreach ($values as $value) {
+                $this->add($value);
+            }
         }
     }
 
@@ -107,11 +109,19 @@ class Vector implements Sequence
         $this->array = array_pad($this->array, $capacity, '');
     }
 
+    /**
+     * Atualiza todos os valores aplicando uma função de retorno de chamada para cada valor.
+     * @param callable $callback
+     */
     public function apply(callable $callback)
     {
         array_walk($this->array, $callback);
     }
 
+    /**
+     * Verifica se o objeto contem os valores passados
+     * @param mixed $values Valores passados
+     */
     public function contains(...$values): bool
     {
         foreach ($values as $value) {
@@ -122,27 +132,50 @@ class Vector implements Sequence
         return true;
     }
 
+    /**
+     * Cria uma nova sequência usando um callable para determinar quais valores
+     * incluir
+     * @param callable $callback
+     */
     public function filter(callable $callback): Sequence
     {
         return new Vector(array_filter($this->array, $callback));
     }
 
+    /**
+     * Atualiza todos os valores aplicando uma função de retorno de chamada 
+     * para cada valor.
+     * @param mixed $value
+     */
     public function find($value)
     {
         return array_search($value, $this->array);
     }
 
+    /**
+     * Retorna o primeiro valor da sequência
+     * @return mixed O primeiro valor da sequência
+     */
     public function first()
     {
         $this->rewind();
         return $this->current();
     }
 
+    /**
+     * Retorna o valor de um determinado índice
+     * @param int $index O índice para acessar, começando de 0
+     */
     public function get(int $index)
     {
         return $this->offsetGet($index);
     }
 
+    /**
+     * Insere valores na sequência em um determinado índice.
+     * @param int $index O índice para inserir. 0 <= index <= count
+     * @param mixed $values
+     */
     public function insert(int $index, ...$values)
     {
         $i = $index;
@@ -152,6 +185,10 @@ class Vector implements Sequence
         }
     }
 
+    /**
+     * Verifica se há elementos no objeto 
+     * @return bool Retorna TRUE caso não haja elementos e FALSE do contrário
+     */
     public function isEmpty(): bool
     {
         $array = array_filter($this->array);
@@ -161,46 +198,75 @@ class Vector implements Sequence
         return true;
     }
 
+    /**
+     * Junta todos os valores como uma string usando um separador opcional entre 
+     * cada valor
+     * 
+     * @param string $glue Uma string opcional para separar cada valor
+     */
     public function join(string $glue = ''): string
     {
         return implode($glue, $this->array);
     }
 
+    /**
+     * Retorna o último valor da sequência
+     * @return mixed O último valor da sequência
+     */
     public function last()
     {
         return end($this->array);
     }
 
+    /**
+     * Remove todos os elementos do objeto
+     */
     public function clear()
     {
         $this->rewind();
         $this->array = [];
     }
 
+    /**
+     * Retorna um novo objeto Vector contendo os elemento do objeto atual
+     * @return \Prime\DataStructure\Collection
+     */
     public function copy(): Collection
     {
         return new Vector($this->array);
     }
 
+    /**
+     * Retorna um array contendo todos os elementos/valores
+     * @return array Um array de elementos/valores
+     */
     public function toArray(): array
     {
         return $this->array;
     }
 
+    /**
+     * Retorna o total de elementos
+     * @return int O número de elementos
+     */
     public function count(): int
     {
         return count($this->array);
     }
 
+    /**
+     * Retorna um string contendo a representação JSON dos valores
+     * @return string A representação JSON dos valores
+     */
     public function jsonSerialize()
     {
         return json_encode($this->array);
     }
 
     /**
-     * {@inheritDoc}
+     * Retorna o resultado a aplicação da função $callback para cada valor da
+     * sequência
      * @param callable $callback
-     * @return Sequence
      */
     public function map(callable $callback): Sequence
     {
@@ -331,19 +397,36 @@ class Vector implements Sequence
         return new Vector(array_slice($this->array, $length, $index));
     }
 
-    public function sort(callable $comparator)
+    /**
+     * Ordena o conteúdo do objeto
+     * @return bool Retorna TRUE em caso de sucesso ou FALSE em caso de falha
+     * na ordenação
+     */
+    public function sort()
     {
-        
+        return sort($this->array);
     }
 
-    public function sorted(callable $comparator): Sequence
+    /**
+     * Retorna uma cópia do objeto com os elementos ordenados
+     * @param callable $comparator
+     * @return Sequence Retorna uma cópia ordenada do conteúdo da Sequência
+     */
+    public function sorted(): Sequence
     {
-        
+        $copy = $this->copy();
+        $copy->sort();
+        return $copy;
     }
 
+    /**
+     * Retorna uma soma de todos os elementos da sequência. Arrays e objetos são 
+     * considerados iguais a zero ao calcular a soma.
+     * @return number A soma de todos os elementos da sequência 
+     */
     public function sum(): number
     {
-        
+        return array_sum($this->array);
     }
 
     /**
@@ -395,6 +478,12 @@ class Vector implements Sequence
         return isset($this->array[$index]);
     }
 
+    /**
+     * 
+     * @param type $index
+     * @return type
+     * @throws OutOfRangeException
+     */
     public function offsetGet($index)
     {
         if (isset($this->array[$index])) {

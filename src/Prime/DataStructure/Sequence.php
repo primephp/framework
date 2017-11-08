@@ -193,16 +193,14 @@ interface Sequence extends Collection
 
     /**
      * Ordena o conteúdo do objeto
-     * @param callable $comparator
      */
-    public function sort(callable $comparator);
+    public function sort();
 
     /**
      * Retorna uma cópia do objeto com os elementos ordenados
-     * @param callable $comparator
      * @return Sequence Retorna uma cópia ordenada do conteúdo da Sequência
      */
-    public function sorted(callable $comparator): Sequence;
+    public function sorted(): Sequence;
 
     /**
      * Retorna uma soma de todos os elementos da sequência. Arrays e objetos são 
