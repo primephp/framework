@@ -26,6 +26,10 @@
 
 namespace Prime\Database;
 
+use PDO;
+use Prime\Core\Exceptions\InvalidContextException;
+use Prime\Core\Exceptions\InvalidParamException;
+
 /**
  * Abre uma conexão com o banco de dados
  *
@@ -35,54 +39,31 @@ final class Connection
 {
 
     /**
-     * Array contendo as conexões ativas
+     * Pool contendo as conexões ativas
      * @var PDO[]
      */
-    private static $conn = [];
+    private static $pool = [];
 
     /**
-     * Array contendo a configuração de conexão com a base de dados da aplicação
+     * Array contendo as configurações de conexão com as bases de dados
      * @var array
      */
-    private static $config;
+    private static $config = [];
 
     private function __construct()
     {
-        throw new \Prime\Core\Exceptions\InvalidContextException();
+        throw new InvalidContextException();
     }
 
-    public static function config($params, $dbName = NULL)
+    public static function config($params, $dbName = 'default')
     {
         if (!is_array($params) && !strpos(':', $params)) {
-            throw new \Prime\Core\Exceptions\InvalidParamException('Parêmetro inválido. Esperado um array ou uma string no formato "type:host:user:passwd:name:port:charset"');
+            throw new InvalidParamException('Parêmetro inválido. Esperado um array ou uma string no formato "type:host:user:passwd:name:port:charset"');
         }
 
         if (is_string($params)) {
             $params = self::paramsToArray($params);
         }
-        if (is_null($dbName)) {
-            $db = md5($str);
-        }
+        
     }
-
-    /**
-     * 
-     * @param string $params
-     * @return array
-     */
-    private static function paramsToArray($params)
-    {
-        $var = explode(':', $params);
-
-        $conn_var = [];
-        $conn_var['type'] = $var[0];
-        $conn_var['host'] = $var[1];
-        $conn_var['user'] = $var[2];
-        $conn_var['pass'] = $var[3];
-        $conn_var['name'] = $var[4];
-        $conn_var['port'] = isset($var[5]) ? $var[5] : NULL;
-        $conn_var['charset'] = isset($var[6]) ? $var[6] : NULL;
-        return $conn_var;
-    }
-
 }
