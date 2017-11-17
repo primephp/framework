@@ -35,7 +35,7 @@ use Prime\Core\Exceptions\InvalidParamException;
  *
  * @author Elton Luiz
  */
-final class Connection
+abstract class Connection
 {
 
     /**
@@ -49,21 +49,91 @@ final class Connection
      * @var array
      */
     private static $config = [];
+    private static $keys = ['type', 'user', 'pass', 'name', 'host', 'port', 'charset', 'params'];
 
-    private function __construct()
+    public static function config(array $params)
     {
-        throw new InvalidContextException();
+        foreach ($params as $key => $value) {
+            if (self::validateConfig($value)) {
+                self::$config[$key] = $value;
+            }
+        }
     }
 
-    public static function config($params, $dbName = 'default')
+    private static function validateConfig($params)
     {
-        if (!is_array($params) && !strpos(':', $params)) {
-            throw new InvalidParamException('Parêmetro inválido. Esperado um array ou uma string no formato "type:host:user:passwd:name:port:charset"');
+        foreach ($params as $key => $value) {
+            if (!in_array($key, self::$keys)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static function open($connName = 'default')
+    {
+        // lê as informações contidas no arquivo
+        $user = isset(self::$config['user']) ? self::$config['user'] : NULL;
+        $pass = isset(self::$config['pass']) ? self::$config['pass'] : NULL;
+        $name = isset(self::$config['name']) ? self::$config['name'] : NULL;
+        $host = isset(self::$config['host']) ? self::$config['host'] : NULL;
+        $type = isset(self::$config['type']) ? self::$config['type'] : NULL;
+        $port = isset(self::$config['port']) ? self::$config['port'] : NULL;
+        $charset = isset(self::$config['charset']) ? self::$config['charset'] : 'utf8mb4';
+
+        $conn = NULL;
+
+        // descobre qual o tipo (driver) de banco de dados a ser utilizado
+        switch ($type) {
+            case 'pgsql':
+                if (is_null($port)) {
+                    $port = '5432';
+                }
+                $conn = new PDO("pgsql:dbname={$name}; user={$user}; password={$pass};
+                        host=$host;port={$port}");
+                break;
+            case 'mysql':
+                $port = $port ? $port : '3306';
+                $option = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset"];
+                $conn = new PDO("mysql:host={$host};port={$port};dbname={$name}", $user, $pass, $option);
+                break;
+            case 'sqlite':
+                $conn = new PDO("sqlite:{$name}");
+                break;
+            case 'ibase':
+                $conn = new PDO("firebird:dbname={$name}", $user, $pass);
+                break;
+            case 'oci':
+                $conn = new PDO("oci:dbname={$name}", $user, $pass);
+                break;
+            case 'mssql':
+                $conn = new PDO("mssql:host={$host},1433;dbname={$name}", $user, $pass);
+                break;
         }
 
-        if (is_string($params)) {
-            $params = self::paramsToArray($params);
+        if (!is_object($conn)) {
+            throw new PDOException('Falha na conexao com a base de dados.');
         }
+
+        // define para que o PDO lance exceções na ocorrência de erros
+        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
+        //PARA DEBUGAR COM O BANCO DE DADOS
+        //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $conn->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
+        $conn->setAttribute(PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY);
+
+        // retorna o objeto instanciado.
+        /**
+         * @var PDO 
+         */
+        self::$conn[$connName] = $conn;
+
+        return self::$conn[$connName];
+    }
+
+    public static function get($connName = 'default')
+    {
         
     }
+
 }
