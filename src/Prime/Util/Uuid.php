@@ -48,19 +48,29 @@ class Uuid
 
     public static function generate($salt = '')
     {
-        $uniqid = uniqid();
-                
-        $value = sprintf('%04x%04x%04x%04x%04x%04x%04x%04x',
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff),
-                mt_rand(0, 0xffff),
-                mt_rand(0, 0xffff),
-                mt_rand(0, 0xffff),
-                mt_rand(0, 0xffff), mt_rand(0, 0xffff), mt_rand(0, 0xffff)
-        );
-        
-        $string = substr($value, 10);
+        $t = time();
+        $m = microtime();
 
-        return self::split($uniqid.$string);
+        $base = '';
+        
+        $base .= base_convert($t, 10, 16);
+        $base .= base_convert(substr($m, 2, 6), 10, 16);
+        $base .= base_convert(date('YmdHis'), 10, 16);
+        $base = substr($base, 0, 12) . 'e' . substr($base, 12) . 'e' . md5(uniqid('', true));
+
+        $value = substr(str_pad($base, 32, '0'), 0, 32);
+        return sprintf('%08s-%04s-%04s-%04s-%12s',
+                //8 primeiros digitos
+                substr($value, 0, 8),
+                // 4 dígitos seguintes
+                substr($value, 8, 4),
+                // segunda parte com 4 digitos
+                substr($value, 12, 4),
+                // teceira parte com 4 digitos
+                substr($value, 16, 4),
+                //12 ditos finais
+                substr($value, 20, 12)
+        );
     }
 
     public static function create($salt)

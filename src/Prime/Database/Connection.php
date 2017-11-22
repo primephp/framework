@@ -27,8 +27,8 @@
 namespace Prime\Database;
 
 use PDO;
-use Prime\Core\Exceptions\InvalidContextException;
-use Prime\Core\Exceptions\InvalidParamException;
+use PDOException;
+use RuntimeException;
 
 /**
  * Abre uma conexão com o banco de dados
@@ -73,13 +73,13 @@ abstract class Connection
     public static function open($connName = 'default')
     {
         // lê as informações contidas no arquivo
-        $user = isset(self::$config['user']) ? self::$config['user'] : NULL;
-        $pass = isset(self::$config['pass']) ? self::$config['pass'] : NULL;
-        $name = isset(self::$config['name']) ? self::$config['name'] : NULL;
-        $host = isset(self::$config['host']) ? self::$config['host'] : NULL;
-        $type = isset(self::$config['type']) ? self::$config['type'] : NULL;
-        $port = isset(self::$config['port']) ? self::$config['port'] : NULL;
-        $charset = isset(self::$config['charset']) ? self::$config['charset'] : 'utf8mb4';
+        $user = isset(self::$config[$connName]['user']) ? self::$config[$connName]['user'] : NULL;
+        $pass = isset(self::$config[$connName]['pass']) ? self::$config[$connName]['pass'] : NULL;
+        $name = isset(self::$config[$connName]['name']) ? self::$config[$connName]['name'] : NULL;
+        $host = isset(self::$config[$connName]['host']) ? self::$config[$connName]['host'] : NULL;
+        $type = isset(self::$config[$connName]['type']) ? self::$config[$connName]['type'] : NULL;
+        $port = isset(self::$config[$connName]['port']) ? self::$config[$connName]['port'] : NULL;
+        $charset = isset(self::$config[$connName]['charset']) ? self::$config[$connName]['charset'] : 'utf8mb4';
 
         $conn = NULL;
 
@@ -126,14 +126,20 @@ abstract class Connection
         /**
          * @var PDO 
          */
-        self::$conn[$connName] = $conn;
+        self::$pool[$connName] = $conn;
 
-        return self::$conn[$connName];
+        return self::$pool[$connName];
     }
 
     public static function get($connName = 'default')
     {
-        
+        if (isset(self::$pool[$connName])) {
+            return self::$pool[$connName];
+        }
+        if (isset(self::$config[$connName])) {
+            return self::open($connName);
+        }
+        throw new RuntimeException(sprintf("Conexão com %s não configurada", $connName));
     }
 
 }
