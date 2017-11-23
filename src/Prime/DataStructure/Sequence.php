@@ -32,7 +32,7 @@ use UnderflowException;
 
 /**
  * Sequence descreve o comportamento de valores dispostos em uma única dimensão 
- * linear. Pode ser visto também como uma lista. É semelhante a um array que usa
+ * linear. Pode ser visto também como uma Lista. É semelhante a um array que usa
  * chaves inteiras incrementais, com exceção de algumas características:<br>
  * - Os valores serão sempre indexados como [0, 1, 2, ..., tamanho - 1].<br>
  * - Só é permitido acessar os valores por índice no intervalo [0, tamanho - 1].
@@ -41,92 +41,104 @@ use UnderflowException;
  * @since 30/10/2017
  * @author TomSailor
  */
-interface  Sequence extends Collection
+interface Sequence extends Collection
 {
 
     /**
      * Updates every value in the sequence by applying a callback, using the
      * return value as the new value.
+     * 
+     * Atualiza todos os valores da sequência(Lista) aplicando uma função callback,
+     * usando o valor de retorno como o novo valor
      *
-     * @param callable $callback Accepts the value, returns the new value.
+     * @param callable $callback retorna o novo valor
      */
     function apply(callable $callback);
 
     /**
-     * Determines whether the sequence contains all of zero or more values.
+     * Determina se a sequência(Lista) contém todos os valores de zero ou mais
      *
      * @param mixed ...$values
      *
-     * @return bool true if at least one value was provided and the sequence
-     *              contains all given values, false otherwise.
+     * @return bool TRUE Se pelo menos um valor foi fornecido e a sequência(Lista)
+     * contém os valores passados
      */
     function contains(...$values): bool;
+
     /**
-     * Returns a new sequence containing only the values for which a callback
-     * returns true. A boolean test will be used if a callback is not provided.
-     *
-     * @param callable|null $callback Accepts a value, returns a boolean result:
-     *                                true : include the value,
-     *                                false: skip the value.
+     * Retorna uma nova Sequência(Lista) contento apenas os valores para os quais
+     * a função callback retorna TRUE. Um teste boleano será usado se um retorno
+     * de chamada não for fornecido
+     * @param callable|null $callback Aceita um valor, retorna um resultado boleano:
+     *                                true : inclui o valor,
+     *                                false: pula o valor.
      *
      * @return Sequence
      */
     function filter(callable $callback = null): Sequence;
+
     /**
-     * Returns the index of a given value, or false if it could not be found.
+     * Retorna o índice de um determinado valor ou FALSE se não for encontrado
      *
      * @param mixed $value
      *
      * @return int|bool
      */
     function find($value);
+
     /**
-     * Returns the first value in the sequence.
+     * Retorna o primeiro valor da Sequência(Lista)
      *
      * @return mixed
      *
-     * @throws UnderflowException if the sequence is empty.
+     * @throws UnderflowException Se a Sequência(Lista) estiver vazia.
      */
     function first();
+
     /**
-     * Returns the value at a given index (position) in the sequence.
+     * Retorna o valor em um determinado índice (posição) na Seqüência(Lista).
      *
      * @param int $index
      *
      * @return mixed
      *
-     * @throws OutOfRangeException if the index is not in the range [0, size-1]
+     * @throws OutOfRangeException se o índice não estiver no intervalo [0, size-1]
      */
     function get(int $index);
+
     /**
-     * Inserts zero or more values at a given index.
+     * Insere zero ou mais valores em um determinado índice.
      *
-     * Each value after the index will be moved one position to the right.
-     * Values may be inserted at an index equal to the size of the sequence.
+     * Cada valor após o índice será movido uma posição para a direita.
+     * Os valores podem ser inseridos em um índice igual ao tamanho da seqüência.
      *
      * @param int   $index
      * @param mixed ...$values
      *
-     * @throws OutOfRangeException if the index is not in the range [0, n]
+     * @throws OutOfRangeException se o índice não estiver no intervalo [0, n]
      */
     function insert(int $index, ...$values);
+
     /**
-     * Joins all values of the sequence into a string, adding an optional 'glue'
-     * between them. Returns an empty string if the sequence is empty.
+     * Junta todos os valores da seqüência em uma string, adicionando uma 
+     * "cola(glue)" opcional entre eles. Retorna uma seqüência vazia se a 
+     * seqüência estiver vazia.
      *
      * @param string $glue
      *
      * @return string
      */
     function join(string $glue = null): string;
+
     /**
-     * Returns the last value in the sequence.
+     * Retorna o último valor da Sequência(Lista)
      *
      * @return mixed
      *
-     * @throws UnderflowException if the sequence is empty.
+     * @throws UnderflowException Se a Sequência(Lista) estiver vazia
      */
     function last();
+
     /**
      * Returns a new sequence using the results of applying a callback to each
      * value.
@@ -136,6 +148,7 @@ interface  Sequence extends Collection
      * @return Sequence
      */
     function map(callable $callback): Sequence;
+
     /**
      * Returns the result of adding all given values to the sequence.
      *
@@ -144,6 +157,7 @@ interface  Sequence extends Collection
      * @return Sequence
      */
     function merge($values): Sequence;
+
     /**
      * Removes the last value in the sequence, and returns it.
      *
@@ -152,12 +166,14 @@ interface  Sequence extends Collection
      * @throws UnderflowException if the sequence is empty.
      */
     function pop();
+
     /**
      * Adds zero or more values to the end of the sequence.
      *
      * @param mixed ...$values
      */
     function push(...$values);
+
     /**
      * Iteratively reduces the sequence to a single value using a callback.
      *
@@ -170,6 +186,7 @@ interface  Sequence extends Collection
      *               value if the sequence was empty.
      */
     function reduce(callable $callback, $initial = null);
+
     /**
      * Removes and returns the value at a given index in the sequence.
      *
@@ -180,16 +197,19 @@ interface  Sequence extends Collection
      * @throws OutOfRangeException if the index is not in the range [0, size-1]
      */
     function remove(int $index);
+
     /**
      * Reverses the sequence in-place.
      */
     function reverse();
+
     /**
      * Returns a reversed copy of the sequence.
      *
      * @return Sequence
      */
     function reversed();
+
     /**
      * Rotates the sequence by a given number of rotations, which is equivalent
      * to successive calls to 'shift' and 'push' if the number of rotations is
@@ -198,6 +218,7 @@ interface  Sequence extends Collection
      * @param int $rotations The number of rotations (can be negative).
      */
     function rotate(int $rotations);
+
     /**
      * Replaces the value at a given index in the sequence with a new value.
      *
@@ -207,6 +228,7 @@ interface  Sequence extends Collection
      * @throws OutOfRangeException if the index is not in the range [0, size-1]
      */
     function set(int $index, $value);
+
     /**
      * Removes and returns the first value in the sequence.
      *
@@ -215,6 +237,7 @@ interface  Sequence extends Collection
      * @throws UnderflowException if the sequence was empty.
      */
     function shift();
+
     /**
      * Returns a sub-sequence of a given length starting at a specified index.
      *
@@ -237,6 +260,7 @@ interface  Sequence extends Collection
      * @return Sequence
      */
     function slice(int $index, int $length = null): Sequence;
+
     /**
      * Sorts the sequence in-place, based on an optional callable comparator.
      *
@@ -244,6 +268,7 @@ interface  Sequence extends Collection
      *                                  Should return the result of a <=> b.
      */
     function sort(callable $comparator = null);
+
     /**
      * Returns a sorted copy of the sequence, based on an optional callable
      * comparator. Natural ordering will be used if a comparator is not given.
@@ -254,12 +279,14 @@ interface  Sequence extends Collection
      * @return Sequence
      */
     function sorted(callable $comparator = null): Sequence;
+
     /**
      * Returns the sum of all values in the sequence.
      *
      * @return int|float The sum of all the values in the sequence.
      */
     function sum();
+
     /**
      * Adds zero or more values to the front of the sequence.
      *

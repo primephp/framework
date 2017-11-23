@@ -31,11 +31,18 @@ namespace Prime\DataStructure;
  * @package Prime\DataStructure
  * @since 30/10/2017
  * @author TomSailor
+ * 
+ * Um Deque (pronunciado "deck") é uma seqüência de valores em um buffer 
+ * contíguo que cresce e diminui automaticamente. O nome é uma abreviatura 
+ * comum de "fila de dupla extremidade".
+ * Enquanto um Deque é muito semelhante a um vetor, ele oferece operações de 
+ * tempo constante nas duas extremidades do buffer.
+ * Ou seja:
+ * shift, unshift, push e pop são todos O(1).
  */
 class Deque implements \IteratorAggregate, \ArrayAccess, Sequence
 {
 
     use CollectionTrait;
     use SequenceTrait;
-
 }
