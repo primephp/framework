@@ -31,17 +31,19 @@ namespace Prime\DataStructure;
  * @package Prime\DataStructure
  * @since 22/11/2017
  * @author TomSailor
+ * Características comuns para classes que implementam a interface Collection
  */
 trait CollectionTrait
 {
+    use HashableTrait;
 
     /**
-     * Returns whether the collection is empty.
+     * Retorna se a coleção está vazia.
      *
-     * This should be equivalent to a count of zero, but is not required.
-     * Implementations should define what empty means in their own context.
+     * Isso deve ser equivalente a uma contagem de zero, mas não é necessário.
+     * As implementações devem definir o que significa vazio em seu próprio contexto.
      *
-     * @return bool whether the collection is empty.
+     * @return bool Se a coleção está vazia
      */
     public function isEmpty(): bool
     {
@@ -49,10 +51,9 @@ trait CollectionTrait
     }
 
     /**
-     * Returns a representation that can be natively converted to JSON, which is
-     * called when invoking json_encode.
-     *
-     * @return mixed
+     * Retorna uma representação do objeto que pode ser nativamente convertida
+     * para JSON, que é chamada pela função json_encode
+     * @return string
      *
      * @see JsonSerializable
      */
@@ -62,9 +63,9 @@ trait CollectionTrait
     }
 
     /**
-     * Creates a shallow copy of the collection.
+     * Cria uma cópia superficial da coleção
      *
-     * @return Collection a shallow copy of the collection.
+     * @return Collection Uma cópia superficial da coleção
      */
     public function copy(): Collection
     {
@@ -72,18 +73,18 @@ trait CollectionTrait
     }
 
     /**
-     * Returns an array representation of the collection.
+     * Retorna um array representando a coleção
      *
-     * The format of the returned array is implementation-dependent. Some
-     * implementations may throw an exception if an array representation
-     * could not be created (for example when object are used as keys).
+     * O formato da matriz retornada é dependente da implementação. Algumas 
+     * implementações podem lançar uma exceção se uma representação de matriz 
+     * não puder ser criada (por exemplo, quando o objeto é usado como chaves).
      *
      * @return array
      */
     abstract public function toArray(): array;
 
     /**
-     * Invoked when calling var_dump.
+     * Método invocado ao chamar var_dump
      *
      * @return array
      */
@@ -93,8 +94,9 @@ trait CollectionTrait
     }
 
     /**
-     * Returns a string representation of the collection, which is invoked when
-     * the collection is converted to a string.
+     * Retorna uma representação de string da coleção, que é invocada quando a coleção é convertida em uma string.
+     * 
+     * @return string
      */
     public function __toString()
     {

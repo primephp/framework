@@ -43,21 +43,5 @@ final class Vector implements \IteratorAggregate, \ArrayAccess, Sequence
 
     use CollectionTrait;
     use SequenceTrait;
-    use CapacityTrait;
-
-    const MIN_CAPACITY = 8;
-
-    protected function getGrowthFactor(): float
-    {
-        return 1.5;
-    }
-
-    /**
-     * @return whether capacity should be increased.
-     */
-    protected function shouldIncreaseCapacity(): bool
-    {
-        return count($this) > $this->capacity;
-    }
 
 }

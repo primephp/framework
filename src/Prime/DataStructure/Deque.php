@@ -32,7 +32,10 @@ namespace Prime\DataStructure;
  * @since 30/10/2017
  * @author TomSailor
  */
-class Deque implements Sequence
+class Deque implements \IteratorAggregate, \ArrayAccess, Sequence
 {
-    const MIN_CAPACITY = 8 ;
+
+    use CollectionTrait;
+    use SequenceTrait;
+
 }

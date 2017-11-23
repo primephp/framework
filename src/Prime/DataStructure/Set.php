@@ -42,7 +42,7 @@ use Traversable;
 class Set implements IteratorAggregate, ArrayAccess, Collection
 {
     use CollectionTrait;
-    const MIN_CAPACITY = Map::MIN_CAPACITY;
+
     /**
      * @var Map internal map to store the values.
      */
@@ -71,27 +71,7 @@ class Set implements IteratorAggregate, ArrayAccess, Collection
             $this->table->put($value, null);
         }
     }
-    /**
-     * Ensures that enough memory is allocated for a specified capacity. This
-     * potentially reduces the number of reallocations as the size increases.
-     *
-     * @param int $capacity The number of values for which capacity should be
-     *                      allocated. Capacity will stay the same if this value
-     *                      is less than or equal to the current capacity.
-     */
-    public function allocate(int $capacity)
-    {
-        $this->table->allocate($capacity);
-    }
-    /**
-     * Returns the current capacity of the set.
-     *
-     * @return int
-     */
-    public function capacity(): int
-    {
-        return $this->table->capacity();
-    }
+    
     /**
      * Clear all elements in the Set
      */

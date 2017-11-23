@@ -35,11 +35,11 @@ use UnderflowException;
  * @since 22/11/2017
  * @author TomSailor
  */
-trait SequenceTrait
+trait SequenceTrait 
 {
 
     /**
-     * @var array internal array used to store the values of the sequence.
+     * @var array Array interno utilizado para armazenar os valores de Sequence
      */
     private $array = [];
 
@@ -187,19 +187,18 @@ trait SequenceTrait
             throw new UnderflowException();
         }
         $value = array_pop($this->array);
-        $this->checkCapacity();
         return $value;
     }
 
     /**
-     * Pushes all values of either an array or traversable object.
+     * Adiciona todos os valores no final do objeto
+     * @param \Traversable $values
      */
     private function pushAll($values)
     {
         foreach ($values as $value) {
             $this->array[] = $value;
         }
-        $this->checkCapacity();
     }
 
     /**
@@ -227,7 +226,6 @@ trait SequenceTrait
             throw new OutOfRangeException();
         }
         $value = array_splice($this->array, $index, 1, null)[0];
-        $this->checkCapacity();
         return $value;
     }
 
@@ -248,6 +246,8 @@ trait SequenceTrait
     }
 
     /**
+     * Converte rotações negativas ou grandes para o mínimo número positivo de 
+     * rotações necessárias para rotacionar a sequência para o valor de $r
      * Converts negative or large rotations into the minimum positive number
      * of rotations required to rotate the sequence by a given $r.
      */
@@ -291,7 +291,6 @@ trait SequenceTrait
             throw new UnderflowException();
         }
         $value = array_shift($this->array);
-        $this->checkCapacity();
         return $value;
     }
 
@@ -343,7 +342,6 @@ trait SequenceTrait
     {
         if ($values) {
             $this->array = array_merge($values, $this->array);
-            $this->checkCapacity();
         }
     }
 
@@ -356,7 +354,7 @@ trait SequenceTrait
     }
 
     /**
-     *
+     * 
      */
     public function getIterator()
     {
@@ -371,7 +369,6 @@ trait SequenceTrait
     public function clear()
     {
         $this->array = [];
-        $this->capacity = self::MIN_CAPACITY;
     }
 
     /**

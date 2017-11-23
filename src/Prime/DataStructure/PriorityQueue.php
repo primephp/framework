@@ -38,12 +38,7 @@ use UnderflowException;
 class PriorityQueue implements Collection, IteratorAggregate
 {
     use CollectionTrait;
-    use SquaredCapacity;
 
-    /**
-     * @var int
-     */
-    const MIN_CAPACITY = 8;
     /**
      * @var array
      */
@@ -65,7 +60,6 @@ class PriorityQueue implements Collection, IteratorAggregate
     {
         $this->heap     = [];
         $this->stamp    = 0;
-        $this->capacity = self::MIN_CAPACITY;
     }
     /**
      * @inheritDoc
@@ -74,7 +68,6 @@ class PriorityQueue implements Collection, IteratorAggregate
     {
         $copy = new PriorityQueue();
         $copy->heap     = $this->heap;
-        $copy->capacity = $this->capacity;
         return $copy;
     }
     /**
@@ -231,7 +224,6 @@ class PriorityQueue implements Collection, IteratorAggregate
         $value = $this->getRoot()->value;
         // Replace the root, then sift down.
         $this->setRoot($leaf);
-        $this->checkCapacity();
         return $value;
     }
     /**
@@ -258,7 +250,6 @@ class PriorityQueue implements Collection, IteratorAggregate
      */
     public function push($value, int $priority)
     {
-        $this->checkCapacity();
         // Add new leaf, then sift up to maintain heap,
         $this->heap[] = new PriorityNode($value, $priority, $this->stamp++);
         $this->siftUp(count($this->heap) - 1);

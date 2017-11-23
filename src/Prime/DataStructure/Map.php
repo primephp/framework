@@ -30,6 +30,7 @@ use ArrayAccess;
 use IteratorAggregate;
 use OutOfBoundsException;
 use OutOfRangeException;
+use Prime\Core\Exceptions\InvalidParamException;
 use Traversable;
 use UnderflowException;
 
@@ -43,9 +44,6 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
 {
 
     use CollectionTrait;
-    use SquaredCapacity;
-
-    const MIN_CAPACITY = 8;
 
     /**
      * @var array internal array to store pairs
@@ -83,7 +81,6 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     public function clear()
     {
         $this->pairs = [];
-        $this->capacity = self::MIN_CAPACITY;
     }
 
     /**
@@ -358,14 +355,17 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @param mixed $key
      * @param mixed $value
+     * @throws InvalidParamException Caso a chave seja uma valor nulo
      */
     public function put($key, $value)
     {
+        if (is_null($key)) {
+            throw new InvalidParamException('A chave não pode ser null');
+        }
         $pair = $this->lookupKey($key);
         if ($pair) {
             $pair->value = $value;
         } else {
-            $this->checkCapacity();
             $this->pairs[] = new Pair($key, $value);
         }
     }
@@ -412,7 +412,6 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
         $pair = $this->pairs[$position];
         $value = $pair->value;
         array_splice($this->pairs, $position, 1, null);
-        $this->checkCapacity();
         return $value;
     }
 
@@ -555,7 +554,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
             });
         }
     }
- 
+
     /**
      * Returns a sorted copy of the map, based on an optional callable
      * comparator. The map will be sorted by key.
@@ -618,22 +617,22 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     public function union(Map $map): Map
     {
         return $this->merge($map);
-    }
+        }
 
-    /**
-     * Creates a new map using keys of either the current instance or of another
-     * map, but not of both.
-     *
-     * @param Map $map
-     *
-     * @return Map A new map containing keys in the current instance as well
-     *                 as another map, but not in both.
-     */
-    public function xor(Map $map): Map
-    {
+        /**
+         * Creates a new map using keys of either the current instance or of another
+         * map, but not of both.
+         *
+         * @param Map $map
+         *
+         * @return Map A new map containing keys in the current instance as well
+         *                 as another map, but not in both.
+         */
+        public function xor(Map $map)
+        {
         return $this->merge($map)->filter(function($key) use ($map) {
-                    return $this->hasKey($key) ^ $map->hasKey($key);
-                });
+        return $this->hasKey($key) ^ $map->hasKey($key);
+        });
     }
 
     /**
@@ -659,6 +658,9 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      */
     public function offsetSet($offset, $value)
     {
+        if(is_null($offset)){
+            $offset = count($this->pairs);
+        }
         $this->put($offset, $value);
     }
 

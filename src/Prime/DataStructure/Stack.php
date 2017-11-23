@@ -79,27 +79,6 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
         return count($this->vector);
     }
     /**
-     * Ensures that enough memory is allocated for a specified capacity. This
-     * potentially reduces the number of reallocations as the size increases.
-     *
-     * @param int $capacity The number of values for which capacity should be
-     *                      allocated. Capacity will stay the same if this value
-     *                      is less than or equal to the current capacity.
-     */
-    public function allocate(int $capacity)
-    {
-        $this->vector->allocate($capacity);
-    }
-    /**
-     * Returns the current capacity of the stack.
-     *
-     * @return int
-     */
-    public function capacity(): int
-    {
-        return $this->vector->capacity();
-    }
-    /**
      * Returns the value at the top of the stack without removing it.
      *
      * @return mixed

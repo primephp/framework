@@ -26,40 +26,46 @@
 
 namespace Prime\DataStructure;
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-use JsonSerializable;
+use Traversable;
 
 /**
  * Collection é a interface base que abrange a funcionalidade comum a todas as 
- * estruturas de dados nesta biblioteca. Garante que todas as estruturas são 
- * Traversable, Countable, ​​e podem ser convertidas para json usando json_encode().
+ * estruturas de dados nesta biblioteca. Garante que todas as estruturas sejam 
+ * Traversable, Countable, e podem ser convertidas para json usando json_encode().
  * @name Collection
  * @package Prime\DataStructure
  * @since 30/10/2017
  * @author TomSailor
  */
-interface Collection extends \Traversable, \Countable, \JsonSerializable
+interface Collection extends Hashable, Traversable, \Countable, \JsonSerializable
 {
 
     /**
      * Remove todos os valors
      */
     public function clear();
+    
+    /**
+     * Retorna o tamanho da coleção
+     * @return int
+     */
+    public function count():int;
 
     /**
      * Retorna uma cópia superficial da coleção
+     * @return Collection Uma cópia da coleção
      */
     public function copy(): Collection;
 
     /**
      * Verifica se a coleção está vazia
+     * @return bool 
      */
     public function isEmpty(): bool;
 
     /**
-     * Converta a coleção para um array
+     * Retorna um array representando a coleção
+     * @return array
      */
     public function toArray(): array;
 }

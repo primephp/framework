@@ -43,14 +43,7 @@ use UnderflowException;
  */
 interface  Sequence extends Collection
 {
-    /**
-     * Ensures that enough memory is allocated for a required capacity.
-     *
-     * @param int $capacity The number of values for which capacity should be
-     *                      allocated. Capacity will stay the same if this value
-     *                      is less than or equal to the current capacity.
-     */
-    function allocate(int $capacity);
+
     /**
      * Updates every value in the sequence by applying a callback, using the
      * return value as the new value.
@@ -58,12 +51,7 @@ interface  Sequence extends Collection
      * @param callable $callback Accepts the value, returns the new value.
      */
     function apply(callable $callback);
-    /**
-     * Returns the current capacity of the sequence.
-     *
-     * @return int
-     */
-    function capacity(): int;
+
     /**
      * Determines whether the sequence contains all of zero or more values.
      *
