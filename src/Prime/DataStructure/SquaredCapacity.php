@@ -26,40 +26,48 @@
 
 namespace Prime\DataStructure;
 
-use ArrayAccess;
-use Countable;
-use Iterator;
-use JsonSerializable;
-
 /**
- * Collection é a interface base que abrange a funcionalidade comum a todas as 
- * estruturas de dados nesta biblioteca. Garante que todas as estruturas são 
- * Traversable, Countable, ​​e podem ser convertidas para json usando json_encode().
- * @name Collection
+ * @name SquaredCapacity
  * @package Prime\DataStructure
- * @since 30/10/2017
+ * @since 22/11/2017
  * @author TomSailor
  */
-interface Collection extends \Traversable, \Countable, \JsonSerializable
+trait SquaredCapacity
 {
 
-    /**
-     * Remove todos os valors
-     */
-    public function clear();
+    use CapacityTrait;
 
     /**
-     * Retorna uma cópia superficial da coleção
+     * Rounds an integer to the next power of two if not already a power of two.
+     *
+     * @param int $capacity
+     *
+     * @return int
      */
-    public function copy(): Collection;
+    private function square(int $capacity): int
+    {
+        return pow(2, ceil(log($capacity, 2)));
+    }
 
     /**
-     * Verifica se a coleção está vazia
+     * Ensures that enough memory is allocated for a specified capacity. This
+     * potentially reduces the number of reallocations as the size increases.
+     *
+     * @param int $capacity The number of values for which capacity should be
+     *                      allocated. Capacity will stay the same if this value
+     *                      is less than or equal to the current capacity.
      */
-    public function isEmpty(): bool;
+    public function allocate(int $capacity)
+    {
+        $this->capacity = max($this->square($capacity), $this->capacity);
+    }
 
     /**
-     * Converta a coleção para um array
+     * Called when capacity should be increased to accommodate new values.
      */
-    public function toArray(): array;
+    protected function increaseCapacity()
+    {
+        $this->capacity = $this->square(max(count($this) + 1, $this->capacity * $this->getGrowthFactor()));
+    }
+
 }

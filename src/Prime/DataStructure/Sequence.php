@@ -26,6 +26,10 @@
 
 namespace Prime\DataStructure;
 
+use OutOfRangeException;
+use Traversable;
+use UnderflowException;
+
 /**
  * Sequence descreve o comportamento de valores dispostos em uma única dimensão 
  * linear. Pode ser visto também como uma lista. É semelhante a um array que usa
@@ -37,181 +41,241 @@ namespace Prime\DataStructure;
  * @since 30/10/2017
  * @author TomSailor
  */
-interface Sequence extends Collection
+interface  Sequence extends Collection
 {
-
     /**
-     * Aloca memória suficiente para uma capacidade requerida.
-     * @param int $capacity
+     * Ensures that enough memory is allocated for a required capacity.
+     *
+     * @param int $capacity The number of values for which capacity should be
+     *                      allocated. Capacity will stay the same if this value
+     *                      is less than or equal to the current capacity.
      */
-    public function allocate(int $capacity);
-
+    function allocate(int $capacity);
     /**
-     * Atualiza todos os valores aplicando uma função de retorno de chamada para cada valor.
-     * @param callable $callback
+     * Updates every value in the sequence by applying a callback, using the
+     * return value as the new value.
+     *
+     * @param callable $callback Accepts the value, returns the new value.
      */
-    public function apply(callable $callback);
-
+    function apply(callable $callback);
     /**
-     * Verifica se o objeto contem os valores passados
-     * @param mixed $values Valores passados
+     * Returns the current capacity of the sequence.
+     *
+     * @return int
      */
-    public function contains(...$values): bool;
-
+    function capacity(): int;
     /**
-     * Cria uma nova sequência usando um callable para determinar quais valores
-     * incluir
-     * @param callable $callback
+     * Determines whether the sequence contains all of zero or more values.
+     *
+     * @param mixed ...$values
+     *
+     * @return bool true if at least one value was provided and the sequence
+     *              contains all given values, false otherwise.
      */
-    public function filter(callable $callback): Sequence;
-
+    function contains(...$values): bool;
     /**
-     * Atualiza todos os valores aplicando uma função de retorno de chamada 
-     * para cada valor.
+     * Returns a new sequence containing only the values for which a callback
+     * returns true. A boolean test will be used if a callback is not provided.
+     *
+     * @param callable|null $callback Accepts a value, returns a boolean result:
+     *                                true : include the value,
+     *                                false: skip the value.
+     *
+     * @return Sequence
+     */
+    function filter(callable $callback = null): Sequence;
+    /**
+     * Returns the index of a given value, or false if it could not be found.
+     *
      * @param mixed $value
+     *
+     * @return int|bool
      */
-    public function find($value);
-
+    function find($value);
     /**
-     * Retorna o primeiro valor da sequência
-     * @return mixed O primeiro valor da sequência
+     * Returns the first value in the sequence.
+     *
+     * @return mixed
+     *
+     * @throws UnderflowException if the sequence is empty.
      */
-    public function first();
-
+    function first();
     /**
-     * Retorna o valor de um determinado índice
-     * @param int $index O índice para acessar, começando de 0
+     * Returns the value at a given index (position) in the sequence.
+     *
+     * @param int $index
+     *
+     * @return mixed
+     *
+     * @throws OutOfRangeException if the index is not in the range [0, size-1]
      */
-    public function get(int $index);
-
+    function get(int $index);
     /**
-     * Insere valores na sequência em um determinado índice.
-     * @param int $index O índice para inserir. 0 <= index <= count
-     * @param mixed $values
+     * Inserts zero or more values at a given index.
+     *
+     * Each value after the index will be moved one position to the right.
+     * Values may be inserted at an index equal to the size of the sequence.
+     *
+     * @param int   $index
+     * @param mixed ...$values
+     *
+     * @throws OutOfRangeException if the index is not in the range [0, n]
      */
-    public function insert(int $index, ...$values);
-
+    function insert(int $index, ...$values);
     /**
-     * Junta todos os valores como uma string usando um separador opcional entre 
-     * cada valor
-     * 
-     * @param string $glue Uma string opcional para separar cada valor
+     * Joins all values of the sequence into a string, adding an optional 'glue'
+     * between them. Returns an empty string if the sequence is empty.
+     *
+     * @param string $glue
+     *
+     * @return string
      */
-    public function join(string $glue = ''): string;
-
+    function join(string $glue = null): string;
     /**
-     * Retorna o último valor da sequência
-     * @return mixed O último valor da sequência
+     * Returns the last value in the sequence.
+     *
+     * @return mixed
+     *
+     * @throws UnderflowException if the sequence is empty.
      */
-    public function last();
-
+    function last();
     /**
-     * Retorna o resultado a aplicação da função $callback para cada valor da
-     * sequência
+     * Returns a new sequence using the results of applying a callback to each
+     * value.
+     *
      * @param callable $callback
+     *
+     * @return Sequence
      */
-    public function map(callable $callback): Sequence;
-
+    function map(callable $callback): Sequence;
     /**
-     * Retorna o resultado da adição de todos os valores dados 
-     * @param type $values Um objeto traversable ou um array
+     * Returns the result of adding all given values to the sequence.
+     *
+     * @param array|Traversable $values
+     *
+     * @return Sequence
      */
-    public function merge($values): Sequence;
-
+    function merge($values): Sequence;
     /**
-     * Remove e retorna o último valor
-     * @return mixed O último valor removido
+     * Removes the last value in the sequence, and returns it.
+     *
+     * @return mixed what was the last value in the sequence.
+     *
+     * @throws UnderflowException if the sequence is empty.
      */
-    public function pop();
-
+    function pop();
     /**
-     * Adiciona valores no final do objeto
-     * @param mixed $values Os valores a serem adicionados
+     * Adds zero or more values to the end of the sequence.
+     *
+     * @param mixed ...$values
      */
-    public function push(...$values);
-
+    function push(...$values);
     /**
-     * Reduz a sequência para um único valor usando uma função $callback.
-     * @param callable $callback
-     * @param int $initial
+     * Iteratively reduces the sequence to a single value using a callback.
+     *
+     * @param callable $callback Accepts the carry and current value, and
+     *                           returns an updated carry value.
+     *
+     * @param mixed|null $initial Optional initial carry value.
+     *
+     * @return mixed The carry value of the final iteration, or the initial
+     *               value if the sequence was empty.
      */
-    public function reduce(callable $callback, int $initial = 0);
-
+    function reduce(callable $callback, $initial = null);
     /**
-     * Remove e retorna o valor do índice informado
-     * @param int $index O índice do valor a ser removeido
-     * @throws \OutOfRangeException Se o índice não é válido
+     * Removes and returns the value at a given index in the sequence.
+     *
+     * @param int $index this index to remove.
+     *
+     * @return mixed the removed value.
+     *
+     * @throws OutOfRangeException if the index is not in the range [0, size-1]
      */
-    public function remove(int $index);
-
+    function remove(int $index);
     /**
-     * Inverte a sequenca do conteúdo do objeto
+     * Reverses the sequence in-place.
      */
-    public function reverse();
-
+    function reverse();
     /**
-     * Retorna uma cópia com conteúdo em ordem inversa
-     * @return Sequence Uma cópia inversa do objeto
+     * Returns a reversed copy of the sequence.
+     *
+     * @return Sequence
      */
-    public function reversed(): Sequence;
-
+    function reversed();
     /**
-     * Rotociona a sequência um determinado número de vezes, removendo o primeiro
-     * elemento e colocando-o no final da sequência
-     * @param int $rotations Número de vezes que a sequência deverá ser 
-     * rotacionada
+     * Rotates the sequence by a given number of rotations, which is equivalent
+     * to successive calls to 'shift' and 'push' if the number of rotations is
+     * positive, or 'pop' and 'unshift' if negative.
+     *
+     * @param int $rotations The number of rotations (can be negative).
      */
-    public function rotate(int $rotations);
-
+    function rotate(int $rotations);
     /**
-     * Atualiza o valor de um determinado índice
-     * @param int $index O índice do valor a ser atualizado
-     * @param mixed $value O novo valor
-     * @throws \OutOfRangeException Se o índice não for válido
+     * Replaces the value at a given index in the sequence with a new value.
+     *
+     * @param int   $index
+     * @param mixed $value
+     *
+     * @throws OutOfRangeException if the index is not in the range [0, size-1]
      */
-    public function set(int $index, $value);
-
+    function set(int $index, $value);
     /**
-     * Remove e retorna o primeiro valor da sequência
-     * @return mixed O primeiro valor, que foi removido
+     * Removes and returns the first value in the sequence.
+     *
+     * @return mixed what was the first value in the sequence.
+     *
+     * @throws UnderflowException if the sequence was empty.
      */
-    public function shift();
-
+    function shift();
     /**
-     * Retorna uma sub-sequência de um determinado intervalo
-     * @param int $index O índice no qual a sub-sequência começa
-     * @param int $length Se um comprimento é dado e é positivo, a sequência 
-     * resultante terá muitos valores nela. Se o comprimento resultar em um 
-     * transbordamento, somente os valores até o final da seqüência serão 
-     * incluídos. Se um comprimento é dado e é negativo, a seqüência irá parar 
-     * que muitos valores do final. Se um comprimento não for fornecido, a 
-     * seqüência resultante conterá todos os valores entre o índice e o fim 
-     * da seqüência.
-     * @return Sequence Uma sub-sequência do intervalo dado
+     * Returns a sub-sequence of a given length starting at a specified index.
+     *
+     * @param int $index  If the index is positive, the sequence will start
+     *                    at that index in the sequence. If index is negative,
+     *                    the sequence will start that far from the end.
+     *
+     * @param int $length If a length is given and is positive, the resulting
+     *                    sequence will have up to that many values in it.
+     *                    If the length results in an overflow, only values
+     *                    up to the end of the sequence will be included.
+     *
+     *                    If a length is given and is negative, the sequence
+     *                    will stop that many values from the end.
+     *
+     *                    If a length is not provided, the resulting sequence
+     *                    will contain all values between the index and the
+     *                    end of the sequence.
+     *
+     * @return Sequence
      */
-    public function slice(int $index, int $length = 0): Sequence;
-
+    function slice(int $index, int $length = null): Sequence;
     /**
-     * Ordena o conteúdo do objeto
+     * Sorts the sequence in-place, based on an optional callable comparator.
+     *
+     * @param callable|null $comparator Accepts two values to be compared.
+     *                                  Should return the result of a <=> b.
      */
-    public function sort();
-
+    function sort(callable $comparator = null);
     /**
-     * Retorna uma cópia do objeto com os elementos ordenados
-     * @return Sequence Retorna uma cópia ordenada do conteúdo da Sequência
+     * Returns a sorted copy of the sequence, based on an optional callable
+     * comparator. Natural ordering will be used if a comparator is not given.
+     *
+     * @param callable|null $comparator Accepts two values to be compared.
+     *                                  Should return the result of a <=> b.
+     *
+     * @return Sequence
      */
-    public function sorted(): Sequence;
-
+    function sorted(callable $comparator = null): Sequence;
     /**
-     * Retorna uma soma de todos os elementos da sequência. Arrays e objetos são 
-     * considerados iguais a zero ao calcular a soma.
-     * @return number A soma de todos os elementos da sequência 
+     * Returns the sum of all values in the sequence.
+     *
+     * @return int|float The sum of all the values in the sequence.
      */
-    public function sum();
-
+    function sum();
     /**
-     * Adiciona valores no início da sequência
-     * @param mixed $values
+     * Adds zero or more values to the front of the sequence.
+     *
+     * @param mixed ...$values
      */
-    public function unshift(...$values);
+    function unshift(...$values);
 }
