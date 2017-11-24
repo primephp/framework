@@ -571,13 +571,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     }
 
     /**
-     * Creates a new map that contains the pairs of the current instance as well
-     * as the pairs of another map.
+     * Cria um novo mapa que contém os pares da instância atual, bem como os 
+     * pares de outro mapa.
      *
-     * @param Map $map The other map, to combine with the current instance.
+     * @param Map $map O outro mapa, para ser combinado com o atual instância
      *
-     * @return Map A new map containing all the pairs of the current
-     *                 instance as well as another map.
+     * @return Map Uma nova instância de Mapa, contendo todos os pares da instância atual
+     * assim como a do outro mapa
      */
     public function union(Map $map): Map {
         return $this->merge($map);
@@ -617,7 +617,9 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     }
 
     /**
-     * @inheritdoc
+     * Atribui um valor a uma posição específica
+     * @param mixed $offset A posição na qual se deseja atribuir um valor.
+     * @param mixed $value O valor a ser atribuído
      */
     public function offsetSet($offset, $value) {
         if (is_null($offset)) {
@@ -627,8 +629,9 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     }
 
     /**
-     * @inheritdoc
-     *
+     * Retorna o valor de uma posição específica. 
+     * @param mixed $offset A posição a ser obtida
+     * @return mixed O valor do Pair da posição especificada
      * @throws OutOfBoundsException
      */
     public function &offsetGet($offset) {
@@ -640,14 +643,17 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     }
 
     /**
-     * @inheritdoc
+     * Remove uma posição
+     * @param mixed $offset A posição a ser removida
      */
     public function offsetUnset($offset) {
         $this->remove($offset, null);
     }
 
     /**
-     * @inheritdoc
+     * Verifica se existe uma chave no Mapa
+     * @param mixed $offset A chave a ser verificada no mapa
+     * @return bool Retorna TRUE caso a chave exista ou FALSE caso contrário
      */
     public function offsetExists($offset) {
         return $this->get($offset, null) !== null;
