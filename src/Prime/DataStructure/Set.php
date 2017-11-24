@@ -135,7 +135,7 @@ class Set implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Set
      */
-    public function xor(Set $set): Set
+    public function xorAnother(Set $set): Set
     {
         return $this->table->xor($set->table)->keys();
     }

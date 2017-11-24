@@ -40,13 +40,12 @@ use UnderflowException;
  * @since 30/10/2017
  * @author TomSailor
  */
-final class Map implements IteratorAggregate, ArrayAccess, Collection
-{
+final class Map implements IteratorAggregate, ArrayAccess, Collection {
 
     use CollectionTrait;
 
     /**
-     * @var array internal array to store pairs
+     * @var array Array Interno para armazenamento dos pares(Pair)
      */
     private $pairs = [];
 
@@ -55,8 +54,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @param array|Traversable|null $values
      */
-    public function __construct($values = null)
-    {
+    public function __construct($values = null) {
         if (func_num_args()) {
             $this->putAll($values);
         }
@@ -68,8 +66,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @param callable $callback Aceita dois argumentos: key e value, será 
      * retornado o valor atualizado.
      */
-    public function apply(callable $callback)
-    {
+    public function apply(callable $callback) {
         foreach ($this->pairs as &$pair) {
             $pair->value = $callback($pair->key, $pair->value);
         }
@@ -78,8 +75,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     /**
      * @inheritDoc
      */
-    public function clear()
-    {
+    public function clear() {
         $this->pairs = [];
     }
 
@@ -90,8 +86,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @throws UnderflowException
      */
-    public function first(): Pair
-    {
+    public function first(): Pair {
         if ($this->isEmpty()) {
             throw new UnderflowException();
         }
@@ -104,8 +99,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @throws UnderflowException
      */
-    public function last(): Pair
-    {
+    public function last(): Pair {
         if ($this->isEmpty()) {
             throw new UnderflowException();
         }
@@ -121,8 +115,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @throws OutOfRangeException
      */
-    public function skip(int $position): Pair
-    {
+    public function skip(int $position): Pair {
         if ($position < 0 || $position >= count($this->pairs)) {
             throw new OutOfRangeException();
         }
@@ -138,8 +131,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Map
      */
-    public function merge($values): Map
-    {
+    public function merge($values): Map {
         $merged = new self($this);
         $merged->putAll($values);
         return $merged;
@@ -156,8 +148,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @return Map Um novo mapa contendo os pares da corrente instância de Map,
      * cujas chaves também estejam presente no mapa dado.
      */
-    public function intersect(Map $map): Map
-    {
+    public function intersect(Map $map): Map {
         return $this->filter(function($key) use ($map) {
                     return $map->hasKey($key);
                 });
@@ -172,8 +163,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @return Map O resultado da remoção de todas as chaves da instância corrente
      * de Map, que estejam presente no map dado.
      */
-    public function diff(Map $map): Map
-    {
+    public function diff(Map $map): Map {
         return $this->filter(function($key) use ($map) {
                     return !$map->hasKey($key);
                 });
@@ -187,8 +177,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return bool TRUE caso sejam iguais e FALSE caso contrário
      */
-    private function keysAreEqual($a, $b): bool
-    {
+    private function keysAreEqual($a, $b): bool {
         if (is_object($a) && $a instanceof Hashable) {
             return get_class($a) === get_class($b) && $a->equals($b);
         }
@@ -203,8 +192,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @return Pair|null Retorna o par (Pair) caso a $key seja encontrada ou NULL
      * caso contrário
      */
-    private function lookupKey($key)
-    {
+    private function lookupKey($key) {
         foreach ($this->pairs as $pair) {
             if ($this->keysAreEqual($pair->key, $key)) {
                 return $pair;
@@ -220,8 +208,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @return Pair|null Retorna o par (Pair) caso o $value seja encontrado ou 
      * NULL caso contrário
      */
-    private function lookupValue($value)
-    {
+    private function lookupValue($value) {
         foreach ($this->pairs as $pair) {
             if ($pair->value === $value) {
                 return $pair;
@@ -237,8 +224,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return bool TRUE caso a chave $key exista e FALSE caso contrário
      */
-    public function hasKey($key): bool
-    {
+    public function hasKey($key): bool {
         return $this->lookupKey($key) !== null;
     }
 
@@ -249,16 +235,14 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return bool TRUE caso o valor exista no Mapa e FALSE caso contrário
      */
-    public function hasValue($value): bool
-    {
+    public function hasValue($value): bool {
         return $this->lookupValue($value) !== null;
     }
 
     /**
      * @inheritDoc
      */
-    public function count(): int
-    {
+    public function count(): int {
         return count($this->pairs);
     }
 
@@ -273,8 +257,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Map
      */
-    public function filter(callable $callback = null): Map
-    {
+    public function filter(callable $callback = null): Map {
         $filtered = new self();
         foreach ($this as $key => $value) {
             if ($callback ? $callback($key, $value) : $value) {
@@ -296,8 +279,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @throws OutOfBoundsException se nenhum padrão foi fornecido e a chave
      *  não está associada a um valor.
      */
-    public function get($key, $default = null)
-    {
+    public function get($key, $default = null) {
         if (($pair = $this->lookupKey($key))) {
             return $pair->value;
         }
@@ -313,8 +295,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Set O conjunto contendo todas as chaves do Mapa
      */
-    public function keys(): Set
-    {
+    public function keys(): Set {
         $key = function($pair) {
             return $pair->key;
         };
@@ -332,8 +313,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Map
      */
-    public function map(callable $callback): Map
-    {
+    public function map(callable $callback): Map {
         $apply = function($pair) use ($callback) {
             return $callback($pair->key, $pair->value);
         };
@@ -346,8 +326,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @return Sequence
      */
-    public function pairs(): Sequence
-    {
+    public function pairs(): Sequence {
         $copy = function($pair) {
             return $pair->copy();
         };
@@ -362,8 +341,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @param mixed $value O valor a ser atribuido
      * @throws InvalidParamException Caso a chave seja uma valor nulo
      */
-    public function put($key, $value)
-    {
+    public function put($key, $value) {
         if (is_null($key)) {
             throw new InvalidParamException('A chave não pode ser null');
         }
@@ -381,26 +359,25 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @param Traversable|array $values
      */
-    public function putAll($values)
-    {
+    public function putAll($values) {
         foreach ($values as $key => $value) {
             $this->put($key, $value);
         }
     }
 
     /**
-     * Iteratively reduces the map to a single value using a callback.
+     * Iterativamente reduz o mapa de forma para um único valor usando uma função
+     * callback
      *
-     * @param callable $callback Accepts the carry, key, and value, and
-     *                           returns an updated carry value.
+     * @param callable $callback Aceita $carry, $key e $value, e retorna o valor
+     * $carry atualizado
      *
-     * @param mixed|null $initial Optional initial carry value.
+     * @param mixed|null $initial Valor inicial opctional para o $carry
      *
-     * @return mixed The carry value of the final iteration, or the initial
-     *               value if the map was empty.
+     * @return mixed O valor de transporte da iteração final, ou o valor 
+     * inicial se o mapa estiver vazio.
      */
-    public function reduce(callable $callback, $initial = null)
-    {
+    public function reduce(callable $callback, $initial = null) {
         $carry = $initial;
         foreach ($this->pairs as $pair) {
             $carry = $callback($carry, $pair->key, $pair->value);
@@ -409,11 +386,11 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Completely removes a pair from the internal array by position. It is
-     * important to remove it from the array and not just use 'unset'.
+     * Remove um par de uma dada posição.
+     * @param int $position A posição a qual deve ser removido o par(Pair)
+     * @return mixed O valor do par da posição passada
      */
-    private function delete(int $position)
-    {
+    private function delete(int $position) {
         $pair = $this->pairs[$position];
         $value = $pair->value;
         array_splice($this->pairs, $position, 1, null);
@@ -421,19 +398,18 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Removes a key's association from the map and returns the associated value
-     * or a provided default if provided.
+     * Remove a associação de uma chave $key do mapa e retorna o valor associado
+     * ou um padrão fornecido, se fornecido.
      *
-     * @param mixed $key
-     * @param mixed $default
+     * @param mixed $key A chave a ser verificada
+     * @param mixed $default O valor padrão de retorno, opcional
      *
-     * @return mixed The associated value or fallback default if provided.
+     * @return mixed O valor associado ou o padrão de retorno se fornecido
      *
-     * @throws OutOfBoundsException if no default was provided and the key is
-     *                               not associated with a value.
+     * @throws OutOfBoundsException Se nenhum valor padrão foi fornecido e a chave
+     * informada não for associada a nenhum valor do mapa.
      */
-    public function remove($key, $default = null)
-    {
+    public function remove($key, $default = null) {
         foreach ($this->pairs as $position => $pair) {
             if ($this->keysAreEqual($pair->key, $key)) {
                 return $this->delete($position);
@@ -447,52 +423,42 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a reversed copy of the map.
-     *
-     * @return Map
+     * Inverta a ordem dos elementos do Mapa
      */
-    public function reverse()
-    {
+    public function reverse() {
         $this->pairs = array_reverse($this->pairs);
     }
 
     /**
-     * Returns a reversed copy of the map.
+     * Retorna um Mapa contendo o elemento da instância atual em ordem inversa
      *
-     * @return Map
+     * @return Map Uma nova instância de Mapa(Map) contendo os elementos do Mapa atual, porém em ordem
+     * inversa
      */
-    public function reversed(): Map
-    {
+    public function reversed(): Map {
         $reversed = new self();
         $reversed->pairs = array_reverse($this->pairs);
         return $reversed;
     }
 
     /**
-     * Returns a sub-sequence of a given length starting at a specified offset.
+     * Retorna uma sub-sequência de um determinado comprimento a partir de um 
+     * ponto especificado.
      *
-     * @param int $offset      If the offset is non-negative, the map will
-     *                         start at that offset in the map. If offset is
-     *                         negative, the map will start that far from the
-     *                         end.
+     * @param int $offset Se o deslocamento não for negativo, o mapa começará 
+     * a partir deste ponto no mapa. Se o deslocamento for negativo, o mapa 
+     * começará tão longe do final.
      *
-     * @param int|null $length If a length is given and is positive, the
-     *                         resulting set will have up to that many pairs in
-     *                         it. If the requested length results in an
-     *                         overflow, only pairs up to the end of the map
-     *                         will be included.
-     *
-     *                         If a length is given and is negative, the map
-     *                         will stop that many pairs from the end.
-     *
-     *                        If a length is not provided, the resulting map
-     *                        will contains all pairs between the offset and
-     *                        the end of the map.
+     * @param int|null $length Se o comprimento é dado e é positivo, a sequência
+     *  terá muitos elementos nela. Se a matriz for menor do que o comprimento,
+     *  somente os elementos de matriz disponíveis estarão presentes. Se o 
+     * comprimento é dado e é negativo, a seqüência irá parar que muitos 
+     * elementos do final da matriz. Se for omitido, a seqüência terá tudo de 
+     * compensação até o final da matriz
      *
      * @return Map
      */
-    public function slice(int $offset, int $length = null): Map
-    {
+    public function slice(int $offset, int $length = null): Map {
         $map = new self();
         if (func_num_args() === 1) {
             $slice = array_slice($this->pairs, $offset);
@@ -506,14 +472,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Sorts the map in-place, based on an optional callable comparator.
+     * Ordena o mapa, com base em um funcão de comparação opcional
      *
-     * The map will be sorted by value.
+     * O Mapa será ordenado por valor
      *
-     * @param callable|null $comparator Accepts two values to be compared.
+     * @param callable|null $comparator Aceita dois valores a serem comparados
      */
-    public function sort(callable $comparator = null)
-    {
+    public function sort(callable $comparator = null) {
         if ($comparator) {
             usort($this->pairs, function($a, $b) use ($comparator) {
                 return $comparator($a->value, $b->value);
@@ -526,15 +491,14 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a sorted copy of the map, based on an optional callable
-     * comparator. The map will be sorted by value.
+     * Retorna um cópia ordenada do mapa, baseado uma função optional de comparação.
+     * O mapa será ordenado por valor.
      *
-     * @param callable|null $comparator Accepts two values to be compared.
+     * @param callable|null $comparator Aceita dois valores a serem comparados
      *
      * @return Map
      */
-    public function sorted(callable $comparator = null): Map
-    {
+    public function sorted(callable $comparator = null): Map {
         $copy = $this->copy();
         $copy->sort($comparator);
         return $copy;
@@ -542,13 +506,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
 
     /**
      * Sorts the map in-place, based on an optional callable comparator.
+     * Ordena o mapa, baseado em um <i>callable</i> optional de comparação.
      *
-     * The map will be sorted by key.
+     * O mapa será ordenado pelas chaves ($key)
      *
-     * @param callable|null $comparator Accepts two keys to be compared.
+     * @param callable|null $comparator Aceita dois valores a serem comparados
      */
-    public function ksort(callable $comparator = null)
-    {
+    public function ksort(callable $comparator = null) {
         if ($comparator) {
             usort($this->pairs, function($a, $b) use ($comparator) {
                 return $comparator($a->key, $b->key);
@@ -561,35 +525,32 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a sorted copy of the map, based on an optional callable
-     * comparator. The map will be sorted by key.
+     * Retorna uma cópia do mapa, baseado em um callable opcional de comparação.
+     * O mapa será ordenado pelas chaves $key
      *
-     * @param callable|null $comparator Accepts two keys to be compared.
+     * @param callable|null $comparator Aceita dois valores a serem comparados
      *
      * @return Map
      */
-    public function ksorted(callable $comparator = null): Map
-    {
+    public function ksorted(callable $comparator = null): Map {
         $copy = $this->copy();
         $copy->ksort($comparator);
         return $copy;
     }
 
     /**
-     * Returns the sum of all values in the map.
+     * Retorna a soma de todos os valores do mapa.
      *
-     * @return int|float The sum of all the values in the map.
+     * @return int|float A soma de todos os valores do mapa
      */
-    public function sum()
-    {
+    public function sum() {
         return $this->values()->sum();
     }
 
     /**
      * @inheritDoc
      */
-    public function toArray(): array
-    {
+    public function toArray(): array {
         $array = [];
         foreach ($this->pairs as $pair) {
             $array[$pair->key] = $pair->value;
@@ -598,12 +559,11 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a sequence of all the associated values in the Map.
+     * Retorna uma sequência(Lista) de todos os valores associados no Mapa
      *
      * @return Sequence
      */
-    public function values(): Sequence
-    {
+    public function values(): Sequence {
         $value = function($pair) {
             return $pair->value;
         };
@@ -619,51 +579,48 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      * @return Map A new map containing all the pairs of the current
      *                 instance as well as another map.
      */
-    public function union(Map $map): Map
-    {
+    public function union(Map $map): Map {
         return $this->merge($map);
-        }
+    }
 
-        /**
-         * Creates a new map using keys of either the current instance or of another
-         * map, but not of both.
-         *
-         * @param Map $map
-         *
-         * @return Map A new map containing keys in the current instance as well
-         *                 as another map, but not in both.
-         */
-        public function xor(Map $map)
-        {
+    /**
+     * Cria um novo mapa usando as chaves $keys do mapa corrente ou de outro mapa, 
+     * mas não de ambos
+     *
+     * @param Map $map
+     *
+     * @return Map O novo mapa contendo as chaves do mapa da instância corrente
+     * ou de outro mapa, mas não contido em ambos.
+     */
+    public function xorAnother(Map $map) {
         return $this->merge($map)->filter(function($key) use ($map) {
-        return $this->hasKey($key) ^ $map->hasKey($key);
-        });
+                    return $this->hasKey($key) ^ $map->hasKey($key);
+                });
     }
 
     /**
      * @inheritDoc
      */
-    public function getIterator()
-    {
+    public function getIterator() {
         foreach ($this->pairs as $pair) {
             yield $pair->key => $pair->value;
         }
     }
 
     /**
-     * Returns a representation to be used for var_dump and print_r.
+     * Retorna uma representação para ser usada por var_dump e print_r
+     * 
+     * @return array
      */
-    public function __debugInfo()
-    {
+    public function __debugInfo() {
         return $this->pairs()->toArray();
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetSet($offset, $value)
-    {
-        if(is_null($offset)){
+    public function offsetSet($offset, $value) {
+        if (is_null($offset)) {
             $offset = count($this->pairs);
         }
         $this->put($offset, $value);
@@ -674,8 +631,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
      *
      * @throws OutOfBoundsException
      */
-    public function &offsetGet($offset)
-    {
+    public function &offsetGet($offset) {
         $pair = $this->lookupKey($offset);
         if ($pair) {
             return $pair->value;
@@ -686,16 +642,14 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     /**
      * @inheritdoc
      */
-    public function offsetUnset($offset)
-    {
+    public function offsetUnset($offset) {
         $this->remove($offset, null);
     }
 
     /**
      * @inheritdoc
      */
-    public function offsetExists($offset)
-    {
+    public function offsetExists($offset) {
         return $this->get($offset, null) !== null;
     }
 
