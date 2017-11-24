@@ -63,10 +63,10 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Updates all values by applying a callback function to each value.
+     * Atualiza todos os valores, aplicando a função callback para cada valor
      *
-     * @param callable $callback Accepts two arguments: key and value, should
-     *                           return what the updated value will be.
+     * @param callable $callback Aceita dois argumentos: key e value, será 
+     * retornado o valor atualizado.
      */
     public function apply(callable $callback)
     {
@@ -84,7 +84,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Return the first Pair from the Map
+     * Retorna o primeiro par do Mapa
      *
      * @return Pair
      *
@@ -99,8 +99,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Return the last Pair from the Map
-     *
+     * Retorna o último par do Mapa
      * @return Pair
      *
      * @throws UnderflowException
@@ -114,7 +113,7 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Return the pair at a specified position in the Map
+     * Retorna o par em uma posição especificada no Map
      *
      * @param int $position
      *
@@ -131,9 +130,10 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns the result of associating all keys of a given traversable object
-     * or array with their corresponding values, as well as those of this map.
-     *
+     * Retorna o resultado da associação de todas as chaves de um determinado
+     * objeto Traversable ou um array com seus valores correspondentes, bem como
+     * aqueles deste mapa.
+     * 
      * @param array|Traversable $values
      *
      * @return Map
@@ -146,16 +146,15 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Creates a new map containing the pairs of the current instance whose keys
-     * are also present in the given map. In other words, returns a copy of the
-     * current map with all keys removed that are not also in the other map.
+     * Cria um novo mapa contendo os pares do instância corrente cujas chaves 
+     * também estão presentes no mapa dado. Em outras palavras, retorna uma 
+     * cópia do mapa corrente com todas as chaves removidas que não estão no
+     * outro mapa.
      *
      * @param Map $map The other map.
      *
-     * @return Map A new map containing the pairs of the current instance
-     *                 whose keys are also present in the given map. In other
-     *                 words, returns a copy of the current map with all keys
-     *                 removed that are not also in the other map.
+     * @return Map Um novo mapa contendo os pares da corrente instância de Map,
+     * cujas chaves também estejam presente no mapa dado.
      */
     public function intersect(Map $map): Map
     {
@@ -165,13 +164,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns the result of removing all keys from the current instance that
-     * are present in a given map.
+     * Retorna o resultado da remoção de todas as chaves da instância corrente,
+     * que estejam presentes no mapa dado.
      *
-     * @param Map $map The map containing the keys to exclude.
+     * @param Map $map O mapa que contem as chaves que devem ser excluídas
      *
-     * @return Map The result of removing all keys from the current instance
-     *                 that are present in a given map.
+     * @return Map O resultado da remoção de todas as chaves da instância corrente
+     * de Map, que estejam presente no map dado.
      */
     public function diff(Map $map): Map
     {
@@ -181,12 +180,12 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Determines whether two keys are equal.
+     * Determina se duas chaves são iguais
      *
      * @param mixed $a
      * @param mixed $b
      *
-     * @return bool
+     * @return bool TRUE caso sejam iguais e FALSE caso contrário
      */
     private function keysAreEqual($a, $b): bool
     {
@@ -197,11 +196,12 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Attempts to look up a key in the table.
+     * Tenta encontrar uma chave no Mapa
      *
-     * @param $key
+     * @param $key A chave se procurar no Mapa
      *
-     * @return Pair|null
+     * @return Pair|null Retorna o par (Pair) caso a $key seja encontrada ou NULL
+     * caso contrário
      */
     private function lookupKey($key)
     {
@@ -213,11 +213,12 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Attempts to look up a key in the table.
+     * Tenta encontrar um valor no Map.
      *
-     * @param $value
+     * @param $value O valor a ser procurado no mapa
      *
-     * @return Pair|null
+     * @return Pair|null Retorna o par (Pair) caso o $value seja encontrado ou 
+     * NULL caso contrário
      */
     private function lookupValue($value)
     {
@@ -229,11 +230,12 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns whether an association a given key exists.
+     * Retorna se uma associação de determinada chave existe.
+     * Verifica se a 
      *
-     * @param mixed $key
+     * @param mixed $key A chave a ser verificada no Mapa
      *
-     * @return bool
+     * @return bool TRUE caso a chave $key exista e FALSE caso contrário
      */
     public function hasKey($key): bool
     {
@@ -241,11 +243,11 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns whether an association for a given value exists.
+     * Retorna se existe uma associação para um determinado valor
      *
-     * @param mixed $value
+     * @param mixed $value O valor a ser verificado no Mapa
      *
-     * @return bool
+     * @return bool TRUE caso o valor exista no Mapa e FALSE caso contrário
      */
     public function hasValue($value): bool
     {
@@ -261,12 +263,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a new map containing only the values for which a predicate
-     * returns true. A boolean test will be used if a predicate is not provided.
+     * Retorna um novo mapa contendo apenas os valores para os quais um 
+     * predicado retorna verdadeiro. Um teste booleano será usado se um 
+     * predicado não for fornecido.
      *
-     * @param callable|null $callback Accepts a key and a value, and returns:
-     *                                true : include the value,
-     *                                false: skip the value.
+     * @param callable|null $callback Aceita um $key e um $value, e retorna:
+     *                                true : incluir o valor,
+     *                                false: pular o valor.
      *
      * @return Map
      */
@@ -282,16 +285,16 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns the value associated with a key, or an optional default if the
-     * key is not associated with a value.
+     * Retorna o valor associado a uma chave ou um padrão opcional se a chave 
+     * não estiver associada a um valor.
      *
      * @param mixed $key
      * @param mixed $default
      *
-     * @return mixed The associated value or fallback default if provided.
+     * @return mixed O valor associado ou o padrão de retorno se fornecido.
      *
-     * @throws OutOfBoundsException if no default was provided and the key is
-     *                               not associated with a value.
+     * @throws OutOfBoundsException se nenhum padrão foi fornecido e a chave
+     *  não está associada a um valor.
      */
     public function get($key, $default = null)
     {
@@ -306,9 +309,9 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a set of all the keys in the map.
+     * Retorna um conjunto(Set) de todas as chaves do Mapa(Map)
      *
-     * @return Set
+     * @return Set O conjunto contendo todas as chaves do Mapa
      */
     public function keys(): Set
     {
@@ -319,12 +322,13 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a new map using the results of applying a callback to each value.
+     * Retorna um novo Mapa usando os resultados da aplicação da função callback
+     * para cada valor
      *
-     * The keys will be equal in both maps.
+     * As chaves serão iguais em ambos os mapas
      *
-     * @param callable $callback Accepts two arguments: key and value, should
-     *                           return what the updated value will be.
+     * @param callable $callback Aceita dois argumentos: $key e $value, deverá
+     * retornar o valor atualizado
      *
      * @return Map
      */
@@ -337,7 +341,8 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns a sequence of pairs representing all associations.
+     * Retorna uma sequência(Sequence) de pares(Pair) representando todas as
+     * associações
      *
      * @return Sequence
      */
@@ -350,11 +355,11 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Associates a key with a value, replacing a previous association if there
-     * was one.
+     * Associa uma chave com um valor, substituindo uma associação anterior se 
+     * houver uma.
      *
-     * @param mixed $key
-     * @param mixed $value
+     * @param mixed $key A chave a ser associada
+     * @param mixed $value O valor a ser atribuido
      * @throws InvalidParamException Caso a chave seja uma valor nulo
      */
     public function put($key, $value)
@@ -371,8 +376,8 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Creates associations for all keys and corresponding values of either an
-     * array or iterable object.
+     * Cria uma associação para todas as chaves e seus valores correspondentes
+     * de um array ou objeto iterable(Traversable)
      *
      * @param Traversable|array $values
      */
