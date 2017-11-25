@@ -34,42 +34,52 @@ use UnderflowException;
  * @package Prime\DataStructure
  * @since 30/10/2017
  * @author TomSailor
+ * Um PriorityQueue é muito semelhante a uma Queue. Os valores são inseridos na 
+ * fila com uma prioridade atribuída e o valor com a maior prioridade sempre 
+ * estará na frente da fila.
  */
 class PriorityQueue implements Collection, IteratorAggregate
 {
+
     use CollectionTrait;
 
     /**
      * @var array
      */
     private $heap = [];
+
     /**
      * @var int
      */
     private $stamp = 0;
+
     /**
-     * Creates a new instance.
+     * Cria uma nova instância de PriorityQueue
      */
     public function __construct()
     {
+        
     }
+
     /**
      * @inheritDoc
      */
     public function clear()
     {
-        $this->heap     = [];
-        $this->stamp    = 0;
+        $this->heap = [];
+        $this->stamp = 0;
     }
+
     /**
      * @inheritDoc
      */
     public function copy(): \Ds\Collection
     {
         $copy = new PriorityQueue();
-        $copy->heap     = $this->heap;
+        $copy->heap = $this->heap;
         return $copy;
     }
+
     /**
      * @inheritDoc
      */
@@ -77,6 +87,7 @@ class PriorityQueue implements Collection, IteratorAggregate
     {
         return count($this->heap);
     }
+
     /**
      * Returns the value with the highest priority in the priority queue.
      *
@@ -91,41 +102,45 @@ class PriorityQueue implements Collection, IteratorAggregate
         }
         return $this->heap[0]->value;
     }
+
     /**
-     * Returns the index of a node's left leaf.
+     * Retorna o índice do nó esquerdo 
      *
-     * @param int $index The index of the node.
+     * @param int $index O índice do nó.
      *
-     * @return int The index of the left leaf.
+     * @return int O índice do nó esquerdo
      */
-    private function left(int $index): int
+    private function leftNode(int $index): int
     {
         return ($index * 2) + 1;
     }
+
     /**
-     * Returns the index of a node's right leaf.
+     * Retorna o índice do nó direito 
      *
-     * @param int $index The index of the node.
+     * @param int $index O índice do nó.
      *
-     * @return int The index of the right leaf.
+     * @return int O índice do nó direito
      */
-    private function right(int $index): int
+    private function rightNode(int $index): int
     {
         return ($index * 2) + 2;
     }
+
     /**
-     * Returns the index of a node's parent node.
+     * Retorna o índice do nó pai 
      *
-     * @param int $index The index of the node.
+     * @param int $index O índice do nó.
      *
-     * @return int The index of the parent.
+     * @return int O índice do nó pai
      */
-    private function parent(int $index): int
+    private function parentNode(int $index): int
     {
-        return ($index - 1) / 2;
+        return($index - 1) / 2;
     }
+
     /**
-     * Compares two indices of the heap.
+     * Compara dois índices da pilha.
      *
      * @param int $a
      * @param int $b
@@ -139,20 +154,23 @@ class PriorityQueue implements Collection, IteratorAggregate
         // Compare priority, using insertion stamp as fallback.
         return ($x->priority <=> $y->priority) ?: ($y->stamp <=> $x->stamp);
     }
+
     /**
-     * Swaps the nodes at two indices of the heap.
+     * Troca os nós em dois índices da pilha.
      *
-     * @param int $a
-     * @param int $b
+     * @param int $a Índica A
+     * @param int $b Índice B
      */
     private function swap(int $a, int $b)
     {
-        $temp           = $this->heap[$a];
+        $temp = $this->heap[$a];
         $this->heap[$a] = $this->heap[$b];
         $this->heap[$b] = $temp;
     }
+
     /**
      * Returns the index of a node's largest leaf node.
+     * 
      *
      * @param int $parent the parent node.
      *
@@ -160,13 +178,14 @@ class PriorityQueue implements Collection, IteratorAggregate
      */
     private function getLargestLeaf(int $parent)
     {
-        $left  = $this->left($parent);
-        $right = $this->right($parent);
+        $left = $this->leftNode($parent);
+        $right = $this->rightNode($parent);
         if ($right < count($this->heap) && $this->compare($left, $right) < 0) {
             return $right;
         }
         return $left;
     }
+
     /**
      * Starts the process of sifting down a given node index to ensure that
      * the heap's properties are preserved.
@@ -186,6 +205,7 @@ class PriorityQueue implements Collection, IteratorAggregate
             $this->swap($parent, $leaf);
         }
     }
+
     /**
      * Sets the root node and sifts it down the heap.
      *
@@ -196,6 +216,7 @@ class PriorityQueue implements Collection, IteratorAggregate
         $this->heap[0] = $node;
         $this->siftDown(0);
     }
+
     /**
      * Returns the root node of the heap.
      *
@@ -205,6 +226,7 @@ class PriorityQueue implements Collection, IteratorAggregate
     {
         return $this->heap[0];
     }
+
     /**
      * Returns and removes the value with the highest priority in the queue.
      *
@@ -226,6 +248,7 @@ class PriorityQueue implements Collection, IteratorAggregate
         $this->setRoot($leaf);
         return $value;
     }
+
     /**
      * Sifts a node up the heap until it's in the right position.
      *
@@ -234,7 +257,7 @@ class PriorityQueue implements Collection, IteratorAggregate
     private function siftUp(int $leaf)
     {
         for (; $leaf > 0; $leaf = $parent) {
-            $parent = $this->parent($leaf);
+            $parent = $this->parentNode($leaf);
             // Done when parent priority is greater.
             if ($this->compare($leaf, $parent) < 0) {
                 break;
@@ -242,6 +265,7 @@ class PriorityQueue implements Collection, IteratorAggregate
             $this->swap($parent, $leaf);
         }
     }
+
     /**
      * Pushes a value into the queue, with a specified priority.
      *
@@ -254,46 +278,54 @@ class PriorityQueue implements Collection, IteratorAggregate
         $this->heap[] = new PriorityNode($value, $priority, $this->stamp++);
         $this->siftUp(count($this->heap) - 1);
     }
+
     /**
      * @inheritDoc
      */
     public function toArray(): array
     {
-        $heap  = $this->heap;
+        $heap = $this->heap;
         $array = [];
-        while ( ! $this->isEmpty()) {
+        while (!$this->isEmpty()) {
             $array[] = $this->pop();
         }
         $this->heap = $heap;
         return $array;
     }
+
     /**
      * @inheritDoc
      */
     public function getIterator()
     {
-        while ( ! $this->isEmpty()) {
+        while (!$this->isEmpty()) {
             yield $this->pop();
         }
     }
+
 }
+
 /**
  * @internal
  */
 final class PriorityNode
 {
+
     /**
      * @var mixed
      */
     public $value;
+
     /**
      * @var int
      */
     public $priority;
+
     /**
      * @var int
      */
     public $stamp;
+
     /**
      * @param mixed $value
      * @param int   $priority
@@ -301,9 +333,9 @@ final class PriorityNode
      */
     public function __construct($value, int $priority, int $stamp)
     {
-        $this->value    = $value;
+        $this->value = $value;
         $this->priority = $priority;
-        $this->stamp    = $stamp;
+        $this->stamp = $stamp;
     }
 
 }

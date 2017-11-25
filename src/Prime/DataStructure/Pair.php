@@ -31,17 +31,18 @@ namespace Prime\DataStructure;
  * @package Prime\DataStructure
  * @since 30/10/2017
  * @author TomSailor
+ * Um Pair(par) representa uma chave e um valor associado
  */
 class Pair implements \JsonSerializable
 {
 
     /**
-     * @param mixed $key The pair's key
+     * @param mixed $key A chave do par
      */
     public $key;
 
     /**
-     * @param mixed $value The pair's value
+     * @param mixed $value O valor do par
      */
     public $value;
 
@@ -51,6 +52,12 @@ class Pair implements \JsonSerializable
      * @param mixed $key
      * @param mixed $value
      */
+
+    /**
+     * Cria uma nova instância
+     * @param mixed $key A chave para o Pair
+     * @param mixed $value O valor para ser associado a respectiva chave
+     */
     public function __construct($key = null, $value = null)
     {
         $this->key = $key;
@@ -58,12 +65,10 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * This allows unset($pair->key) to not completely remove the property,
-     * but be set to null instead.
-     *
+     * Isso permite que unset ($ pair-> key) não remova completamente a propriedade, mas seja definido como nulo em vez disso.
      * @param mixed $name
-     *
      * @return mixed|null
+     * @throws OutOfBoundsException
      */
     public function __get($name)
     {
@@ -75,7 +80,7 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * Returns a copy of the Pair
+     * Retorna a copia do Pair(par)
      *
      * @return Pair
      */
@@ -85,7 +90,7 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * Returns a representation to be used for var_dump and print_r.
+     * Retorna uma representação a ser usada para var_dump e print_r.
      *
      * @return array
      */
@@ -95,7 +100,8 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * Converte o Pair(par) para um array
+     * @return array Um array contendo todos a chave e o valor do Pair(par)
      */
     public function toArray(): array
     {
@@ -103,7 +109,8 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * @inheritDoc
+     * Retorna uma representação que pode ser convertida em JSON.
+     * @return array Um array contendo todos a chave e o valor do Pair(par)
      */
     public function jsonSerialize()
     {
@@ -111,7 +118,8 @@ class Pair implements \JsonSerializable
     }
 
     /**
-     * Returns a string representation of the pair.
+     * Retorna uma representação de string do par.
+     * @return string
      */
     public function __toString()
     {

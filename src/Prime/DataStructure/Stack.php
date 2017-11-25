@@ -41,11 +41,14 @@ use UnderflowException;
  */
 final class Stack implements IteratorAggregate, ArrayAccess, Collection
 {
+
     use CollectionTrait;
+
     /**
      * @var Vector internal vector to store values of the stack.
      */
     private $vector;
+
     /**
      * Creates an instance using the values of an array or Traversable object.
      *
@@ -55,6 +58,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         $this->vector = new Vector($values ?: []);
     }
+
     /**
      * Clear all elements in the Stack
      */
@@ -62,13 +66,16 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         $this->vector->clear();
     }
+
     /**
-     * @inheritdoc
+     * Cria uma cópia superficial da coleção
+     * @return Collection Uma cópia superficial da coleção
      */
     public function copy(): Collection
     {
         return new self($this->vector);
     }
+
     /**
      * Returns the number of elements in the Stack
      *
@@ -78,6 +85,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         return count($this->vector);
     }
+
     /**
      * Returns the value at the top of the stack without removing it.
      *
@@ -89,6 +97,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         return $this->vector->last();
     }
+
     /**
      * Returns and removes the value at the top of the stack.
      *
@@ -100,6 +109,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         return $this->vector->pop();
     }
+
     /**
      * Pushes zero or more values onto the top of the stack.
      *
@@ -109,6 +119,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         $this->vector->push(...$values);
     }
+
     /**
      * @inheritDoc
      */
@@ -116,15 +127,17 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         return array_reverse($this->vector->toArray());
     }
+
     /**
      *
      */
     public function getIterator()
     {
-        while ( ! $this->isEmpty()) {
+        while (!$this->isEmpty()) {
             yield $this->pop();
         }
     }
+
     /**
      * @inheritdoc
      *
@@ -138,6 +151,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
             throw new OutOfBoundsException();
         }
     }
+
     /**
      * @inheritdoc
      *
@@ -147,6 +161,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         throw new Error();
     }
+
     /**
      * @inheritdoc
      *
@@ -156,6 +171,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         throw new Error();
     }
+
     /**
      * @inheritdoc
      *
@@ -165,4 +181,5 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     {
         throw new Error();
     }
+
 }
