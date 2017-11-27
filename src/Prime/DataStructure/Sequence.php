@@ -45,8 +45,6 @@ interface Sequence extends Collection
 {
 
     /**
-     * Updates every value in the sequence by applying a callback, using the
-     * return value as the new value.
      * 
      * Atualiza todos os valores da sequência(Lista) aplicando uma função callback,
      * usando o valor de retorno como o novo valor
@@ -140,8 +138,8 @@ interface Sequence extends Collection
     function last();
 
     /**
-     * Returns a new sequence using the results of applying a callback to each
-     * value.
+     * Retorna uma nova sequencia usando o resultado da função callback aplicada
+     * em casa valor
      *
      * @param callable $callback
      *
@@ -150,7 +148,8 @@ interface Sequence extends Collection
     function map(callable $callback): Sequence;
 
     /**
-     * Returns the result of adding all given values to the sequence.
+     * Retorna o resultado a adição de todos os valores do sequência passada como
+     * parâmetro
      *
      * @param array|Traversable $values
      *
@@ -159,31 +158,34 @@ interface Sequence extends Collection
     function merge($values): Sequence;
 
     /**
-     * Removes the last value in the sequence, and returns it.
+     * Remove o último valor da sequência e retorna-o
      *
-     * @return mixed what was the last value in the sequence.
+     * @return mixed O último valor da Sequência
      *
-     * @throws UnderflowException if the sequence is empty.
+     * @throws UnderflowException Se a sequência(Lista) estiver vazia.
      */
     function pop();
 
     /**
-     * Adds zero or more values to the end of the sequence.
+     * Adiciona zero ou mais valores no final da sequencia
      *
      * @param mixed ...$values
      */
     function push(...$values);
 
     /**
-     * Iteratively reduces the sequence to a single value using a callback.
+     * Reduz a Sequência(Lista) para um único valor através de um processo 
+     * iterativo via função callback.
      *
-     * @param callable $callback Accepts the carry and current value, and
-     *                           returns an updated carry value.
+     * @param callable $callback Accepts the $carry (Valor da iteração anterior)
+     * e varor $current, e retorna o valor da iteração $carry atualizado.
      *
-     * @param mixed|null $initial Optional initial carry value.
+     * @param mixed|null $initial Se o argumento opcional initial for passado, 
+     * ele será utilizado no início do processo, ou como um resultado final se a
+     * Sequência(Lista) estiver vazia.
      *
-     * @return mixed The carry value of the final iteration, or the initial
-     *               value if the sequence was empty.
+     * @return mixed O varor $carry (de transporte) da iteração final ou o valor
+     * inicial.
      */
     function reduce(callable $callback, $initial = null);
 
