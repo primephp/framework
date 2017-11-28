@@ -201,98 +201,95 @@ interface Sequence extends Collection
     function remove(int $index);
 
     /**
-     * Reverses the sequence in-place.
+     * Inverte a ordem dos elementos da Sequência(Lista).
      */
     function reverse();
 
     /**
-     * Returns a reversed copy of the sequence.
+     * Retorna uma cópia da Sequência(Lista) com os elementos em Ordem inversa
      *
      * @return Sequence
      */
     function reversed();
 
     /**
-     * Rotates the sequence by a given number of rotations, which is equivalent
-     * to successive calls to 'shift' and 'push' if the number of rotations is
-     * positive, or 'pop' and 'unshift' if negative.
+     * Gira a sequência por um determinado número de rotações, o que equivale a 
+     * chamadas sucessivas para 'shift' e 'push' se o número de rotações for 
+     * positivo, ou 'pop' e 'unshift' se negativo.
      *
-     * @param int $rotations The number of rotations (can be negative).
+     * @param int $rotations O número de rotações (pode ser negativo).
      */
     function rotate(int $rotations);
 
     /**
-     * Replaces the value at a given index in the sequence with a new value.
+     * Substitui o valor do índice informado na Sequência(Lista) por um novo
+     * valor
      *
      * @param int   $index
      * @param mixed $value
      *
-     * @throws OutOfRangeException if the index is not in the range [0, size-1]
+     * @throws OutOfRangeException Se o índice não estiver no range [0, size-1]
      */
     function set(int $index, $value);
 
     /**
-     * Removes and returns the first value in the sequence.
+     * Remove e retorna o primeiro valor da Sequência(Lista)
      *
-     * @return mixed what was the first value in the sequence.
+     * @return mixed O primeiro elemento da Sequência(Lista)
      *
-     * @throws UnderflowException if the sequence was empty.
+     * @throws UnderflowException Se a Sequência(Lista) estiver vazia
      */
     function shift();
 
     /**
-     * Returns a sub-sequence of a given length starting at a specified index.
+     * Retorna uma sub-sequência de um determinado comprimento a partir de um 
+     * índice especificado.
      *
-     * @param int $index  If the index is positive, the sequence will start
-     *                    at that index in the sequence. If index is negative,
-     *                    the sequence will start that far from the end.
+     * @param int $index  Se o índice for positivo, a seqüência começará a 
+     * partir deste índice na Sequência(Lista). Se o índice for negativo, a 
+     * sub-seqüência começará dessa distância do final da sequência.
      *
-     * @param int $length If a length is given and is positive, the resulting
-     *                    sequence will have up to that many values in it.
-     *                    If the length results in an overflow, only values
-     *                    up to the end of the sequence will be included.
-     *
-     *                    If a length is given and is negative, the sequence
-     *                    will stop that many values from the end.
-     *
-     *                    If a length is not provided, the resulting sequence
-     *                    will contain all values between the index and the
-     *                    end of the sequence.
+     * @param int $length Se length for especificado e positivo, então a 
+     * sequência terá essa quantidade de elementos. Se a Sequência for menor que 
+     * length, então somente os elementos disponíveis serão retornados. Se length 
+     * for especificado e negativo então a sequência conterá essa quantidade 
+     * elementos a partir do final da Sequência. Se for omitido, então a sequência 
+     * terá todos os elementos a partir de $index até o final da Sequência. 
      *
      * @return Sequence
      */
     function slice(int $index, int $length = null): Sequence;
 
     /**
-     * Sorts the sequence in-place, based on an optional callable comparator.
+     * 
+     * Ordena a seqüência, com base em uma função callback de comparação.
      *
-     * @param callable|null $comparator Accepts two values to be compared.
-     *                                  Should return the result of a <=> b.
+     * @param callable|null $comparator Aceita dois valores para serem comparados.
+     *                                  Deve retorna o resultado de um a <=> b.
      */
     function sort(callable $comparator = null);
 
     /**
-     * Returns a sorted copy of the sequence, based on an optional callable
-     * comparator. Natural ordering will be used if a comparator is not given.
+     * Retorna uma copia ordenada da Sequência, baseada numa função callback.
      *
-     * @param callable|null $comparator Accepts two values to be compared.
-     *                                  Should return the result of a <=> b.
+     * @param callable|null $comparator Aceita dois valores para serem comparados.
+     *                                  Deve retorna o resultado de um a <=> b.
      *
      * @return Sequence
      */
     function sorted(callable $comparator = null): Sequence;
 
     /**
-     * Returns the sum of all values in the sequence.
+     * Retorna a soma de todos os valores da Sequência.
      *
-     * @return int|float The sum of all the values in the sequence.
+     * @return int|float A soma de todos os valores da Sequência
      */
     function sum();
 
     /**
-     * Adds zero or more values to the front of the sequence.
+     * Adiciona zero ou mais valores no início da Sequência.
      *
-     * @param mixed ...$values
+     * @param mixed ...$values Aceita como parâmetros a serem adicionados
      */
     function unshift(...$values);
 }

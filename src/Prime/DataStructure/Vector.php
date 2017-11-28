@@ -26,9 +26,8 @@
 
 namespace Prime\DataStructure;
 
-use OutOfRangeException;
-use Traversable;
-use UnexpectedValueException;
+use ArrayAccess;
+use IteratorAggregate;
 
 /**
  * Um Vector é uma sequência de valores contínuos que cresce e diminui 
@@ -38,7 +37,7 @@ use UnexpectedValueException;
  * @since 30/10/2017
  * @author TomSailor
  */
-final class Vector implements \IteratorAggregate, \ArrayAccess, Sequence
+final class Vector implements IteratorAggregate, ArrayAccess, Sequence
 {
 
     use CollectionTrait;
