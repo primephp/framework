@@ -64,6 +64,17 @@ class SqlSelect extends AbstractStatement
     }
 
     /**
+     * Adicionar um array de colunas a seres retornadas pela instrução select
+     * @param SqlColumn[] $columns
+     */
+    public function addColumns(array $columns)
+    {
+        foreach ($columns as $column) {
+            $this->addColumn($column);
+        }
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function getStatement(): string

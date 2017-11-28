@@ -13,6 +13,7 @@ use Prime\Model\SQL\SQLUpdate;
 /**
  * Classe Repository
  * @name Repository
+ * @internal asdfasdf 
  * @package Prime\Model\DataSource
  * esta classe provê os métodos necessários para manipular coleções de objetos.
  */
@@ -69,7 +70,7 @@ final class Repository
                 $sql->addColumn($value);
             }
         } else {
-            $sql->addColumn('*');
+            $sql->addColumn('*');        $log->pushHandler(new TelegramHandler)
         }
         $sql->setEntity(constant($this->class . '::TABLENAME'));
         $sql->setCriteria($criteria);

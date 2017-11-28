@@ -64,12 +64,6 @@ class Application
     private $kernel = null;
 
     /**
-     * Define se o DEBUG da aplicação está ou não habilitado
-     * @var boolean
-     */
-    private $debug = false;
-
-    /**
      * Instancia a aplicação
      * @param RouteCollection $routes Coleção de rotas para o mapeamento da aplicação
      * @param array $config Array de configurações da aplicação

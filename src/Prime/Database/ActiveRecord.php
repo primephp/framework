@@ -26,6 +26,14 @@
 
 namespace Prime\Database;
 
+use Monolog\Logger;
+use PDOStatement;
+use Prime\Database\SQL\ExpressionInterface;
+use Prime\Database\SQL\SqlColumn;
+use Prime\Database\SQL\SqlSelect;
+use Prime\DataStructure\ArrayTrait;
+use Prime\Model\DataSource\Repository;
+
 /**
  * @name ActiveRecord
  * @package Prime\Database
@@ -35,27 +43,63 @@ namespace Prime\Database;
 abstract class ActiveRecord
 {
 
+    use ArrayTrait;
+
     /**
-     *
+     * Armazena a conexão com a base de dados
      * @var Connection
      */
     protected $connection = null;
-    protected static $pk = 'id';
+
+    /**
+     * O nome do campo que é a chave primária da tabela
+     * @var string
+     */
+    protected $pk = 'id';
+
+    /**
+     * Armazena um array contendo todos os objetos do tipo sqlcolumn para
+     * serem utilizados na instrução sql
+     * @var SqlColumn[]
+     */
     protected $columns = [];
-    protected $oldData = [];
+
+    /**
+     * Um array armazenando os campos e os valores recuperados da base de dados
+     * @var array 
+     */
     protected $data = [];
+
+    /**
+     *
+     * @var array 
+     */
+    protected $array = [];
     protected $isLoad = false;
     protected $criteria;
     protected $statement;
+    private $log;
 
     public static function load(string $id)
     {
-        
+        $r = new Repository('');
     }
+
+    public function __construct(array $array = array())
+    {
+
+        $this->init();
+    }
+
+    protected function init()
+    {
+        $log = new Logger('teste');
+    }
+
     private function fieldNewValue($key)
     {
-        if (isset($this->oldData[$key])) {
-            if ($this->data[$key] != $this->oldData[$key]) {
+        if (isset($this->data[$key])) {
+            if ($this->array[$key] != $this->data[$key]) {
                 return TRUE;
             }
         } else {
@@ -63,6 +107,7 @@ abstract class ActiveRecord
         }
         return FALSE;
     }
+
     /**
      * Retorna o nome da Tabela
      * @return string
@@ -72,16 +117,79 @@ abstract class ActiveRecord
         $class = $this->getClass();
         return constant("{$class}::TABLENAME");
     }
+
     /**
      * Retorna o nome do campo que é a chave primária da entidade relacional
      * @return string
      */
-    public function getPrimaryKey()
+    public function pkName()
     {
         return constant($this->getClass() . '::PRIMARY_KEY');
     }
 
-    private function getPrimaryKeyType(){
+    private function pkType()
+    {
         return constant($this->getClass() . '::KEY_TYPE');
     }
+
+    private function createPk()
+    {
+        
+    }
+
+    public function loadByCriteria(ExpressionInterface $criteria)
+    {
+        $pdo = new PDOStatement();
+    }
+
+    /**
+     * Retorna um array contendo todas as colunas configuradas para serem utilizadas
+     * na instrução SQL
+     * @return SqlColumn[]
+     */
+    public function getColumns(): array
+    {
+        return $this->columns;
+    }
+    
+    protected function exec(string $sql){
+        
+    }
+
+    private function select(ExpressionInterface $criteria)
+    {
+        $sql = new SqlSelect($this->getEntity());
+        $sql->addColumn($this->columns);
+    }
+
+    private function update()
+    {
+        
+    }
+
+    private function insert()
+    {
+        
+    }
+
+    public function store()
+    {
+        
+    }
+
+    public function delete($id)
+    {
+        
+    }
+
+    public function getClass()
+    {
+        return get_class($this);
+    }
+
+    public static function getClassName()
+    {
+        return get_called_class();
+    }
+
 }
