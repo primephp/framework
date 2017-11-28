@@ -101,7 +101,7 @@ final class TString extends TObject implements StringInterface
      * @param string $string
      * @return TString
      */
-    public function sanitize($string)
+    public static function sanitize($string)
     {
         $v = filter_var($string, FILTER_SANITIZE_STRING);
         return new TString($v);
