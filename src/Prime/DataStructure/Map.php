@@ -505,7 +505,6 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     }
 
     /**
-     * Sorts the map in-place, based on an optional callable comparator.
      * Ordena o mapa, baseado em um <i>callable</i> optional de comparação.
      *
      * O mapa será ordenado pelas chaves ($key)
@@ -546,9 +545,10 @@ final class Map implements IteratorAggregate, ArrayAccess, Collection {
     public function sum() {
         return $this->values()->sum();
     }
-
+    
     /**
-     * @inheritDoc
+     * Retorna os valores do Mapa(Map) no formato de um array
+     * @return array
      */
     public function toArray(): array {
         $array = [];

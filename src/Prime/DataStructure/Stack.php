@@ -45,12 +45,12 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     use CollectionTrait;
 
     /**
-     * @var Vector internal vector to store values of the stack.
+     * @var Vector Vetor interno para armazenar os valores da pilha
      */
     private $vector;
 
     /**
-     * Creates an instance using the values of an array or Traversable object.
+     * Cria uma instância usando os valores de um array ou objeto Traversable.
      *
      * @param array|Traversable $values
      */
@@ -60,7 +60,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Clear all elements in the Stack
+     * Limpa todos os elementos da Pilha
      */
     public function clear()
     {
@@ -77,7 +77,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns the number of elements in the Stack
+     * Retorna o número de elementos na Pilha
      *
      * @return int
      */
@@ -87,11 +87,11 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns the value at the top of the stack without removing it.
+     * Retorna o valor do topo da pilha sem removê-lo
      *
      * @return mixed
      *
-     * @throws UnderflowException if the stack is empty.
+     * @throws UnderflowException Se a pilha estiver vazia.
      */
     public function peek()
     {
@@ -99,11 +99,11 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Returns and removes the value at the top of the stack.
+     * Retorna e remove o valor do topo da Pilha
      *
      * @return mixed
      *
-     * @throws UnderflowException if the stack is empty.
+     * @throws UnderflowException Se a pilha estiver vazia
      */
     public function pop()
     {
@@ -111,7 +111,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     * Pushes zero or more values onto the top of the stack.
+     * Adiciona zero ou mais valores no topo da Pilha
      *
      * @param mixed ...$values
      */
@@ -129,7 +129,7 @@ final class Stack implements IteratorAggregate, ArrayAccess, Collection
     }
 
     /**
-     *
+     * @inheritDoc
      */
     public function getIterator()
     {
