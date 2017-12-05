@@ -70,7 +70,7 @@ final class Repository
                 $sql->addColumn($value);
             }
         } else {
-            $sql->addColumn('*');        $log->pushHandler(new TelegramHandler)
+            $sql->addColumn('*');  
         }
         $sql->setEntity(constant($this->class . '::TABLENAME'));
         $sql->setCriteria($criteria);

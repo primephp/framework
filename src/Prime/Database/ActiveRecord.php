@@ -178,7 +178,7 @@ abstract class ActiveRecord {
      * @return array
      */
     public function loadByCriteria(SqlExpressionInterface $criteria) {
-        return $this->fetch($this->preLoad($criteria));
+        return $this->fetch($this->query($this->getSqlSelectSatatment($criteria)));
     }
 
     /**
@@ -193,21 +193,92 @@ abstract class ActiveRecord {
     }
 
     /**
-     * Executa a instrução SQL, retornando um conjunto de resultados como um objeto PDOStatement
-     * @param SqlExpressionInterface $criteria
-     * @return \PDOStatement
+     * Retorna a instrução sql para inserção dos dados 
+     * @return string A instrução SQL
      */
-    private function preLoad(SqlExpressionInterface $criteria) {
+    private function getSqlInsertStatement() {
+        $sql = new SqlInsert();
+        $sql->setEntity($this->getEntity());
+
+        if (empty($this->data[$this->getPrimaryKey()])) {
+            $this->data[$this->getPrimaryKey()] = $this->createPK();
+        }
+
+        foreach ($this->data as $key => $value) {
+            $sql->setRowData($key, $value);
+        }
+        return $sql->getStatement();
+    }
+
+    /**
+     * Retorna a instrução sql para atualização dos dados 
+     * @return string A intrução sql 
+     */
+    private function getSqlUpdateStatement() {
+        $sql = new SqlUpdate();
+        $sql->setEntity($this->getEntity());
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $this->{$this->getPrimaryKey()}));
+        foreach ($this->data as $key => $value) {
+            if ($key !== $this->getPrimaryKey() && $this->checkIsNew($key)) {
+                $sql->setRowData($key, $value);
+            }
+        }
+        return $sql->getStatement();
+    }
+
+    /**
+     * Retorna a instrução sql para deleção de dados 
+     * @param string $id
+     * @return string A instrução sql
+     */
+    private function getSqlDeleteStatement($id = null) {
+        if (is_null($id)) {
+            $id = $this->data[$this->getPrimaryKey()];
+        }
+        $sql = new SqlDelete();
+        $sql->setEntity($this->getEntity());
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
+        return $sql->getStatement();
+    }
+
+    /**
+     * Retorna a instrução sql para carregar dados 
+     * @param SqlExpressionInterface $criteria
+     * @return string A instrução SQL
+     */
+    private function getSqlSelectSatatment(SqlExpressionInterface $criteria) {
         $sql = new SqlSelect();
         $sql->addColumn($this->getColumns());
         $sql->setEntity($this->getEntity());
         $sql->setCriteria($criteria);
+        return $sql->getStatement();
+    }
 
+    /**
+     * Executa uma instrução SQL, retornando um conjunto de resultados como um 
+     * objeto PDOStatement
+     * @param string $statement
+     * @return \PDOStatement|FALSE
+     * @throws PDOException Caso ocorra alguma falha ao executar a instrução SQL
+     */
+    private function query(string $statement) {
         $conn = $this->getConnection();
+        $query = $conn->query($statement);
+        if (!$query) {
+            throw new PDOException($conn->errorInfo()[2]);
+        }
+        return $query;
+    }
 
-        $this->statement = $sql->getStatement();
-
-        return $conn->query($this->statement);
+    /**
+     * Execute uma instrução SQL e retornar o número de linhas afetadas
+     * @param string $statement
+     * @return int Retorna o número de linhas que foram modificadas ou excluídas
+     * pela declaração SQL. Se nenhuma linha foi afetada, retorna 0;
+     */
+    private function exec(string $statement) {
+        $conn = $this->getConnection();
+        return $conn->exec($statement);
     }
 
     /**
@@ -235,7 +306,7 @@ abstract class ActiveRecord {
      * @param array $data
      * @return boolean
      */
-    public function fromArray($data) {
+    private function fromArray($data) {
         if (is_array($data)) {
             foreach ($data as $key => $value) {
                 $this->data[$key] = $value;
@@ -275,52 +346,20 @@ abstract class ActiveRecord {
     public function store() {
         if (empty($this->data[$this->getPrimaryKey()]) or ( !$this->exist($this->data[$this->getPrimaryKey()])
                 )) {
-            $sql = $this->insert();
+            $sql = $this->getSqlInsertStatement();
         } else {
-            $sql = $this->update();
+            $sql = $this->getSqlUpdateStatement();
         }
-
-        $conn = $this->getConnection();
-
-        $this->statement = $sql->getStatement();
-        return $conn->exec($this->statement);
+        return $this->exec($sql);
     }
 
     /**
-     * Atualiza um Row Datagateway
-     * @return SqlInsert
+     * Verifica se o valor do campo foi inserido ou alterado, ou seja, verifica
+     * se é um valor novo
+     * @param string $key O nome do campo
+     * @return boolean Retorna TRUE se o valor do campo é novo ou foi alterado
      */
-    private function insert() {
-        $sql = new SqlInsert();
-        $sql->setEntity($this->getEntity());
-
-        if (empty($this->data[$this->getPrimaryKey()])) {
-            $this->data[$this->getPrimaryKey()] = $this->createPK();
-        }
-
-        foreach ($this->data as $key => $value) {
-            $sql->setRowData($key, $value);
-        }
-        return $sql;
-    }
-
-    /**
-     * Atualiza um Row DataGateway
-     * @return SqlUpdate 
-     */
-    private function update() {
-        $sql = new SqlUpdate();
-        $sql->setEntity($this->getEntity());
-        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $this->{$this->getPrimaryKey()}));
-        foreach ($this->data as $key => $value) {
-            if ($key !== $this->getPrimaryKey() && $this->fieldNewValue($key)) {
-                $sql->setRowData($key, $value);
-            }
-        }
-        return $sql;
-    }
-
-    private function fieldNewValue($key) {
+    private function checkIsNew($key) {
         if (isset($this->oldData[$key])) {
             if ($this->data[$key] != $this->oldData[$key]) {
                 return TRUE;
@@ -346,17 +385,7 @@ abstract class ActiveRecord {
      * @return int Retorna o número de linhas afetadas pela instrução SQL
      */
     public function delete($id = NULL) {
-        if (is_null($id)) {
-            $id = $this->data[$this->getPrimaryKey()];
-        }
-        $sql = new SqlDelete();
-        $sql->setEntity($this->getEntity());
-        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
-
-        $conn = $this->getConnection();
-
-        $this->statement = $sql->getStatement();
-        return $conn->exec($this->statement);
+        return $this->exec($this->getSqlDeleteStatement($id));
     }
 
     /**
