@@ -27,17 +27,26 @@
 namespace Prime\Database\SQL;
 
 /**
- * Operadores lógicos para consulta
- * @name LogicalOperatorInterface
+ * Operadores relacionais usados para realização comparações entre valores, 
+ * em estrutula de controle
+ * @name RelationalOperatorInterface
  * @package Prime\Database\SQL
  * @since 27/10/2017
  * @author Elton Luiz
  */
-interface LogicalOperatorInterface
+interface SqlRelationalOperatorInterface extends SqlLogicalOperatorInterface
 {
 
-    const AND_OPERATOR = ' AND ';
-    const OR_OPERATOR = ' OR ';
-    const NOT = ' NOT ';
+    const EQUALS = ' = ';
+    const GREATER_THAN = ' > ';
+    const LESS_THAN = ' < ';
+    const GREATER_THAN_OR_EQUAL_TO = ' >= ';
+    const LESS_THAN_OR_EQUAL_TO = ' <= ';
+    const NOT_EQUAL_TO = ' <> ';
+    const BETWEEN = ' BETWEEN ';
+    const LIKE = ' LIKE ';
+    const IN = ' IN ';
+    const NOT_IN = ' NOT IN ';
+    const IS = ' IS ';
 
 }

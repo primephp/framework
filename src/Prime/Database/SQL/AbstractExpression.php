@@ -7,7 +7,7 @@ namespace Prime\Database\SQL;
  *
  * @author Tom Sailor
  */
-abstract class AbstractExpression implements ExpressionInterface
+abstract class AbstractExpression implements SqlExpressionInterface
 {
 
     /**

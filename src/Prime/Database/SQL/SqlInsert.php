@@ -26,40 +26,36 @@
 
 namespace Prime\Database\SQL;
 
-use Prime\Database\SQL\SqlExpressionInterface as ExpressionInterface;
+use Prime\Core\Exceptions\InvalidContextException;
+use Prime\Core\TString;
 
 /**
- * @name SqlCriteriaExpression
+ * @name SqlInsert
  * @package Prime\Database\SQL
- * @since 29/10/2017
+ * @since 05/12/2017
  * @author TomSailor
  */
-trait SqlCriteriaExpression
-{
+class SqlInsert extends AbstractStatement {
+
+    use SqlCriteriaExpression;
+    use SqlColumnDataTrait;
 
     /**
-     * @var ExpressionInterface
+     * {@inheritDoc} 
      */
-    private $criteria;
+    public function getStatement(): string {
+        $columns = implode(', ', array_keys($this->columnsValues));
+        $values = implode(', ', array_values($this->columnsValues));
 
-    /**
-     * Define os critérios para a consulta
-     * @param ExpressionInterface $criteria
-     * @return $this
-     */
-    public function setCriteria(ExpressionInterface $criteria)
-    {
-        $this->criteria = $criteria;
-        return $this;
+        $string = new TString("INSERT INTO {$this->getEntity()} ");
+        $string->concat("($columns)");
+        $string->concat(" values ($values)");
+        $this->statement = $string->getValue();
+        return $this->statement;
     }
 
-    /**
-     * Retorna o objeto de critério
-     * @return ExpressionInterface
-     */
-    public function getCriteria(): SqlExpressionInterface
-    {
-        return $this->criteria;
+    public function setCriteria(SqlExpressionInterface $criteria) {
+        throw new InvalidContextException(__CLASS__ . ' não aceita definição de Critério');
     }
 
 }

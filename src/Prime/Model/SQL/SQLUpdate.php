@@ -2,7 +2,7 @@
 
 namespace Prime\Model\SQL;
 
-/*
+/**
  * classe SQLUpdate
  * @package Prime\Model\SQL
  * Esta classe provê meios para manipulação de uma instrução de UPDATE no banco de dados

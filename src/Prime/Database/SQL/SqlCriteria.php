@@ -73,7 +73,7 @@ class SqlCriteria extends AbstractExpression
      * @param ExpressionInterface $criteria
      * @param string $operator
      */
-    public function add(ExpressionInterface $criteria, string $operator = self::AND_OPERATOR)
+    public function add(SqlExpressionInterface $criteria, string $operator = self::AND_OPERATOR)
     {
         if ($this->expression->size() == 0) {
             $operator = NULL;
@@ -86,7 +86,7 @@ class SqlCriteria extends AbstractExpression
      * Adiciona o filtro de critério
      * @param ExpressionInterface $filter
      */
-    private function addFilter(ExpressionInterface $filter)
+    private function addFilter(SqlExpressionInterface $filter)
     {
         $this->expression->add($filter);
     }

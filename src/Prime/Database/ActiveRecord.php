@@ -26,12 +26,18 @@
 
 namespace Prime\Database;
 
-use Monolog\Logger;
+use Exception;
+use PDO;
+use PDOException;
 use PDOStatement;
-use Prime\Database\SQL\ExpressionInterface;
-use Prime\Database\SQL\SqlColumn;
+use Prime\Core\Error;
+use Prime\Database\SQL\SqlCriteria;
+use Prime\Database\SQL\SqlDelete;
+use Prime\Database\SQL\SqlExpressionInterface;
+use Prime\Database\SQL\SqlFilter;
+use Prime\Database\SQL\SqlInsert;
 use Prime\Database\SQL\SqlSelect;
-use Prime\DataStructure\ArrayTrait;
+use Prime\Database\SQL\SqlUpdate;
 use Prime\Model\DataSource\Repository;
 
 /**
@@ -40,66 +46,283 @@ use Prime\Model\DataSource\Repository;
  * @since 27/11/2017
  * @author TomSailor
  */
-abstract class ActiveRecord
-{
-
-    use ArrayTrait;
+abstract class ActiveRecord {
 
     /**
-     * Armazena a conexão com a base de dados
-     * @var Connection
-     */
-    protected $connection = null;
-
-    /**
-     * O nome do campo que é a chave primária da tabela
-     * @var string
-     */
-    protected $pk = 'id';
-
-    /**
-     * Armazena um array contendo todos os objetos do tipo sqlcolumn para
-     * serem utilizados na instrução sql
-     * @var SqlColumn[]
-     */
-    protected $columns = [];
-
-    /**
-     * Um array armazenando os campos e os valores recuperados da base de dados
+     * Armazena os dados do Objeto Row DataGateway
      * @var array 
      */
     protected $data = [];
+    protected $oldData = [];
+    protected $columns;
 
     /**
-     *
-     * @var array 
+     * Armazena o critéria para consulta
+     * @var SqlCriteria
      */
-    protected $array = [];
-    protected $isLoad = false;
     protected $criteria;
     protected $statement;
-    private $log;
 
-    public static function load(string $id)
-    {
-        $r = new Repository('');
+    /**
+     * Armazena o objeto de erro para controle dos erros na utilização do Model
+     * @var Error
+     */
+    protected $error;
+
+    /**
+     * TRUE caso o model carregou algum dado da base de dados
+     * @var boolean
+     */
+    protected $isLoad = FALSE;
+
+    public function __construct($id = null) {
+        if (!is_null($id)) {
+            $this->load($id);
+            $this->data[$this->getPrimaryKey()] = $id;
+        }
+        $this->error = new Error();
     }
 
-    public function __construct(array $array = array())
-    {
-
-        $this->init();
+    /**
+     * método __clone()
+     * executado quando o objeto for clonado.
+     * limpa o ID para que seja gerado um novo ID para o clone.
+     */
+    public function __clone() {
+        unset($this->{$this->getPrimaryKey()});
     }
 
-    protected function init()
-    {
-        $log = new Logger('teste');
+    /**
+     * método __set()
+     * executado sempre que uma propriedade for atribuída.
+     */
+    public function __set($prop, $value) {
+        // verifica se existe método set_<propriedade>
+        if ($value === NULL) {
+            unset($this->data[$prop]);
+        } else {
+            // atribui o valor da propriedade
+            $this->data[$prop] = $value;
+        }
     }
 
-    private function fieldNewValue($key)
-    {
-        if (isset($this->data[$key])) {
-            if ($this->array[$key] != $this->data[$key]) {
+    /**
+     * método __get()
+     * executado sempre que uma propriedade for requerida
+     */
+    public function __get($prop) {
+        if (isset($this->data[$prop])) {
+            return $this->data[$prop];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Inicializa internamente o objeto model
+     */
+    protected function init() {
+        $this->data = [];
+        $this->oldData = [];
+    }
+
+    /**
+     * Adiciona os nomes das colunas a serem utilizadas especificadamente na consulta SQL
+     * @param string $columnsName
+     */
+    public function addColumns($columnsName) {
+        $this->columns[] = $columnsName;
+    }
+
+    private function getColumns() {
+        if (is_array($this->columns)) {
+            $total = count($this->columns);
+            for ($index = 0; $index < $total; $index++) {
+                
+            }
+        } else {
+            return '*';
+        }
+    }
+
+    /**
+     * Retorna o nome do campo que é a chave primária da entidade relacional
+     * @return string
+     */
+    public function getPrimaryKey() {
+        return constant($this->getClass() . '::PRIMARY_KEY');
+    }
+
+    /**
+     * Retorna um array e configura o objeto com os dados carregados
+     * @param mixed $id O valor da chave primária
+     * @return array Os dados carregados
+     */
+    public function load($id) {
+        return $this->loadByField($this->getPrimaryKey(), $id);
+    }
+
+    /**
+     * Retorna um array e configura o objeto com os dados carregados
+     * @param string $field
+     * @param mixed $value
+     * @return array
+     */
+    public function loadByField($field, $value) {
+        return $this->loadByCriteria(new SqlFilter($field, SqlFilter::IS_EQUAL, $value));
+    }
+
+    /**
+     * Retorna um array e configura o objeto com os dados carregados
+     * @param SqlExpressionInterface $criteria
+     * @return array
+     */
+    public function loadByCriteria(SqlExpressionInterface $criteria) {
+        return $this->fetch($this->preLoad($criteria));
+    }
+
+    /**
+     * Verifica se já uma linha de dados com o ID passado como parâmetro armazenada na
+     * base de dados
+     * @param mixed $id
+     * @return int O número de linhas com o ID passado
+     */
+    private function exist($id) {
+        $repo = new Repository($this->getClass());
+        return $repo->count(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
+    }
+
+    /**
+     * Executa a instrução SQL, retornando um conjunto de resultados como um objeto PDOStatement
+     * @param SqlExpressionInterface $criteria
+     * @return \PDOStatement
+     */
+    private function preLoad(SqlExpressionInterface $criteria) {
+        $sql = new SqlSelect();
+        $sql->addColumn($this->getColumns());
+        $sql->setEntity($this->getEntity());
+        $sql->setCriteria($criteria);
+
+        $conn = $this->getConnection();
+
+        $this->statement = $sql->getStatement();
+
+        return $conn->query($this->statement);
+    }
+
+    /**
+     * Obtém a próxima linha de um conjunto de resultados, retornando um array com índice
+     * associativo com os nomes da colunas e seus valores
+     * @param PDOStatement $statement
+     * @return array
+     */
+    private function fetch(PDOStatement $statement) {
+        return $this->fromArray($statement->fetch(PDO::FETCH_ASSOC));
+    }
+
+    /**
+     * Retorna um array de objetos do tipo Model referente à entidade
+     * @param SqlCriteria $criteria
+     * @return array
+     */
+    public function fetchAll(SqlCriteria $criteria) {
+        $repo = new Repository($this->getClass());
+        return $repo->load($criteria);
+    }
+
+    /**
+     * Configura os dados interno do Model de acordo com um array passado como os dados
+     * @param array $data
+     * @return boolean
+     */
+    public function fromArray($data) {
+        if (is_array($data)) {
+            foreach ($data as $key => $value) {
+                $this->data[$key] = $value;
+                $this->oldData[$key] = $value;
+            }
+            $this->isLoad = TRUE;
+            return TRUE;
+        } else {
+            $this->isLoad = FALSE;
+            return FALSE;
+        }
+    }
+
+    /**
+     * Retorna TRUE caso o model carregou algum dado do Banco de Dados
+     * @return boolean
+     */
+    public function isLoaded() {
+        return $this->isLoad;
+    }
+
+    /**
+     * Retorna TRUE caso o model contenha algum dado
+     * @return boolean
+     */
+    public function isEmpty() {
+        if (count($this->data)) {
+            return FALSE;
+        }
+        return TRUE;
+    }
+
+    /**
+     * Armazena os dados alterados ou inseridos no objeto
+     * @return int O número de linhas afetadas pela instrução SQL
+     */
+    public function store() {
+        if (empty($this->data[$this->getPrimaryKey()]) or ( !$this->exist($this->data[$this->getPrimaryKey()])
+                )) {
+            $sql = $this->insert();
+        } else {
+            $sql = $this->update();
+        }
+
+        $conn = $this->getConnection();
+
+        $this->statement = $sql->getStatement();
+        return $conn->exec($this->statement);
+    }
+
+    /**
+     * Atualiza um Row Datagateway
+     * @return SqlInsert
+     */
+    private function insert() {
+        $sql = new SqlInsert();
+        $sql->setEntity($this->getEntity());
+
+        if (empty($this->data[$this->getPrimaryKey()])) {
+            $this->data[$this->getPrimaryKey()] = $this->createPK();
+        }
+
+        foreach ($this->data as $key => $value) {
+            $sql->setRowData($key, $value);
+        }
+        return $sql;
+    }
+
+    /**
+     * Atualiza um Row DataGateway
+     * @return SqlUpdate 
+     */
+    private function update() {
+        $sql = new SqlUpdate();
+        $sql->setEntity($this->getEntity());
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $this->{$this->getPrimaryKey()}));
+        foreach ($this->data as $key => $value) {
+            if ($key !== $this->getPrimaryKey() && $this->fieldNewValue($key)) {
+                $sql->setRowData($key, $value);
+            }
+        }
+        return $sql;
+    }
+
+    private function fieldNewValue($key) {
+        if (isset($this->oldData[$key])) {
+            if ($this->data[$key] != $this->oldData[$key]) {
                 return TRUE;
             }
         } else {
@@ -109,87 +332,135 @@ abstract class ActiveRecord
     }
 
     /**
+     * 
+     * @return array
+     */
+    public function toArray() {
+        return $this->data;
+    }
+
+    /**
+     * Deleta uma linha de acordo com a PK passada como parâmetro ou configurada anteriormente
+     * no objeto
+     * @param mixed $id
+     * @return int Retorna o número de linhas afetadas pela instrução SQL
+     */
+    public function delete($id = NULL) {
+        if (is_null($id)) {
+            $id = $this->data[$this->getPrimaryKey()];
+        }
+        $sql = new SqlDelete();
+        $sql->setEntity($this->getEntity());
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
+
+        $conn = $this->getConnection();
+
+        $this->statement = $sql->getStatement();
+        return $conn->exec($this->statement);
+    }
+
+    /**
      * Retorna o nome da Tabela
      * @return string
      */
-    public function getEntity()
-    {
+    public function getEntity(): string {
         $class = $this->getClass();
         return constant("{$class}::TABLENAME");
     }
 
     /**
-     * Retorna o nome do campo que é a chave primária da entidade relacional
-     * @return string
+     * Retorna a transação ativa
+     * @return PDO
+     * @throws Exception
      */
-    public function pkName()
-    {
-        return constant($this->getClass() . '::PRIMARY_KEY');
-    }
-
-    private function pkType()
-    {
-        return constant($this->getClass() . '::KEY_TYPE');
-    }
-
-    private function createPk()
-    {
-        
-    }
-
-    public function loadByCriteria(ExpressionInterface $criteria)
-    {
-        $pdo = new PDOStatement();
+    protected function getConnection(): PDO {
+        if ($conn = Connection::get()) {
+            return $conn;
+        } else {
+            throw new PDOException('Não há transação ativa em ' . $this->getClass());
+        }
     }
 
     /**
-     * Retorna um array contendo todas as colunas configuradas para serem utilizadas
-     * na instrução SQL
-     * @return SqlColumn[]
+     * Retorna o nome da classe de dados
+     * @return string O nome da Classe Model do Objeto
      */
-    public function getColumns(): array
-    {
-        return $this->columns;
-    }
-    
-    protected function exec(string $sql){
-        
-    }
-
-    private function select(ExpressionInterface $criteria)
-    {
-        $sql = new SqlSelect($this->getEntity());
-        $sql->addColumn($this->columns);
-    }
-
-    private function update()
-    {
-        
-    }
-
-    private function insert()
-    {
-        
-    }
-
-    public function store()
-    {
-        
-    }
-
-    public function delete($id)
-    {
-        
-    }
-
-    public function getClass()
-    {
+    public function getClass(): string {
         return get_class($this);
     }
 
-    public static function getClassName()
-    {
+    /**
+     * Retorna o nome da classe de dados
+     * @return string O nome da Classe Model do Objeto
+     */
+    public static function getClassName(): string {
         return get_called_class();
+    }
+
+    /**
+     * Retorna um valor para ser definido como valor da cheve primária da 
+     * entidade(tabela) de acordo com a constante KEY_TYPE definida na classe
+     * T{Entidade}
+     * @return int | str
+     */
+    private function createPK() {
+        if (isset($this->data[$this->getPrimaryKey()])) {
+            return $this->data[$this->getPrimaryKey()];
+        }
+        if ($this->typePK() == 'MD5') {
+            return md5(uniqid($this->getEntity(), TRUE));
+        }
+        if ($this->typePK() == 'STRING' || $this->typePK() == 'ID') {
+            return uniqid();
+        }
+        if ($this->typePK() == 'SERIAL') {
+            $sq1 = new SqlSelect();
+            $sq1->addColumn('max(' . $this->getPrimaryKey() . ') as ' . $this->getPrimaryKey());
+            $sq1->setEntity($this->getEntity());
+            $resu1t = $this->getConnection()->query($sq1->getStatement());
+            $row = $resu1t->fetch();
+            return ((int) $row[0]) + 1;
+        }
+    }
+
+    /**
+     * Retorna o tipo da PK 
+     * @return string se do tipo inteiros ou string
+     */
+    private function typePK() {
+        return constant($this->getClass() . '::KEY_TYPE');
+    }
+
+    /**
+     * Retorna a última string sql executada
+     * @return string
+     */
+    public function getStatement() {
+        return $this->statement;
+    }
+
+    /**
+     * Adiciona um error ao model
+     * @param string $text
+     */
+    public function addError($text) {
+        $this->error->add($text);
+    }
+
+    /**
+     * Verifica se o objeto model possui erro
+     * @return boolean Caso TRUE o objeto possui erro
+     */
+    public function hasError() {
+        return $this->error->hasError();
+    }
+
+    /**
+     * Retorna um array contendo todos os textos de definição de Erros
+     * @return array
+     */
+    public function getErrors() {
+        return $this->error->getErrors();
     }
 
 }
