@@ -26,7 +26,7 @@
 
 namespace Prime\Model\DataSource\Metadata;
 
-use \Prime\Model\DataSource\Model;
+use Prime\Database\ActiveRecord;
 
 /**
  * Classe CreateDataSource
@@ -50,7 +50,7 @@ class CreateDataSource
         $meta = new EntityMetadata($tableName);
         $this->metadata = $meta->get();
         $this->className = $this->className(ucfirst(strtolower($tableName)));
-        $this->parentClass = Model::class;
+        $this->parentClass = ActiveRecord::class;
     }
 
     public function getClassName()
@@ -101,8 +101,6 @@ class CreateDataSource
                 "
                 namespace {$this->modelNamespace};\n 
                 
-                use {$this->parentClass};\n
-                
                 /**
                 *@name $classeName '
                 *@package {$this->modelNamespace}
@@ -111,7 +109,7 @@ class CreateDataSource
                 *Objetiva facilitar o desenvolvimento com as IDE padroes de mercado.
 		*/\n
                 
-                abstract class $classeName extends Model{
+                abstract class $classeName extends {$this->parentClass}{
                     
                     ";
     }

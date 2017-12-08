@@ -79,7 +79,7 @@ abstract class Connection
         $host = isset(self::$config[$connName]['host']) ? self::$config[$connName]['host'] : NULL;
         $type = isset(self::$config[$connName]['type']) ? self::$config[$connName]['type'] : NULL;
         $port = isset(self::$config[$connName]['port']) ? self::$config[$connName]['port'] : NULL;
-        $charset = isset(self::$config[$connName]['charset']) ? self::$config[$connName]['charset'] : 'utf8mb4';
+        $charset = isset(self::$config[$connName]['charset']) ? self::$config[$connName]['charset'] : 'utf8';
 
         $conn = NULL;
 
@@ -91,23 +91,48 @@ abstract class Connection
                 }
                 $conn = new PDO("pgsql:dbname={$name}; user={$user}; password={$pass};
                         host=$host;port={$port}");
+                if (!empty($charset)) {
+                    $conn->exec("SET CLIENT_ENCODING TO '{$charset}';");
+                }
                 break;
             case 'mysql':
                 $port = $port ? $port : '3306';
+                if ($charset == 'utf8') {
+                    $charset = 'utf8mb4';
+                }
                 $option = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset"];
                 $conn = new PDO("mysql:host={$host};port={$port};dbname={$name}", $user, $pass, $option);
                 break;
             case 'sqlite':
+            case 'fbird':
                 $conn = new PDO("sqlite:{$name}");
                 break;
             case 'ibase':
                 $conn = new PDO("firebird:dbname={$name}", $user, $pass);
                 break;
             case 'oci':
+            case 'oci8':
+            case 'oracle':
                 $conn = new PDO("oci:dbname={$name}", $user, $pass);
                 break;
             case 'mssql':
+                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+                    $conn = new PDO("sqlsrv:Server={$host};Database={$name}", $user, $pass);
+                } else {
+                    if ($port) {
+                        $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}", $user, $pass);
+                    } else {
+                        $conn = new PDO("dblib:host={$host};dbname={$name}", $user, $pass);
+                    }
+                }
                 $conn = new PDO("mssql:host={$host},1433;dbname={$name}", $user, $pass);
+                break;
+            case 'dblib':
+                $port = $port ? $port : '1433';
+                $conn = new PDO("dblib:host={$host},{$port};dbname={$name}", $user, $pass);
+                break;
+            default:
+                throw new Exception("Drive não encontrado para o tipo". ': ' . $type);
                 break;
         }
 

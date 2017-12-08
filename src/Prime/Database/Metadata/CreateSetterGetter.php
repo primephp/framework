@@ -96,11 +96,6 @@ class CreateSetterGetter
         return $getter;
     }
 
-    public function setterDefault($value)
-    {
-        $this->data[self::FIELD_ID_MENSAGEM] = $value;
-    }
-
     public function getterDefault()
     {
         return "/**
@@ -121,7 +116,7 @@ class CreateSetterGetter
         return " /**
                   * Retorna um objeto TStrig contendo o valor de {$this->name}
                   * ou NULL   
-                  * @return \Prime\Core\TString|NULL
+                  * @return " . \Prime\Core\TString::class . "|NULL
                   */"
                 . "\npublic function get{$this->method}(){\n" .
                 "if(!empty(\$this->data[{$this->const}])){
@@ -129,7 +124,7 @@ class CreateSetterGetter
         }else{\n"
                 . "\$value = '';\n"
                 . "}\n"
-                . "return new \Prime\Core\TString(\$value);\n"
+                . "return new " . \Prime\Core\TString::class . "(\$value);\n"
                 . "}\n";
     }
 
@@ -138,15 +133,15 @@ class CreateSetterGetter
         return " /**
                   * Retorna um objeto TInteger contendo o valor de {$this->name}
                   * ou NULL   
-                  * @return \Prime\Core\TInteger
+                  * @return " . \Prime\Core\TInteger::class . "
                   */"
-                . "\npublic function get{$this->method}(){\n" .
-                "if(!empty(\$this->data[{$this->const}])){
-            \$value = \$this->data[{$this->const}];
-        }else{\n"
+                . "\npublic function get{$this->method}(){\n"
+                . "if(!empty(\$this->data[{$this->const}])){"
+                . "\$value = \$this->data[{$this->const}];"
+                . "}else{\n"
                 . "\$value='';\n"
                 . "}\n"
-                . "return new \Prime\Core\TInteger(\$value);\n"
+                . "return new " . \Prime\Core\TInteger::class . "(\$value);\n"
                 . "}\n";
     }
 
@@ -155,13 +150,13 @@ class CreateSetterGetter
         return " /**
                   * Retorna um objeto Datetime contendo o valor de {$this->name}
                   * ou NULL   
-                  * @return \Prime\Util\Datetime\Datetime|NULL
+                  * @return " . \Prime\Util\Datetime\Datetime::class . "|NULL
                   */"
-                . "\npublic function get{$this->method}(){\n" .
-                "if(!empty(\$this->data[{$this->const}])){
-            \$value = \$this->data[{$this->const}];
-                return new \Prime\Util\Datetime\Datetime(\$value); 
-        }\n"
+                . "\npublic function get{$this->method}(){\n"
+                . "if(!empty(\$this->data[{$this->const}])){"
+                . "\$value = \$this->data[{$this->const}];"
+                . "return new " . \Prime\Util\Datetime\Datetime::class . "(\$value); "
+                . "}\n"
                 . "return NULL;\n"
                 . "}\n";
     }
@@ -171,13 +166,13 @@ class CreateSetterGetter
         return " /**
                   * Retorna um objeto TFloat contendo o valor de {$this->name}
                   * ou NULL   
-                  * @return \Prime\Core\TFloat|NULL
+                  * @return " . \Prime\Core\TFloat::class . "|NULL
                   */"
-                . "\npublic function get{$this->method}(){\n" .
-                "if(!empty(\$this->data[{$this->const}])){
-            \$value = \$this->data[{$this->const}];
-                return new \Prime\Core\TFloat(\$value); 
-        }\n"
+                . "\npublic function get{$this->method}(){\n"
+                . "if(!empty(\$this->data[{$this->const}])){"
+                . "\$value = \$this->data[{$this->const}];"
+                . "return new " . \Prime\Core\TFloat::class . "(\$value);"
+                . "}\n"
                 . "return NULL;\n"
                 . "}\n";
     }
@@ -209,7 +204,18 @@ class CreateSetterGetter
         return $return;
     }
 
+    /**
+     * @todo 
+     */
     private function setNotNull()
+    {
+        
+    }
+
+    /**
+     * @todo 
+     */
+    public function setterDefault($value)
     {
         
     }
