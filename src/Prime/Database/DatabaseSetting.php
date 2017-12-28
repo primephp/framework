@@ -35,7 +35,7 @@ namespace Prime\Database;
 class DatabaseSetting
 {
     public static $drivers = [
-      PDO_CUBRID  
+      
     ];
 
     private $user;

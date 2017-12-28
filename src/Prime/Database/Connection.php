@@ -53,33 +53,19 @@ abstract class Connection
 
     public static function config(array $params)
     {
-        foreach ($params as $key => $value) {
-            if (self::validateConfig($value)) {
-                self::$config[$key] = $value;
-            }
-        }
-    }
-
-    private static function validateConfig($params)
-    {
-        foreach ($params as $key => $value) {
-            if (!in_array($key, self::$keys)) {
-                return false;
-            }
-        }
-        return true;
+        self::$config[$key] = $params;
     }
 
     public static function open($connName = 'default')
     {
         // lê as informações contidas no arquivo
-        $user = isset(self::$config[$connName]['user']) ? self::$config[$connName]['user'] : NULL;
-        $pass = isset(self::$config[$connName]['pass']) ? self::$config[$connName]['pass'] : NULL;
-        $name = isset(self::$config[$connName]['name']) ? self::$config[$connName]['name'] : NULL;
-        $host = isset(self::$config[$connName]['host']) ? self::$config[$connName]['host'] : NULL;
-        $type = isset(self::$config[$connName]['type']) ? self::$config[$connName]['type'] : NULL;
-        $port = isset(self::$config[$connName]['port']) ? self::$config[$connName]['port'] : NULL;
-        $charset = isset(self::$config[$connName]['charset']) ? self::$config[$connName]['charset'] : 'utf8';
+        $user = self::$config[$connName]['user'] ?? NULL;
+        $pass = self::$config[$connName]['pass'] ?? NULL;
+        $name = self::$config[$connName]['name'] ?? NULL;
+        $host = self::$config[$connName]['host'] ?? NULL;
+        $type = self::$config[$connName]['type'] ?? NULL;
+        $port = self::$config[$connName]['port'] ?? NULL;
+        $charset = self::$config[$connName]['charset'] ?? 'utf8';
 
         $conn = NULL;
 
@@ -132,8 +118,7 @@ abstract class Connection
                 $conn = new PDO("dblib:host={$host},{$port};dbname={$name}", $user, $pass);
                 break;
             default:
-                throw new Exception("Drive não encontrado para o tipo". ': ' . $type);
-                break;
+                throw new Exception("Drive não encontrado para o tipo" . ': ' . $type);
         }
 
         if (!is_object($conn)) {
