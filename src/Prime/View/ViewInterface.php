@@ -9,7 +9,7 @@ use Prime\Io\PrintableInterface;
  * @author Elton Luiz
  * @package Prime\View
  */
-interface ViewInterface extends PrintableInterface
+interface ViewInterface extends \Prime\Io\Interfaces\PrintableInterface
 {
 
     /**

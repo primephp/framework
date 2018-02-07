@@ -53,7 +53,7 @@ abstract class Connection
 
     public static function config(array $params)
     {
-        self::$config[$key] = $params;
+        self::$config = $params;
     }
 
     public static function open($connName = 'default')
