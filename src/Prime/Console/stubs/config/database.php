@@ -1,6 +1,6 @@
 <?php
 
-return [
+$database['default'] = [
     /*
       |-------------------------------------------------------------------------
       | Drive de Conexão
@@ -11,7 +11,7 @@ return [
       |
       |
      */
-    'type' => 'DbDrive',
+    'type' => 'mysql',
     /*
       |-------------------------------------------------------------------------
       | Usuário do banco de dados
@@ -20,7 +20,7 @@ return [
       | Define o nome do usuário com permissão de acesso ao banco de dados
       |
      */
-    'user' => 'DbUser',
+    'user' => 'dbusername',
     /*
       |-------------------------------------------------------------------------
       | Senha do Usuário
@@ -29,7 +29,7 @@ return [
       | Define a senha de acesso do usuário com permissão de acesso ao BD
       |
      */
-    'pass' => 'DbPassword',
+    'pass' => 'password',
     /*
       |-------------------------------------------------------------------------
       | Nome da Base de Dados
@@ -38,7 +38,7 @@ return [
       | Nome do banco de dados que a aplicação utilizará
       |
      */
-    'name' => 'DbName',
+    'name' => 'dbname',
     /*
       |-------------------------------------------------------------------------
       | HostName
@@ -47,7 +47,7 @@ return [
       | IP do host aonde está hospedado a base de dados a qual se quer acessar
       |
      */
-    'host' => 'DbHost',
+    'host' => 'dbhost',
     /*
       |-------------------------------------------------------------------------
       | Porta
@@ -56,5 +56,48 @@ return [
       | Porta para acesso à base de dados
       |
      */
-    'port' => 'DbPort'
+    'port' => 'dbport',
+    /*
+      |-------------------------------------------------------------------------
+      | Charset
+      |-------------------------------------------------------------------------
+      |
+      | Porta para acesso à base de dados
+      |
+     */
+    'charset' => 'dbcharset'
 ];
+
+//conexao com sqlite
+$database['database2'] = [
+    'type' => 'sqlite',
+    'user' => null,
+    'pass' => null,
+    'name' => '/path/mydb.sq3',
+    'params' => [
+        PDO::ATTR_PERSISTENT => true
+    ]
+];
+//conexão com ODBC
+$database['database3'] = [
+    'type' => 'odbc',
+    'params' => [
+        PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY,
+        PDO::ATTR_CASE => PDO::CASE_LOWER,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    ],
+];
+//conexao com mssql
+$database['database4'] = [
+    'type' => 'mssql',
+    'host' => 'localhost',
+    'user' => 'username',
+    'pass' => 'minhasenha',
+    'name' => 'dbname',
+        /* 'params' => array(
+          PDO::ATTR_PERSISTENT => true, //conexão persistente
+          PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+          ) */
+];
+
+return $database;

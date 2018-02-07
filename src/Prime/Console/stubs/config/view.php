@@ -1,5 +1,13 @@
 <?php
 
+/*
+  |-------------------------------------------------------------------------
+  | Configuração para uso do Twig Template
+  |-------------------------------------------------------------------------
+  |
+  |Diretório para armazenamento do cache do TWIG
+  |
+ */
 $cacheDirectory = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'data' . DIRECTORY_SEPARATOR . 'cache';
 
 /*

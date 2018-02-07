@@ -75,10 +75,10 @@ class CreateApplicationCommand extends BaseCommand
         $fileSystem = Filesystem::getInstance();
 
         $fileSystem->mkdir([
-            'App/Modules',
-            'App/Console',
-            'App/DataSource',
-            'App/Templates',
+            'app/Modules',
+            'app/Console',
+            'app/DataSource',
+            'app/Templates',
             'public/assets/css',
             'public/assets/js',
             'public/storage',
@@ -86,7 +86,11 @@ class CreateApplicationCommand extends BaseCommand
             'data/cache',
             'data/doc'
                 ], 2770);
-        $fileSystem->mirror(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config', $this->dirBase . DIRECTORY_SEPARATOR . 'config');
+        $fileSystem->copy(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR. 'filesystem.php', $this->dirBase . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR. 'filesystem.php');
+        $fileSystem->copy(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR. 'database.php', $this->dirBase . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR. 'database.php');
+        $fileSystem->copy(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR. 'listeners.php', $this->dirBase . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR. 'listeners.php');
+        $fileSystem->copy(dirname(__DIR__) . DIRECTORY_SEPARATOR . 'stubs' . DIRECTORY_SEPARATOR . 'config'. DIRECTORY_SEPARATOR. 'view.php', $this->dirBase . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR. 'view.php');
+        
     }
 
 }

@@ -11,35 +11,47 @@ use Prime\FileSystem\Filesystem;
   | como armazenamento de log, cache, arquivos diversos
   |
  */
+
+$root = dirname(__DIR__);
+$app = 'app';
+$public = 'public';
+$data = 'data';
+$modules = 'Modules';
+$templates = 'Templates';
+$storage = 'storage';
+$log = 'log';
+$cache = 'cache';
+
 Filesystem::addPaths([
     /*
       |-------------------------------------------------------------------------
-      | Diretório base
+      | Diretório raiz
       |-------------------------------------------------------------------------
       |
-      | Define o diretório raiz, que serve de base para todos os
+      | Define o diretório raiz onde estão os arquivos
+      |
+     */
+    'root' => $root,
+    /*
+      |-------------------------------------------------------------------------
+      | Diretório raiz da aplicação
+      |-------------------------------------------------------------------------
+      |
+      | Define o diretório raiz da aplicação, que serve de base para todos os
+      | demais diretórios básicos da aplicação
+      |
+     */
+    'app' => $root. DS . $app,
+    /*
+      |-------------------------------------------------------------------------
+      | Diretório raiz da aplicação
+      |-------------------------------------------------------------------------
+      |
+      | Define o diretório raiz da aplicação, que serve de base para todos os
       | demais diretórios
       |
      */
-    'root' => dirname(__DIR__),
-    /*
-      |-------------------------------------------------------------------------
-      | Diretório da Aplicação
-      |-------------------------------------------------------------------------
-      |
-      | Define o diretório base da aplicação
-      |
-     */
-    'app' => dirname(__DIR__) . DS . 'App',
-    /*
-      |-------------------------------------------------------------------------
-      | Diretório dos Módulos
-      |-------------------------------------------------------------------------
-      |
-      | Define o diretório onde ficam os módulos da aplicação
-      |
-     */
-    'modules' => dirname(__DIR__) . DS . 'App' . DS . 'Modules',
+    'modules' => $root . DS . $app . DS . $modules,
     /*
       |-------------------------------------------------------------------------
       | Diretório de log
@@ -48,7 +60,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os logs da aplicação
       |
      */
-    'log' => dirname(__DIR__) . DS . 'data' . DS . 'log',
+    'log' => $root . DS . $data . DS . $log,
     /*
       |-------------------------------------------------------------------------
       | Diretório dos Templates
@@ -57,7 +69,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os templates que serão utilizados na aplicação
       |
      */
-    'templates' => dirname(__DIR__) . DS . 'App' . DS . 'Templates',
+    'templates' => $root . DS . $app . DS . $templates,
     /*
       |-------------------------------------------------------------------------
       | Diretório de cache
@@ -66,7 +78,7 @@ Filesystem::addPaths([
       | Define o local aonde serão armazenados os caches dos templates da aplicação
       |
      */
-    'cache' => dirname(__DIR__) . DS . 'data' . DS . 'cache',
+    'cache' => $root . DS . $data . DS . $cache,
     /*
       |-------------------------------------------------------------------------
       | Diretório de armazenamento
@@ -76,5 +88,5 @@ Filesystem::addPaths([
       | ícones ou conteúdo diversos, podendo ser subdividido a critério do
       | utilizador
      */
-    'storage' => dirname(__DIR__) . DS . 'public' . DS . 'storage',
+    'storage' => $root . DS . $public . DS . $storage,
 ]);
