@@ -10,8 +10,7 @@ use PDOException;
  * @package Prime\Model\DataSource
  * gerencia conexões com bancos de dados através de arquivos de configuração.
  */
-final class Connection
-{
+final class Connection {
 
     /**
      * Armazena a Transação ativa
@@ -20,11 +19,17 @@ final class Connection
     private static $conn;
 
     /**
+     * Armazena um array de objetos contendo as configurações de conexão às
+     * bases de dados
+     * @var \Prime\Database\DatabaseSetting[]
+     */
+    private static $config = [];
+
+    /**
      * método __construct()
      * não existirão instâncias de Connection, por isto estamos marcando-o como private
      */
-    private function __construct()
-    {
+    private function __construct() {
         
     }
 
@@ -32,24 +37,20 @@ final class Connection
      * Configura os dados para conexão com a base de dados da aplicação
      * @param array|string $conn_var
      */
-    public static function config($conn_var)
-    {
-        if (is_string($conn_var)) {
-            $var = explode(':', $conn_var);
+    public static function config($conn_var) {
+        foreach ($conn_var as $key => $value) {
+            $dbConfig = new \Prime\Database\DatabaseSetting();
+            $dbConfig->setType($value['type'] ?? NULL);
+            $dbConfig->setCharset($value['charset'] ?? NULL);
+            $dbConfig->setHost($value['host'] ?? NULL);
+            $dbConfig->setName($value['name'] ?? NULL);
+            $dbConfig->setPass($value['pass'] ?? NULL);
+            $dbConfig->setPort($value['port'] ?? NULL);
+            $dbConfig->setUser($value['user'] ?? NULL);
+            self::$config[$key] = $dbConfig;
+        }
 
-            $conn_var = [];
-            $conn_var['type'] = $var[0];
-            $conn_var['host'] = $var[1];
-            $conn_var['user'] = $var[2];
-            $conn_var['pass'] = $var[3];
-            $conn_var['name'] = $var[4];
-            $conn_var['port'] = isset($var[5]) ? $var[5] : NULL;
-            $conn_var['charset'] = isset($var[6]) ? $var[6] : NULL;
-        }
-        if (!is_array($conn_var)) {
-            trigger_error('Parâmetro inválido. ' . __METHOD__, E_USER_ERROR);
-        }
-        self::$config = $conn_var;
+        return self::$config;
     }
 
     /**
@@ -59,16 +60,23 @@ final class Connection
      * ou um array associativo com as supracitadas chaves
      * @return PDO
      */
-    public static function open()
-    {
+    public static function open($connectionName = 'default') {
+        $conn = self::$conn[$connectionName] ?? NULL;
+        
+        if ($conn instanceof PDO) {
+            return $conn;
+        }
+        
+        $config = self::$config[$connectionName];
+
         // lê as informações contidas no arquivo
-        $user = isset(self::$config['user']) ? self::$config['user'] : NULL;
-        $pass = isset(self::$config['pass']) ? self::$config['pass'] : NULL;
-        $name = isset(self::$config['name']) ? self::$config['name'] : NULL;
-        $host = isset(self::$config['host']) ? self::$config['host'] : NULL;
-        $type = isset(self::$config['type']) ? self::$config['type'] : NULL;
-        $port = isset(self::$config['port']) ? self::$config['port'] : NULL;
-        $charset = isset(self::$config['charset']) ? self::$config['charset'] : 'utf8mb4';
+        $user = $config->getName();
+        $pass = $config->getPass();
+        $name = $config->getName();
+        $host = $config->getHost();
+        $type = $config->getType();
+        $port = $config->getPort();
+        $charset = $config->getCharset();
 
         $conn = NULL;
 
@@ -115,20 +123,19 @@ final class Connection
         /**
          * @var PDO 
          */
-        self::$conn = $conn;
+        self::$conn[$connectionName] = $conn;
 
-        return self::$conn;
+        return self::$conn[$connectionName];
     }
 
     /**
      * Retorna a conexão ativa
      * @return PDO
      */
-    public static function get()
-    {
+    public static function get($connectionName = 'default') {
         // retorna a conexão ativa
-        if (!empty(self::$conn)) {
-            return self::$conn;
+        if (!empty(self::$conn[$connectionName])) {
+            return self::$conn[$connectionName];
         } else {
             throw new PDOException('Não há conexão ativa');
         }
