@@ -45,6 +45,7 @@ class DatabaseSetting
     private $type;
     private $port;
     private $charset;
+    private $params;
 
     public function getUser()
     {
@@ -121,6 +122,17 @@ class DatabaseSetting
     {
         $this->charset = $charset;
         return $this;
+    }
+    
+    public function setParams($params)
+    {
+        $this->params = $params;
+        return $this;
+    }
+    
+    public function getParams()
+    {
+        return $this->params;
     }
 
 }

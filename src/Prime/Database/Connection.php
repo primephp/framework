@@ -51,21 +51,43 @@ abstract class Connection
     private static $config = [];
     private static $keys = ['type', 'user', 'pass', 'name', 'host', 'port', 'charset', 'params'];
 
-    public static function config(array $params)
+    public static function config(array $conn_var)
     {
-        self::$config = $params;
+        foreach ($conn_var as $key => $value) {
+            $dbConfig = new \Prime\Database\DatabaseSetting();
+            $dbConfig->setType($value['type'] ?? NULL);
+            $dbConfig->setCharset($value['charset'] ?? NULL);
+            $dbConfig->setHost($value['host'] ?? NULL);
+            $dbConfig->setName($value['name'] ?? NULL);
+            $dbConfig->setPass($value['pass'] ?? NULL);
+            $dbConfig->setPort($value['port'] ?? NULL);
+            $dbConfig->setUser($value['user'] ?? NULL);
+            $dbConfig->setParams($value['params'] ?? NULL);
+            self::$config[$key] = $dbConfig;
+        }
+
+        return self::$config;
     }
 
-    public static function open($connName = 'default')
+    public static function open($connectionName = 'default')
     {
+        $conn = self::$conn[$connectionName] ?? NULL;
+
+        if ($conn instanceof PDO) {
+            return $conn;
+        }
+
+        $config = self::$config[$connectionName];
+
         // lê as informações contidas no arquivo
-        $user = self::$config[$connName]['user'] ?? NULL;
-        $pass = self::$config[$connName]['pass'] ?? NULL;
-        $name = self::$config[$connName]['name'] ?? NULL;
-        $host = self::$config[$connName]['host'] ?? NULL;
-        $type = self::$config[$connName]['type'] ?? NULL;
-        $port = self::$config[$connName]['port'] ?? NULL;
-        $charset = self::$config[$connName]['charset'] ?? 'utf8';
+        $user = $config->getName();
+        $pass = $config->getPass();
+        $name = $config->getName();
+        $host = $config->getHost();
+        $type = $config->getType();
+        $port = $config->getPort();
+        $charset = $config->getCharset();
+        $params = $config->getParams();
 
         $conn = NULL;
 
@@ -77,79 +99,53 @@ abstract class Connection
                 }
                 $conn = new PDO("pgsql:dbname={$name}; user={$user}; password={$pass};
                         host=$host;port={$port}");
-                if (!empty($charset)) {
-                    $conn->exec("SET CLIENT_ENCODING TO '{$charset}';");
-                }
                 break;
             case 'mysql':
                 $port = $port ? $port : '3306';
-                if ($charset == 'utf8') {
-                    $charset = 'utf8mb4';
-                }
-                $option = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset"];
+                $option = [\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES $charset"];
                 $conn = new PDO("mysql:host={$host};port={$port};dbname={$name}", $user, $pass, $option);
                 break;
             case 'sqlite':
-            case 'fbird':
                 $conn = new PDO("sqlite:{$name}");
                 break;
             case 'ibase':
                 $conn = new PDO("firebird:dbname={$name}", $user, $pass);
                 break;
             case 'oci':
-            case 'oci8':
-            case 'oracle':
                 $conn = new PDO("oci:dbname={$name}", $user, $pass);
                 break;
             case 'mssql':
-                if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-                    $conn = new PDO("sqlsrv:Server={$host};Database={$name}", $user, $pass);
-                } else {
-                    if ($port) {
-                        $conn = new PDO("dblib:host={$host}:{$port};dbname={$name}", $user, $pass);
-                    } else {
-                        $conn = new PDO("dblib:host={$host};dbname={$name}", $user, $pass);
-                    }
-                }
                 $conn = new PDO("mssql:host={$host},1433;dbname={$name}", $user, $pass);
                 break;
-            case 'dblib':
-                $port = $port ? $port : '1433';
-                $conn = new PDO("dblib:host={$host},{$port};dbname={$name}", $user, $pass);
-                break;
-            default:
-                throw new Exception("Drive não encontrado para o tipo" . ': ' . $type);
         }
 
         if (!is_object($conn)) {
             throw new PDOException('Falha na conexao com a base de dados.');
         }
 
-        // define para que o PDO lance exceções na ocorrência de erros
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_SILENT);
-        //PARA DEBUGAR COM O BANCO DE DADOS
-        //$conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $conn->setAttribute(PDO::ATTR_CASE, PDO::CASE_LOWER);
-        $conn->setAttribute(PDO::ATTR_CURSOR, PDO::CURSOR_FWDONLY);
+        foreach ($params as $key => $value) {
+            $conn->setAttribute($key, $value);
+        }
 
         // retorna o objeto instanciado.
         /**
          * @var PDO 
          */
-        self::$pool[$connName] = $conn;
+        self::$conn[$connectionName] = $conn;
 
-        return self::$pool[$connName];
+        return self::$conn[$connectionName];
     }
 
     public static function get($connName = 'default')
     {
+        //dd(self::$config);
         if (isset(self::$pool[$connName])) {
             return self::$pool[$connName];
         }
         if (isset(self::$config[$connName])) {
             return self::open($connName);
         }
-        throw new RuntimeException(sprintf("Conexão com %s não configurada", $connName));
+        throw new RuntimeException(sprintf("Conexão %s não configurada", $connName));
     }
 
 }

@@ -27,12 +27,15 @@
 namespace Prime\Server\Http;
 
 use FilesystemIterator;
+use Prime\Database\Connection;
 use Prime\FileSystem\Filesystem;
-use Prime\Model\DataSource\Connection;
 use Prime\Server\Routing\RouteCollection;
 use Prime\View\Template;
 use Prime\View\TwigExtension;
 use Symfony\Component\Debug\Debug;
+use const DS;
+use function mb_http_output;
+use function mb_internal_encoding;
 
 /**
  * Descrição da Classe Application
