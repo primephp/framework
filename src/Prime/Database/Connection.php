@@ -79,8 +79,8 @@ abstract class Connection
 
         $config = self::$config[$connectionName];
 
-        // lê as informações contidas no arquivo
-        $user = $config->getName();
+        /* @var $config DatabaseSetting */
+        $user = $config->getUser();
         $pass = $config->getPass();
         $name = $config->getName();
         $host = $config->getHost();
@@ -131,9 +131,9 @@ abstract class Connection
         /**
          * @var PDO 
          */
-        self::$conn[$connectionName] = $conn;
+        self::$pool[$connectionName] = $conn;
 
-        return self::$conn[$connectionName];
+        return self::$pool[$connectionName];
     }
 
     public static function get($connName = 'default')
