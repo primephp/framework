@@ -51,6 +51,11 @@ abstract class Connection
     private static $config = [];
     private static $keys = ['type', 'user', 'pass', 'name', 'host', 'port', 'charset', 'params'];
 
+    /**
+     * Configura as conexões com as bases de dados
+     * @param array $conn_var
+     * @return array
+     */
     public static function config(array $conn_var)
     {
         foreach ($conn_var as $key => $value) {
@@ -69,9 +74,16 @@ abstract class Connection
         return self::$config;
     }
 
+    /**
+     * Abre uma conexão com a base de dados
+     * @param string $connectionName O nome da conexão que será aberta de acordo
+     * com a configuração no arquivo de configuração do banco de dados
+     * @return PDO Um instância de conexão PDO
+     * @throws PDOException Caso falha a conexão
+     */
     public static function open($connectionName = 'default')
     {
-        $conn = self::$conn[$connectionName] ?? NULL;
+        $conn = self::$pool[$connectionName] ?? NULL;
 
         if ($conn instanceof PDO) {
             return $conn;
@@ -136,6 +148,12 @@ abstract class Connection
         return self::$pool[$connectionName];
     }
 
+    /**
+     * Retorna a conexão
+     * @param string $connName
+     * @return \PDO
+     * @throws RuntimeException
+     */
     public static function get($connName = 'default')
     {
         //dd(self::$config);
