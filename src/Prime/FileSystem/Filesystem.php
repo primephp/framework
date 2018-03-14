@@ -33,7 +33,7 @@ class Filesystem extends SymfonyFilesystem
 
     /**
      * Retorna a instância única de FileSystem
-     * @return Filesystem
+     * @return self
      */
     public static function getInstance()
     {

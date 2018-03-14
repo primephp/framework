@@ -37,7 +37,7 @@ class Secret extends TObject
 
     /**
      * Instancia um objeto para criptografia de dados
-     * @param string $key a chave utilizada para criptografar e descriptografar 
+     * @param string $key A chave utilizada para criptografar e descriptografar 
      * o conteúdo
      */
     public function __construct($key = NULL)

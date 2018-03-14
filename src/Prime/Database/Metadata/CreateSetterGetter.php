@@ -24,12 +24,12 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DataSource\Metadata;
+namespace Prime\Database\Metadata;
 
 /**
  * Classe CreateSetterGetter
  * @name CreateSetterGetter
- * @package Prime\Model\DataSource\Metadata
+ * @package Prime\Database\Metadata
  * @since 22/07/2015
  * @author devel4
  */

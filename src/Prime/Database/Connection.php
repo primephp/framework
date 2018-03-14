@@ -89,6 +89,9 @@ abstract class Connection
             return $conn;
         }
 
+        if(!isset(self::$config[$connectionName])){
+            throw new \PDOException("'$connectionName' não é uma configuração de banco de dados válida para a aplicação");
+        }
         $config = self::$config[$connectionName];
 
         /* @var $config DatabaseSetting */

@@ -24,14 +24,14 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DataSource\Metadata;
+namespace Prime\Database\Metadata;
 
 use Prime\Database\ActiveRecord;
 
 /**
  * Classe CreateDataSource
  * @name CreateDataSource
- * @package Prime\Model\DataSource\Metadata
+ * @package Prime\Database\Metadata
  * @since 22/07/2015
  * @author Elton Luiz
  */
@@ -44,10 +44,10 @@ class CreateDataSource
     private $className = NULL;
     private $parentClass = NULL;
 
-    public function __construct($tableName)
+    public function __construct($tableName, $dbname)
     {
         $this->entity = $tableName;
-        $meta = new EntityMetadata($tableName);
+        $meta = new EntityMetadata($tableName, $dbname);
         $this->metadata = $meta->get();
         $this->className = $this->className(ucfirst(strtolower($tableName)));
         $this->parentClass = ActiveRecord::class;

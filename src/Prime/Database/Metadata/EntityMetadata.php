@@ -24,15 +24,16 @@
  * THE SOFTWARE.
  */
 
-namespace Prime\Model\DataSource\Metadata;
+namespace Prime\Database\Metadata;
 
-use \PDO,
-    \Prime\Model\DataSource\Connection;
+use PDO;
+use Prime\Database\Connection;
+use UnexpectedValueException;
 
 /**
  * Classe Metadata
  * @name Metadata
- * @package Prime\Model\DataSource
+ * @package Prime\Database\Metadata
  * @since 22/07/2015
  * @author Elton Luiz
  */
@@ -49,10 +50,11 @@ class EntityMetadata
     private $metadata = NULL;
     private $types = [];
 
-    public function __construct($entity = NULL)
+    public function __construct($entity = NULL, $database = 'default')
     {
         $this->entity = $entity;
-        $this->conn = Connection::get();
+        Connection::open($database);
+        $this->conn = Connection::get($database);
         $this->setTypes();
         $this->prepare();
     }
@@ -94,10 +96,11 @@ class EntityMetadata
         $query = "SELECT * FROM $table LIMIT 1";
 
         $conn = $this->conn;
+
         $statement = $conn->query($query);
 
         if (!$statement) {
-            throw new \UnexpectedValueException('Entidade Relacional não encontrada no banco de dados.');
+            throw new UnexpectedValueException('Entidade Relacional não encontrada no banco de dados.');
         }
 
         $this->totalColumns = $statement->columnCount();

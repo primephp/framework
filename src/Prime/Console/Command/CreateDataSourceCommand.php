@@ -49,7 +49,7 @@ class CreateDataSourceCommand extends BaseCommand
 
     private function isConnected()
     {
-        if (!Connection::open()) {
+        if (!\Prime\Database\Connection::open()) {
             throw new RuntimeException('Há conexão com com banco de dados.');
         }
     }
@@ -61,29 +61,37 @@ class CreateDataSourceCommand extends BaseCommand
                 ->setDescription('Cria um objeto para acesso aos dados de uma tabela do banco de dados da aplicação')
                 ->addArgument(
                         'entity', InputArgument::REQUIRED, 'O nome da tabela para qual deve ser criado o DataSource')
-                ->setHelp('console create:DataSource {NomeDaTabela} para criar uma classe de acesso ao banco de dados');
+                ->addArgument('dbname', InputArgument::OPTIONAL, 'O nome da conexão de banco de dados a ser utilizada para criação do DataSource')
+                ->setHelp('console create:DataSource {entity} [{dbName}] para criar uma classe de acesso ao banco de dados');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $this->isConnected();
         $entity = $input->getArgument('entity');
+        $dbName = $input->getArgument('dbname') ?? 'default';
 
-        $dataSource = new CreateDataSource($entity);
+        $dataSource = new \Prime\Database\Metadata\CreateDataSource($entity, $dbName);
 
-        $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR . 'DataSource';
+        $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'DataSource';
         $filename = realpath($dirBase) . DIRECTORY_SEPARATOR . $dataSource->getClassName() . '.php';
 
-        Filesystem::getInstance()->touch($filename);
-        Filesystem::getInstance()->chmod($filename, 0660);
-
-        $file = new File($filename);
-        $fileObject = $file->openFile('w');
-        $fileObject->fwrite($dataSource->getOutput());
+        try {
 
 
-        $output->writeln("<info>$filename criado com sucesso!!!</info>");
-        $output->writeln('<comment>Cria sua classe de modelo de dados e estenda de ' . $dataSource->getClassName() . '</comment>');
+            Filesystem::getInstance()->touch($filename);
+            Filesystem::getInstance()->chmod($filename, 0660);
+
+            $file = new File($filename);
+            $fileObject = $file->openFile('w');
+            $fileObject->fwrite($dataSource->getOutput());
+
+
+            $output->writeln("<info>$filename criado com sucesso!!!</info>");
+            $output->writeln('<comment>Cria sua classe de modelo de dados e estenda de ' . $dataSource->getClassName() . '</comment>');
+        } catch (Exception $exc) {
+            echo $exc->getTraceAsString();
+        }
     }
 
 }
