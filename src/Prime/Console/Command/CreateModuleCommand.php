@@ -50,7 +50,7 @@ class CreateModuleCommand extends BaseCommand
     public function __construct($name = 'create:module')
     {
         parent::__construct($name);
-        $this->appRoot = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'App' . DIRECTORY_SEPARATOR;
+        $this->appRoot = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR;
     }
 
     protected function configure()
