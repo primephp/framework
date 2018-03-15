@@ -27,10 +27,10 @@
 namespace Prime\Console\Command;
 
 use Prime\Console\BaseCommand;
+use Prime\Database\Connection;
+use Prime\Database\Metadata\CreateDataSource;
 use Prime\FileSystem\File;
 use Prime\FileSystem\Filesystem;
-use Prime\Model\DataSource\Connection;
-use Prime\Model\DataSource\Metadata\CreateDataSource;
 use RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -49,7 +49,7 @@ class CreateDataSourceCommand extends BaseCommand
 
     private function isConnected()
     {
-        if (!\Prime\Database\Connection::open()) {
+        if (!Connection::open()) {
             throw new RuntimeException('Há conexão com com banco de dados.');
         }
     }
@@ -71,7 +71,7 @@ class CreateDataSourceCommand extends BaseCommand
         $entity = $input->getArgument('entity');
         $dbName = $input->getArgument('dbname') ?? 'default';
 
-        $dataSource = new \Prime\Database\Metadata\CreateDataSource($entity, $dbName);
+        $dataSource = new CreateDataSource($entity, $dbName);
 
         $dirBase = dirname($_SERVER['SCRIPT_FILENAME']) . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'DataSource';
         $filename = realpath($dirBase) . DIRECTORY_SEPARATOR . $dataSource->getClassName() . '.php';

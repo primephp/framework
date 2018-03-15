@@ -83,8 +83,8 @@ class EntityMetadata
             //datetime
             'DATE' => 'date',
             'DATETIME' => 'datetime',
-            'timestamp' => 'int',
-            'TIMESTAMP' => 'int',
+            'timestamp' => 'datetime',
+            'TIMESTAMP' => 'datetime',
             'date' => 'date',
             'time' => 'time'
         ];
