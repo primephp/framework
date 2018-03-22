@@ -39,9 +39,11 @@ class SqlSelect extends AbstractStatement
      * retorna um conjunto de resultados de registros de uma ou mais tabelas
      * @param string $entityName
      */
-    public function __construct(string $entityName, string $alias = NULL)
+    public function __construct(string $entityName = NULL, string $alias = NULL)
     {
-        $this->setEntity($entityName, $alias);
+        if (!is_null($entityName)) {
+            $this->setEntity($entityName, $alias);
+        }
     }
 
     /**

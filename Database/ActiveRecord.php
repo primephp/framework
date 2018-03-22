@@ -130,18 +130,13 @@ abstract class ActiveRecord {
      * Adiciona os nomes das colunas a serem utilizadas especificadamente na consulta SQL
      * @param string $columnsName
      */
-    public function addColumns($columnsName) {
+    public function addColumn($columnsName) {
         $this->columns[] = $columnsName;
     }
 
     private function getColumns() {
-        if (is_array($this->columns)) {
-            $total = count($this->columns);
-            for ($index = 0; $index < $total; $index++) {
-                
-            }
-        } else {
-            return '*';
+        if (count($this->columns)) {
+            return $this->columns;
         }
     }
 
@@ -169,7 +164,7 @@ abstract class ActiveRecord {
      * @return array
      */
     public function loadByField($field, $value) {
-        return $this->loadByCriteria(new SqlFilter($field, SqlFilter::IS_EQUAL, $value));
+        return $this->loadByCriteria(new SqlFilter($field, SqlFilter::EQUALS, $value));
     }
 
     /**
@@ -189,7 +184,7 @@ abstract class ActiveRecord {
      */
     private function exist($id) {
         $repo = new Repository($this->getClass());
-        return $repo->count(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
+        return $repo->count(new SqlFilter($this->getPrimaryKey(), SqlFilter::EQUALS, $id));
     }
 
     /**
@@ -217,7 +212,7 @@ abstract class ActiveRecord {
     private function getSqlUpdateStatement() {
         $sql = new SqlUpdate();
         $sql->setEntity($this->getEntity());
-        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $this->{$this->getPrimaryKey()}));
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::EQUALS, $this->{$this->getPrimaryKey()}));
         foreach ($this->data as $key => $value) {
             if ($key !== $this->getPrimaryKey() && $this->checkIsNew($key)) {
                 $sql->setRowData($key, $value);
@@ -237,7 +232,7 @@ abstract class ActiveRecord {
         }
         $sql = new SqlDelete();
         $sql->setEntity($this->getEntity());
-        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::IS_EQUAL, $id));
+        $sql->setCriteria(new SqlFilter($this->getPrimaryKey(), SqlFilter::EQUALS, $id));
         return $sql->getStatement();
     }
 
@@ -248,7 +243,9 @@ abstract class ActiveRecord {
      */
     private function getSqlSelectSatatment(SqlExpressionInterface $criteria) {
         $sql = new SqlSelect();
-        $sql->addColumn($this->getColumns());
+        foreach ($this->getColumns() as $column) {
+            $sql->addColumn($column);
+        }
         $sql->setEntity($this->getEntity());
         $sql->setCriteria($criteria);
         return $sql->getStatement();
